@@ -1,0 +1,28 @@
+{
+  "rounds": "26–35",
+  "notification_delivery": "isolated adapter only; real OS delivery not verified",
+  "native_backup_picker": "manual check pending Mac unlock",
+  "sources": {
+    "src/app.js": "5293df6e693c1801f371c51915adf8ad488c97d7768f43263863240a43934e0d",
+    "src/index.html": "fdcfa57b9aa6f057ba73ad134bfce3df3c809b6db78f7bdbf2c38c2cd9d20e68",
+    "src/model.js": "d7ffaadf0aeec3c9815482b710074b8971205e965e7efe6ee96df3bcb85bc9d5",
+    "src/storage.js": "4dca2295c45595d76584dd1d299076834ec6df3ce0bfc84bab249f94af3aebe9",
+    "src/styles.css": "b89ad7a963bd5c800293a70e6c93786edf33d0a22603741f3dc9a4727d47441e",
+    "native/App.swift": "fb20f5e3c183dd433dc6d915e4df90d4cd5eb0a98f38f711f757a84568cda317",
+    "native/DataStore.swift": "07b9b3056b61bd26c0e2b72552737ade317bd056c302d33b94d2853f5580222f",
+    "native/LinkPolicy.swift": "42695a8723abf96f25053ec625d535d985ab172087c2d6b60199a04996963ef1",
+    "native/Reminders.swift": "483922d6e5ee9eb006d63855141d903688b97a2932997f2ad8c26454e75b4eba",
+    "tests/build.test.py": "84f266ddc37eb0ab464b1d8a7d3b4c74c2e1ad09cacc0720eb8b29bde162a214",
+    "tests/data-store.swift": "b7a756ed838e418edfb6097e4c1e0a357e455a66db41622c6a3024c691f6ba0f",
+    "tests/desktop-data-reminders.js": "acc7904a48311b0f487fe103518f8cccb51b7d4ff840d3b28c62f80c40da2a72",
+    "tests/desktop-editor.js": "90a8feb610b1d4631d04898d7b61d56a27bcff8b5eb7b2386a9b838689e4e258",
+    "tests/desktop-overview.js": "82144a912814a0dd1f18843ada7b6bb41231f3d80bcf0892b95bf5165370204e",
+    "tests/desktop-reload-fixture.js": "6ce51e283f927b79d27fbdcd49ced16532087245390eb45ca4c9180c7f8dc237",
+    "tests/desktop-reminder-denied.js": "82c2f839b5292b3555aafff7f617ef6be43d728b3da4a55d8e7e4449cc99acc8",
+    "tests/desktop-save-fixture.js": "563da7b3570b7a74f95534edfb8bdb0f3d36ade0b1daf1de1a8ded1f19d9a245",
+    "tests/desktop-ui.js": "002e8005727fb6f79d368dd96d3f2d9fdda38a46968908032b2c1ea82f0a89a9",
+    "tests/link-policy.swift": "9789149a02fc68b68e9ae295cd266c266e8dfc1bbff96d303a297e1f409b9eff",
+    "tests/model.test.cjs": "2cd22b7549701558d6aa0d13fd7f5dd465644578373ae474427195af770f3467",
+    "tests/reminder-scheduling.swift": "8dc7dab45df648ba94aa195b91ef7a3f264689a7c87f9c7865d55fb64598d0df"
+  }
+}

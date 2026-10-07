@@ -6,7 +6,7 @@ mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 # Python 3 is needed only to rebuild the portable interface, not to launch the app.
 "${PYTHON:-python3}" "$ROOT/scripts/build.py"
 mkdir -p "$ROOT/.build/module-cache"
-swiftc -parse-as-library -O -target "$(uname -m)-apple-macos15.0" -module-cache-path "$ROOT/.build/module-cache" -framework AppKit -framework WebKit "$ROOT/native/App.swift" "$ROOT/native/LinkPolicy.swift" -o "$APP/Contents/MacOS/RequirementCalendar"
+swiftc -parse-as-library -O -target "$(uname -m)-apple-macos15.0" -module-cache-path "$ROOT/.build/module-cache" -framework AppKit -framework WebKit -framework UserNotifications "$ROOT/native/App.swift" "$ROOT/native/LinkPolicy.swift" "$ROOT/native/DataStore.swift" "$ROOT/native/Reminders.swift" -o "$APP/Contents/MacOS/RequirementCalendar"
 cp "$ROOT/index.html" "$APP/Contents/Resources/index.html"
 cat > "$APP/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>

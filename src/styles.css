@@ -91,3 +91,6 @@ html.native #req-calendar-refined .rf-bars{grid-auto-rows:34px;row-gap:4px;paddi
 html.native #req-calendar-refined .rf-bar-title{min-height:19px;padding-top:1px;padding-bottom:0;font-size:11px}
 html.native #req-calendar-refined .rf-phases{min-height:15px}
 html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
+#req-calendar-refined .rf-reminder-status{margin:0;padding:8px 20px;font-size:12px;color:var(--rf-muted);background:var(--rf-soft);border-bottom:1px solid var(--rf-line)}
+#req-calendar-refined [aria-busy=true]{cursor:progress}
+#req-calendar-refined button:disabled{opacity:.5;cursor:default}

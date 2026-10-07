@@ -1,18 +1,44 @@
 import AppKit
 import WebKit
+import UniformTypeIdentifiers
+import UserNotifications
 
 @MainActor
-final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelegate, WKNavigationDelegate, WKUIDelegate {
+final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelegate, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandlerWithReply, UNUserNotificationCenterDelegate {
     var window: NSWindow!
     var webView: WKWebView!
+    var latestRequirements: [[String: Any]] = []
+    var dataLoaded = false
+    var pendingNotificationID: String?
+    lazy var notificationScheduler: any NotificationScheduling = {
+        if verifyScript != nil || ProcessInfo.processInfo.environment["CALENDAR_EPHEMERAL"] == "1" {
+            let scheduler = IsolatedNotificationScheduler()
+            if ProcessInfo.processInfo.environment["CALENDAR_VERIFY_NOTIFICATION_PERMISSION"] == "denied" { scheduler.permission = .denied }
+            return scheduler
+        }
+        return SystemNotificationScheduler()
+    }()
+    lazy var reminders = ReminderManager(scheduler: notificationScheduler)
     let entry = Bundle.main.url(forResource: "index", withExtension: "html")!
     let verifyScript = ProcessInfo.processInfo.environment["CALENDAR_VERIFY_SCRIPT"]
+    lazy var dataStore: CalendarDataStore = {
+        let isolated = verifyScript != nil || ProcessInfo.processInfo.environment["CALENDAR_EPHEMERAL"] == "1"
+        let directory: URL
+        if isolated {
+            directory = ProcessInfo.processInfo.environment["CALENDAR_DATA_DIR"].map { URL(fileURLWithPath: $0, isDirectory: true) } ?? FileManager.default.temporaryDirectory.appendingPathComponent("RequirementCalendar-\(UUID().uuidString)", isDirectory: true)
+        } else {
+            directory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("RequirementCalendar", isDirectory: true)
+        }
+        return CalendarDataStore(directory: directory)
+    }()
     let verifyOutput = ProcessInfo.processInfo.environment["CALENDAR_VERIFY_OUTPUT"]
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.regular)
         createMenu()
+        if verifyScript == nil && ProcessInfo.processInfo.environment["CALENDAR_EPHEMERAL"] != "1" { UNUserNotificationCenter.current().delegate = self }
         let config = WKWebViewConfiguration()
+        if verifyScript == nil || ProcessInfo.processInfo.environment["CALENDAR_VERIFY_BROWSER_STORAGE"] != "1" { config.userContentController.addScriptMessageHandler(self, contentWorld: .page, name: "calendar") }
         config.userContentController.addUserScript(WKUserScript(source: "document.documentElement.classList.add('native');", injectionTime: .atDocumentEnd, forMainFrameOnly: true))
         // Verification runs never touch the user's persisted application data.
         if verifyScript != nil || ProcessInfo.processInfo.environment["CALENDAR_EPHEMERAL"] == "1" { config.websiteDataStore = .nonPersistent() }
@@ -49,6 +75,11 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
             let item = fileMenu.addItem(withTitle: title, action: action, keyEquivalent: key)
             item.target = self
         }
+        fileMenu.addItem(.separator())
+        for (title, action) in [("导出备份…", #selector(exportBackup)), ("从备份恢复…", #selector(importBackup)), ("显示数据文件夹", #selector(showDataFolder))] {
+            let item = fileMenu.addItem(withTitle: title, action: action, keyEquivalent: "")
+            item.target = self
+        }
         file.submenu = fileMenu
         main.addItem(file)
         let edit = NSMenuItem()
@@ -77,6 +108,94 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
         NSApp.windowsMenu = windowMenu
     }
 
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage, replyHandler: @escaping (Any?, String?) -> Void) {
+        guard message.frameInfo.isMainFrame, message.frameInfo.request.url == entry, let body = message.body as? [String: Any], let action = body["action"] as? String else { replyHandler(nil, "消息来源无效。"); return }
+        do {
+            switch action {
+            case "load":
+                let result = dataStore.load()
+                if let raw = result["raw"] as? String, let bytes = raw.data(using: .utf8), let value = try? CalendarDataStore.validate(bytes) { latestRequirements = value["requirements"] as? [[String: Any]] ?? [] }
+                dataLoaded = true
+                replyHandler(result, nil)
+                refreshReminders()
+                if let id = pendingNotificationID { pendingNotificationID = nil; openNotification(id) }
+            case "save":
+                guard let raw = body["raw"] as? String, let bytes = raw.data(using: .utf8) else { throw CalendarDataError(message: "保存内容无效。") }
+                try dataStore.save(bytes, recovery: body["recovery"] as? Bool == true)
+                latestRequirements = (try CalendarDataStore.validate(bytes))["requirements"] as? [[String: Any]] ?? []
+                let snapshot = latestRequirements
+                Task { @MainActor in
+                    let issue = await reminders.reconcile(snapshot, requestPermission: true)
+                    replyHandler(["ok": true, "reminderIssue": issue as Any? ?? NSNull()], nil)
+                }
+            case "verifyReminders":
+                guard verifyScript != nil, let scheduler = notificationScheduler as? IsolatedNotificationScheduler else { replyHandler(nil, "仅在隔离回归中可用。"); return }
+                replyHandler(["ids": Array(scheduler.plans.keys), "permissionRequests": scheduler.requests], nil)
+            default: replyHandler(nil, "未知操作。")
+            }
+        } catch { replyHandler(nil, error.localizedDescription) }
+    }
+    func applicationDidBecomeActive(_ notification: Notification) { if dataLoaded { refreshReminders() } }
+    func refreshReminders() {
+        let snapshot = latestRequirements
+        Task { @MainActor in
+            let issue = await reminders.reconcile(snapshot, requestPermission: false)
+            webView.callAsyncJavaScript("await window.CalendarReady; window.CalendarApp.setReminderIssue(issue)", arguments: ["issue": issue as Any? ?? NSNull()], in: nil, in: .page, completionHandler: nil)
+        }
+    }
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if let id = response.notification.request.content.userInfo["requirementID"] as? String {
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                if !dataLoaded { pendingNotificationID = id; return }
+                openNotification(id)
+            }
+        }
+        completionHandler()
+    }
+    func openNotification(_ id: String) {
+        window.makeKeyAndOrderFront(nil); NSApp.activate(ignoringOtherApps: true)
+        webView.callAsyncJavaScript("await window.CalendarReady; return window.CalendarApp.openRequirement(id)", arguments: ["id": id], in: nil, in: .page, completionHandler: nil)
+    }
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) { completionHandler([.banner,.sound]) }
+    func showError(_ message: String) { let alert = NSAlert(); alert.messageText = message; alert.addButton(withTitle: "好"); alert.beginSheetModal(for: window) }
+    func withCleanEditor(_ action: @escaping () -> Void) {
+        webView.evaluateJavaScript("window.CalendarApp?.hasUnsavedChanges() ?? true") { value, error in
+            if error != nil || value as? Bool != false { self.showError("请先保存或取消当前编辑，再进行备份操作。"); return }
+            action()
+        }
+    }
+    @objc func showDataFolder() { NSWorkspace.shared.open(dataStore.directory) }
+    @objc func exportBackup() {
+        withCleanEditor {
+            self.webView.evaluateJavaScript("window.CalendarApp.exportSnapshot()") { result, error in
+                guard error == nil, let raw = result as? String, let data = raw.data(using: .utf8) else { self.showError("无法读取当前记录。"); return }
+                let panel = NSSavePanel(); panel.allowedContentTypes = [.json]; panel.nameFieldStringValue = "需求日历备份.json"; panel.title = "导出需求备份"
+                panel.beginSheetModal(for: self.window) { response in
+                    guard response == .OK, let url = panel.url else { return }
+                    do { try data.write(to: url, options: .atomic) } catch { self.showError("导出失败：\(error.localizedDescription)") }
+                }
+            }
+        }
+    }
+    @objc func importBackup() {
+        withCleanEditor {
+            let panel = NSOpenPanel(); panel.allowedContentTypes = [.json]; panel.allowsMultipleSelection = false; panel.canChooseDirectories = false; panel.title = "从备份恢复"
+            panel.beginSheetModal(for: self.window) { response in
+                guard response == .OK, let url = panel.url else { return }
+                do {
+                    let data = try Data(contentsOf: url), value = try CalendarDataStore.validate(data)
+                    let alert = NSAlert(); alert.messageText = "恢复这份备份？"; alert.informativeText = "备份包含 \((value["requirements"] as? [Any])?.count ?? 0) 个需求。将替换当前记录；原记录会保留在数据文件夹中。"; alert.addButton(withTitle: "恢复"); alert.addButton(withTitle: "取消")
+                    alert.beginSheetModal(for: self.window) { response in
+                        guard response == .alertFirstButtonReturn else { return }
+                        self.webView.callAsyncJavaScript("return await window.CalendarApp.restoreSnapshot(raw)", arguments: ["raw": String(decoding: data, as: UTF8.self)], in: nil, in: .page) { result in
+                            switch result { case .success(let value) where value as? Bool == true: break; default: self.showError("恢复失败。请检查窗口上方的错误提示，原文件未被静默替换。") }
+                        }
+                    }
+                } catch { self.showError("备份无效：\(error.localizedDescription)") }
+            }
+        }
+    }
     func command(_ value: String) { webView.evaluateJavaScript("window.CalendarApp?.command('\(value)')", completionHandler: nil) }
     @objc func newRequirement() { command("new") }
     @objc func saveRequirement() { command("save") }
@@ -97,7 +216,9 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
             alert.beginSheetModal(for: self.window) { response in
                 if response == .alertThirdButtonReturn { done(true) }
                 else if response == .alertFirstButtonReturn {
-                    self.webView.evaluateJavaScript("window.CalendarApp.command('save'); !window.CalendarApp.hasUnsavedChanges()") { saved, error in done(error == nil && saved as? Bool == true) }
+                    self.webView.callAsyncJavaScript("await window.CalendarApp.command('save'); return !window.CalendarApp.hasUnsavedChanges()", arguments: [:], in: nil, in: .page) { result in
+                        switch result { case .success(let saved): done(saved as? Bool == true); case .failure: done(false) }
+                    }
                 } else { done(false) }
             }
         }
@@ -131,7 +252,7 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         guard let verifyScript, let verifyOutput else { return }
         do {
-            let script = try String(contentsOfFile: verifyScript, encoding: .utf8)
+            let script = "await window.CalendarReady;\n" + (try String(contentsOfFile: verifyScript, encoding: .utf8))
             webView.callAsyncJavaScript(script, arguments: [:], in: nil, in: .page) { result in
                 let output: [String: Any]
                 switch result {

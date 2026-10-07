@@ -99,6 +99,9 @@ html.native #req-calendar-refined .rf-bars{grid-auto-rows:34px;row-gap:4px;paddi
 html.native #req-calendar-refined .rf-bar-title{min-height:19px;padding-top:1px;padding-bottom:0;font-size:11px}
 html.native #req-calendar-refined .rf-phases{min-height:15px}
 html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
+#req-calendar-refined .rf-reminder-status{margin:0;padding:8px 20px;font-size:12px;color:var(--rf-muted);background:var(--rf-soft);border-bottom:1px solid var(--rf-line)}
+#req-calendar-refined [aria-busy=true]{cursor:progress}
+#req-calendar-refined button:disabled{opacity:.5;cursor:default}
 
 </style>
 </head>
@@ -107,6 +110,7 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
 
 <div class="rf-chrome"><span class="rf-app">需求日历</span></div>
 <div class="rf-toolbar"><div class="rf-controls"><h2 id="rf-title">2026 年 10 月</h2><button type="button" class="rf-arrow cursor-interaction" id="rf-prev" aria-label="上一页">‹</button><button type="button" class="rf-arrow cursor-interaction" id="rf-next" aria-label="下一页">›</button></div><div class="rf-controls"><button type="button" class="rf-button rf-primary rf-add cursor-interaction" id="rf-new" aria-label="新建需求" data-tooltip="新建需求">＋</button></div></div>
+<p id="rf-reminder-status" class="rf-reminder-status" role="status" hidden></p>
 <p id="rf-storage-error" class="rf-storage-error" role="alert" hidden></p>
 <div class="rf-content"><main id="rf-calendar" class="rf-calendar" aria-label="需求与阶段日历"></main><aside id="rf-detail" class="rf-detail" aria-label="需求详情" hidden><div class="rf-detail-head"><span id="rf-panel-label" class="rf-muted">需求详情</span><button type="button" class="rf-close cursor-interaction" id="rf-close" aria-label="关闭详情">×</button></div><div id="rf-panel"></div></aside></div>
 <span id="rf-feedback" class="rf-feedback" aria-live="polite"></span>
@@ -119,7 +123,7 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
 /* Shared domain rules for the browser and desktop host. No UI or storage side effects. */
 (function (scope) {
   'use strict';
-  const VERSION = 5;
+  const VERSION = 6;
   class ValidationError extends Error {
     constructor(message, path = '') { super(message); this.name = 'ValidationError'; this.path = path; }
   }
@@ -143,6 +147,11 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
   const days = (start, end) => Math.round((parse(end) - parse(start)) / 86400000);
   const localDate = (date = new Date()) => [String(date.getFullYear()).padStart(4, '0'), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
   const format = value => Number(value.slice(5, 7)) + '.' + Number(value.slice(8));
+  function validReminder(value) {
+    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value) || !validDate(value.slice(0,10))) return false;
+    const date = new Date(value);
+    return Number.isFinite(date.getTime()) && localDate(date) + 'T' + String(date.getHours()).padStart(2,'0') + ':' + String(date.getMinutes()).padStart(2,'0') === value;
+  }
   function newId(crypto = scope.crypto) {
     if (crypto?.randomUUID) return crypto.randomUUID();
     if (!crypto?.getRandomValues) throw new Error('当前运行环境不支持安全生成需求标识。');
@@ -188,18 +197,20 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
       return { name, type, url, icon: url ? iconFor(url, type) : (typeof resource.icon === 'string' ? resource.icon : iconFor('', type)) };
     });
     if (!Array.isArray(value.tasks) || !value.tasks.every(task => typeof task === 'string' && task.trim()) || !Array.isArray(value.done) || value.done.length !== value.tasks.length || !value.done.every(done => typeof done === 'boolean')) throw new ValidationError('事项与完成状态不一致。', '事项');
-    return { id, title, short: title, tone: ['', 'blue', 'green'].includes(value.tone) ? value.tone : '', start: value.start, end: value.end, phases, resources, tasks: value.tasks.map(task => task.trim()), done: [...value.done], note: text(value.note ?? '', '备忘') };
+    const reminder = value.reminder ?? null;
+    if (reminder !== null && !validReminder(reminder)) throw new ValidationError('提醒时间无效。', '提醒');
+    return { id, title, reminder, short: title, tone: ['', 'blue', 'green'].includes(value.tone) ? value.tone : '', start: value.start, end: value.end, phases, resources, tasks: value.tasks.map(task => task.trim()), done: [...value.done], note: text(value.note ?? '', '备忘') };
   }
   function snapshot(value) {
     if (!value || typeof value !== 'object' || Array.isArray(value)) throw new ValidationError('保存的数据格式无效。');
     const source = value.privateContent ?? value;
-    if (![4, VERSION].includes(source.version)) throw new ValidationError('数据版本不受支持，原始数据已保留。');
+    if (![4, 5, VERSION].includes(source.version)) throw new ValidationError('数据版本不受支持，原始数据已保留。');
     if (!validDate(source.anchor) || !Array.isArray(source.requirements)) throw new ValidationError('保存的数据不完整，原始数据已保留。');
     const requirements = source.requirements.map(requirement), ids = new Set(requirements.map(item => item.id));
     if (ids.size !== requirements.length) throw new ValidationError('需求标识重复，无法安全载入数据。');
     return { version: VERSION, anchor: source.anchor, requirements };
   }
-  const api = { VERSION, ValidationError, validDate, parse, iso, add, days, localDate, format, newId, safeURL, iconFor, requirement, snapshot };
+  const api = { VERSION, ValidationError, validDate, parse, iso, add, days, localDate, format, validReminder, newId, safeURL, iconFor, requirement, snapshot };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else scope.CalendarModel = api;
 })(globalThis);
@@ -209,7 +220,7 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
 (function (scope) {
   'use strict';
   const Model = typeof module !== 'undefined' && module.exports ? require('./model.js') : scope.CalendarModel;
-  const KEY = 'requirement-calendar:state:v5', BACKUP_KEY = KEY + ':last-good';
+  const KEY = 'requirement-calendar:state:v6', BACKUP_KEY = KEY + ':last-good';
   function createStore(storage, options = {}) {
     let blocked = false;
     const decode = value => Model.snapshot(JSON.parse(value));
@@ -229,7 +240,7 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
             return { data: null, issue: '本地记录无法读取，原始数据已保留。请先恢复备份，再保存更改。' };
           }
         }
-        const legacyKey = options.legacyKey;
+        const legacyKey = storage.getItem('requirement-calendar:state:v5') !== null ? 'requirement-calendar:state:v5' : options.legacyKey;
         if (legacyKey) {
           const legacy = storage.getItem(legacyKey);
           if (legacy !== null) {
@@ -255,7 +266,35 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
     }
     return { load, save };
   }
-  const api = { KEY, BACKUP_KEY, createStore };
+  function createNativeStore(bridge, legacyStore) {
+    let blocked = false;
+    async function load() {
+      try {
+        const result = await bridge.postMessage({ action: 'load' });
+        if (result.raw !== null) return { data: Model.snapshot(JSON.parse(result.raw)), issue: result.issue };
+        if (result.issue) { blocked = true; return { data: null, issue: result.issue }; }
+        const legacy = legacyStore?.load();
+        if (legacy?.data) {
+          const data = Model.snapshot(legacy.data);
+          await bridge.postMessage({ action: 'save', raw: JSON.stringify(data) });
+          return { data, issue: '已将旧版本机记录迁移到独立数据文件，旧记录仍保留。', migrated: true };
+        }
+        if (legacy?.issue) { blocked = true; return { data: null, issue: legacy.issue }; }
+        return { data: null, issue: null };
+      } catch (error) { blocked = true; return { data: null, issue: '本机数据读取失败：' + error.message }; }
+    }
+    async function save(value, recovery = false) {
+      if (blocked && !recovery) return { ok: false, issue: '本机记录无法安全覆盖，请从备份恢复后重试。' };
+      try {
+        const data = Model.snapshot(value);
+        const result = await bridge.postMessage({ action: 'save', raw: JSON.stringify(data), recovery });
+        blocked = false;
+        return { ok: true, issue: null, reminderIssue: result.reminderIssue || null };
+      } catch (error) { return { ok: false, issue: error.message || '本机文件保存失败，请重试。' }; }
+    }
+    return { load, save };
+  }
+  const api = { KEY, BACKUP_KEY, createStore, createNativeStore };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else scope.CalendarStorage = api;
 })(globalThis);
@@ -263,11 +302,11 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
 </script>
 <script>
 
-(()=>{
+window.CalendarReady=(async()=>{
  const Model=CalendarModel;
  const root=document.getElementById('req-calendar-refined'),get=id=>root.querySelector('#'+id),today=Model.localDate();
  const baseline=[{id:'checkout',title:'结算流程改版',short:'结算改版',tone:'',start:'2026-10-07',end:'2026-11-06',phases:[{name:'评审',start:'2026-10-07',end:'2026-10-08'},{name:'开发',start:'2026-10-09',end:'2026-10-16'},{name:'联调',start:'2026-10-17',end:'2026-10-23'},{name:'测试',start:'2026-10-24',end:'2026-10-30'},{name:'上线',start:'2026-10-31',end:'2026-11-06'}],resources:[{icon:'钉',name:'结算改版 PRD',type:'需求文档',url:''},{icon:'F',name:'Checkout 交互与视觉',type:'设计稿',url:''}],tasks:['确认需求边界与验收标准','实现优惠券选择与金额计算','补齐支付失败恢复逻辑','联调与回归验证'],done:[true,false,false,false],note:'待产品确认：优惠券与余额的扣减顺序。'},{id:'login',title:'登录态异常修复',short:'登录修复',tone:'blue',start:'2026-10-09',end:'2026-10-13',phases:[{name:'排查',start:'2026-10-09',end:'2026-10-10'},{name:'修复',start:'2026-10-11',end:'2026-10-12'},{name:'验证',start:'2026-10-13',end:'2026-10-13'}],resources:[{icon:'钉',name:'登录失效场景整理',type:'问题记录',url:''},{icon:'G',name:'认证模块设计',type:'接口约定',url:''}],tasks:['定位状态不同步','修复与回归验证','发布与观察'],done:[false,false,false],note:'确认自动续期失败后是否强制退出。'},{id:'export',title:'报表导出优化',short:'报表优化',tone:'green',start:'2026-10-19',end:'2026-10-30',phases:[{name:'方案',start:'2026-10-19',end:'2026-10-20'},{name:'开发',start:'2026-10-21',end:'2026-10-26'},{name:'验收',start:'2026-10-27',end:'2026-10-30'}],resources:[{icon:'钉',name:'异步导出说明',type:'需求文档',url:''},{icon:'F',name:'导出任务面板',type:'交互设计',url:''}],tasks:['确认导出规模与边界','实现任务状态展示','联调与验收'],done:[false,false,false],note:'等待后端确认导出任务状态与重试接口。'}];
- let requirements=structuredClone(baseline),state={view:'month',anchor:today,selected:null,rowHeight:136},lastTrigger=null,draftPreview=null,editor=null,pendingAction=null,deleted=null;
+ let requirements=structuredClone(baseline),state={view:'month',anchor:today,selected:null,rowHeight:136},lastTrigger=null,draftPreview=null,editor=null,pendingAction=null,deleted=null,saving=false;
  const {parse,iso,add,days,format,validDate}=Model,req=id=>requirements.find(r=>r.id===id);
  const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
  const button=(cls,text,label,action)=>{const b=el('button',cls+' cursor-interaction',text);b.type='button';if(label)b.setAttribute('aria-label',label);b.addEventListener('click',action);return b;};
@@ -275,17 +314,19 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
  const input=(type,value='',placeholder='')=>{const n=el('input');n.type=type;n.value=value;n.placeholder=placeholder;return n;};
  let storage=null;try{storage=window.localStorage;}catch{}
  const legacyKey='codex:visualization-widget-state-v2:'+JSON.stringify([window.location.pathname,window.location.search]);
- const store=CalendarStorage.createStore(storage,{legacyKey});
+ const browserStore=CalendarStorage.createStore(storage,{legacyKey}),nativeBridge=window.webkit?.messageHandlers?.calendar;
+ const store=nativeBridge?CalendarStorage.createNativeStore(nativeBridge,browserStore):browserStore;
  function showStorageIssue(issue){const node=get('rf-storage-error');node.hidden=!issue;node.textContent=issue||'';}
- const restored=store.load();if(restored.data){requirements=restored.data.requirements;state.anchor=restored.data.anchor;}showStorageIssue(restored.issue);
- function save(next=requirements){const result=store.save({version:Model.VERSION,anchor:state.anchor,requirements:next});showStorageIssue(result.issue);return result.ok;}
- function openPanel(label,trigger){if(!root.classList.contains('has-detail'))lastTrigger=trigger??document.activeElement;editor=null;root.classList.add('has-detail');get('rf-detail').hidden=false;get('rf-panel-label').textContent=label;get('rf-panel').replaceChildren();}
- function closePanel(force=false){if(!force&&!mayLeave(()=>closePanel(true)))return;editor=null;clearDraftPreview();root.classList.remove('has-detail');get('rf-detail').hidden=true;state.selected=null;const target=lastTrigger?.isConnected?lastTrigger:get('rf-new');target.focus({preventScroll:true});}
+ function setReminderIssue(issue){const node=get('rf-reminder-status');node.hidden=!issue;node.textContent=issue||'';}
+ const restored=await store.load();if(restored.data){requirements=restored.data.requirements;state.anchor=restored.data.anchor;}showStorageIssue(restored.issue);
+ async function save(next=requirements,recovery=false){const result=await store.save({version:Model.VERSION,anchor:state.anchor,requirements:next},recovery);showStorageIssue(result.issue);setReminderIssue(result.reminderIssue);return result.ok;}
+ function openPanel(label,trigger){if(saving)return;if(!root.classList.contains('has-detail'))lastTrigger=trigger??document.activeElement;editor=null;root.classList.add('has-detail');get('rf-detail').hidden=false;get('rf-panel-label').textContent=label;get('rf-panel').replaceChildren();}
+ function closePanel(force=false){if(saving)return;if(!force&&!mayLeave(()=>closePanel(true)))return;editor=null;clearDraftPreview();root.classList.remove('has-detail');get('rf-detail').hidden=true;state.selected=null;const target=lastTrigger?.isConnected?lastTrigger:get('rf-new');target.focus({preventScroll:true});}
  function lanes(){const ends=[],mapping=Object.create(null);for(const r of [...requirements].sort((a,b)=>a.start.localeCompare(b.start)||a.end.localeCompare(b.end))){let lane=ends.findIndex(end=>end<r.start);if(lane<0)lane=ends.length;ends[lane]=r.end;mapping[r.id]=lane;}return {mapping,count:Math.max(2,ends.length)};}
  function makeWeek(start,allocation){const end=add(start,6),week=el('div','rf-week'),dateGrid=el('div','rf-days'),bars=el('div','rf-bars');for(let i=0;i<7;i++){const date=add(start,i),outside=date.slice(0,7)!==state.anchor.slice(0,7);const dateButton=button('rf-date'+(outside?' outside':''),'',date+' 新建需求',()=>edit(null,date));dateButton.dataset.date=date;dateButton.append(el('span','',String(Number(date.slice(8)))));dateGrid.append(dateButton);}for(const r of requirements){if(r.start>end||r.end<start)continue;const a=r.start<start?start:r.start,b=r.end>end?end:r.end,length=days(a,b)+1;const bar=button('rf-bar '+(r.tone||'')+(r.start<start?' continued-left':'')+(r.end>end?' continued-right':''),'',r.title+'，'+r.start+' 至 '+r.end,e=>detail(r.id,e.currentTarget));bar.style.gridColumn=(days(start,a)+1)+' / span '+length;bar.style.gridRow=String(allocation.mapping[r.id]+1);bar.style.setProperty('--rf-days',length);bar.dataset.tooltip=r.title+' · '+format(r.start)+'—'+format(r.end);bar.append(el('span','rf-bar-title',r.short||r.title));const track=el('span','rf-phases');for(const phase of r.phases){if(phase.start>b||phase.end<a)continue;const pa=phase.start<a?a:phase.start,pb=phase.end>b?b:phase.end;const segment=el('span','rf-phase'+(phase.start<=today&&phase.end>=today?' is-current':''),phase.name);segment.style.gridColumn=(days(a,pa)+1)+' / span '+(days(pa,pb)+1);segment.dataset.tooltip=phase.name+' · '+format(phase.start)+'—'+format(phase.end);track.append(segment);}bar.append(track);bars.append(bar);}week.style.setProperty('--rf-lanes',Math.max(0,...Array.from(bars.children,bar=>Number(bar.style.gridRow)+0)));week.append(dateGrid,bars);return week;}
  function render(){state.view='month';const calendar=get('rf-calendar');calendar.replaceChildren();root.style.setProperty('--rf-row-height',state.rowHeight+'px');const allocation=lanes();root.style.setProperty('--rf-lanes',allocation.count);const heading=el('div','rf-weekdays'),d=parse(state.anchor);for(const day of ['一','二','三','四','五','六','日'])heading.append(el('span','','周'+day));calendar.append(heading);get('rf-title').textContent=d.getUTCFullYear()+' 年 '+(d.getUTCMonth()+1)+' 月';const first=iso(new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),1,12))),start=add(first,-((parse(first).getUTCDay()+6)%7)),last=iso(new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,0,12))),count=Math.ceil((days(start,last)+1)/7);for(let i=0;i<count;i++)calendar.append(makeWeek(add(start,i*7),allocation));if(draftPreview)paintDateSelection(draftPreview);} 
  function resourceRow(r){const row=el(r.url?'a':'div','rf-resource-row');if(r.url){row.href=r.url;row.target='_blank';row.rel='noopener noreferrer';}row.append(el('span','rf-resource-icon',r.icon||'文'));const text=el('span','rf-resource-text');text.append(el('strong','',r.name),el('small','',r.type||'资料'));row.append(text);return row;}
- function detail(id,trigger,force=false){if(!force&&!mayLeave(()=>detail(id,trigger,true)))return;const r=req(id);if(!r)return;clearDraftPreview();state.selected=id;openPanel('需求详情',trigger);const panel=get('rf-panel');panel.append(el('h2','',r.title));const meta=el('div','rf-meta');meta.append(el('span','rf-pill',format(r.start)+' — '+format(r.end)));const phase=r.phases.find(p=>p.start<=today&&p.end>=today);meta.append(el('span','rf-pill',phase?phase.name:today<r.start?'未开始':today>r.end?'计划已结束':'进行中'));panel.append(meta);const columns=el('div','rf-detail-columns');const phases=el('section','rf-section'),ph=el('div','rf-heading');ph.append(el('h3','','阶段安排'),button('rf-text-button','编辑',null,()=>edit(r.id,undefined,undefined,'phases')));phases.append(ph);for(const p of r.phases){const row=el('div','rf-phase-row'+(p.start<=today&&p.end>=today?' current':''));row.append(el('span','',p.name),el('span','rf-muted',format(p.start)+'—'+format(p.end)));phases.append(row);}if(!r.phases.length)phases.append(el('p','rf-note','尚未安排阶段'));columns.append(phases);const resources=el('section','rf-section'),rh=el('div','rf-heading');rh.append(el('h3','','相关资料'),button('rf-text-button','管理',null,()=>editResources(r.id)));resources.append(rh);r.resources.forEach(x=>resources.append(resourceRow(x)));if(!r.resources.length)resources.append(el('p','rf-note','可以添加任意名称和类型的资料'));columns.append(resources);const tasks=el('section','rf-section'),th=el('div','rf-heading'),count=el('span','rf-muted');const progress=()=>count.textContent=r.done.filter(Boolean).length+' / '+r.tasks.length;progress();th.append(el('h3','','工作事项'),count);tasks.append(th);r.tasks.forEach((text,i)=>{const label=el('label','rf-task'),check=input('checkbox');check.checked=!!r.done[i];check.addEventListener('change',()=>{const previous=r.done[i];r.done[i]=check.checked;if(!save()){r.done[i]=previous;check.checked=previous;}progress();});label.append(check,el('span','',text));tasks.append(label);});if(!r.tasks.length)tasks.append(el('p','rf-note','暂无工作事项'));columns.append(tasks);const note=el('section','rf-section');note.append(el('h3','rf-heading','事项与备忘'),el('p','rf-note',r.note||'暂无备忘'));columns.append(note);panel.append(columns);const actions=el('div','rf-section');actions.append(button('rf-button','编辑需求',null,()=>edit(r.id)),button('rf-text-button rf-destructive','删除需求',null,()=>deleteRequirement(r.id)));panel.append(actions);get('rf-close').focus({preventScroll:true});}
+ function detail(id,trigger,force=false){if(saving)return;if(!force&&!mayLeave(()=>detail(id,trigger,true)))return;const r=req(id);if(!r)return;clearDraftPreview();state.selected=id;openPanel('需求详情',trigger);const panel=get('rf-panel');panel.append(el('h2','',r.title));const meta=el('div','rf-meta');meta.append(el('span','rf-pill',format(r.start)+' — '+format(r.end)));const phase=r.phases.find(p=>p.start<=today&&p.end>=today);if(r.reminder)meta.append(el('span','rf-pill','提醒 '+r.reminder.replace('T',' ')));meta.append(el('span','rf-pill',phase?phase.name:today<r.start?'未开始':today>r.end?'计划已结束':'进行中'));panel.append(meta);const columns=el('div','rf-detail-columns');const phases=el('section','rf-section'),ph=el('div','rf-heading');ph.append(el('h3','','阶段安排'),button('rf-text-button','编辑',null,()=>edit(r.id,undefined,undefined,'phases')));phases.append(ph);for(const p of r.phases){const row=el('div','rf-phase-row'+(p.start<=today&&p.end>=today?' current':''));row.append(el('span','',p.name),el('span','rf-muted',format(p.start)+'—'+format(p.end)));phases.append(row);}if(!r.phases.length)phases.append(el('p','rf-note','尚未安排阶段'));columns.append(phases);const resources=el('section','rf-section'),rh=el('div','rf-heading');rh.append(el('h3','','相关资料'),button('rf-text-button','管理',null,()=>editResources(r.id)));resources.append(rh);r.resources.forEach(x=>resources.append(resourceRow(x)));if(!r.resources.length)resources.append(el('p','rf-note','可以添加任意名称和类型的资料'));columns.append(resources);const tasks=el('section','rf-section'),th=el('div','rf-heading'),count=el('span','rf-muted');const progress=()=>count.textContent=r.done.filter(Boolean).length+' / '+r.tasks.length;progress();th.append(el('h3','','工作事项'),count);tasks.append(th);r.tasks.forEach((text,i)=>{const label=el('label','rf-task'),check=input('checkbox');check.checked=!!r.done[i];check.addEventListener('change',async()=>{if(saving){check.checked=r.done[i];return;}const checked=check.checked,next=requirements.map(x=>x.id===r.id?{...x,done:x.done.map((value,index)=>index===i?checked:value)}:x);setSaving(true);const ok=await save(next);setSaving(false);if(ok){requirements=next;r.done[i]=checked;check.checked=checked;}else check.checked=r.done[i];progress();});label.append(check,el('span','',text));tasks.append(label);});if(!r.tasks.length)tasks.append(el('p','rf-note','暂无工作事项'));columns.append(tasks);const note=el('section','rf-section');note.append(el('h3','rf-heading','事项与备忘'),el('p','rf-note',r.note||'暂无备忘'));columns.append(note);panel.append(columns);const actions=el('div','rf-section');actions.append(button('rf-button','编辑需求',null,()=>edit(r.id)),button('rf-text-button rf-destructive','删除需求',null,()=>deleteRequirement(r.id)));panel.append(actions);get('rf-close').focus({preventScroll:true});}
  const iconFor=Model.iconFor;
  function collection(kind,initial){
   const section=el('section','rf-editor-section'),head=el('div','rf-heading'),list=el('div'),rows=[];
@@ -314,6 +355,7 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
  function validateForm(form){const invalid=Array.from(form.elements).find(control=>control.willValidate&&!control.validity.valid);if(!invalid)return true;const disclosure=invalid.closest('details');if(disclosure)disclosure.open=true;invalid.reportValidity();return false;}
  function editResources(id){edit(id);}
  function edit(id=null,date=state.anchor,endDate=date,initialTab='basic',force=false){
+  if(saving)return;
   if(!force&&!mayLeave(()=>edit(id,date,endDate,initialTab,true)))return;
   const existing=req(id),draft=existing?structuredClone(existing):{id:Model.newId(),title:'',short:'',tone:'',start:date,end:endDate,phases:[],resources:[],tasks:[],done:[],note:''};
   state.selected=id;openPanel(existing?'编辑需求':'新建需求');
@@ -330,47 +372,51 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
   const pair=el('div','rf-pair');pair.append(field('开始日期',start),field('结束日期',end));
   const note=el('textarea');note.value=draft.note;note.placeholder='评审结论、阻塞事项、接口约定…';note.maxLength=1000;
   panels.basic.append(field('需求名称',name),pair);
+  const reminder=input('datetime-local',draft.reminder||'');if(nativeBridge)panels.basic.append(field('提醒（可选，本机时间）',reminder));
   const phases=collection('phase',draft.phases),resources=collection('resource',draft.resources);panels.phases.append(phases.node);panels.basic.append(resources.node,taskEditor(draft),field('事项与备忘',note));
   const error=el('p','rf-error');error.setAttribute('role','alert');
   const actions=el('div','rf-form-actions'),submit=el('button','rf-button rf-primary cursor-interaction','保存需求');submit.type='submit';actions.append(button('rf-button','取消',null,()=>cancelEdit()),submit);
   form.append(tabs,panels.basic,panels.phases,error,actions);showTab(initialTab);
   form.addEventListener('invalid',event=>{const panel=event.target.closest('[data-editor-panel]');if(panel)showTab(panel.dataset.editorPanel);const disclosure=event.target.closest('details');if(disclosure)disclosure.open=true;},true);
-  form.addEventListener('submit',e=>{
-   e.preventDefault();if(!validateForm(form))return;
-   if(!name.value.trim()){showTab('basic');error.textContent='请填写需求名称。';return;}
-   if(end.value<start.value){showTab('basic');error.textContent='结束日期不能早于开始日期。';return;}
+  async function submitDraft(){
+   if(saving)return false;if(!validateForm(form))return false;
+   if(!name.value.trim()){showTab('basic');error.textContent='请填写需求名称。';return false;}
+   if(nativeBridge&&reminder.value&&reminder.value!==(existing?.reminder??'')&&new Date(reminder.value).getTime()<=Date.now()){showTab('basic');error.textContent='提醒时间需要晚于当前时间。';reminder.focus();return false;}
+   if(end.value<start.value){showTab('basic');error.textContent='结束日期不能早于开始日期。';return false;}
    const phaseItems=phases.read().sort((a,b)=>a.start.localeCompare(b.start)),resourceItems=resources.read();
-   if(phaseItems.some(p=>!p.name||p.start<start.value||p.end>end.value||p.end<p.start)){showTab('phases');error.textContent='阶段需要填写名称，且日期须落在需求周期内。';return;}
-   if(phaseItems.some((p,i)=>i>0&&p.start<=phaseItems[i-1].end)){showTab('phases');error.textContent='阶段日期存在重叠，请调整后保存。';return;}
-   const message=resourceError(resourceItems);if(message){showTab('basic');error.textContent=message;return;}
-   Object.assign(draft,{title:name.value.trim(),short:name.value.trim(),start:start.value,end:end.value,phases:phaseItems,resources:resourceItems,tasks:Array.from(form.querySelectorAll('.rf-task-edit input[type=text]'),x=>x.value.trim()),done:Array.from(form.querySelectorAll('.rf-task-edit input[type=checkbox]'),x=>x.checked),note:note.value.trim()});
-   try{Object.assign(draft,Model.requirement(draft));}catch(issue){error.textContent=issue.message;return;}
+   if(phaseItems.some(p=>!p.name||p.start<start.value||p.end>end.value||p.end<p.start)){showTab('phases');error.textContent='阶段需要填写名称，且日期须落在需求周期内。';return false;}
+   if(phaseItems.some((p,i)=>i>0&&p.start<=phaseItems[i-1].end)){showTab('phases');error.textContent='阶段日期存在重叠，请调整后保存。';return false;}
+   const message=resourceError(resourceItems);if(message){showTab('basic');error.textContent=message;return false;}
+   Object.assign(draft,{title:name.value.trim(),short:name.value.trim(),start:start.value,end:end.value,phases:phaseItems,resources:resourceItems,reminder:nativeBridge?(reminder.value||null):draft.reminder??null,tasks:Array.from(form.querySelectorAll('.rf-task-edit input[type=text]'),x=>x.value.trim()),done:Array.from(form.querySelectorAll('.rf-task-edit input[type=checkbox]'),x=>x.checked),note:note.value.trim()});
+   try{Object.assign(draft,Model.requirement(draft));}catch(issue){error.textContent=issue.message;return false;}
    const next=existing?requirements.map(r=>r.id===id?draft:r):[...requirements,draft],previousAnchor=state.anchor;if(!existing)state.anchor=draft.start;
-   if(!save(next)){state.anchor=previousAnchor;error.textContent='保存失败，更改仍保留在编辑器中。请检查上方提示后重试。';return;}requirements=next;
-   editor=null;clearDraftPreview();render();detail(draft.id,undefined,true);get('rf-feedback').textContent='已保存：'+draft.title+' · '+format(draft.start)+'—'+format(draft.end);if(pendingAction){const action=pendingAction;pendingAction=null;get('rf-discard').close();action();}
-  });
-  get('rf-panel').append(form);syncDraftPreview();const fingerprint=()=>JSON.stringify(Array.from(form.querySelectorAll('input,textarea'),control=>[control.type,control.value,control.checked]));const original=fingerprint();editor={form,isDirty:()=>fingerprint()!==original,cancel:()=>existing?detail(id,undefined,true):closePanel(true)};if(initialTab==='phases')tabButtons.phases.focus({preventScroll:true});else name.focus({preventScroll:true});
+   setSaving(true);const ok=await save(next);setSaving(false);if(!ok){state.anchor=previousAnchor;error.textContent='保存失败，更改仍保留在编辑器中。请检查上方提示后重试。';return false;}requirements=next;
+   editor=null;clearDraftPreview();render();detail(draft.id,undefined,true);get('rf-feedback').textContent='已保存：'+draft.title+' · '+format(draft.start)+'—'+format(draft.end);if(pendingAction){const action=pendingAction;pendingAction=null;get('rf-discard').close();action();}return true;
+  }
+  form.addEventListener('submit',event=>{event.preventDefault();void submitDraft();});
+  get('rf-panel').append(form);syncDraftPreview();const fingerprint=()=>JSON.stringify(Array.from(form.querySelectorAll('input,textarea'),control=>[control.type,control.value,control.checked]));const original=fingerprint();editor={form,submit:submitDraft,isDirty:()=>fingerprint()!==original,cancel:()=>existing?detail(id,undefined,true):closePanel(true)};if(initialTab==='phases')tabButtons.phases.focus({preventScroll:true});else name.focus({preventScroll:true});
  }
- function mayLeave(action){if(!editor?.isDirty())return true;pendingAction=action;const dialog=get('rf-discard');if(!dialog.open)dialog.showModal();return false;}
+ function setSaving(value){saving=value;root.setAttribute('aria-busy',String(value));get('rf-panel').inert=value;for(const id of ['rf-new','rf-prev','rf-next','rf-close','rf-undo'])get(id).disabled=value;const submit=editor?.form.querySelector('[type=submit]');if(submit){submit.disabled=value;submit.textContent=value?'正在保存…':'保存需求';}}
+ function mayLeave(action){if(saving)return false;if(!editor?.isDirty())return true;pendingAction=action;const dialog=get('rf-discard');if(!dialog.open)dialog.showModal();return false;}
  function cancelEdit(){const action=editor?.cancel;if(action&&mayLeave(action))action();}
  get('rf-discard-keep').addEventListener('click',()=>{pendingAction=null;get('rf-discard').close();});
  get('rf-discard').addEventListener('cancel',()=>{pendingAction=null;});
  get('rf-discard-drop').addEventListener('click',()=>{const action=pendingAction;pendingAction=null;editor=null;get('rf-discard').close();action?.();});
- get('rf-discard-save').addEventListener('click',()=>{get('rf-discard').close();editor?.form.requestSubmit();if(pendingAction)pendingAction=null;});
+ get('rf-discard-save').addEventListener('click',async()=>{get('rf-discard').close();const ok=await editor?.submit();if(!ok)pendingAction=null;});
  window.addEventListener('beforeunload',event=>{if(editor?.isDirty()){event.preventDefault();event.returnValue='';}});
  function taskEditor(draft){const section=el('section','rf-editor-section'),heading=el('div','rf-heading'),list=el('div');heading.append(el('h3','','工作事项'),button('rf-text-button','添加事项',null,()=>append('',false,true)));section.append(heading,list);
   function append(text,done,focus=false){const row=el('div','rf-task-edit'),check=input('checkbox'),name=input('text',text,'可验收的具体事项');check.checked=done;check.setAttribute('aria-label','事项已完成');name.setAttribute('aria-label','事项内容');name.required=true;name.maxLength=200;row.append(check,name,button('rf-remove','移除','移除此事项',()=>{const next=row.nextElementSibling?.querySelector('input[type=text]')||row.previousElementSibling?.querySelector('input[type=text]');row.remove();(next||heading.querySelector('button')).focus();}));list.append(row);if(focus)name.focus();}
   draft.tasks.forEach((text,i)=>append(text,draft.done[i]));return section;
  }
- function deleteRequirement(id){const item=req(id);if(!item)return;const next=requirements.filter(r=>r.id!==id);if(!save(next))return;requirements=next;deleted=structuredClone(item);closePanel(true);render();get('rf-toast-text').textContent='已删除“'+item.title+'”';get('rf-toast').hidden=false;}
- get('rf-undo').addEventListener('click',()=>{if(!deleted||req(deleted.id))return;const next=[...requirements,deleted];if(!save(next))return;const id=deleted.id;requirements=next;state.anchor=deleted.start;deleted=null;get('rf-toast').hidden=true;render();detail(id);});
- function shiftMonth(delta){const d=parse(state.anchor),next=iso(new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+delta,1,12)));if(!validDate(next))return;state.anchor=next;render();save();}
- function command(name){if(get('rf-discard').open)return;if(name==='new')edit();else if(name==='save')editor?.form.requestSubmit();else if(name==='close')closePanel();else if(name==='previous')shiftMonth(-1);else if(name==='next')shiftMonth(1);}
- window.CalendarApp={command,hasUnsavedChanges:()=>!!editor?.isDirty()};
+ async function deleteRequirement(id){if(saving)return;const item=req(id);if(!item)return;const next=requirements.filter(r=>r.id!==id);setSaving(true);const ok=await save(next);setSaving(false);if(!ok)return;requirements=next;deleted=structuredClone(item);closePanel(true);render();get('rf-toast-text').textContent='已删除“'+item.title+'”';get('rf-toast').hidden=false;}
+ get('rf-undo').addEventListener('click',async()=>{if(saving||!deleted||req(deleted.id))return;const next=[...requirements,deleted],previous=state.anchor;state.anchor=deleted.start;setSaving(true);const ok=await save(next);setSaving(false);if(!ok){state.anchor=previous;return;}const id=deleted.id;requirements=next;deleted=null;get('rf-toast').hidden=true;render();detail(id);});
+ async function shiftMonth(delta){if(saving)return;const d=parse(state.anchor),next=iso(new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+delta,1,12)));if(!validDate(next))return;state.anchor=next;render();await save();}
+ async function command(name){if(saving||get('rf-discard').open)return false;if(name==='new')edit();else if(name==='save')return editor?await editor.submit():true;else if(name==='close')closePanel();else if(name==='previous')await shiftMonth(-1);else if(name==='next')await shiftMonth(1);}
+ window.CalendarApp={command,setReminderIssue,openRequirement(id){const item=req(id);if(!item)return false;const action=()=>{state.anchor=item.start;render();detail(id,undefined,true);};if(mayLeave(action))action();return true;},hasUnsavedChanges:()=>saving||!!editor?.isDirty(),isSaving:()=>saving,exportSnapshot:()=>JSON.stringify(Model.snapshot({version:Model.VERSION,anchor:state.anchor,requirements})),async restoreSnapshot(raw){if(saving||editor?.isDirty())return false;let next;try{next=Model.snapshot(JSON.parse(raw));}catch(error){showStorageIssue(error.message);return false;}const previous=state.anchor;state.anchor=next.anchor;setSaving(true);const ok=await save(next.requirements,true);setSaving(false);if(!ok){state.anchor=previous;return false;}requirements=next.requirements;deleted=null;get('rf-toast').hidden=true;closePanel(true);render();return true;}};
  get('rf-new').addEventListener('click',()=>command('new'));get('rf-close').addEventListener('click',()=>command('close'));get('rf-prev').addEventListener('click',()=>command('previous'));get('rf-next').addEventListener('click',()=>command('next'));
  window.addEventListener('keydown',event=>{if(event.isComposing||event.defaultPrevented)return;const modifier=event.metaKey||event.ctrlKey;const key=event.key.toLowerCase();if(modifier&&!event.altKey&&['n','s'].includes(key)){event.preventDefault();command(key==='n'?'new':'save');}else if(modifier&&event.altKey&&['arrowleft','arrowright'].includes(key)){event.preventDefault();command(key==='arrowleft'?'previous':'next');}else if(event.key==='Escape'&&!dateSelection&&!get('rf-detail').hidden&&!get('rf-discard').open){event.preventDefault();command('close');}});render();
  const calendar=get('rf-calendar');let dateSelection=null,suppressDateClickUntil=0;
- calendar.addEventListener('keydown',event=>{const cell=event.target.closest('.rf-date');if(!cell||event.metaKey||event.ctrlKey||event.altKey||event.shiftKey)return;const delta={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[event.key];if(!delta)return;event.preventDefault();const date=add(cell.dataset.date,delta);let target=Array.from(calendar.querySelectorAll('.rf-date')).find(x=>x.dataset.date===date);if(!target){state.anchor=date;render();save();target=Array.from(calendar.querySelectorAll('.rf-date')).find(x=>x.dataset.date===date);}target?.focus({preventScroll:true});});
+ calendar.addEventListener('keydown',event=>{const cell=event.target.closest('.rf-date');if(!cell||saving||event.metaKey||event.ctrlKey||event.altKey||event.shiftKey)return;const delta={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[event.key];if(!delta)return;event.preventDefault();const date=add(cell.dataset.date,delta);let target=Array.from(calendar.querySelectorAll('.rf-date')).find(x=>x.dataset.date===date);if(!target){state.anchor=date;render();save();target=Array.from(calendar.querySelectorAll('.rf-date')).find(x=>x.dataset.date===date);}target?.focus({preventScroll:true});});
  function paintDateSelection(range=dateSelection){
   const start=range?(range.start<range.end?range.start:range.end):null;
   const end=range?(range.start>range.end?range.start:range.end):null;
@@ -389,7 +435,7 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
  }
  function clearDateSelection(keepPreview=false){const selection=dateSelection;dateSelection=null;if(keepPreview!==true)paintDateSelection(draftPreview);if(selection?.button.hasPointerCapture(selection.pointerId))selection.button.releasePointerCapture(selection.pointerId);}
  calendar.addEventListener('pointerdown',event=>{
-  const button=event.target.closest?.('.rf-date');if(!button||!calendar.contains(button)||event.button!==0||event.isPrimary===false||editor?.isDirty()||get('rf-discard').open)return;
+  const button=event.target.closest?.('.rf-date');if(!button||!calendar.contains(button)||event.button!==0||event.isPrimary===false||saving||editor?.isDirty()||get('rf-discard').open)return;
   dateSelection={start:button.dataset.date,end:button.dataset.date,pointerId:event.pointerId,button,dragged:false};button.setPointerCapture(event.pointerId);paintDateSelection();
  });
  calendar.addEventListener('pointermove',event=>{

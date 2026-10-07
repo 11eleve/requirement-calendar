@@ -1,0 +1,15 @@
+PASS 26: empty file store starts clean
+PASS 26: full JSON written to an independent file
+PASS 27: previous committed record remains a separate backup
+PASS 26: process restart reloads complete data
+PASS 30: stale window cannot overwrite another window's save
+PASS 30: interprocess lock refuses overlapping writes
+PASS 27: corrupted primary recovers last-good record visibly
+PASS 27: first save archives corrupt bytes rather than losing them
+PASS 27: unrecoverable records are never silently replaced
+PASS 28: explicit validated backup restore repairs the file store
+PASS 27: newer schema blocks downgrade even with an old backup
+PASS 27: real filesystem failure retains committed primary bytes
+PASS 27: retry after filesystem repair succeeds
+PASS 28: invalid imported task state rejected before any write
+14 file-store assertions passed

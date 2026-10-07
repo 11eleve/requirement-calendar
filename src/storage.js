@@ -1,7 +1,7 @@
 (function (scope) {
   'use strict';
   const Model = typeof module !== 'undefined' && module.exports ? require('./model.js') : scope.CalendarModel;
-  const KEY = 'requirement-calendar:state:v5', BACKUP_KEY = KEY + ':last-good';
+  const KEY = 'requirement-calendar:state:v6', BACKUP_KEY = KEY + ':last-good';
   function createStore(storage, options = {}) {
     let blocked = false;
     const decode = value => Model.snapshot(JSON.parse(value));
@@ -21,7 +21,7 @@
             return { data: null, issue: '本地记录无法读取，原始数据已保留。请先恢复备份，再保存更改。' };
           }
         }
-        const legacyKey = options.legacyKey;
+        const legacyKey = storage.getItem('requirement-calendar:state:v5') !== null ? 'requirement-calendar:state:v5' : options.legacyKey;
         if (legacyKey) {
           const legacy = storage.getItem(legacyKey);
           if (legacy !== null) {
@@ -47,7 +47,35 @@
     }
     return { load, save };
   }
-  const api = { KEY, BACKUP_KEY, createStore };
+  function createNativeStore(bridge, legacyStore) {
+    let blocked = false;
+    async function load() {
+      try {
+        const result = await bridge.postMessage({ action: 'load' });
+        if (result.raw !== null) return { data: Model.snapshot(JSON.parse(result.raw)), issue: result.issue };
+        if (result.issue) { blocked = true; return { data: null, issue: result.issue }; }
+        const legacy = legacyStore?.load();
+        if (legacy?.data) {
+          const data = Model.snapshot(legacy.data);
+          await bridge.postMessage({ action: 'save', raw: JSON.stringify(data) });
+          return { data, issue: '已将旧版本机记录迁移到独立数据文件，旧记录仍保留。', migrated: true };
+        }
+        if (legacy?.issue) { blocked = true; return { data: null, issue: legacy.issue }; }
+        return { data: null, issue: null };
+      } catch (error) { blocked = true; return { data: null, issue: '本机数据读取失败：' + error.message }; }
+    }
+    async function save(value, recovery = false) {
+      if (blocked && !recovery) return { ok: false, issue: '本机记录无法安全覆盖，请从备份恢复后重试。' };
+      try {
+        const data = Model.snapshot(value);
+        const result = await bridge.postMessage({ action: 'save', raw: JSON.stringify(data), recovery });
+        blocked = false;
+        return { ok: true, issue: null, reminderIssue: result.reminderIssue || null };
+      } catch (error) { return { ok: false, issue: error.message || '本机文件保存失败，请重试。' }; }
+    }
+    return { load, save };
+  }
+  const api = { KEY, BACKUP_KEY, createStore, createNativeStore };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else scope.CalendarStorage = api;
 })(globalThis);

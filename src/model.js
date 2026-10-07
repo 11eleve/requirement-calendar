@@ -1,7 +1,7 @@
 /* Shared domain rules for the browser and desktop host. No UI or storage side effects. */
 (function (scope) {
   'use strict';
-  const VERSION = 5;
+  const VERSION = 6;
   class ValidationError extends Error {
     constructor(message, path = '') { super(message); this.name = 'ValidationError'; this.path = path; }
   }
@@ -25,6 +25,11 @@
   const days = (start, end) => Math.round((parse(end) - parse(start)) / 86400000);
   const localDate = (date = new Date()) => [String(date.getFullYear()).padStart(4, '0'), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
   const format = value => Number(value.slice(5, 7)) + '.' + Number(value.slice(8));
+  function validReminder(value) {
+    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value) || !validDate(value.slice(0,10))) return false;
+    const date = new Date(value);
+    return Number.isFinite(date.getTime()) && localDate(date) + 'T' + String(date.getHours()).padStart(2,'0') + ':' + String(date.getMinutes()).padStart(2,'0') === value;
+  }
   function newId(crypto = scope.crypto) {
     if (crypto?.randomUUID) return crypto.randomUUID();
     if (!crypto?.getRandomValues) throw new Error('当前运行环境不支持安全生成需求标识。');
@@ -70,18 +75,20 @@
       return { name, type, url, icon: url ? iconFor(url, type) : (typeof resource.icon === 'string' ? resource.icon : iconFor('', type)) };
     });
     if (!Array.isArray(value.tasks) || !value.tasks.every(task => typeof task === 'string' && task.trim()) || !Array.isArray(value.done) || value.done.length !== value.tasks.length || !value.done.every(done => typeof done === 'boolean')) throw new ValidationError('事项与完成状态不一致。', '事项');
-    return { id, title, short: title, tone: ['', 'blue', 'green'].includes(value.tone) ? value.tone : '', start: value.start, end: value.end, phases, resources, tasks: value.tasks.map(task => task.trim()), done: [...value.done], note: text(value.note ?? '', '备忘') };
+    const reminder = value.reminder ?? null;
+    if (reminder !== null && !validReminder(reminder)) throw new ValidationError('提醒时间无效。', '提醒');
+    return { id, title, reminder, short: title, tone: ['', 'blue', 'green'].includes(value.tone) ? value.tone : '', start: value.start, end: value.end, phases, resources, tasks: value.tasks.map(task => task.trim()), done: [...value.done], note: text(value.note ?? '', '备忘') };
   }
   function snapshot(value) {
     if (!value || typeof value !== 'object' || Array.isArray(value)) throw new ValidationError('保存的数据格式无效。');
     const source = value.privateContent ?? value;
-    if (![4, VERSION].includes(source.version)) throw new ValidationError('数据版本不受支持，原始数据已保留。');
+    if (![4, 5, VERSION].includes(source.version)) throw new ValidationError('数据版本不受支持，原始数据已保留。');
     if (!validDate(source.anchor) || !Array.isArray(source.requirements)) throw new ValidationError('保存的数据不完整，原始数据已保留。');
     const requirements = source.requirements.map(requirement), ids = new Set(requirements.map(item => item.id));
     if (ids.size !== requirements.length) throw new ValidationError('需求标识重复，无法安全载入数据。');
     return { version: VERSION, anchor: source.anchor, requirements };
   }
-  const api = { VERSION, ValidationError, validDate, parse, iso, add, days, localDate, format, newId, safeURL, iconFor, requirement, snapshot };
+  const api = { VERSION, ValidationError, validDate, parse, iso, add, days, localDate, format, validReminder, newId, safeURL, iconFor, requirement, snapshot };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else scope.CalendarModel = api;
 })(globalThis);
