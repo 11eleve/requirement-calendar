@@ -80,6 +80,14 @@ test('10: corrupted records recover from last-good data; unrecoverable data bloc
   assert.equal(protectedStore.load().data, null); assert.equal(protectedStore.save(snapshot()).ok, false); assert.equal(broken.getItem(Storage.KEY), '{broken');
   const future = memory({ [Storage.KEY]: JSON.stringify({ ...snapshot(), version: 999 }) }), futureStore = Storage.createStore(future);
   assert.equal(futureStore.load().data, null); assert.equal(futureStore.save(snapshot()).ok, false);
+  const newer=memory({[Storage.KEY]:JSON.stringify({...snapshot(),version:999}),[Storage.BACKUP_KEY]:JSON.stringify(snapshot())}),guarded=Storage.createStore(newer);
+  assert.equal(guarded.load().data,null);assert.equal(guarded.save(snapshot()).ok,false);
+  assert.equal(store.save(snapshot()).ok,true);
+  assert.ok([...database.data.entries()].some(([key,value])=>key.startsWith(Storage.KEY+':preserved:')&&value==='{broken'));
+  const original=JSON.stringify(snapshot()),backupFailure=memory({[Storage.KEY]:original}),base=backupFailure.setItem;
+  backupFailure.setItem=(key,value)=>{if(key===Storage.BACKUP_KEY)throw new Error('quota');base(key,value);};
+  assert.equal(Storage.createStore(backupFailure).save(snapshot([requirement({title:'不得覆盖'})])).ok,false);
+  assert.equal(backupFailure.getItem(Storage.KEY),original);
 });
 
 test('29: v5 browser records migrate to a native file through the bridge without deleting originals', async () => {
@@ -104,4 +112,36 @@ test('32: optional local reminder validates real wall time, rejects DST gaps, an
     assert.equal(Model.requirement(requirement({reminder:'2026-10-20T09:00'})).reminder,'2026-10-20T09:00');
     assert.equal(Model.snapshot(snapshot()).version,6);
   } finally {if(before===undefined)delete process.env.TZ;else process.env.TZ=before;}
+});
+
+test('37: month navigation and grids retain early years, leap days, six weeks, and supported boundaries', () => {
+  assert.equal(Model.monthOffset('0099-12-31', 1), '0100-01-01');
+  assert.equal(Model.monthOffset('0001-01-01', -1), null);
+  assert.equal(Model.monthOffset('9999-12-31', 1), null);
+  assert.deepEqual(Model.monthGrid('0001-01-01'), { first: '0001-01-01', last: '0001-01-31', start: '0001-01-01', count: 5 });
+  assert.equal(Model.monthGrid('2028-02-29').last, '2028-02-29');
+  assert.equal(Model.monthGrid('2026-03-31').count, 6);
+  assert.equal(Model.monthGrid('9999-12-31').last, '9999-12-31');
+  assert.throws(() => Model.add('0001-01-01', -1));
+  assert.throws(() => Model.add('9999-12-31', 1));
+});
+
+test('38: invisible history cannot inflate visible lanes and overlapping requirements never share a lane', () => {
+  const history=Array.from({length:40},(_,i)=>({id:'old-'+i,start:'2025-01-01',end:'2025-02-01'}));
+  const visible=[{id:'long',start:'2025-02-01',end:'2026-11-01'},{id:'__proto__',start:'2026-10-01',end:'2026-10-07'},{id:'later',start:'2026-10-08',end:'2026-10-31'}];
+  const {mapping,count}=Model.allocateLanes([...history,...visible],'2026-09-28','2026-11-01');
+  assert.equal(count,2);assert.equal(Object.keys(mapping).length,3);
+  assert.notEqual(mapping.long,mapping.__proto__);
+  assert.equal(mapping.__proto__,mapping.later);
+  for(const a of visible)for(const b of visible)if(a!==b&&a.start<=b.end&&a.end>=b.start)assert.notEqual(mapping[a.id],mapping[b.id]);
+});
+
+test('44–45: programmer notes and long resource links survive an actual storage round trip without truncation', () => {
+  const note='\n    function example() {\n\treturn 1;\n    }\n\n'+('    // review details\n'.repeat(150))+'  ';
+  const url='https://example.com/design?signature='+('a'.repeat(4096))+'&page=2';
+  const store=Storage.createStore(memory());
+  assert.equal(store.save(snapshot([requirement({note,resources:[{name:'签名资料',type:'设计稿',url}]})])).ok,true);
+  const item=store.load().data.requirements[0];
+  assert.equal(item.note,note);assert.equal(item.resources[0].url,url);
+  assert.throws(()=>Model.requirement(requirement({note:123})),/备忘/);
 });

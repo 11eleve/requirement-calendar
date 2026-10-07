@@ -1,0 +1,2 @@
+23: native external-link policy passed 8 cases
+

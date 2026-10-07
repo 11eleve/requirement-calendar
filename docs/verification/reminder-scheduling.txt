@@ -10,4 +10,5 @@ PASS 35: individual scheduling errors are reported accurately
 PASS 35: failed updates cannot leave a stale old reminder
 PASS 34: notification carries the exact requirement identity
 PASS 32: nonexistent DST wall time is rejected
-12 reminder assertions passed; no system permission requested or real notification sent
+PASS 35: system calendar preference cannot reinterpret Gregorian reminder years
+13 reminder assertions passed; no system permission requested or real notification sent

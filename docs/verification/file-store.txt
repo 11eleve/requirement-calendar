@@ -11,5 +11,6 @@ PASS 28: explicit validated backup restore repairs the file store
 PASS 27: newer schema blocks downgrade even with an old backup
 PASS 27: real filesystem failure retains committed primary bytes
 PASS 27: retry after filesystem repair succeeds
+PASS 28: pre-restore records remain archived after subsequent saves
 PASS 28: invalid imported task state rejected before any write
-14 file-store assertions passed
+15 file-store assertions passed

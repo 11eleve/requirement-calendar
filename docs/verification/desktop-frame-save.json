@@ -1,0 +1,17 @@
+{
+  "ok" : true,
+  "result" : {
+    "saved" : {
+      "fullScreenAvailable" : true,
+      "height" : 700,
+      "menus" : [
+        "需求日历",
+        "文件",
+        "编辑",
+        "显示",
+        "窗口"
+      ],
+      "width" : 980
+    }
+  }
+}

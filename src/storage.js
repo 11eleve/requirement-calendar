@@ -13,6 +13,10 @@
         if (raw !== null) {
           try { return { data: decode(raw), issue: null }; }
           catch {
+            try {
+              const parsed=JSON.parse(raw), source=parsed?.privateContent??parsed;
+              if(Number.isInteger(source?.version)&&source.version>Model.VERSION){blocked=true;return {data:null,issue:'数据来自更高版本，已阻止旧版覆盖。请升级应用。'};}
+            } catch {}
             const backup = storage.getItem(BACKUP_KEY);
             if (backup !== null) {
               try { return { data: decode(backup), issue: '已从上一次有效备份恢复；原始记录仍保留。' }; } catch {}
@@ -37,7 +41,8 @@
       try {
         const content = JSON.stringify(Model.snapshot(value)), previous = storage.getItem(KEY);
         if (previous !== null) {
-          try { decode(previous); storage.setItem(BACKUP_KEY, previous); } catch {}
+          let valid=true;try { decode(previous); } catch { valid=false; }
+          storage.setItem(valid?BACKUP_KEY:KEY+':preserved:'+Model.newId(),previous);
         }
         storage.setItem(KEY, content);
         return { ok: true, issue: null };

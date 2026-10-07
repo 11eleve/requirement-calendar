@@ -39,6 +39,9 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
         if verifyScript == nil && ProcessInfo.processInfo.environment["CALENDAR_EPHEMERAL"] != "1" { UNUserNotificationCenter.current().delegate = self }
         let config = WKWebViewConfiguration()
         if verifyScript == nil || ProcessInfo.processInfo.environment["CALENDAR_VERIFY_BROWSER_STORAGE"] != "1" { config.userContentController.addScriptMessageHandler(self, contentWorld: .page, name: "calendar") }
+        if (verifyScript != nil && ProcessInfo.processInfo.environment["CALENDAR_VERIFY_EMPTY"] != "1") || ProcessInfo.processInfo.environment["CALENDAR_DEMO"] == "1" {
+            config.userContentController.addUserScript(WKUserScript(source: "window.__calendarDemo=true;", injectionTime: .atDocumentStart, forMainFrameOnly: true))
+        }
         config.userContentController.addUserScript(WKUserScript(source: "document.documentElement.classList.add('native');", injectionTime: .atDocumentEnd, forMainFrameOnly: true))
         // Verification runs never touch the user's persisted application data.
         if verifyScript != nil || ProcessInfo.processInfo.environment["CALENDAR_EPHEMERAL"] == "1" { config.websiteDataStore = .nonPersistent() }
@@ -51,8 +54,12 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
         window.contentView = webView
         window.delegate = self
         window.isReleasedWhenClosed = false
-        if verifyScript == nil { window.setFrameAutosaveName("RequirementCalendarWindow") }
-        window.center()
+        let isolated = verifyScript != nil || ProcessInfo.processInfo.environment["CALENDAR_EPHEMERAL"] == "1"
+        let frameName = isolated ? (verifyScript != nil ? ProcessInfo.processInfo.environment["CALENDAR_VERIFY_FRAME_NAME"] : nil) : "RequirementCalendarWindow"
+        if let frameName { window.setFrameAutosaveName(frameName); if !window.setFrameUsingName(frameName) { window.center() } }
+        else { window.center() }
+        if let appearance = ProcessInfo.processInfo.environment["CALENDAR_VERIFY_APPEARANCE"], verifyScript != nil { window.appearance = NSAppearance(named: appearance == "dark" ? .darkAqua : .aqua) }
+        window.collectionBehavior.insert(.fullScreenPrimary)
         window.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
         webView.loadFileURL(entry, allowingReadAccessTo: entry.deletingLastPathComponent())
@@ -84,8 +91,9 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
         main.addItem(file)
         let edit = NSMenuItem()
         let editMenu = NSMenu(title: "编辑")
-        for (title, action, key) in [("撤销", Selector(("undo:")), "z"), ("重做", Selector(("redo:")), "Z"), ("剪切", #selector(NSText.cut(_:)), "x"), ("拷贝", #selector(NSText.copy(_:)), "c"), ("粘贴", #selector(NSText.paste(_:)), "v"), ("全选", #selector(NSText.selectAll(_:)), "a")] {
-            editMenu.addItem(withTitle: title, action: action, keyEquivalent: key)
+        for (title, action, key) in [("撤销", #selector(performUndo), "z"), ("重做", Selector(("redo:")), "Z"), ("剪切", #selector(NSText.cut(_:)), "x"), ("拷贝", #selector(NSText.copy(_:)), "c"), ("粘贴", #selector(NSText.paste(_:)), "v"), ("全选", #selector(NSText.selectAll(_:)), "a")] {
+            let item = editMenu.addItem(withTitle: title, action: action, keyEquivalent: key)
+            if action == #selector(performUndo) { item.target = self }
         }
         edit.submenu = editMenu
         main.addItem(edit)
@@ -96,6 +104,9 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
             item.keyEquivalentModifierMask = [.command, .option]
             item.target = self
         }
+        viewMenu.addItem(.separator())
+        let fullScreen = viewMenu.addItem(withTitle: "进入全屏", action: #selector(NSWindow.toggleFullScreen(_:)), keyEquivalent: "f")
+        fullScreen.keyEquivalentModifierMask = [.command,.control]
         view.submenu = viewMenu
         main.addItem(view)
         let windowItem = NSMenuItem()
@@ -128,6 +139,18 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
                     let issue = await reminders.reconcile(snapshot, requestPermission: true)
                     replyHandler(["ok": true, "reminderIssue": issue as Any? ?? NSNull()], nil)
                 }
+            case "contextMenu":
+                guard let id = body["id"] as? String else { throw CalendarDataError(message: "需求标识无效。") }
+                let menu = requirementMenu(id)
+                replyHandler(["items": menu.items.map(\.title)], nil)
+                if verifyScript == nil || ProcessInfo.processInfo.environment["CALENDAR_VERIFY_SHOW_MENUS"] == "1" { DispatchQueue.main.async { menu.popUp(positioning: nil, at: NSEvent.mouseLocation, in: nil) } }
+            case "verifyWindow":
+                guard verifyScript != nil else { replyHandler(nil, "仅在隔离回归中可用。"); return }
+                if let name = ProcessInfo.processInfo.environment["CALENDAR_VERIFY_FRAME_NAME"], body["save"] as? Bool == true {
+                    window.setFrame(NSRect(x: 100,y: 100,width: 980,height: 700), display: true)
+                    window.saveFrame(usingName: name); UserDefaults.standard.synchronize()
+                }
+                replyHandler(["width":window.frame.width,"height":window.frame.height,"fullScreenAvailable":window.collectionBehavior.contains(.fullScreenPrimary),"menus":NSApp.mainMenu?.items.compactMap { $0.submenu?.title } ?? []], nil)
             case "verifyReminders":
                 guard verifyScript != nil, let scheduler = notificationScheduler as? IsolatedNotificationScheduler else { replyHandler(nil, "仅在隔离回归中可用。"); return }
                 replyHandler(["ids": Array(scheduler.plans.keys), "permissionRequests": scheduler.requests], nil)
@@ -135,7 +158,10 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
             }
         } catch { replyHandler(nil, error.localizedDescription) }
     }
-    func applicationDidBecomeActive(_ notification: Notification) { if dataLoaded { refreshReminders() } }
+    func applicationDidBecomeActive(_ notification: Notification) { if dataLoaded {
+        webView.callAsyncJavaScript("await window.CalendarReady; window.CalendarApp.refreshDate()", arguments: [:], in: nil, in: .page, completionHandler: nil)
+        refreshReminders()
+    } }
     func refreshReminders() {
         let snapshot = latestRequirements
         Task { @MainActor in
@@ -196,6 +222,26 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
             }
         }
     }
+    func requirementMenu(_ id: String) -> NSMenu {
+        let menu = NSMenu(title: "需求")
+        for (title, action) in [("打开详情", #selector(contextOpen(_:))), ("编辑需求", #selector(contextEdit(_:))), ("删除需求", #selector(contextDelete(_:)))] {
+            let item=menu.addItem(withTitle:title,action:action,keyEquivalent:"");item.target=self;item.representedObject=id
+        }
+        return menu
+    }
+    @objc func contextOpen(_ sender: NSMenuItem) { contextCommand("openRequirement", sender) }
+    @objc func contextEdit(_ sender: NSMenuItem) { contextCommand("editRequirement", sender) }
+    @objc func contextDelete(_ sender: NSMenuItem) { contextCommand("deleteRequirement", sender) }
+    func contextCommand(_ name: String, _ sender: NSMenuItem) {
+        guard let id=sender.representedObject as? String else { return }
+        webView.callAsyncJavaScript("return await window.CalendarApp[method](id)", arguments:["method":name,"id":id], in:nil,in:.page,completionHandler:nil)
+    }
+    @objc func performUndo() {
+        webView.callAsyncJavaScript("return await window.CalendarApp.command('undo')",arguments:[:],in:nil,in:.page) { result in
+            if case .success(let handled)=result,handled as? Bool == true { return }
+            NSApp.sendAction(Selector(("undo:")),to:nil,from:nil)
+        }
+    }
     func command(_ value: String) { webView.evaluateJavaScript("window.CalendarApp?.command('\(value)')", completionHandler: nil) }
     @objc func newRequirement() { command("new") }
     @objc func saveRequirement() { command("save") }
@@ -251,6 +297,12 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
     }
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         guard let verifyScript, let verifyOutput else { return }
+        // A test timeout is terminal evidence, not a reason to relaunch the same test.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 45) {
+            let output: [String: Any] = ["ok": false, "error": "WebKit verification exceeded 45 seconds", "script": verifyScript]
+            if let data = try? JSONSerialization.data(withJSONObject: output, options: [.prettyPrinted,.sortedKeys]) { try? data.write(to: URL(fileURLWithPath: verifyOutput), options: .atomic) }
+            exit(1)
+        }
         do {
             let script = "await window.CalendarReady;\n" + (try String(contentsOfFile: verifyScript, encoding: .utf8))
             webView.callAsyncJavaScript(script, arguments: [:], in: nil, in: .page) { result in

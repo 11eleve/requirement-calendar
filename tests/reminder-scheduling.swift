@@ -45,6 +45,9 @@ struct ReminderTests {
         check(plan.requirementID=="one"&&plan.id=="requirement.one","34: notification carries the exact requirement identity")
         var calendar=Calendar(identifier:.gregorian);calendar.timeZone=TimeZone(identifier:"America/Los_Angeles")!
         check(ReminderPlan.make([item("dst","2027-03-14T02:30")],now:now,calendar:calendar).isEmpty,"32: nonexistent DST wall time is rejected")
+        var buddhist=Calendar(identifier:.buddhist);buddhist.timeZone=TimeZone(secondsFromGMT:0)!
+        let localized=ReminderPlan.make([item()],now:now,calendar:buddhist)
+        check(localized.count==1&&localized[0].components.year==2026&&localized[0].components.calendar?.identifier == .gregorian,"35: system calendar preference cannot reinterpret Gregorian reminder years")
         print("\(assertions) reminder assertions passed; no system permission requested or real notification sent")
     }
 }

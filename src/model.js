@@ -25,6 +25,25 @@
   const days = (start, end) => Math.round((parse(end) - parse(start)) / 86400000);
   const localDate = (date = new Date()) => [String(date.getFullYear()).padStart(4, '0'), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
   const format = value => Number(value.slice(5, 7)) + '.' + Number(value.slice(8));
+  function monthOffset(anchor, delta) {
+    if (!Number.isInteger(delta)) throw new ValidationError('月份偏移需要是整数。');
+    const date = parse(anchor); date.setUTCDate(1); date.setUTCMonth(date.getUTCMonth()+delta);
+    const result = iso(date); return validDate(result) ? result : null;
+  }
+  function monthGrid(anchor) {
+    const date = parse(anchor); date.setUTCDate(1); const first=iso(date);
+    const end = new Date(date); end.setUTCMonth(end.getUTCMonth()+1); end.setUTCDate(0); const last=iso(end);
+    const start=add(first,-((date.getUTCDay()+6)%7)),count=Math.ceil((days(start,last)+1)/7);
+    return {first,last,start,count};
+  }
+  function allocateLanes(items, start, end) {
+    const mapping=Object.create(null),ends=[];
+    for (const item of items.filter(item=>item.start<=end&&item.end>=start).sort((a,b)=>a.start.localeCompare(b.start)||a.end.localeCompare(b.end)||a.id.localeCompare(b.id))) {
+      let lane=ends.findIndex(value=>value<item.start);if(lane<0)lane=ends.length;
+      ends[lane]=item.end;mapping[item.id]=lane;
+    }
+    return {mapping,count:ends.length};
+  }
   function validReminder(value) {
     if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value) || !validDate(value.slice(0,10))) return false;
     const date = new Date(value);
@@ -77,7 +96,7 @@
     if (!Array.isArray(value.tasks) || !value.tasks.every(task => typeof task === 'string' && task.trim()) || !Array.isArray(value.done) || value.done.length !== value.tasks.length || !value.done.every(done => typeof done === 'boolean')) throw new ValidationError('事项与完成状态不一致。', '事项');
     const reminder = value.reminder ?? null;
     if (reminder !== null && !validReminder(reminder)) throw new ValidationError('提醒时间无效。', '提醒');
-    return { id, title, reminder, short: title, tone: ['', 'blue', 'green'].includes(value.tone) ? value.tone : '', start: value.start, end: value.end, phases, resources, tasks: value.tasks.map(task => task.trim()), done: [...value.done], note: text(value.note ?? '', '备忘') };
+    return { id, title, reminder, short: title, tone: ['', 'blue', 'green'].includes(value.tone) ? value.tone : '', start: value.start, end: value.end, phases, resources, tasks: value.tasks.map(task => task.trim()), done: [...value.done], note: typeof value.note === 'string' ? value.note : value.note == null ? '' : text(value.note, '备忘') };
   }
   function snapshot(value) {
     if (!value || typeof value !== 'object' || Array.isArray(value)) throw new ValidationError('保存的数据格式无效。');
@@ -88,7 +107,7 @@
     if (ids.size !== requirements.length) throw new ValidationError('需求标识重复，无法安全载入数据。');
     return { version: VERSION, anchor: source.anchor, requirements };
   }
-  const api = { VERSION, ValidationError, validDate, parse, iso, add, days, localDate, format, validReminder, newId, safeURL, iconFor, requirement, snapshot };
+  const api = { VERSION, ValidationError, validDate, parse, iso, add, days, localDate, format, monthOffset, monthGrid, allocateLanes, validReminder, newId, safeURL, iconFor, requirement, snapshot };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else scope.CalendarModel = api;
 })(globalThis);

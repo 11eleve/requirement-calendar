@@ -94,3 +94,17 @@ html.native #req-calendar-refined .rf-phase{font-size:10px;padding:0 6px}
 #req-calendar-refined .rf-reminder-status{margin:0;padding:8px 20px;font-size:12px;color:var(--rf-muted);background:var(--rf-soft);border-bottom:1px solid var(--rf-line)}
 #req-calendar-refined [aria-busy=true]{cursor:progress}
 #req-calendar-refined button:disabled{opacity:.5;cursor:default}
+/* Disclosure affordance stays visible even when the row is collapsed. */
+#req-calendar-refined .rf-item-summary::before{content:'›';display:inline-block;flex:none;width:9px;color:var(--rf-muted);font-size:16px;line-height:1}
+#req-calendar-refined details[open]>.rf-item-summary::before{transform:rotate(90deg)}
+#req-calendar-refined .rf-summary-name{flex:1}
+#req-calendar-refined [aria-invalid=true]{border-color:light-dark(#a33b46,#ffb2be)}
+/* Calendar and inspector scroll independently inside the actual native window. */
+html.native #req-calendar-refined{display:flex;flex-direction:column;height:100vh;min-height:0;overflow:hidden}
+html.native #req-calendar-refined .rf-toolbar,html.native #req-calendar-refined .rf-storage-error,html.native #req-calendar-refined .rf-reminder-status{flex:none}
+html.native #req-calendar-refined .rf-content{flex:1;min-height:0;overflow:hidden}
+html.native #req-calendar-refined .rf-calendar{height:100%;min-height:0;overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
+html.native #req-calendar-refined .rf-week{flex-shrink:0}
+html.native #req-calendar-refined .rf-weekdays{position:sticky;top:0;z-index:3}
+html.native #req-calendar-refined .rf-detail{max-height:100%}
+html.native #req-calendar-refined .rf-date span{scroll-margin-top:48px;scroll-margin-bottom:8px}

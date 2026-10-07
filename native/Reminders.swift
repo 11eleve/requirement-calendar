@@ -8,11 +8,14 @@ struct ReminderPlan: Equatable {
     let components: DateComponents
     static let prefix = "requirement."
     static func make(_ requirements: [[String: Any]], now: Date = Date(), calendar: Calendar = .current) -> [ReminderPlan] {
-        requirements.compactMap { value in
+        // HTML date fields always use Gregorian years, regardless of system calendar.
+        var gregorian=Calendar(identifier:.gregorian);gregorian.timeZone=calendar.timeZone
+        return requirements.compactMap { value in
             guard let id = value["id"] as? String, let title = value["title"] as? String, let raw = value["reminder"] as? String else { return nil }
-            let formatter = DateFormatter(); formatter.locale = Locale(identifier: "en_US_POSIX"); formatter.calendar = calendar; formatter.timeZone = calendar.timeZone; formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"; formatter.isLenient = false
+            let formatter = DateFormatter(); formatter.locale = Locale(identifier: "en_US_POSIX"); formatter.calendar = gregorian; formatter.timeZone = gregorian.timeZone; formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"; formatter.isLenient = false
             guard let date = formatter.date(from: raw), formatter.string(from: date) == raw, date > now else { return nil }
-            let components = calendar.dateComponents([.year,.month,.day,.hour,.minute], from: date)
+            var components = gregorian.dateComponents([.year,.month,.day,.hour,.minute], from: date)
+            components.calendar=gregorian
             return ReminderPlan(id: prefix + id, requirementID: id, title: title, components: components)
         }
     }

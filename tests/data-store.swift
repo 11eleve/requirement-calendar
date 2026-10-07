@@ -50,6 +50,9 @@ struct DataStoreTests {
         try FileManager.default.setAttributes([.posixPermissions:0o700],ofItemAtPath:root.path)
         try failure.save(second)
         check(try Data(contentsOf:store.primary)==second,"27: retry after filesystem repair succeeds")
+        try failure.save(first,recovery:true);try failure.save(second)
+        let restoreArchives=try FileManager.default.contentsOfDirectory(at:root,includingPropertiesForKeys:nil).filter{$0.lastPathComponent.hasPrefix("calendar.before-restore-")}
+        check(try restoreArchives.contains{try Data(contentsOf:$0)==second},"28: pre-restore records remain archived after subsequent saves")
         var invalid=try JSONSerialization.jsonObject(with:first) as! [String:Any];var items=invalid["requirements"] as! [[String:Any]];items[0]["done"]=[1];invalid["requirements"]=items
         do{_=try CalendarDataStore.validate(JSONSerialization.data(withJSONObject:invalid));fatalError("numeric completion must fail")}catch{check(true,"28: invalid imported task state rejected before any write")}
         print("\(passed) file-store assertions passed")

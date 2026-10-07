@@ -1,0 +1,14 @@
+{
+  "ok" : true,
+  "result" : {
+    "checks" : [
+      "48: pointer down produces the range strip",
+      "48: moving across weeks extends the range strip",
+      "48: release outside the calendar cancels creation without changing data",
+      "48: a ghost click following cancelled drag cannot create a requirement",
+      "48: a subsequent deliberate date click still creates a draft",
+      "48: losing window focus cancels a pending gesture"
+    ],
+    "scope" : "synthetic WebKit events with pointer-capture bookkeeping stubbed; trusted mouse release remains a manual gate"
+  }
+}

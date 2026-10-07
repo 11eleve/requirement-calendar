@@ -83,7 +83,10 @@ final class CalendarDataStore {
             let current = try read(primary)
             guard current == observed else { throw CalendarDataError(message: "数据已被另一个窗口修改，未覆盖任何记录。请重新打开应用后再编辑。") }
             if let current {
-                if (try? Self.validate(current)) != nil { try current.write(to: backup, options: .atomic) }
+                if (try? Self.validate(current)) != nil {
+                    if recovery { try current.write(to: directory.appendingPathComponent("calendar.before-restore-\(UUID().uuidString).json"), options: .atomic) }
+                    try current.write(to: backup, options: .atomic)
+                }
                 else { try current.write(to: directory.appendingPathComponent("calendar.preserved-\(UUID().uuidString).json"), options: .atomic) }
             }
             try data.write(to: primary, options: .atomic)
