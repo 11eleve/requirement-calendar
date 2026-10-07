@@ -1,0 +1,152 @@
+
+(()=>{
+ const Model=CalendarModel;
+ const root=document.getElementById('req-calendar-refined'),get=id=>root.querySelector('#'+id),today=Model.localDate();
+ const baseline=[{id:'checkout',title:'结算流程改版',short:'结算改版',tone:'',start:'2026-10-07',end:'2026-11-06',phases:[{name:'评审',start:'2026-10-07',end:'2026-10-08'},{name:'开发',start:'2026-10-09',end:'2026-10-16'},{name:'联调',start:'2026-10-17',end:'2026-10-23'},{name:'测试',start:'2026-10-24',end:'2026-10-30'},{name:'上线',start:'2026-10-31',end:'2026-11-06'}],resources:[{icon:'钉',name:'结算改版 PRD',type:'需求文档',url:''},{icon:'F',name:'Checkout 交互与视觉',type:'设计稿',url:''}],tasks:['确认需求边界与验收标准','实现优惠券选择与金额计算','补齐支付失败恢复逻辑','联调与回归验证'],done:[true,false,false,false],note:'待产品确认：优惠券与余额的扣减顺序。'},{id:'login',title:'登录态异常修复',short:'登录修复',tone:'blue',start:'2026-10-09',end:'2026-10-13',phases:[{name:'排查',start:'2026-10-09',end:'2026-10-10'},{name:'修复',start:'2026-10-11',end:'2026-10-12'},{name:'验证',start:'2026-10-13',end:'2026-10-13'}],resources:[{icon:'钉',name:'登录失效场景整理',type:'问题记录',url:''},{icon:'G',name:'认证模块设计',type:'接口约定',url:''}],tasks:['定位状态不同步','修复与回归验证','发布与观察'],done:[false,false,false],note:'确认自动续期失败后是否强制退出。'},{id:'export',title:'报表导出优化',short:'报表优化',tone:'green',start:'2026-10-19',end:'2026-10-30',phases:[{name:'方案',start:'2026-10-19',end:'2026-10-20'},{name:'开发',start:'2026-10-21',end:'2026-10-26'},{name:'验收',start:'2026-10-27',end:'2026-10-30'}],resources:[{icon:'钉',name:'异步导出说明',type:'需求文档',url:''},{icon:'F',name:'导出任务面板',type:'交互设计',url:''}],tasks:['确认导出规模与边界','实现任务状态展示','联调与验收'],done:[false,false,false],note:'等待后端确认导出任务状态与重试接口。'}];
+ let requirements=structuredClone(baseline),state={view:'month',anchor:today,selected:null,rowHeight:136},lastTrigger=null,draftPreview=null,editor=null,pendingAction=null,deleted=null;
+ const {parse,iso,add,days,format,validDate}=Model,req=id=>requirements.find(r=>r.id===id);
+ const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
+ const button=(cls,text,label,action)=>{const b=el('button',cls+' cursor-interaction',text);b.type='button';if(label)b.setAttribute('aria-label',label);b.addEventListener('click',action);return b;};
+ const field=(label,input)=>{const l=el('label','rf-field');l.append(el('span','',label),input);return l;};
+ const input=(type,value='',placeholder='')=>{const n=el('input');n.type=type;n.value=value;n.placeholder=placeholder;return n;};
+ let storage=null;try{storage=window.localStorage;}catch{}
+ const legacyKey='codex:visualization-widget-state-v2:'+JSON.stringify([window.location.pathname,window.location.search]);
+ const store=CalendarStorage.createStore(storage,{legacyKey});
+ function showStorageIssue(issue){const node=get('rf-storage-error');node.hidden=!issue;node.textContent=issue||'';}
+ const restored=store.load();if(restored.data){requirements=restored.data.requirements;state.anchor=restored.data.anchor;}showStorageIssue(restored.issue);
+ function save(next=requirements){const result=store.save({version:Model.VERSION,anchor:state.anchor,requirements:next});showStorageIssue(result.issue);return result.ok;}
+ function openPanel(label,trigger){if(!root.classList.contains('has-detail'))lastTrigger=trigger??document.activeElement;editor=null;root.classList.add('has-detail');get('rf-detail').hidden=false;get('rf-panel-label').textContent=label;get('rf-panel').replaceChildren();}
+ function closePanel(force=false){if(!force&&!mayLeave(()=>closePanel(true)))return;editor=null;clearDraftPreview();root.classList.remove('has-detail');get('rf-detail').hidden=true;state.selected=null;const target=lastTrigger?.isConnected?lastTrigger:get('rf-new');target.focus({preventScroll:true});}
+ function lanes(){const ends=[],mapping=Object.create(null);for(const r of [...requirements].sort((a,b)=>a.start.localeCompare(b.start)||a.end.localeCompare(b.end))){let lane=ends.findIndex(end=>end<r.start);if(lane<0)lane=ends.length;ends[lane]=r.end;mapping[r.id]=lane;}return {mapping,count:Math.max(2,ends.length)};}
+ function makeWeek(start,allocation){const end=add(start,6),week=el('div','rf-week'),dateGrid=el('div','rf-days'),bars=el('div','rf-bars');for(let i=0;i<7;i++){const date=add(start,i),outside=date.slice(0,7)!==state.anchor.slice(0,7);const dateButton=button('rf-date'+(outside?' outside':''),'',date+' 新建需求',()=>edit(null,date));dateButton.dataset.date=date;dateButton.append(el('span','',String(Number(date.slice(8)))));dateGrid.append(dateButton);}for(const r of requirements){if(r.start>end||r.end<start)continue;const a=r.start<start?start:r.start,b=r.end>end?end:r.end,length=days(a,b)+1;const bar=button('rf-bar '+(r.tone||'')+(r.start<start?' continued-left':'')+(r.end>end?' continued-right':''),'',r.title+'，'+r.start+' 至 '+r.end,e=>detail(r.id,e.currentTarget));bar.style.gridColumn=(days(start,a)+1)+' / span '+length;bar.style.gridRow=String(allocation.mapping[r.id]+1);bar.style.setProperty('--rf-days',length);bar.dataset.tooltip=r.title+' · '+format(r.start)+'—'+format(r.end);bar.append(el('span','rf-bar-title',r.short||r.title));const track=el('span','rf-phases');for(const phase of r.phases){if(phase.start>b||phase.end<a)continue;const pa=phase.start<a?a:phase.start,pb=phase.end>b?b:phase.end;const segment=el('span','rf-phase'+(phase.start<=today&&phase.end>=today?' is-current':''),phase.name);segment.style.gridColumn=(days(a,pa)+1)+' / span '+(days(pa,pb)+1);segment.dataset.tooltip=phase.name+' · '+format(phase.start)+'—'+format(phase.end);track.append(segment);}bar.append(track);bars.append(bar);}week.style.setProperty('--rf-lanes',Math.max(0,...Array.from(bars.children,bar=>Number(bar.style.gridRow)+0)));week.append(dateGrid,bars);return week;}
+ function render(){state.view='month';const calendar=get('rf-calendar');calendar.replaceChildren();root.style.setProperty('--rf-row-height',state.rowHeight+'px');const allocation=lanes();root.style.setProperty('--rf-lanes',allocation.count);const heading=el('div','rf-weekdays'),d=parse(state.anchor);for(const day of ['一','二','三','四','五','六','日'])heading.append(el('span','','周'+day));calendar.append(heading);get('rf-title').textContent=d.getUTCFullYear()+' 年 '+(d.getUTCMonth()+1)+' 月';const first=iso(new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),1,12))),start=add(first,-((parse(first).getUTCDay()+6)%7)),last=iso(new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,0,12))),count=Math.ceil((days(start,last)+1)/7);for(let i=0;i<count;i++)calendar.append(makeWeek(add(start,i*7),allocation));if(draftPreview)paintDateSelection(draftPreview);} 
+ function resourceRow(r){const row=el(r.url?'a':'div','rf-resource-row');if(r.url){row.href=r.url;row.target='_blank';row.rel='noopener noreferrer';}row.append(el('span','rf-resource-icon',r.icon||'文'));const text=el('span','rf-resource-text');text.append(el('strong','',r.name),el('small','',r.type||'资料'));row.append(text);return row;}
+ function detail(id,trigger,force=false){if(!force&&!mayLeave(()=>detail(id,trigger,true)))return;const r=req(id);if(!r)return;clearDraftPreview();state.selected=id;openPanel('需求详情',trigger);const panel=get('rf-panel');panel.append(el('h2','',r.title));const meta=el('div','rf-meta');meta.append(el('span','rf-pill',format(r.start)+' — '+format(r.end)));const phase=r.phases.find(p=>p.start<=today&&p.end>=today);meta.append(el('span','rf-pill',phase?phase.name:today<r.start?'未开始':today>r.end?'计划已结束':'进行中'));panel.append(meta);const columns=el('div','rf-detail-columns');const phases=el('section','rf-section'),ph=el('div','rf-heading');ph.append(el('h3','','阶段安排'),button('rf-text-button','编辑',null,()=>edit(r.id,undefined,undefined,'phases')));phases.append(ph);for(const p of r.phases){const row=el('div','rf-phase-row'+(p.start<=today&&p.end>=today?' current':''));row.append(el('span','',p.name),el('span','rf-muted',format(p.start)+'—'+format(p.end)));phases.append(row);}if(!r.phases.length)phases.append(el('p','rf-note','尚未安排阶段'));columns.append(phases);const resources=el('section','rf-section'),rh=el('div','rf-heading');rh.append(el('h3','','相关资料'),button('rf-text-button','管理',null,()=>editResources(r.id)));resources.append(rh);r.resources.forEach(x=>resources.append(resourceRow(x)));if(!r.resources.length)resources.append(el('p','rf-note','可以添加任意名称和类型的资料'));columns.append(resources);const tasks=el('section','rf-section'),th=el('div','rf-heading'),count=el('span','rf-muted');const progress=()=>count.textContent=r.done.filter(Boolean).length+' / '+r.tasks.length;progress();th.append(el('h3','','工作事项'),count);tasks.append(th);r.tasks.forEach((text,i)=>{const label=el('label','rf-task'),check=input('checkbox');check.checked=!!r.done[i];check.addEventListener('change',()=>{const previous=r.done[i];r.done[i]=check.checked;if(!save()){r.done[i]=previous;check.checked=previous;}progress();});label.append(check,el('span','',text));tasks.append(label);});if(!r.tasks.length)tasks.append(el('p','rf-note','暂无工作事项'));columns.append(tasks);const note=el('section','rf-section');note.append(el('h3','rf-heading','事项与备忘'),el('p','rf-note',r.note||'暂无备忘'));columns.append(note);panel.append(columns);const actions=el('div','rf-section');actions.append(button('rf-button','编辑需求',null,()=>edit(r.id)),button('rf-text-button rf-destructive','删除需求',null,()=>deleteRequirement(r.id)));panel.append(actions);get('rf-close').focus({preventScroll:true});}
+ const iconFor=Model.iconFor;
+ function collection(kind,initial){
+  const section=el('section','rf-editor-section'),head=el('div','rf-heading'),list=el('div'),rows=[];
+  head.append(el('h3','',kind==='phase'?'阶段安排':'相关资料'),button('rf-text-button',kind==='phase'?'添加阶段':'添加资料',null,()=>addItem({},true)));
+  section.append(head,list);
+  function addItem(value={},expand=false){
+   const item=el('div','rf-editor-item'),disclosure=el('details','rf-disclosure'),summary=el('summary','rf-item-summary cursor-interaction'),summaryName=el('span','rf-summary-name'),summaryMeta=el('span','rf-summary-meta'),fields=el('div','rf-item-fields'),name=input('text',value.name||'',kind==='phase'?'例如：评审、开发、联调':'资料名称');
+   name.maxLength=64;name.required=true;const row={item,disclosure,name};summary.append(summaryName,summaryMeta);fields.append(field('名称',name));
+   if(kind==='phase'){
+    row.start=input('date',value.start||'');row.end=input('date',value.end||'');row.start.required=true;row.end.required=true;
+    const pair=el('div','rf-pair');pair.append(field('开始日期',row.start),field('结束日期',row.end));fields.append(pair);
+   }else{
+    row.type=input('text',value.type||'','文档、设计、接口或自定义');row.type.maxLength=32;row.url=input('url',value.url||'','https://…');row.url.maxLength=512;row.originalIcon=value.icon;
+    fields.append(field('类型（可自定义）',row.type),field('链接（可选）',row.url));
+   }
+   const updateSummary=()=>{summaryName.textContent=name.value.trim()||(kind==='phase'?'未命名阶段':'未命名资料');summaryMeta.textContent=kind==='phase'?(row.start.value&&row.end.value?format(row.start.value)+'—'+format(row.end.value):'设置日期'):row.type.value.trim()||'自定义资料';};
+   updateSummary();fields.addEventListener('input',updateSummary);fields.addEventListener('invalid',()=>{disclosure.open=true;},true);
+   disclosure.addEventListener('toggle',()=>{if(disclosure.open)rows.forEach(other=>{if(other!==row)other.disclosure.open=false;});});
+   disclosure.append(summary,fields);item.append(disclosure,button('rf-remove','移除',kind==='phase'?'移除此阶段':'移除此资料',()=>{const index=rows.indexOf(row);item.remove();rows.splice(index,1);(rows[index]?.disclosure.querySelector('summary')||rows[index-1]?.disclosure.querySelector('summary')||head.querySelector('button')).focus();}));rows.push(row);list.append(item);
+   if(expand){rows.forEach(other=>other.disclosure.open=other===row);name.focus({preventScroll:true});}
+  }
+  initial.forEach(value=>addItem(value));
+  return {node:section,read:()=>rows.map(row=>kind==='phase'?{name:row.name.value.trim(),start:row.start.value,end:row.end.value}:{name:row.name.value.trim(),type:row.type.value.trim(),url:row.url.value.trim(),icon:row.url.value?iconFor(row.url.value,row.type.value):row.originalIcon||iconFor('',row.type.value)})};
+ }
+ function resourceError(items){if(items.some(x=>!x.name))return '请填写资料名称。';try{items.forEach(x=>Model.safeURL(x.url));}catch(error){return error.message;}return '';}
+ function validateForm(form){const invalid=Array.from(form.elements).find(control=>control.willValidate&&!control.validity.valid);if(!invalid)return true;const disclosure=invalid.closest('details');if(disclosure)disclosure.open=true;invalid.reportValidity();return false;}
+ function editResources(id){edit(id);}
+ function edit(id=null,date=state.anchor,endDate=date,initialTab='basic',force=false){
+  if(!force&&!mayLeave(()=>edit(id,date,endDate,initialTab,true)))return;
+  const existing=req(id),draft=existing?structuredClone(existing):{id:Model.newId(),title:'',short:'',tone:'',start:date,end:endDate,phases:[],resources:[],tasks:[],done:[],note:''};
+  state.selected=id;openPanel(existing?'编辑需求':'新建需求');
+  const form=el('form','rf-form rf-tabbed-form');form.noValidate=true;
+  const tabs=el('div','rf-editor-tabs'),tabButtons={},panels={},prefix='rf-editor-'+Date.now();tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','需求编辑内容');
+  function showTab(key){for(const name of Object.keys(panels)){panels[name].hidden=name!==key;tabButtons[name].setAttribute('aria-selected',String(name===key));tabButtons[name].tabIndex=name===key?0:-1;}}
+  for(const [key,label] of [['basic','基本信息'],['phases','阶段']]){
+   const tab=button('rf-editor-tab',label,null,()=>showTab(key)),panel=el('div','rf-tab-panel');tab.id=prefix+'-'+key;tab.setAttribute('role','tab');tab.setAttribute('aria-controls',prefix+'-'+key+'-panel');tab.setAttribute('aria-selected',String(key==='basic'));panel.id=prefix+'-'+key+'-panel';panel.dataset.editorPanel=key;panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby',tab.id);tabButtons[key]=tab;panels[key]=panel;tabs.append(tab);
+  }
+  tabs.addEventListener('keydown',event=>{const keys=Object.keys(panels),index=keys.findIndex(key=>tabButtons[key]===event.target);if(index<0)return;let next;if(event.key==='ArrowRight')next=(index+1)%keys.length;else if(event.key==='ArrowLeft')next=(index+keys.length-1)%keys.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=keys.length-1;else return;event.preventDefault();showTab(keys[next]);tabButtons[keys[next]].focus();});
+  const name=input('text',draft.title,'例如：支付结果页改版');name.required=true;name.maxLength=64;
+  const start=input('date',draft.start),end=input('date',draft.end);start.required=true;end.required=true;
+  const syncDraftPreview=()=>updateDraftPreview(start.value,end.value);for(const control of [start,end]){control.addEventListener('input',syncDraftPreview);control.addEventListener('change',syncDraftPreview);}
+  const pair=el('div','rf-pair');pair.append(field('开始日期',start),field('结束日期',end));
+  const note=el('textarea');note.value=draft.note;note.placeholder='评审结论、阻塞事项、接口约定…';note.maxLength=1000;
+  panels.basic.append(field('需求名称',name),pair);
+  const phases=collection('phase',draft.phases),resources=collection('resource',draft.resources);panels.phases.append(phases.node);panels.basic.append(resources.node,taskEditor(draft),field('事项与备忘',note));
+  const error=el('p','rf-error');error.setAttribute('role','alert');
+  const actions=el('div','rf-form-actions'),submit=el('button','rf-button rf-primary cursor-interaction','保存需求');submit.type='submit';actions.append(button('rf-button','取消',null,()=>cancelEdit()),submit);
+  form.append(tabs,panels.basic,panels.phases,error,actions);showTab(initialTab);
+  form.addEventListener('invalid',event=>{const panel=event.target.closest('[data-editor-panel]');if(panel)showTab(panel.dataset.editorPanel);const disclosure=event.target.closest('details');if(disclosure)disclosure.open=true;},true);
+  form.addEventListener('submit',e=>{
+   e.preventDefault();if(!validateForm(form))return;
+   if(!name.value.trim()){showTab('basic');error.textContent='请填写需求名称。';return;}
+   if(end.value<start.value){showTab('basic');error.textContent='结束日期不能早于开始日期。';return;}
+   const phaseItems=phases.read().sort((a,b)=>a.start.localeCompare(b.start)),resourceItems=resources.read();
+   if(phaseItems.some(p=>!p.name||p.start<start.value||p.end>end.value||p.end<p.start)){showTab('phases');error.textContent='阶段需要填写名称，且日期须落在需求周期内。';return;}
+   if(phaseItems.some((p,i)=>i>0&&p.start<=phaseItems[i-1].end)){showTab('phases');error.textContent='阶段日期存在重叠，请调整后保存。';return;}
+   const message=resourceError(resourceItems);if(message){showTab('basic');error.textContent=message;return;}
+   Object.assign(draft,{title:name.value.trim(),short:name.value.trim(),start:start.value,end:end.value,phases:phaseItems,resources:resourceItems,tasks:Array.from(form.querySelectorAll('.rf-task-edit input[type=text]'),x=>x.value.trim()),done:Array.from(form.querySelectorAll('.rf-task-edit input[type=checkbox]'),x=>x.checked),note:note.value.trim()});
+   try{Object.assign(draft,Model.requirement(draft));}catch(issue){error.textContent=issue.message;return;}
+   const next=existing?requirements.map(r=>r.id===id?draft:r):[...requirements,draft],previousAnchor=state.anchor;if(!existing)state.anchor=draft.start;
+   if(!save(next)){state.anchor=previousAnchor;error.textContent='保存失败，更改仍保留在编辑器中。请检查上方提示后重试。';return;}requirements=next;
+   editor=null;clearDraftPreview();render();detail(draft.id,undefined,true);get('rf-feedback').textContent='已保存：'+draft.title+' · '+format(draft.start)+'—'+format(draft.end);if(pendingAction){const action=pendingAction;pendingAction=null;get('rf-discard').close();action();}
+  });
+  get('rf-panel').append(form);syncDraftPreview();const fingerprint=()=>JSON.stringify(Array.from(form.querySelectorAll('input,textarea'),control=>[control.type,control.value,control.checked]));const original=fingerprint();editor={form,isDirty:()=>fingerprint()!==original,cancel:()=>existing?detail(id,undefined,true):closePanel(true)};if(initialTab==='phases')tabButtons.phases.focus({preventScroll:true});else name.focus({preventScroll:true});
+ }
+ function mayLeave(action){if(!editor?.isDirty())return true;pendingAction=action;const dialog=get('rf-discard');if(!dialog.open)dialog.showModal();return false;}
+ function cancelEdit(){const action=editor?.cancel;if(action&&mayLeave(action))action();}
+ get('rf-discard-keep').addEventListener('click',()=>{pendingAction=null;get('rf-discard').close();});
+ get('rf-discard').addEventListener('cancel',()=>{pendingAction=null;});
+ get('rf-discard-drop').addEventListener('click',()=>{const action=pendingAction;pendingAction=null;editor=null;get('rf-discard').close();action?.();});
+ get('rf-discard-save').addEventListener('click',()=>{get('rf-discard').close();editor?.form.requestSubmit();if(pendingAction)pendingAction=null;});
+ window.addEventListener('beforeunload',event=>{if(editor?.isDirty()){event.preventDefault();event.returnValue='';}});
+ function taskEditor(draft){const section=el('section','rf-editor-section'),heading=el('div','rf-heading'),list=el('div');heading.append(el('h3','','工作事项'),button('rf-text-button','添加事项',null,()=>append('',false,true)));section.append(heading,list);
+  function append(text,done,focus=false){const row=el('div','rf-task-edit'),check=input('checkbox'),name=input('text',text,'可验收的具体事项');check.checked=done;check.setAttribute('aria-label','事项已完成');name.setAttribute('aria-label','事项内容');name.required=true;name.maxLength=200;row.append(check,name,button('rf-remove','移除','移除此事项',()=>{const next=row.nextElementSibling?.querySelector('input[type=text]')||row.previousElementSibling?.querySelector('input[type=text]');row.remove();(next||heading.querySelector('button')).focus();}));list.append(row);if(focus)name.focus();}
+  draft.tasks.forEach((text,i)=>append(text,draft.done[i]));return section;
+ }
+ function deleteRequirement(id){const item=req(id);if(!item)return;const next=requirements.filter(r=>r.id!==id);if(!save(next))return;requirements=next;deleted=structuredClone(item);closePanel(true);render();get('rf-toast-text').textContent='已删除“'+item.title+'”';get('rf-toast').hidden=false;}
+ get('rf-undo').addEventListener('click',()=>{if(!deleted||req(deleted.id))return;const next=[...requirements,deleted];if(!save(next))return;const id=deleted.id;requirements=next;state.anchor=deleted.start;deleted=null;get('rf-toast').hidden=true;render();detail(id);});
+ function shiftMonth(delta){const d=parse(state.anchor),next=iso(new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+delta,1,12)));if(!validDate(next))return;state.anchor=next;render();save();}
+ function command(name){if(get('rf-discard').open)return;if(name==='new')edit();else if(name==='save')editor?.form.requestSubmit();else if(name==='close')closePanel();else if(name==='previous')shiftMonth(-1);else if(name==='next')shiftMonth(1);}
+ window.CalendarApp={command,hasUnsavedChanges:()=>!!editor?.isDirty()};
+ get('rf-new').addEventListener('click',()=>command('new'));get('rf-close').addEventListener('click',()=>command('close'));get('rf-prev').addEventListener('click',()=>command('previous'));get('rf-next').addEventListener('click',()=>command('next'));
+ window.addEventListener('keydown',event=>{if(event.isComposing||event.defaultPrevented)return;const modifier=event.metaKey||event.ctrlKey;const key=event.key.toLowerCase();if(modifier&&!event.altKey&&['n','s'].includes(key)){event.preventDefault();command(key==='n'?'new':'save');}else if(modifier&&event.altKey&&['arrowleft','arrowright'].includes(key)){event.preventDefault();command(key==='arrowleft'?'previous':'next');}else if(event.key==='Escape'&&!dateSelection&&!get('rf-detail').hidden&&!get('rf-discard').open){event.preventDefault();command('close');}});render();
+ const calendar=get('rf-calendar');let dateSelection=null,suppressDateClickUntil=0;
+ calendar.addEventListener('keydown',event=>{const cell=event.target.closest('.rf-date');if(!cell||event.metaKey||event.ctrlKey||event.altKey||event.shiftKey)return;const delta={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[event.key];if(!delta)return;event.preventDefault();const date=add(cell.dataset.date,delta);let target=Array.from(calendar.querySelectorAll('.rf-date')).find(x=>x.dataset.date===date);if(!target){state.anchor=date;render();save();target=Array.from(calendar.querySelectorAll('.rf-date')).find(x=>x.dataset.date===date);}target?.focus({preventScroll:true});});
+ function paintDateSelection(range=dateSelection){
+  const start=range?(range.start<range.end?range.start:range.end):null;
+  const end=range?(range.start>range.end?range.start:range.end):null;
+  for(const week of calendar.querySelectorAll('.rf-week')){
+   const dates=Array.from(week.querySelectorAll('.rf-date'),button=>button.dataset.date),first=dates.findIndex(date=>start&&date>=start&&date<=end);
+   let preview=week.querySelector('.rf-range-preview');if(first<0){preview?.classList.remove('is-visible');continue;}
+   const last=dates.findLastIndex(date=>date>=start&&date<=end);if(!preview){preview=el('div','rf-range-preview');preview.setAttribute('aria-hidden','true');week.append(preview);}
+   const visible=preview.classList.contains('is-visible');preview.style.left='calc('+(first/7*100)+'% + 3px)';preview.style.width='calc('+((last-first+1)/7*100)+'% - 6px)';
+   preview.classList.toggle('continues-left',start<dates[0]);preview.classList.toggle('continues-right',end>dates[6]);if(!visible)void preview.offsetWidth;preview.classList.add('is-visible');
+  }
+ }
+ function updateDraftPreview(start,end){if(!validDate(start)||!validDate(end)||end<start){clearDraftPreview();return;}draftPreview={start,end};paintDateSelection(draftPreview);}
+ function clearDraftPreview(){draftPreview=null;paintDateSelection(null);}
+ function dateAtPoint(x,y){
+  for(const week of calendar.querySelectorAll('.rf-week')){const bounds=week.getBoundingClientRect();if(x<bounds.left||x>=bounds.right||y<bounds.top||y>=bounds.bottom)continue;const index=Math.min(6,Math.floor((x-bounds.left)/bounds.width*7));return week.querySelectorAll('.rf-date')[index]?.dataset.date??null;}return null;
+ }
+ function clearDateSelection(keepPreview=false){const selection=dateSelection;dateSelection=null;if(keepPreview!==true)paintDateSelection(draftPreview);if(selection?.button.hasPointerCapture(selection.pointerId))selection.button.releasePointerCapture(selection.pointerId);}
+ calendar.addEventListener('pointerdown',event=>{
+  const button=event.target.closest?.('.rf-date');if(!button||!calendar.contains(button)||event.button!==0||event.isPrimary===false||editor?.isDirty()||get('rf-discard').open)return;
+  dateSelection={start:button.dataset.date,end:button.dataset.date,pointerId:event.pointerId,button,dragged:false};button.setPointerCapture(event.pointerId);paintDateSelection();
+ });
+ calendar.addEventListener('pointermove',event=>{
+  if(!dateSelection||dateSelection.pointerId!==event.pointerId)return;const date=dateAtPoint(event.clientX,event.clientY);if(!date||date===dateSelection.end)return;dateSelection.end=date;dateSelection.dragged=true;paintDateSelection();
+ });
+ calendar.addEventListener('pointerup',event=>{
+  if(!dateSelection||dateSelection.pointerId!==event.pointerId)return;const selected=dateSelection;
+  const start=selected.start<selected.end?selected.start:selected.end,end=selected.start>selected.end?selected.start:selected.end;
+  if(selected.dragged){event.preventDefault();suppressDateClickUntil=performance.now()+400;}
+  clearDateSelection(true);if(selected.dragged){get('rf-feedback').textContent='已选择 '+format(start)+' 至 '+format(end);edit(null,start,end);}
+ });
+ calendar.addEventListener('click',event=>{if(performance.now()<suppressDateClickUntil&&event.target.closest?.('.rf-date')){event.preventDefault();event.stopImmediatePropagation();}},true);
+ calendar.addEventListener('pointercancel',clearDateSelection);calendar.addEventListener('lostpointercapture',()=>{if(dateSelection)clearDateSelection();});
+ root.addEventListener('keydown',event=>{if(event.key==='Escape'&&dateSelection){event.preventDefault();clearDateSelection();}});window.addEventListener('blur',clearDateSelection);
+ root.addEventListener('click',event=>{
+  const control=event.target.closest?.('button');if(!control||!root.contains(control)||control.disabled)return;
+  const isDate=control.classList.contains('rf-date');if(isDate&&performance.now()<suppressDateClickUntil)return;
+  if(isDate)return;
+  if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return;
+  control.animate?.([{transform:'scale(1)'},{transform:'scale(.97)'},{transform:'scale(1)'}],{duration:160,easing:'ease-out'});
+ },true);
+
+ const syncPanelHeight=()=>root.style.setProperty('--rf-calendar-height',Math.max(260,get('rf-calendar').getBoundingClientRect().height)+'px');syncPanelHeight();if(globalThis.ResizeObserver)new ResizeObserver(syncPanelHeight).observe(get('rf-calendar'));
+})();

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>需求日历</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="req-calendar-refined" aria-label="需求长条与条内阶段日历">
+
+<div class="rf-chrome"><span class="rf-app">需求日历</span></div>
+<div class="rf-toolbar"><div class="rf-controls"><h2 id="rf-title">2026 年 10 月</h2><button type="button" class="rf-arrow cursor-interaction" id="rf-prev" aria-label="上一页">‹</button><button type="button" class="rf-arrow cursor-interaction" id="rf-next" aria-label="下一页">›</button></div><div class="rf-controls"><button type="button" class="rf-button rf-primary rf-add cursor-interaction" id="rf-new" aria-label="新建需求" data-tooltip="新建需求">＋</button></div></div>
+<p id="rf-storage-error" class="rf-storage-error" role="alert" hidden></p>
+<div class="rf-content"><main id="rf-calendar" class="rf-calendar" aria-label="需求与阶段日历"></main><aside id="rf-detail" class="rf-detail" aria-label="需求详情" hidden><div class="rf-detail-head"><span id="rf-panel-label" class="rf-muted">需求详情</span><button type="button" class="rf-close cursor-interaction" id="rf-close" aria-label="关闭详情">×</button></div><div id="rf-panel"></div></aside></div>
+<span id="rf-feedback" class="rf-feedback" aria-live="polite"></span>
+<div id="rf-toast" class="rf-toast" role="status" hidden><span id="rf-toast-text"></span><button id="rf-undo" type="button">撤销删除</button></div>
+<dialog id="rf-discard" class="rf-dialog" aria-labelledby="rf-discard-title"><h2 id="rf-discard-title">保存对需求的更改？</h2><p>未保存的更改会在离开编辑器后丢失。</p><div class="rf-dialog-actions"><button id="rf-discard-drop" type="button">不保存</button><button id="rf-discard-keep" type="button" autofocus>继续编辑</button><button id="rf-discard-save" type="button">保存</button></div></dialog>
+
+</div>
+
+<script src="model.js"></script>
+<script src="storage.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
