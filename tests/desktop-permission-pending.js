@@ -1,0 +1,18 @@
+const checks=[];
+const assert=(value,message)=>{if(!value)throw new Error(message);checks.push(message);};
+const bridge=webkit.messageHandlers.calendar;
+const nextDay=CalendarModel.add(CalendarModel.localDate(),1);
+const item={id:'permission-pending',title:'通知等待不阻塞保存',start:nextDay,end:nextDay,phases:[],resources:[],tasks:[],done:[],note:'',reminder:nextDay+'T09:00'};
+assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:nextDay,requirements:[item]})),'file save returns while notification permission is still pending');
+assert(!CalendarApp.isSaving()&&!document.querySelector('#rf-new').disabled,'requirement controls unlock after file persistence');
+let pending=await bridge.postMessage({action:'verifyReminders',wait:false});
+assert(pending.permissionRequests===1&&pending.ids.length===0,'isolated permission request is pending and notification has not been scheduled');
+await CalendarApp.command('new');
+const name=document.querySelector('.rf-form input[type=text]');name.value='等待授权时继续编辑';name.dispatchEvent(new Event('input',{bubbles:true}));
+assert(CalendarApp.hasUnsavedChanges()&&name.value==='等待授权时继续编辑','user can edit another draft during permission wait');
+const settled=await bridge.postMessage({action:'verifyReminders'});
+assert(settled.ids.includes('requirement.permission-pending'),'permission completion schedules the persisted reminder');
+const deadline=Date.now()+2000;
+while(document.querySelector('#rf-reminder-status').textContent&&Date.now()<deadline)await new Promise(resolve=>setTimeout(resolve,25));
+assert(name.isConnected&&name.value==='等待授权时继续编辑'&&!document.querySelector('#rf-reminder-status').textContent,'background reminder result clears status without replacing the active draft');
+return {checks,notificationAdapter:'isolated delayed permission; no real OS permission granted'};

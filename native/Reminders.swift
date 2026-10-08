@@ -49,6 +49,7 @@ final class ReminderManager {
     let scheduler: any NotificationScheduling
     init(scheduler: any NotificationScheduling) { self.scheduler = scheduler }
     private var tail: Task<String?, Never>?
+    func waitUntilSettled() async -> String? { await tail?.value }
     // Permission is requested only by an explicit save containing a future reminder.
     func reconcile(_ requirements: [[String: Any]], requestPermission: Bool, now: Date = Date()) async -> String? {
         let previous = tail
@@ -85,9 +86,14 @@ final class ReminderManager {
 final class IsolatedNotificationScheduler: NotificationScheduling {
     var permission: UNAuthorizationStatus = .notDetermined
     var requests = 0
+    var permissionDelay: UInt64 = 0
     var plans: [String: ReminderPlan] = [:]
     func status() async -> UNAuthorizationStatus { permission }
-    func requestPermission() async throws -> Bool { requests += 1; permission = .authorized; return true }
+    func requestPermission() async throws -> Bool {
+        requests += 1
+        if permissionDelay > 0 { try await Task.sleep(nanoseconds: permissionDelay) }
+        permission = .authorized; return true
+    }
     func pendingIDs() async -> [String] { Array(plans.keys) }
     func add(_ plan: ReminderPlan) async throws { plans[plan.id] = plan }
     func remove(_ ids: [String]) { ids.forEach { plans.removeValue(forKey: $0) } }

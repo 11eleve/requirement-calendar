@@ -14,6 +14,7 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
         if verifyScript != nil || ProcessInfo.processInfo.environment["CALENDAR_EPHEMERAL"] == "1" {
             let scheduler = IsolatedNotificationScheduler()
             if ProcessInfo.processInfo.environment["CALENDAR_VERIFY_NOTIFICATION_PERMISSION"] == "denied" { scheduler.permission = .denied }
+            if ProcessInfo.processInfo.environment["CALENDAR_VERIFY_NOTIFICATION_PERMISSION"] == "delayed" { scheduler.permissionDelay = 2_000_000_000 }
             return scheduler
         }
         return SystemNotificationScheduler()
@@ -135,9 +136,13 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
                 try dataStore.save(bytes, recovery: body["recovery"] as? Bool == true)
                 latestRequirements = (try CalendarDataStore.validate(bytes))["requirements"] as? [[String: Any]] ?? []
                 let snapshot = latestRequirements
+                // File persistence completes independently of the OS permission prompt.
+                // A suppressed or unanswered prompt must never lock the requirement editor.
+                let pendingIssue: Any = ReminderPlan.make(snapshot).isEmpty ? NSNull() : "需求已保存，正在确认系统提醒状态…"
+                replyHandler(["ok": true, "reminderIssue": pendingIssue], nil)
                 Task { @MainActor in
                     let issue = await reminders.reconcile(snapshot, requestPermission: true)
-                    replyHandler(["ok": true, "reminderIssue": issue as Any? ?? NSNull()], nil)
+                    webView.callAsyncJavaScript("await window.CalendarReady; while (window.CalendarApp.isSaving()) await new Promise(resolve => setTimeout(resolve, 10)); window.CalendarApp.setReminderIssue(issue)", arguments: ["issue": issue as Any? ?? NSNull()], in: nil, in: .page, completionHandler: nil)
                 }
             case "contextMenu":
                 guard let id = body["id"] as? String else { throw CalendarDataError(message: "需求标识无效。") }
@@ -153,7 +158,10 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
                 replyHandler(["width":window.frame.width,"height":window.frame.height,"fullScreenAvailable":window.collectionBehavior.contains(.fullScreenPrimary),"menus":NSApp.mainMenu?.items.compactMap { $0.submenu?.title } ?? []], nil)
             case "verifyReminders":
                 guard verifyScript != nil, let scheduler = notificationScheduler as? IsolatedNotificationScheduler else { replyHandler(nil, "仅在隔离回归中可用。"); return }
-                replyHandler(["ids": Array(scheduler.plans.keys), "permissionRequests": scheduler.requests], nil)
+                Task { @MainActor in
+                    if body["wait"] as? Bool != false { _ = await reminders.waitUntilSettled() }
+                    replyHandler(["ids": Array(scheduler.plans.keys), "permissionRequests": scheduler.requests], nil)
+                }
             default: replyHandler(nil, "未知操作。")
             }
         } catch { replyHandler(nil, error.localizedDescription) }

@@ -99,12 +99,11 @@
 
 ## 最终验收状态
 
-50 轮实现已覆盖，但目标尚未完成最终验收。当前系统界面工具仍报告 Mac 锁定，不能将合成事件、隔离提醒适配器或截图当作下列操作已通过：
+2026-10-08 解锁后使用独立应用标识与隔离记录执行真实系统界面回归。已验证点击和正反/跨周拖动、拖出日历释放、编辑时范围条、原生右键打开/编辑/删除、文字与删除撤销、全屏、备份导出/选择/恢复/取消，以及关闭退出的保存/取消/不保存和文件占用失败分支。备份恢复后内容与导出完全一致，恢复前记录独立归档。详见 `docs/verification/manual-acceptance.json`。
 
-- 原生备份保存/打开窗口、恢复确认和关闭/退出保存提示的当前版本操作回归。
-- 真实系统通知授权、投递、点击后的需求定位与草稿保护。
-- 当前原生右键菜单点击、文字撤销及全屏切换。
-- 真实鼠标拖出日历释放、取消后再次点击，以及点击/拖动动画体验。
+真实通知验收发现：系统授权等待可能不返回，原生保存曾等待通知完成，导致文件已经保存但界面保持忙碌。已修复为文件保存完成立即恢复操作，后台处理授权和提醒状态；新增 6 项延迟授权回归，既有提醒 13 项、文件桥接 14 项、拒绝权限与桌面综合 49 项重新通过。这是对第 35 轮的补修，不另计轮数。
+
+50 轮实现已覆盖，最终验收仍有明确未完成项：真实通知开关当前关闭，尚未获得用户允许开启验收权限，真实投递与点击未证实；拖动按住期间失焦和中间动画过程仍只有处理器检查，未观察完整可信输入过程。保留完整目标，不将这些项标为通过。
 
 具体证据与未完成项见 [完成审计](COMPLETION_AUDIT.md)。不为凑数添加协作平台、AI 或统计面板。
 
@@ -118,6 +117,12 @@ scripts/build-macos.sh
 CALENDAR_VERIFY_SCRIPT="$PWD/tests/desktop-ui.js" \
 CALENDAR_VERIFY_OUTPUT=/tmp/calendar-ui-results.json \
 CALENDAR_VERIFY_SNAPSHOT=/tmp/calendar-ui.png \
+"dist/需求日历.app/Contents/MacOS/RequirementCalendar"
+
+# 延迟通知授权：验证文件保存和继续编辑不等待权限结果
+CALENDAR_VERIFY_NOTIFICATION_PERMISSION=delayed \
+CALENDAR_VERIFY_SCRIPT="$PWD/tests/desktop-permission-pending.js" \
+CALENDAR_VERIFY_OUTPUT=/tmp/calendar-permission-pending.json \
 "dist/需求日历.app/Contents/MacOS/RequirementCalendar"
 ```
 

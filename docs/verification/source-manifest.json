@@ -1,11 +1,11 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-07T17:43:02.083614+00:00",
+  "checked_at_utc": "2026-10-08T01:38:34.974680+00:00",
   "verification_scope": {
-    "notification_delivery": "isolated adapter only; real OS permission, delivery and click not verified",
-    "native_system_interactions": "manual check blocked by locked Mac",
-    "pointer_events": "WebKit handlers with pointer-capture bookkeeping stubbed; trusted mouse remains pending",
+    "notification_delivery": "Real system adapter attempted; authorization unavailable and display-sharing suppression observed; no permission granted or delivery/click verified. Saving now independent from notification wait; delayed fake adapter regression passed.",
+    "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
+    "pointer_events": "Trusted single click, forward/reverse/cross-week drag and outside calendar release passed; held-gesture focus loss and intermediate animation remain unobserved",
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
@@ -15,10 +15,10 @@
     "src/model.js": "94e4ab1229da3517049065b86968e22796a31aebbbe7910ccef6624fda5ba17c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
     "src/styles.css": "8090bb8b01e53daf32e454aa14c0efcd687ebb6405b74702b383022ed373331b",
-    "native/App.swift": "1c29a8f38adb955da5e0064458427bfef83ee013ac5cac03127433c4695ee87a",
+    "native/App.swift": "a575f6b0662917446218844d3beb0e3d48fa6eeaf78f632353f3244ed00f00e2",
     "native/DataStore.swift": "7e2fe913db06f18ee669a799c1675bc99c704bd5e10ab7421510038079c0e091",
     "native/LinkPolicy.swift": "42695a8723abf96f25053ec625d535d985ab172087c2d6b60199a04996963ef1",
-    "native/Reminders.swift": "72faa52beafe00ce72392484716d880becb81ee6d05b8bcc6bb6fe92d5c46f05",
+    "native/Reminders.swift": "8438f16b93e7a6505484fba169394db5cc6255eeeb7e8d78e7a101948966ce0e",
     "scripts/build.py": "c03bb151d1bea77907d71f66c439d2104c56d9b8fc83419f0124750c97d7ec81",
     "scripts/build-macos.sh": "881aef75902810ba68ab960f70ee2c075cc977f4d33e92c7b39afe96dee3c047",
     "tests/build.test.py": "84f266ddc37eb0ab464b1d8a7d3b4c74c2e1ad09cacc0720eb8b29bde162a214",
@@ -36,7 +36,8 @@
     "tests/desktop-ui.js": "002e8005727fb6f79d368dd96d3f2d9fdda38a46968908032b2c1ea82f0a89a9",
     "tests/link-policy.swift": "9789149a02fc68b68e9ae295cd266c266e8dfc1bbff96d303a297e1f409b9eff",
     "tests/model.test.cjs": "483515a83877cbd15dde2f268a1a244acb81dbac900d236de90285002bb0a58a",
-    "tests/reminder-scheduling.swift": "3de859279c90d8101fb7937ebbfb17fc5ea86f9403f6d1ca1a6bdf24b4011647"
+    "tests/reminder-scheduling.swift": "3de859279c90d8101fb7937ebbfb17fc5ea86f9403f6d1ca1a6bdf24b4011647",
+    "tests/desktop-permission-pending.js": "e73c03c65d1eb72966bf0920c0c93118366c7bc35b29827fab2d13f8242a065b"
   },
   "results": {
     "docs/verification/browser-storage.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
@@ -57,7 +58,9 @@
     "docs/verification/file-store.txt": "3ab6e68635ebc48e6f2737af507b433c1cfbd231313f7588b9f10d8887c42023",
     "docs/verification/link-policy.txt": "1994008d165df8924dfe3ba7d1d47068fe86689fbcc4e7828b11658b66ada252",
     "docs/verification/model-tests.txt": "879d9dc1b169e90a1e78bb7ca0a08a81622e4c7cb1bdb276735534d83818131f",
-    "docs/verification/reminder-scheduling.txt": "a6183a6c6b201af5a94637e8a9b1691450319079113bf809c563181a1d717a95"
+    "docs/verification/reminder-scheduling.txt": "a6183a6c6b201af5a94637e8a9b1691450319079113bf809c563181a1d717a95",
+    "docs/verification/desktop-permission-pending.json": "36d06a803ed98faabdd72f07bad55f15608e5c9d5372749103b9e2cebe9cac28",
+    "docs/verification/manual-acceptance.json": "1e86dd74f3977945f0863b090f1ddfdceff45c445896241ee3f9e4889da90139"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "ff0812b66bbf82a5daf43cf00b0a7e53f997f1332e8fe5adfda2c7d0ca9c86e3",
@@ -65,15 +68,12 @@
     "assets/desktop-overview.png": "7786b0563c87558e043e9da85c3b268ebe5fd2db2d71946378af86d159309f18"
   },
   "local_app": {
-    "binary_sha256": "141515586e8059dd3250dcc71b73dd6cd158e9774886a90ec0b0d275d9de4e9e",
+    "binary_sha256": "6b122fab2f48138e7cfc79fd4523ea5ae42fa1a0363689c18040a54cafb44ada",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true
   },
   "pending_manual_gates": [
-    "native backup pickers and confirmation",
-    "current close/quit save protection",
-    "native context menu, text undo and full screen",
-    "trusted mouse range gestures and animation",
+    "trusted held-drag focus loss and intermediate animation",
     "real notification permission, delivery and click"
   ]
 }
