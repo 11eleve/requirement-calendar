@@ -135,6 +135,9 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-resource-icon[data-kind="钉"] { background:var(--rf-blue-bg); color:var(--rf-blue); border-color:color-mix(in srgb,var(--rf-blue) 15%,transparent); }
 #req-calendar-refined .rf-resource-icon[data-kind="F"] { background:light-dark(#f8eee9,#43352f); color:light-dark(#ae6a4c,#efb697); }
 #req-calendar-refined .rf-resource-icon[data-kind="G"],#req-calendar-refined .rf-resource-icon[data-kind="码"] { background:var(--rf-soft); color:var(--rf-text); }
+#req-calendar-refined .rf-resource-icon[data-site-icon=true] { background:#f8f8fa; border-color:var(--rf-line); }
+#req-calendar-refined .rf-site-icon { width:18px; height:18px; object-fit:contain; }
+#req-calendar-refined .rf-item-summary .rf-site-icon { width:14px; height:14px; }
 #req-calendar-refined .rf-resource-symbol { width:18px; height:18px; stroke-width:1.6; }
 #req-calendar-refined .rf-resource-symbol[data-filled=true] { fill:currentColor; stroke:none; }
 #req-calendar-refined .rf-item-summary .rf-resource-symbol { width:14px; height:14px; }

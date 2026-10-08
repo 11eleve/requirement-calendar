@@ -1,7 +1,7 @@
 // Verify the actual resource reading/editing flow, including local SVG rendering.
 const checks=[], $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 const assert=(value,message)=>{if(!value)throw new Error(message);checks.push(message);};
-const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(requestAnimationFrame);document.getAnimations().forEach(a=>a.finish());};
+const settle=async()=>{document.getAnimations().forEach(a=>a.finish());void document.querySelector('#rf-panel').offsetWidth;document.getAnimations().forEach(a=>a.finish());};
 const resources=[{name:'需求说明',type:'PRD',url:'https://alidocs.com/doc/plan'},{name:'交互与视觉',type:'设计稿',url:'https://www.figma.com/design/plan'},{name:'代码仓库',type:'代码',url:'https://github.com/example/project'},{name:'交互说明',type:'交互设计',url:'https://example.com/design'},{name:'接口契约',type:'接口',url:'https://example.com/api'},{name:'参考资料',type:'自定义',url:'https://example.com/reference'},{name:'原有自定义标识',type:'自定义',url:'',icon:'∆'}];
 assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-01',requirements:[{id:'icons',title:'资料图标验收',start:'2026-10-01',end:'2026-10-31',phases:[],resources,tasks:[],done:[],note:''}]})),'isolated resource fixture restored');
 CalendarApp.openRequirement('icons');await settle();
@@ -22,4 +22,4 @@ assert(await CalendarApp.command('save'),'updated resource metadata saves throug
 const saved=JSON.parse(CalendarApp.exportSnapshot()).requirements[0];
 assert(saved.resources[1].icon==='码'&&saved.resources[1].url==='https://example.com/contract'&&saved.resources[6].icon==='∆','stored resources preserve their existing data format and custom symbols');
 assert($$('.rf-resource-row .rf-resource-symbol')[1].dataset.symbol==='code','saved details display the updated resource symbol');
-return {checks,appearance:matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light',scope:'real WebKit SVG, links and edit/save flow with isolated data; no live favicon or browser tab lookup'};
+return {checks,appearance:matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light',scope:'real WebKit SVG, links and edit/save flow with isolated data; network icons disabled in this deterministic fallback suite; no browser tab lookup'};

@@ -1,0 +1,55 @@
+{
+  "ok" : true,
+  "result" : {
+    "checks" : [
+      "28: invalid backup rejected before native save",
+      "28: rejected backup leaves the calendar untouched",
+      "28: valid backup restores all requirement fields through the native file bridge",
+      "32: explicit future reminder requests permission once in the isolated adapter",
+      "34: notification identity opens the correct requirement and month",
+      "31: in-flight file save disables competing edits and shows busy state",
+      "31: competing navigation and duplicate save do not replace the draft",
+      "31: one asynchronous save completes normally",
+      "31: delayed save publishes exactly the captured requirement",
+      "34: notification click protects an active unsaved editor",
+      "34: notification navigation can be cancelled without losing text",
+      "33: deleting a requirement cancels its pending notification",
+      "33: undo reschedules a future reminder without another authorization request",
+      "33: clearing the optional time cancels the reminder"
+    ],
+    "notificationAdapter" : "isolated; no real notification sent",
+    "snapshot" : {
+      "anchor" : "2026-10-10",
+      "requirements" : [
+        {
+          "done" : [
+            false
+          ],
+          "end" : "2026-10-12",
+          "id" : "restore-1",
+          "note" : "多行\n备忘",
+          "phases" : [
+
+          ],
+          "reminder" : null,
+          "resources" : [
+            {
+              "icon" : "文",
+              "name" : "验收文档",
+              "type" : "自定义",
+              "url" : "https:\/\/example.com\/spec"
+            }
+          ],
+          "short" : "保存锁验证",
+          "start" : "2026-10-10",
+          "tasks" : [
+            "检查原子保存"
+          ],
+          "title" : "保存锁验证",
+          "tone" : "blue"
+        }
+      ],
+      "version" : 6
+    }
+  }
+}

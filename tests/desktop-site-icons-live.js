@@ -1,0 +1,24 @@
+// Explicit live smoke test: public favicon endpoints only, no private document paths.
+const checks=[], $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const assert=(value,message)=>{if(!value)throw new Error(message);checks.push(message);};
+const snapshot=JSON.parse(CalendarApp.exportSnapshot()),item=snapshot.requirements.find(r=>r.id==='checkout');
+item.resources=[{name:'产品需求文档',type:'钉钉文档',url:'https://alidocs.dingtalk.com/'},{name:'界面与交互设计',type:'设计稿',url:'https://www.figma.com/'},{name:'需求日历代码仓库',type:'代码仓库',url:'https://github.com/11eleve/requirement-calendar'}];
+assert(await CalendarApp.restoreSnapshot(JSON.stringify(snapshot)),'public-site fixture restored in isolated native data');
+CalendarApp.openRequirement(item.id);document.getAnimations().forEach(a=>a.finish());
+const heights=$$('.rf-resource-row').map(node=>node.getBoundingClientRect().height),original=CalendarApp.exportSnapshot(),deadline=Date.now()+16000;
+while($$('.rf-resource-icon img').length<3&&Date.now()<deadline)await new Promise(resolve=>setTimeout(resolve,50));
+assert($$('.rf-resource-icon img').length===3,'DingTalk, Figma and GitHub icons arrive through the production URLSession bridge');
+assert($$('.rf-resource-icon img').every(image=>image.complete&&image.naturalWidth>0&&image.naturalWidth<=56&&image.src.startsWith('data:image/png;base64,')),'live ICO responses are decoded and reduced to local PNG data');
+assert($$('.rf-resource-row').every((node,index)=>node.getBoundingClientRect().height===heights[index]),'live arrival does not shift resource row heights');
+assert(CalendarApp.exportSnapshot()===original&&!CalendarApp.hasUnsavedChanges(),'live icon loading does not change stored data');
+CalendarApp.editRequirement(item.id);document.getAnimations().forEach(a=>a.finish());
+const editingDeadline=Date.now()+3000;
+while($$('.rf-item-summary img').length<3&&Date.now()<editingDeadline)await new Promise(resolve=>setTimeout(resolve,20));
+assert($$('.rf-item-summary img').length===3&&$$('.rf-item-summary img').every(image=>image.getBoundingClientRect().width===14),'cached website icons carry into compact editing summaries');
+assert(!CalendarApp.hasUnsavedChanges()&&!!$('.rf-range-preview.is-visible'),'website image arrival leaves the editor clean and its date strip visible');
+$$('.rf-form-actions button').find(button=>button.textContent==='取消').click();document.getAnimations().forEach(a=>a.finish());
+const returnDeadline=Date.now()+3000;
+while($$('.rf-resource-row img').length<3&&Date.now()<returnDeadline)await new Promise(resolve=>setTimeout(resolve,20));
+assert($$('.rf-resource-row img').length===3&&CalendarApp.exportSnapshot()===original,'returning to details reuses icons without changing requirement data');
+$('#rf-close').blur();
+return {checks,appearance:matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light',origins:item.resources.map(r=>new URL(r.url).origin),scope:'actual production native network-to-WebKit PNG rendering for these three public sites; not browser-tab or authenticated favicon access'};

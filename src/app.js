@@ -12,6 +12,7 @@ window.CalendarReady=(async()=>{
  let storage=null;try{storage=window.localStorage;}catch{}
  const legacyKey='codex:visualization-widget-state-v2:'+JSON.stringify([window.location.pathname,window.location.search]);
  const browserStore=CalendarStorage.createStore(storage,{legacyKey}),nativeBridge=window.webkit?.messageHandlers?.calendar;
+ const siteIcons=CalendarSiteIcons.create(nativeBridge);
  const store=nativeBridge?CalendarStorage.createNativeStore(nativeBridge,browserStore):browserStore;
  function showStorageIssue(issue){const node=get('rf-storage-error');node.hidden=!issue;node.textContent=issue||'';}
  function setReminderIssue(issue){const node=get('rf-reminder-status');node.hidden=!issue;node.textContent=issue||'';}
@@ -25,8 +26,8 @@ window.CalendarReady=(async()=>{
  function updateNavigation(){get('rf-prev').disabled=saving||Model.monthOffset(state.anchor,-1)===null;get('rf-next').disabled=saving||Model.monthOffset(state.anchor,1)===null;}
  function render(){state.view='month';const calendar=get('rf-calendar');calendar.replaceChildren();root.style.setProperty('--rf-row-height',state.rowHeight+'px');const grid=Model.monthGrid(state.anchor),allocation=Model.allocateLanes(requirements,grid.start,boundedAdd(grid.start,grid.count*7-1)||'9999-12-31');root.style.setProperty('--rf-lanes',Math.max(0,allocation.count));const heading=el('div','rf-weekdays'),d=parse(state.anchor);for(const day of ['一','二','三','四','五','六','日'])heading.append(el('span','','周'+day));calendar.append(heading);get('rf-title').replaceChildren(el('span','rf-month-year',d.getUTCFullYear()+' 年 '),el('span','rf-month-name',(d.getUTCMonth()+1)+' 月'));for(let i=0;i<grid.count;i++)calendar.append(makeWeek(add(grid.start,i*7),allocation));selectRequirement(state.selected);if(draftPreview)paintDateSelection(draftPreview);updateNavigation();}
  function rangeText(start,end,separator='—'){const years=start.slice(0,4)!==end.slice(0,4)||start.slice(0,4)!==state.anchor.slice(0,4);const date=value=>(years?Number(value.slice(0,4))+'.':'')+format(value);return date(start)+separator+date(end);}
- function resourceIcon(value){const icon=el('span','rf-resource-icon');icon.append(CalendarIcons.symbol(value||'文'));icon.dataset.kind=value||'文';icon.setAttribute('aria-hidden','true');return icon;}
- function resourceRow(r){const row=el(r.url?'a':'div','rf-resource-row');if(r.url){row.href=r.url;row.title=r.url;row.target='_blank';row.rel='noopener noreferrer';}row.append(resourceIcon(r.icon));if(r.url)row.classList.add('is-link');const text=el('span','rf-resource-text');text.append(el('strong','',r.name),el('small','',r.type||'资料'));row.append(text);return row;}
+ function resourceIcon(value,url=''){const icon=el('span','rf-resource-icon');icon.setAttribute('aria-hidden','true');void siteIcons.apply(icon,url,value||'文');return icon;}
+ function resourceRow(r){const row=el(r.url?'a':'div','rf-resource-row');if(r.url){row.href=r.url;row.title=r.url;row.target='_blank';row.rel='noopener noreferrer';}row.append(resourceIcon(r.icon,r.url));if(r.url)row.classList.add('is-link');const text=el('span','rf-resource-text');text.append(el('strong','',r.name),el('small','',r.type||'资料'));row.append(text);return row;}
  function captureDetailPosition(id,action){
   const panel=get('rf-panel');if(state.selected!==id||get('rf-detail').hidden||!panel.querySelector('.rf-detail-title'))return null;
   const top=panel.getBoundingClientRect().top,sections=Array.from(panel.querySelectorAll('.rf-section')),index=panel.scrollTop>0?sections.findIndex(section=>section.getBoundingClientRect().bottom>top):-1;
@@ -47,7 +48,7 @@ window.CalendarReady=(async()=>{
   section.append(head,list);
   function addItem(value={},expand=false){
    const item=el('div','rf-editor-item'),disclosure=el('details','rf-disclosure'),summary=el('summary','rf-item-summary cursor-interaction'),summaryName=el('span','rf-summary-name'),summaryMeta=el('span','rf-summary-meta'),fields=el('div','rf-item-fields'),name=input('text',value.name||'',kind==='phase'?'例如：评审、开发、联调':'资料名称');
-   name.maxLength=64;name.required=true;const row={item,disclosure,name};const summaryIcon=kind==='resource'?resourceIcon(value.icon||Model.iconFor(value.url||'',value.type||'')):null;if(summaryIcon)summary.append(summaryIcon);summary.append(summaryName,summaryMeta);fields.append(field('名称',name));
+   name.maxLength=64;name.required=true;const row={item,disclosure,name};const summaryIcon=kind==='resource'?resourceIcon(value.icon||Model.iconFor(value.url||'',value.type||''),value.url||''):null;if(summaryIcon)summary.append(summaryIcon);summary.append(summaryName,summaryMeta);fields.append(field('名称',name));
    if(kind==='phase'){
     row.start=input('date',value.start||'');row.end=input('date',value.end||'');row.start.required=true;row.end.required=true;
     const pair=el('div','rf-pair');pair.append(field('开始日期',row.start),field('结束日期',row.end));fields.append(pair);
@@ -55,8 +56,8 @@ window.CalendarReady=(async()=>{
     row.type=input('text',value.type||'','文档、设计、接口或自定义');row.type.maxLength=32;row.url=input('url',value.url||'','https://…');row.originalIcon=value.icon;
     fields.append(field('类型（可自定义）',row.type),field('链接（可选）',row.url));
    }
-   const updateSummary=()=>{if(summaryIcon){const icon=row.url.value?Model.iconFor(row.url.value,row.type.value):row.originalIcon||Model.iconFor('',row.type.value);summaryIcon.replaceChildren(CalendarIcons.symbol(icon));summaryIcon.dataset.kind=icon;}summaryName.title=name.value;summaryName.textContent=name.value.trim()||(kind==='phase'?'未命名阶段':'未命名资料');summaryMeta.textContent=kind==='phase'?(row.start.value&&row.end.value?rangeText(row.start.value,row.end.value):'设置日期'):row.type.value.trim()||'自定义资料';};
-   updateSummary();fields.addEventListener('input',updateSummary);fields.addEventListener('invalid',()=>{disclosure.open=true;},true);
+   const updateSummary=()=>{if(summaryIcon){const icon=row.url.value?Model.iconFor(row.url.value,row.type.value):row.originalIcon||Model.iconFor('',row.type.value);void siteIcons.apply(summaryIcon,row.url.value,icon,{fetch:false});}summaryName.title=name.value;summaryName.textContent=name.value.trim()||(kind==='phase'?'未命名阶段':'未命名资料');summaryMeta.textContent=kind==='phase'?(row.start.value&&row.end.value?rangeText(row.start.value,row.end.value):'设置日期'):row.type.value.trim()||'自定义资料';};
+   updateSummary();fields.addEventListener('input',updateSummary);if(summaryIcon)fields.addEventListener('change',()=>{const icon=row.url.value?Model.iconFor(row.url.value,row.type.value):row.originalIcon||Model.iconFor('',row.type.value);void siteIcons.apply(summaryIcon,row.url.value,icon);});fields.addEventListener('invalid',()=>{disclosure.open=true;},true);
    disclosure.addEventListener('toggle',()=>{if(disclosure.open)rows.forEach(other=>{if(other!==row)other.disclosure.open=false;});});
    disclosure.append(summary,fields);item.append(disclosure,button('rf-remove','移除',kind==='phase'?'移除此阶段':'移除此资料',()=>{const index=rows.indexOf(row);item.remove();rows.splice(index,1);(rows[index]?.disclosure.querySelector('summary')||rows[index-1]?.disclosure.querySelector('summary')||head.querySelector('button')).focus();}));rows.push(row);list.append(item);
    if(expand){rows.forEach(other=>other.disclosure.open=other===row);name.focus({preventScroll:true});}

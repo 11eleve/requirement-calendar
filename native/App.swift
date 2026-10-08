@@ -20,6 +20,7 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
         return SystemNotificationScheduler()
     }()
     lazy var reminders = ReminderManager(scheduler: notificationScheduler)
+    let resourceIcons = ResourceIconStore()
     let entry = Bundle.main.url(forResource: "index", withExtension: "html")!
     let verifyScript = ProcessInfo.processInfo.environment["CALENDAR_VERIFY_SCRIPT"]
     lazy var dataStore: CalendarDataStore = {
@@ -144,6 +145,10 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
                     let issue = await reminders.reconcile(snapshot, requestPermission: true)
                     webView.callAsyncJavaScript("await window.CalendarReady; while (window.CalendarApp.isSaving()) await new Promise(resolve => setTimeout(resolve, 10)); window.CalendarApp.setReminderIssue(issue)", arguments: ["issue": issue as Any? ?? NSNull()], in: nil, in: .page, completionHandler: nil)
                 }
+            case "resourceIcon":
+                guard let raw = body["url"] as? String else { replyHandler(NSNull(), nil); return }
+                if verifyScript != nil && ProcessInfo.processInfo.environment["CALENDAR_VERIFY_SITE_ICONS"] != "live" { replyHandler(NSNull(), nil); return }
+                Task { @MainActor in replyHandler(await resourceIcons.icon(for: raw) as Any? ?? NSNull(), nil) }
             case "contextMenu":
                 guard let id = body["id"] as? String else { throw CalendarDataError(message: "需求标识无效。") }
                 let menu = requirementMenu(id)
