@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "result": {
+    "overflow": [
+      {
+        "className": "rf-phase-row",
+        "contentWidth": 362,
+        "width": 292
+      },
+      {
+        "className": "rf-task",
+        "contentWidth": 412,
+        "width": 292
+      }
+    ],
+    "period": "12.20 — 2.10",
+    "phase": "AuthenticationServiceMigrationAndCompatibilityValidation12.20—2.10"
+  },
+  "source_revision": "34c4d667913495e3bccc7fb363eb8994400fda37",
+  "scope": "Actual WebKit long-content geometry before wrapping and contextual date refinement; isolated data and synthetic actions."
+}
