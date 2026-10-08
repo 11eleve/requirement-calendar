@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T16:01:32.032156+00:00",
+  "checked_at_utc": "2026-10-08T16:10:57.932186+00:00",
   "verification_scope": {
     "notification_delivery": "User authorized temporary permission; enabled through real Settings UI. System NotificationCenter added actual 09:45 reminder to history; displayShared suppressed banner/sound. Actual click and permission restoration blocked by locked Mac.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,19 +9,19 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "fdae2f89734efd5c77ababf7c07fa5ab3e38634a125a70082f961c3993ef3de0",
-    "src/app.js": "fbf8e3b2d31156fa6fbbc84be244e0328c467831a9354f212aa6a382ebc9aea7",
-    "src/index.html": "d6fcfe6cd026b45c49ac43ed8207be4224b1933e2af294ee114ca057bb268b0d",
+    "index.html": "2985b72fbc4d2fbd5037f8eeec24998ef124e9e389d0749ffbdc70757f1af1d3",
+    "src/app.js": "e11c9266a37d667ca346f03490896bb4da7b5af47459d4b62a7fd748472a95f4",
+    "src/index.html": "f6dec4a04b1b2ff0ff224981648869e13300d361f9853d01533bf2991d77010e",
     "src/model.js": "94e4ab1229da3517049065b86968e22796a31aebbbe7910ccef6624fda5ba17c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
-    "src/styles.css": "1564ef76bff058dae80d2412c7fa7374a8ffb120544843426f155579f6852373",
+    "src/styles.css": "54e1a8a98490b5f05891da120d874a70318d0468301ac52a8e505113ad8023df",
     "native/App.swift": "a575f6b0662917446218844d3beb0e3d48fa6eeaf78f632353f3244ed00f00e2",
     "native/DataStore.swift": "7e2fe913db06f18ee669a799c1675bc99c704bd5e10ab7421510038079c0e091",
     "native/LinkPolicy.swift": "42695a8723abf96f25053ec625d535d985ab172087c2d6b60199a04996963ef1",
     "native/Reminders.swift": "8438f16b93e7a6505484fba169394db5cc6255eeeb7e8d78e7a101948966ce0e",
     "scripts/build.py": "c03bb151d1bea77907d71f66c439d2104c56d9b8fc83419f0124750c97d7ec81",
-    "scripts/build-macos.sh": "881aef75902810ba68ab960f70ee2c075cc977f4d33e92c7b39afe96dee3c047",
-    "tests/build.test.py": "84f266ddc37eb0ab464b1d8a7d3b4c74c2e1ad09cacc0720eb8b29bde162a214",
+    "scripts/build-macos.sh": "ec00b8dedce0b75392ac775fe3ddbced818319e828218b854c8933d951264015",
+    "tests/build.test.py": "3b8e7c1cdfc12d22222c2c6f6f93360f92b6f6bda235436187564664472a163e",
     "tests/data-store.swift": "ffafa82c793f7924313093bccc28b4bea214b27c2082f73ea6190d27acb9e0c7",
     "tests/desktop-data-reminders.js": "acc7904a48311b0f487fe103518f8cccb51b7d4ff840d3b28c62f80c40da2a72",
     "tests/desktop-editor.js": "f2aa9d5fe6d398f631a3cd876e7499540b0aeb2fde67016289d2a7b82c4d512b",
@@ -43,7 +43,10 @@
     "tests/desktop-design-motion.js": "ea68fe2cfa2a56378381f51a5811824fd045e5a75f01cdad47d4b5959639c943",
     "tests/desktop-detail.js": "e0f179436847e81f85b52fdc05538ae96760e38c88388396cb0fbaff79d5b93c",
     "tests/desktop-editor-navigation.js": "dd92bc524948d4d697117f41ae97c29f0a6c0711c6f1de184d92a708fc4c9301",
-    "tests/desktop-content.js": "a609b81769499f3691c3dbd6e7df11d6f0e87bbd296b07c697f35c9d3baa9595"
+    "tests/desktop-content.js": "a609b81769499f3691c3dbd6e7df11d6f0e87bbd296b07c697f35c9d3baa9595",
+    "src/icons.js": "5c26f6938fdafa8ec75d4e6999583c50178f7974c3dc400cc964428cded35262",
+    "tests/desktop-resource-icons.js": "a63b2b682c0d3a345cf9803eb008441ce09c8f773fdb6e7d0d1b81f5dd5c933b",
+    "THIRD_PARTY_NOTICES.md": "63271b114e4cdcc129178228b3aa3ea36d233267c0d17bdf626350a384900b0e"
   },
   "results": {
     "docs/verification/browser-storage.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
@@ -80,18 +83,21 @@
     "docs/verification/desktop-editor-navigation-before.json": "a4552f0cd4743e7f8dd26223ba20d657a399594e0fb5a2275b3c8a4860c6d385",
     "docs/verification/desktop-content.json": "e7bc79380ca5c088417ca45c4d8c13adf413c4cba625ca766d3ff22a2b037892",
     "docs/verification/desktop-content-dark.json": "2cf465b0093c9df7ad25f258b56250342477f3b20191dddef3f2bc74e64c7959",
-    "docs/verification/desktop-content-before.json": "60c2f48d87f873a0d055b219d9e339b716ee376b0f06e4aa835c134ef0d1152d"
+    "docs/verification/desktop-content-before.json": "60c2f48d87f873a0d055b219d9e339b716ee376b0f06e4aa835c134ef0d1152d",
+    "docs/verification/desktop-resource-icons.json": "9fc11d16d9f3f844995e0af0a0ab79b239944ab45da0df8d2b3ddd4ed26a6ec3",
+    "docs/verification/desktop-resource-icons-dark.json": "bdf7e00368e6f67ec32695e90e111e9d95232fdebd93e6dc7927bf060d02a1b2"
   },
   "screenshots": {
-    "assets/desktop-editor-dark.png": "d6bf0c81a8b874d1708e01635bfbf37b50ba5e3d770960830cc8655ac7c8a925",
-    "assets/desktop-editor.png": "b228bc91481476a80ded41d549bb18f528870a25be16273370855d1db994d29d",
+    "assets/desktop-editor-dark.png": "9ab1ce33991d7e07b325cadc669b126a7bd838b4463831cef5e311eb351fa072",
+    "assets/desktop-editor.png": "5d7789b747f56dd7d1ef57e31751423be91172564e7792362ca865d90c494cc3",
     "assets/desktop-overview.png": "d273bf933da7a1c06f9c4e54d16138b8ce4f9a7b2885fd56294810f408fbba4b",
-    "assets/desktop-detail.png": "4d176d55dc9065d616c4f2bdf1cc2d7456ebe9a3ebc326814ce156b05ac3da44"
+    "assets/desktop-detail.png": "bb6a905ed5d8577ec10674b7dc335a18c76b0f358aaa3834ffd4eb5afe4273b5"
   },
   "local_app": {
-    "binary_sha256": "b1629b1caf06d245f1cb86758c8cd41cb675322ab8f0cd09eda8ed990fb5e9c8",
+    "binary_sha256": "aeb2ec42f0650519c99a5237e62902d6fb48db43d81bb472fef3831fa733b641",
     "bundled_page_matches_source_build": true,
-    "ad_hoc_signature_verified": true
+    "ad_hoc_signature_verified": true,
+    "bundled_third_party_notices_match": true
   },
   "pending_manual_gates": [
     "trusted held-drag focus loss and intermediate animation",
@@ -167,5 +173,26 @@
       "native build/signature/bundled page"
     ],
     "scope": "Real WebKit geometry and date text at default and small native windows with isolated data and synthetic actions. Light/dark screenshots were inspected locally; existing README screenshots are from the preceding visual revision. Other recorded checks are earlier evidence."
+  },
+  "resource_symbol_refinement": {
+    "changes": [
+      "bundled SVG symbols for brand and resource types",
+      "consistent square badge geometry in detail and editing rows",
+      "live symbol refresh without changing stored resource schema",
+      "bundled third-party source and license notices"
+    ],
+    "current_build_checks": [
+      "resource icons light/dark 12 each",
+      "long content light 19",
+      "editor navigation light 11",
+      "design light 16",
+      "polish light 20",
+      "desktop final light 49",
+      "desktop UI light 21",
+      "detail and light/dark editor screenshots",
+      "portable build",
+      "native build/signature/bundled page and notices"
+    ],
+    "scope": "Actual WebKit SVG rendering, destination links and edit/save with isolated native data. Built-in symbols are not live favicons or browser-tab lookup. Other recorded results are earlier evidence; system and aesthetic acceptance remain pending."
   }
 }

@@ -1,0 +1,21 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "light",
+    "checks" : [
+      "isolated resource fixture restored",
+      "resource links and custom types receive recognizable brand or type symbols",
+      "resource symbols render as decorative SVG without duplicating accessible names",
+      "resource names and destinations remain on their original clickable rows",
+      "every resource symbol is self-contained rather than loading an external image",
+      "legacy custom text symbols remain available",
+      "unrecognized imported symbols stay literal text, including reserved property names",
+      "collapsed edit rows retain their symbols without modifying data",
+      "editing a link and type updates the symbol and badge together",
+      "updated resource metadata saves through the native file bridge",
+      "stored resources preserve their existing data format and custom symbols",
+      "saved details display the updated resource symbol"
+    ],
+    "scope" : "real WebKit SVG, links and edit\/save flow with isolated data; no live favicon or browser tab lookup"
+  }
+}
