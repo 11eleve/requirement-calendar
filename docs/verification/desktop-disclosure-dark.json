@@ -1,0 +1,76 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "isolated motion fixture restored",
+      "native summaries identify their collapsed and inactive content",
+      "opening immediately exposes the intended state and retains summary focus",
+      "height animation is exposed for measurement",
+      "height animation is exposed for measurement",
+      "opening has a real intermediate content height",
+      "opening releases temporary size and clipping",
+      "closing immediately removes input interaction while keeping content for the short exit",
+      "exiting content cannot take focus",
+      "height animation is exposed for measurement",
+      "height animation is exposed for measurement",
+      "closing interpolates before the native details element closes",
+      "folding preserves saved data, clean draft, calendar reading position and date strip",
+      "height animation is exposed for measurement",
+      "height animation is exposed for measurement",
+      "reversing an opening starts from its displayed height",
+      "height animation is exposed for measurement",
+      "height animation is exposed for measurement",
+      "reopening an interrupted close keeps the displayed height",
+      "coalesced native toggle events do not override the latest intent",
+      "opening another resource settles with only that row expanded",
+      "coordinated folding retains the original fields",
+      "height animation is exposed for measurement",
+      "direct field access cancels an exit and expands immediately",
+      "external native closing synchronizes state",
+      "external native opening remains immediate and synchronized",
+      "folding retains the edited field node, value, selection and dirty state",
+      "a save failure keeps the expanded draft and saved snapshot",
+      "saving can be exercised during an exit",
+      "retry saves through the isolated native bridge",
+      "successful save disposes old motion and preserves the edited resource",
+      "height animation is exposed for measurement",
+      "removing an animating row cancels motion and focuses its neighbour",
+      "height animation is exposed for measurement",
+      "height animation is exposed for measurement",
+      "stage disclosure uses the same motion without changing its dates",
+      "expanded stages remain within the smaller native viewport",
+      "injected reduced-motion preference opens immediately",
+      "injected reduced-motion preference closes immediately",
+      "missing animation API preserves native expansion",
+      "missing animation API preserves native collapse",
+      "animation errors fall back to a complete expanded state",
+      "animation errors also settle a complete closed state"
+    ],
+    "measurements" : [
+      {
+        "closing" : [
+          208.5,
+          16.9375,
+          0
+        ],
+        "kind" : "resource",
+        "opening" : [
+          0,
+          191.546875,
+          208.5
+        ]
+      },
+      {
+        "kind" : "phase",
+        "opening" : [
+          0,
+          134.125,
+          146
+        ]
+      }
+    ],
+    "reducedMotion" : false,
+    "scope" : "actual isolated native WebKit heights at explicitly paused animation times, activeElement\/selection and native persistence with synthetic clicks\/inputs and injected save failure. Reduced-motion branch uses an injected preference; OS preference, trusted keyboard activation, frame pacing and pointer feel are not asserted"
+  }
+}
