@@ -713,7 +713,7 @@ window.CalendarReady=(async()=>{
    updateSummary();fields.addEventListener('input',updateSummary);if(summaryIcon)fields.addEventListener('change',()=>{const icon=symbolForResource(row);void siteIcons.apply(summaryIcon,row.url.value,icon);});fields.addEventListener('invalid',()=>{disclosure.open=true;},true);
    disclosure.addEventListener('toggle',()=>{if(disclosure.open)rows.forEach(other=>{if(other!==row)other.disclosure.open=false;});});
    disclosure.append(summary,fields);item.append(disclosure,removeButton(kind==='phase'?'阶段':'资料',name,()=>{const index=rows.indexOf(row);item.remove();rows.splice(index,1);(rows[index]?.disclosure.querySelector('summary')||rows[index-1]?.disclosure.querySelector('summary')||head.querySelector('button')).focus();}));rows.push(row);list.append(item);
-   if(expand){rows.forEach(other=>other.disclosure.open=other===row);name.focus({preventScroll:true});}
+   if(expand){rows.forEach(other=>other.disclosure.open=other===row);name.focus();}
   }
   initial.forEach(value=>addItem(value));
   return {node:section,reveal(){const target=rows[0]?.disclosure.querySelector('summary')||head.querySelector('button');target.focus();target.scrollIntoView({block:'nearest'});},focus(index,key='name'){const row=rows[index];if(row){row.disclosure.open=true;const control=row[key]||row.name;control.focus();control.setAttribute('aria-invalid','true');const error=control.closest('form')?.querySelector('.rf-error');if(error)control.setAttribute('aria-describedby',error.id);}},read:()=>rows.map(row=>kind==='phase'?{name:row.name.value.trim(),start:row.start.value,end:row.end.value}:{name:row.name.value.trim(),type:row.type.value.trim(),url:row.url.value.trim(),icon:symbolForResource(row)})};

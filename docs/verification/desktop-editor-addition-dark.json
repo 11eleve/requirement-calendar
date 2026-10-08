@@ -1,0 +1,95 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "default 资料: the newly added name is focused and visible between tabs and save actions",
+      "default 资料: adding keeps the calendar position, saved data and persistent draft strip",
+      "default 资料: only the newly added collection row is expanded",
+      "default 资料: the new entry saves through native persistence",
+      "default 资料: saved new content preserves all earlier entries and their associations",
+      "default 资料: successful save returns to clean details and clears the temporary strip",
+      "default 阶段: the newly added name is focused and visible between tabs and save actions",
+      "default 阶段: adding keeps the calendar position, saved data and persistent draft strip",
+      "default 阶段: only the newly added collection row is expanded",
+      "default 阶段: the new entry saves through native persistence",
+      "default 阶段: saved new content preserves all earlier entries and their associations",
+      "default 阶段: successful save returns to clean details and clears the temporary strip",
+      "default 事项: the newly added name is focused and visible between tabs and save actions",
+      "default 事项: adding keeps the calendar position, saved data and persistent draft strip",
+      "default 事项: the new entry saves through native persistence",
+      "default 事项: saved new content preserves all earlier entries and their associations",
+      "default 事项: successful save returns to clean details and clears the temporary strip",
+      "addition is checked in the smaller native window",
+      "small 资料: the newly added name is focused and visible between tabs and save actions",
+      "small 资料: adding keeps the calendar position, saved data and persistent draft strip",
+      "small 资料: only the newly added collection row is expanded",
+      "small 资料: the new entry saves through native persistence",
+      "small 资料: saved new content preserves all earlier entries and their associations",
+      "small 资料: successful save returns to clean details and clears the temporary strip",
+      "small 阶段: the newly added name is focused and visible between tabs and save actions",
+      "small 阶段: adding keeps the calendar position, saved data and persistent draft strip",
+      "small 阶段: only the newly added collection row is expanded",
+      "small 阶段: the new entry saves through native persistence",
+      "small 阶段: saved new content preserves all earlier entries and their associations",
+      "small 阶段: successful save returns to clean details and clears the temporary strip",
+      "small 事项: the newly added name is focused and visible between tabs and save actions",
+      "small 事项: adding keeps the calendar position, saved data and persistent draft strip",
+      "small 事项: the new entry saves through native persistence",
+      "small 事项: saved new content preserves all earlier entries and their associations",
+      "small 事项: successful save returns to clean details and clears the temporary strip",
+      "long-list additions do not cause document overflow"
+    ],
+    "measurements" : [
+      {
+        "bottom" : 450,
+        "footerTop" : 718,
+        "kind" : "资料",
+        "size" : "default",
+        "tabsBottom" : 140.5,
+        "top" : 416
+      },
+      {
+        "bottom" : 608.5,
+        "footerTop" : 701.5,
+        "kind" : "阶段",
+        "size" : "default",
+        "tabsBottom" : 140.5,
+        "top" : 574.5
+      },
+      {
+        "bottom" : 572,
+        "footerTop" : 701.5,
+        "kind" : "事项",
+        "size" : "default",
+        "tabsBottom" : 140.5,
+        "top" : 540
+      },
+      {
+        "bottom" : 394,
+        "footerTop" : 606,
+        "kind" : "资料",
+        "size" : "small",
+        "tabsBottom" : 140.5,
+        "top" : 360
+      },
+      {
+        "bottom" : 496.5,
+        "footerTop" : 589.5,
+        "kind" : "阶段",
+        "size" : "small",
+        "tabsBottom" : 140.5,
+        "top" : 462.5
+      },
+      {
+        "bottom" : 460,
+        "footerTop" : 589.5,
+        "kind" : "事项",
+        "size" : "small",
+        "tabsBottom" : 140.5,
+        "top" : 428
+      }
+    ],
+    "scope" : "actual isolated native WebKit geometry, activeElement and persistence using synthetic button\/input actions; no trusted pointer or motion evidence"
+  }
+}

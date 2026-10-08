@@ -1,0 +1,36 @@
+{
+  "ok": true,
+  "result": {
+    "measurements": [
+      {
+        "focusedName": "资料名称",
+        "footerTop": 718,
+        "inputBottom": 1264,
+        "inputTop": 1230,
+        "kind": "资料",
+        "panelScroll": 0,
+        "tabsBottom": 156.5
+      },
+      {
+        "focusedName": "例如：评审、开发、联调",
+        "footerTop": 718,
+        "inputBottom": 1111.5,
+        "inputTop": 1077.5,
+        "kind": "阶段",
+        "panelScroll": 0,
+        "tabsBottom": 156.5
+      },
+      {
+        "focusedName": "可验收的具体事项",
+        "footerTop": 701.5,
+        "inputBottom": 572,
+        "inputTop": 540,
+        "kind": "事项",
+        "panelScroll": 1398,
+        "tabsBottom": 140.5
+      }
+    ],
+    "scope": "actual isolated WebKit list addition using synthetic activation; not trusted pointer evidence"
+  },
+  "source_commit": "9afe48b06cc3ddfe7c700c616a66cec557761d90"
+}

@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T18:26:57.688Z",
+  "checked_at_utc": "2026-10-08T18:32:25.339Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: the authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Screen state was not revalidated by this website-icon batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,8 +9,8 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "fc04aa2ba9a0d1b3fccb25db94170add57fd9af85cbbc551bfc1394907425b1e",
-    "src/app.js": "3173d1f9ce8743daacbb68a99e8d2ca2cae5396a03b47c86b127df75f48611c2",
+    "index.html": "a180c6339c4afee56509ed956c6c02f75ff378fe2f9dc6c12f37b307ccf0b25e",
+    "src/app.js": "8a4d071adf8d6c1b6c97dba610205c98c5727dd52551de6838d3d257a448e8a6",
     "src/index.html": "bfffb5032fe63a1907798b3b6f6f78b80114e1a18d95e752baf84c7c09461bb9",
     "src/model.js": "2a41e221832c283ab778d76181e307b15a71c51c6949da3cb70aee5cd732635c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
@@ -50,7 +50,7 @@
     "tests/desktop-readability.js": "92a77b600bf58511401fa56a46acf3557c2030ac620859bc0d7a03dfd86ee722",
     "tests/desktop-panel-continuity.js": "3dfe463107504cb679cb9fd637027d0fe82dac3c815614728cb7e04cc8086259",
     "tests/desktop-creation-colors.js": "0c070de5c92ed11c904daf7ac1e6ab8d531e61a06a1db2b3f4a63f33c55f366e",
-    "README.md": "cf42c454e9886aa548fc25f54c9d73c5fd593e69d74a806964c38d4e74f40663",
+    "README.md": "541639643d8f41613503d6d167a9624b916c58c20508098410feea9be232ff46",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "2f280e5ce9f36a7a9fd0c04f3dcbadc2f7c499efbad572c16ef91c149185ab65",
     "tests/resource-icons.swift": "62528e8913c67b0496c859b0ce22782c94b41e83fc5f9a7cd70df37183c263ca",
@@ -63,7 +63,8 @@
     "tests/desktop-sticky-dates.js": "b203da19aebdd58a1084ffb79881582bd2a68b66639a1fab600b125bcfde5dce",
     "tests/desktop-dense-schedule.js": "5a95f6905478e3c50c92d3f76c4199c2cbc1e505f622264d56d24485d143aad1",
     "tests/desktop-editor-rows.js": "5aabdae8070f99e1fbcaf474def688d5cabf4f3d5e664941dd7c418acd0c4e4e",
-    "tests/desktop-phase-editor.js": "c83bd9cd12831fab5c72076b2f7fb78f17115dff936482cbf76fc956a88af0f3"
+    "tests/desktop-phase-editor.js": "c83bd9cd12831fab5c72076b2f7fb78f17115dff936482cbf76fc956a88af0f3",
+    "tests/desktop-editor-addition.js": "11be41c2f43f8116c4fce3f4d0e342f502b4890d1117e624091a825253bf5702"
   },
   "results": {
     "docs/verification/browser-storage.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
@@ -159,7 +160,11 @@
     "docs/verification/desktop-phase-reading-before.json": "b79098a7c733158263f9c45fb2d1e356c8c3beb408640d0b8534cea864cb97b4",
     "docs/verification/desktop-phase-reading-after.json": "0652840a16c4f5f1c13ad243fc59613f28455c365cf8c3519de01971c382a30f",
     "docs/verification/desktop-phase-editor-light.json": "82c36dcadbc80a8931069e9a067f826d9d558fd9eb9c1676d25101f75bc9ec5e",
-    "docs/verification/desktop-phase-editor-dark.json": "82c36dcadbc80a8931069e9a067f826d9d558fd9eb9c1676d25101f75bc9ec5e"
+    "docs/verification/desktop-phase-editor-dark.json": "82c36dcadbc80a8931069e9a067f826d9d558fd9eb9c1676d25101f75bc9ec5e",
+    "docs/verification/desktop-editor-add-before.json": "efc6943063d75002aaf181da3451357817f6170c931d4c307bfde9eef947943a",
+    "docs/verification/desktop-editor-add-after.json": "e07f42ce602b99dc4c5cdb5c019c2390c756ae1d7bd53bad147d12a84fe61d75",
+    "docs/verification/desktop-editor-addition-light.json": "2da92a132f4e8f773bfebf14907dcc20cf744399c1568da27d2a52532689a788",
+    "docs/verification/desktop-editor-addition-dark.json": "83351352f4247980962a9612199c01755cb7085b7599c3fa44123f8d463dbd21"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "a1a23e8105921eb746d35a12badaa4917c71937d83a354c696f994c22b681763",
@@ -174,7 +179,7 @@
     "assets/desktop-phase-editor-dark.png": "4766d039bcf05e396ff31ba85b6fbba8131bb52066ffdc812b86feb9ef7f51ed"
   },
   "local_app": {
-    "binary_sha256": "d27ffbcfa84fb242ceaf48e4264b76b77b61b69aa31961ade583da5cd7f94001",
+    "binary_sha256": "2b4890dca1eabc10b230d0643778b26dff2b1752cba0dce3a671af92bbc1400d",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -561,5 +566,24 @@
       "dark": 6.589057162205963
     },
     "scope": "Actual isolated WebKit static geometry and computed text colors at default and smaller native windows, with synthetic activation. Coarse-pointer and focused task CSS verification limits from earlier batches remain; other recorded suites are historical evidence. No trusted animation, user aesthetic acceptance or deferred system gate completion claim."
+  },
+  "editor_addition_refinement": {
+    "changes": [
+      "scroll new resource and phase name fields into view when focusing",
+      "preserve independent calendar scroll and existing saved entries"
+    ],
+    "source_before": "9afe48b06cc3ddfe7c700c616a66cec557761d90",
+    "current_build_checks": [
+      "editor addition light/dark 36 each",
+      "editor navigation light/dark 11 each",
+      "editor rows light 23",
+      "long content light 29",
+      "design layout light 16",
+      "polish light 20",
+      "desktop final light 49",
+      "same-fixture before/after geometry",
+      "portable build 1 and native signature/bundled page and notices"
+    ],
+    "scope": "Actual isolated native WebKit activeElement and geometry at default and smaller windows, plus native save using synthetic activation. No style changes; existing screenshots remain representative. Other suites are historical evidence; trusted pointer motion and deferred system/aesthetic acceptance remain open."
   }
 }

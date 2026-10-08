@@ -1,0 +1,37 @@
+{
+  "ok": true,
+  "result": {
+    "measurements": [
+      {
+        "focusedName": "资料名称",
+        "footerTop": 718,
+        "inputBottom": 450,
+        "inputTop": 416,
+        "kind": "资料",
+        "panelScroll": 814,
+        "tabsBottom": 140.5
+      },
+      {
+        "focusedName": "例如：评审、开发、联调",
+        "footerTop": 701.5,
+        "inputBottom": 608.5,
+        "inputTop": 574.5,
+        "kind": "阶段",
+        "panelScroll": 503,
+        "tabsBottom": 140.5
+      },
+      {
+        "focusedName": "可验收的具体事项",
+        "footerTop": 701.5,
+        "inputBottom": 572,
+        "inputTop": 540,
+        "kind": "事项",
+        "panelScroll": 1398,
+        "tabsBottom": 140.5
+      }
+    ],
+    "scope": "actual isolated WebKit list addition using synthetic activation; not trusted pointer evidence"
+  },
+  "base_commit": "9afe48b06cc3ddfe7c700c616a66cec557761d90",
+  "scope": "Same isolated fixture measured after local focus-scroll correction; actual native WebKit static geometry and synthetic activation."
+}
