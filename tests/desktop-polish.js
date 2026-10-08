@@ -1,0 +1,65 @@
+// Product WebKit regression. Synthetic pointers exercise handlers and hit testing;
+// capture bookkeeping is stubbed and does not prove trusted mouse animation.
+const checks=[], $=selector=>document.querySelector(selector), $$=selector=>Array.from(document.querySelectorAll(selector));
+const assert=(value,message)=>{if(!value)throw new Error(message);checks.push(message);};
+const pause=()=>new Promise(resolve=>setTimeout(resolve,30));
+const fixture=(id,overrides={})=>({id,title:'需求 '+id,start:'2026-10-01',end:'2026-10-31',phases:[],resources:[],tasks:[],done:[],note:'',...overrides});
+const restore=async items=>{assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-08',requirements:items})),'isolated fixture restored');};
+const send=(target,type,point)=>target.dispatchEvent(new PointerEvent(type,{pointerId:71,isPrimary:true,button:0,bubbles:true,cancelable:true,clientX:point.x,clientY:point.y}));
+const point=node=>{const rect=node.getBoundingClientRect();return {x:rect.left+rect.width/2,y:rect.top+12};};
+const dates=()=>$$('.rf-form .rf-pair input[type=date]').slice(0,2).map(node=>node.value);
+const originalSet=Element.prototype.setPointerCapture, originalHas=Element.prototype.hasPointerCapture;
+Element.prototype.setPointerCapture=()=>{};Element.prototype.hasPointerCapture=()=>false;
+try{
+  await restore([]);
+  const first=$('.rf-date[data-date="2026-10-01"]'), third=$('.rf-date[data-date="2026-10-03"]');
+  send(first,'pointerdown',point(first));send(first,'pointerup',point(third));
+  assert(dates().join(',')==='2026-10-01,2026-10-03','release position determines the range even without a final pointermove');
+  await CalendarApp.command('close');
+  await pause();
+  send(third,'pointerdown',point(third));send(third,'pointerup',point(first));
+  assert(dates().join(',')==='2026-10-01,2026-10-03','reverse release normalizes the requirement dates');
+  await CalendarApp.command('close');
+  send(first,'pointerdown',point(first));
+  assert(!!$('.rf-range-preview.is-visible'),'a new drag begins before Escape cancellation');
+  first.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));
+  assert($('#rf-detail').hidden&&!$('.rf-range-preview.is-visible'),'Escape immediately clears the pending range');
+  await new Promise(resolve=>setTimeout(resolve,450));
+  send(first,'pointerup',point(first));first.click();
+  assert($('#rf-detail').hidden&&!$('.rf-range-preview.is-visible'),'Escape cancellation remains cancelled when the mouse is released later');
+  send(first,'pointerdown',point(first));send(first,'pointerup',point(first));first.click();
+  assert(!!$('.rf-form')&&dates()[0]==='2026-10-01','a fresh gesture works immediately after cancellation');
+  await CalendarApp.command('close');
+  send(first,'pointerdown',point(first));window.dispatchEvent(new Event('blur'));
+  send(first,'pointerup',point(first));first.click();
+  assert($('#rf-detail').hidden&&!$('.rf-range-preview.is-visible'),'focus-loss cancellation rejects a trailing date click');
+
+  await restore(Array.from({length:14},(_,index)=>fixture('dense-'+index)));
+  const calendar=$('#rf-calendar');calendar.scrollTop=60;
+  const visible=$('.rf-date[data-date="2026-10-08"]'), header=$('.rf-weekdays');
+  send(visible,'pointerdown',point(visible));send(visible,'pointerup',point(header));
+  assert($('#rf-detail').hidden&&!$('.rf-range-preview.is-visible'),'release over the sticky weekday header cannot select an obscured date');
+}finally{Element.prototype.setPointerCapture=originalSet;Element.prototype.hasPointerCapture=originalHas;}
+
+await restore([fixture('selected',{end:'2026-10-20',resources:Array.from({length:18},(_,index)=>({name:'资料 '+index,type:'文档',url:''})),phases:[{name:'开发',start:'2026-10-01',end:'2026-10-15'}]}),fixture('other')]);
+CalendarApp.openRequirement('selected');
+assert($$('.rf-bar[data-requirement-id="selected"]').every(bar=>bar.classList.contains('is-selected')&&bar.getAttribute('aria-expanded')==='true'),'every visible segment identifies the opened requirement');
+assert($$('.rf-bar[data-requirement-id="other"]').every(bar=>!bar.classList.contains('is-selected')&&bar.getAttribute('aria-expanded')==='false'),'other requirement bars remain unselected');
+await CalendarApp.command('next');
+assert($$('.rf-bar').every(bar=>!bar.classList.contains('is-selected')),'a month without the selected requirement has no stale highlight');
+await CalendarApp.command('previous');
+assert($$('.rf-bar[data-requirement-id="selected"]').every(bar=>bar.classList.contains('is-selected')),'returning to the month restores the selected segments');
+CalendarApp.editRequirement('selected');
+const panel=$('#rf-panel'), tabs=$('.rf-editor-tabs');panel.scrollTop=panel.scrollHeight;
+await pause();document.getAnimations().forEach(animation=>animation.finish());
+const panelBounds=panel.getBoundingClientRect(), tabBounds=tabs.getBoundingClientRect();
+assert(tabBounds.top>=panelBounds.top-1&&tabBounds.bottom<=panelBounds.bottom,'editor tabs remain visible when many resources are scrolled');
+$$('.rf-editor-tab').find(tab=>tab.textContent==='阶段').click();
+assert(panel.scrollTop===0&&!$('[data-editor-panel="phases"]').hidden,'switching tabs brings the phase content into view');
+assert(!!$('.rf-range-preview.is-visible')&&$$('.rf-bar.is-selected').length>0,'editing keeps both the persistent range strip and selected requirement');
+await CalendarApp.command('close');
+assert(!$$('.rf-bar.is-selected').length&&$$('.rf-bar').every(bar=>bar.getAttribute('aria-expanded')==='false'),'closing the inspector clears selection and accessibility state');
+assert(document.documentElement.scrollHeight<=innerHeight+1,'the polished editor does not create document overflow');
+CalendarApp.editRequirement('selected');
+await pause();document.getAnimations().forEach(animation=>animation.finish());
+return {checks,scope:'isolated real WebKit rendering and application persistence; pointer events synthetic, capture bookkeeping stubbed'};

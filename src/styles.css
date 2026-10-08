@@ -108,3 +108,7 @@ html.native #req-calendar-refined .rf-week{flex-shrink:0}
 html.native #req-calendar-refined .rf-weekdays{position:sticky;top:0;z-index:3}
 html.native #req-calendar-refined .rf-detail{max-height:100%}
 html.native #req-calendar-refined .rf-date span{scroll-margin-top:48px;scroll-margin-bottom:8px}
+/* Keep context visible without adding another control to the calendar. */
+#req-calendar-refined .rf-bar.is-selected{box-shadow:inset 0 0 0 1.5px var(--rf-tone)}
+#req-calendar-refined .rf-editor-tabs{position:sticky;top:-14px;z-index:3;box-shadow:0 -14px 0 var(--rf-soft),0 6px 0 var(--rf-soft)}
+#req-calendar-refined .rf-form :is(input,textarea,summary){scroll-margin-top:56px;scroll-margin-bottom:56px}

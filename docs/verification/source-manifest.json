@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T02:08:49.693292+00:00",
+  "checked_at_utc": "2026-10-08T14:43:30.274566+00:00",
   "verification_scope": {
     "notification_delivery": "User authorized temporary permission; enabled through real Settings UI. System NotificationCenter added actual 09:45 reminder to history; displayShared suppressed banner/sound. Actual click and permission restoration blocked by locked Mac.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,12 +9,12 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "e0b8dad5e112dc33d6e5307042e31cfa4c0445fd5a9595e912003ddffb72c471",
-    "src/app.js": "475e422df9c0238a9bfa4477b90ef6e8a215ecdc23516f32fa43c1d700fa9d06",
+    "index.html": "49e832864719c05822059cc32b1f923c5542d1d633f3785d79e89be80e1d2ec0",
+    "src/app.js": "de283ed6ad188676f4ad65f861154ff310a588ae02cbf60a0b2f6387d2110fe4",
     "src/index.html": "228842fba037f20fefd6a69663d6ab6a7cbe61e9f4d234d79205025c98b7e389",
     "src/model.js": "94e4ab1229da3517049065b86968e22796a31aebbbe7910ccef6624fda5ba17c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
-    "src/styles.css": "8090bb8b01e53daf32e454aa14c0efcd687ebb6405b74702b383022ed373331b",
+    "src/styles.css": "d9f7473e37a04837d436129e326889e7dcd5b5e5a2b771c5f03eace7722b31e7",
     "native/App.swift": "a575f6b0662917446218844d3beb0e3d48fa6eeaf78f632353f3244ed00f00e2",
     "native/DataStore.swift": "7e2fe913db06f18ee669a799c1675bc99c704bd5e10ab7421510038079c0e091",
     "native/LinkPolicy.swift": "42695a8723abf96f25053ec625d535d985ab172087c2d6b60199a04996963ef1",
@@ -37,7 +37,8 @@
     "tests/link-policy.swift": "9789149a02fc68b68e9ae295cd266c266e8dfc1bbff96d303a297e1f409b9eff",
     "tests/model.test.cjs": "483515a83877cbd15dde2f268a1a244acb81dbac900d236de90285002bb0a58a",
     "tests/reminder-scheduling.swift": "3de859279c90d8101fb7937ebbfb17fc5ea86f9403f6d1ca1a6bdf24b4011647",
-    "tests/desktop-permission-pending.js": "e73c03c65d1eb72966bf0920c0c93118366c7bc35b29827fab2d13f8242a065b"
+    "tests/desktop-permission-pending.js": "e73c03c65d1eb72966bf0920c0c93118366c7bc35b29827fab2d13f8242a065b",
+    "tests/desktop-polish.js": "381d21f17bc985d98e942cd2ee09caab0e3ebb4e8530aa4f54c710362bccb64b"
   },
   "results": {
     "docs/verification/browser-storage.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
@@ -61,7 +62,10 @@
     "docs/verification/reminder-scheduling.txt": "a6183a6c6b201af5a94637e8a9b1691450319079113bf809c563181a1d717a95",
     "docs/verification/desktop-permission-pending.json": "36d06a803ed98faabdd72f07bad55f15608e5c9d5372749103b9e2cebe9cac28",
     "docs/verification/manual-acceptance.json": "7a1a6ab7681a145eb5e3dbe4612369a68e76ebea0d3cae7a300c65959cf686a0",
-    "docs/verification/notification-system-delivery.txt": "8f71e8fdef1447680c51936d1e7d69aa67e7f6daf5ccc9cf78819be42c5a4950"
+    "docs/verification/notification-system-delivery.txt": "8f71e8fdef1447680c51936d1e7d69aa67e7f6daf5ccc9cf78819be42c5a4950",
+    "docs/verification/desktop-polish.json": "461ac8a90abe50843b31ff956da5e53b5f8b61d4c0b4a3854670fca8982bb498",
+    "docs/verification/desktop-polish-dark.json": "461ac8a90abe50843b31ff956da5e53b5f8b61d4c0b4a3854670fca8982bb498",
+    "docs/verification/desktop-polish-before.json": "48d1bb6b2a8731817f67dc12195d9ddb195cb44340640036d8606135598cd4a6"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "ff0812b66bbf82a5daf43cf00b0a7e53f997f1332e8fe5adfda2c7d0ca9c86e3",
@@ -69,7 +73,7 @@
     "assets/desktop-overview.png": "7786b0563c87558e043e9da85c3b268ebe5fd2db2d71946378af86d159309f18"
   },
   "local_app": {
-    "binary_sha256": "6b122fab2f48138e7cfc79fd4523ea5ae42fa1a0363689c18040a54cafb44ada",
+    "binary_sha256": "bceee4d3c6a82569031db347609d7f3cd6f9c475e54576e93fdcb6cb0318c573",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true
   },
@@ -77,5 +81,25 @@
     "trusted held-drag focus loss and intermediate animation",
     "real notification click with dirty draft protection",
     "restore temporary notification permission after unlock"
-  ]
+  ],
+  "followup_optimization": {
+    "changes": [
+      "release endpoint and sticky header hit testing",
+      "cancelled gesture trailing click protection",
+      "selected requirement segments and accessible expansion state",
+      "sticky editor tabs and content positioning"
+    ],
+    "current_build_checks": [
+      "desktop-polish light 20",
+      "desktop-polish dark 20",
+      "desktop-final light 49",
+      "desktop-final dark 49",
+      "desktop-pointer 6",
+      "desktop-ui 21",
+      "portable build 1",
+      "ad hoc signature and bundled page consistency"
+    ],
+    "scope": "Only the listed checks were rerun for this follow-up; other recorded results are earlier evidence. Pointer capture remains stubbed in synthetic event checks.",
+    "system_acceptance": "User requested deferring lock-related blockers; notification click and temporary permission restoration remain pending."
+  }
 }

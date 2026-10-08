@@ -1,0 +1,7 @@
+{
+  "details": "[\"NSLocalizedDescription\": A JavaScript exception occurred, \"WKJavaScriptExceptionColumnNumber\": 0, \"WKJavaScriptExceptionMessage\": Error: release position determines the range even without a final pointermove, \"WKJavaScriptExceptionLineNumber\": 0]",
+  "error": "A JavaScript exception occurred",
+  "ok": false,
+  "source_revision": "8b895091300bb24b40f2f81219254f5189ff39b8",
+  "scope": "isolated WebKit regression before the follow-up fix; synthetic pointer events with capture bookkeeping stubbed"
+}
