@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "result": {
+    "resourceFocus": false,
+    "scrollAfter": 0,
+    "scrollBefore": 260
+  },
+  "source_revision": "66aa688ff633797ec0452cc5d019a77558a66967",
+  "scope": "Actual WebKit focus and scroll baseline before navigation refinement; synthetic button activation."
+}

@@ -528,11 +528,11 @@ window.CalendarReady=(async()=>{
    if(expand){rows.forEach(other=>other.disclosure.open=other===row);name.focus({preventScroll:true});}
   }
   initial.forEach(value=>addItem(value));
-  return {node:section,focus(index,key='name'){const row=rows[index];if(row){row.disclosure.open=true;const control=row[key]||row.name;control.focus();control.setAttribute('aria-invalid','true');const error=control.closest('form')?.querySelector('.rf-error');if(error)control.setAttribute('aria-describedby',error.id);}},read:()=>rows.map(row=>kind==='phase'?{name:row.name.value.trim(),start:row.start.value,end:row.end.value}:{name:row.name.value.trim(),type:row.type.value.trim(),url:row.url.value.trim(),icon:row.url.value?iconFor(row.url.value,row.type.value):row.originalIcon||iconFor('',row.type.value)})};
+  return {node:section,reveal(){const target=rows[0]?.disclosure.querySelector('summary')||head.querySelector('button');target.focus();target.scrollIntoView({block:'nearest'});},focus(index,key='name'){const row=rows[index];if(row){row.disclosure.open=true;const control=row[key]||row.name;control.focus();control.setAttribute('aria-invalid','true');const error=control.closest('form')?.querySelector('.rf-error');if(error)control.setAttribute('aria-describedby',error.id);}},read:()=>rows.map(row=>kind==='phase'?{name:row.name.value.trim(),start:row.start.value,end:row.end.value}:{name:row.name.value.trim(),type:row.type.value.trim(),url:row.url.value.trim(),icon:row.url.value?iconFor(row.url.value,row.type.value):row.originalIcon||iconFor('',row.type.value)})};
  }
  function resourceError(items){if(items.some(x=>!x.name))return '请填写资料名称。';try{items.forEach(x=>Model.safeURL(x.url));}catch(error){return error.message;}return '';}
  function validateForm(form){const invalid=Array.from(form.elements).find(control=>control.willValidate&&!control.validity.valid);if(!invalid)return true;const disclosure=invalid.closest('details');if(disclosure)disclosure.open=true;invalid.reportValidity();return false;}
- function editResources(id){edit(id);}
+ function editResources(id){edit(id,undefined,undefined,'resources');}
  function edit(id=null,date=state.anchor,endDate=date,initialTab='basic',force=false){
   if(saving)return;
   if(!force&&!mayLeave(()=>edit(id,date,endDate,initialTab,true)))return;
@@ -540,7 +540,8 @@ window.CalendarReady=(async()=>{
   selectRequirement(existing?id:null);openPanel(existing?'编辑需求':'新建需求');
   const form=el('form','rf-form rf-tabbed-form');form.noValidate=true;
   const tabs=el('div','rf-editor-tabs'),tabButtons={},panels={},prefix='rf-editor-'+Date.now();tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','需求编辑内容');
-  function showTab(key){for(const name of Object.keys(panels)){panels[name].hidden=name!==key;tabButtons[name].setAttribute('aria-selected',String(name===key));tabButtons[name].tabIndex=name===key?0:-1;}get('rf-panel').scrollTop=0;}
+  let activeTab=null;
+  function showTab(key){if(key===activeTab)return;activeTab=key;for(const name of Object.keys(panels)){panels[name].hidden=name!==key;tabButtons[name].setAttribute('aria-selected',String(name===key));tabButtons[name].tabIndex=name===key?0:-1;}get('rf-panel').scrollTop=0;}
   for(const [key,label] of [['basic','基本信息'],['phases','阶段']]){
    const tab=button('rf-editor-tab',label,null,()=>showTab(key)),panel=el('div','rf-tab-panel');tab.id=prefix+'-'+key;tab.setAttribute('role','tab');tab.setAttribute('aria-controls',prefix+'-'+key+'-panel');tab.setAttribute('aria-selected',String(key==='basic'));panel.id=prefix+'-'+key+'-panel';panel.dataset.editorPanel=key;panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby',tab.id);tabButtons[key]=tab;panels[key]=panel;tabs.append(tab);
   }
@@ -555,7 +556,7 @@ window.CalendarReady=(async()=>{
   const phases=collection('phase',draft.phases),resources=collection('resource',draft.resources);panels.phases.append(phases.node);panels.basic.append(resources.node,taskEditor(draft),field('事项与备忘',note));
   const error=el('p','rf-error');error.id=prefix+'-error';error.setAttribute('role','alert');form.addEventListener('input',()=>{error.textContent='';form.querySelectorAll('[aria-invalid]').forEach(control=>control.removeAttribute('aria-invalid'));});
   const actions=el('div','rf-form-actions'),submit=el('button','rf-button rf-primary cursor-interaction','保存需求');submit.type='submit';actions.append(button('rf-button','取消',null,()=>cancelEdit()),submit);
-  form.append(tabs,panels.basic,panels.phases,error,actions);form.querySelectorAll('input,textarea').forEach(control=>control.setAttribute('aria-describedby',error.id));showTab(initialTab);
+  form.append(tabs,panels.basic,panels.phases,error,actions);form.querySelectorAll('input,textarea').forEach(control=>control.setAttribute('aria-describedby',error.id));showTab(initialTab==='resources'?'basic':initialTab);
   form.addEventListener('invalid',event=>{const panel=event.target.closest('[data-editor-panel]');if(panel)showTab(panel.dataset.editorPanel);const disclosure=event.target.closest('details');if(disclosure)disclosure.open=true;},true);
   async function submitDraft(){
    if(saving)return false;if(!validateForm(form))return false;
@@ -573,7 +574,7 @@ window.CalendarReady=(async()=>{
    editor=null;clearDraftPreview();render();detail(draft.id,undefined,true);get('rf-feedback').textContent='已保存：'+draft.title+' · '+format(draft.start)+'—'+format(draft.end);if(pendingAction){const action=pendingAction;pendingAction=null;get('rf-discard').close();action();}return true;
   }
   form.addEventListener('submit',event=>{event.preventDefault();void submitDraft();});
-  get('rf-panel').append(form);syncDraftPreview();const fingerprint=()=>JSON.stringify(Array.from(form.querySelectorAll('input,textarea'),control=>[control.type,control.value,control.checked]));const original=fingerprint();editor={form,submit:submitDraft,isDirty:()=>fingerprint()!==original,cancel:()=>existing?detail(id,undefined,true):closePanel(true)};if(initialTab==='phases')tabButtons.phases.focus({preventScroll:true});else name.focus({preventScroll:true});
+  get('rf-panel').append(form);syncDraftPreview();const fingerprint=()=>JSON.stringify(Array.from(form.querySelectorAll('input,textarea'),control=>[control.type,control.value,control.checked]));const original=fingerprint();editor={form,submit:submitDraft,isDirty:()=>fingerprint()!==original,cancel:()=>existing?detail(id,undefined,true):closePanel(true)};if(initialTab==='resources')resources.reveal();else if(initialTab==='phases')tabButtons.phases.focus({preventScroll:true});else name.focus({preventScroll:true});
  }
  function setSaving(value){saving=value;root.setAttribute('aria-busy',String(value));get('rf-panel').inert=value;for(const id of ['rf-new','rf-prev','rf-next','rf-close','rf-undo'])get(id).disabled=value;const submit=editor?.form.querySelector('[type=submit]');if(submit){submit.disabled=value;submit.textContent=value?'正在保存…':'保存需求';}updateNavigation();if(!value&&queuedNotification){const id=queuedNotification;queuedNotification=null;queueMicrotask(()=>CalendarApp.openRequirement(id));}}
  function mayLeave(action){if(saving)return false;if(!editor?.isDirty())return true;pendingAction=action;const dialog=get('rf-discard');if(!dialog.open)dialog.showModal();return false;}

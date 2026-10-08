@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T15:46:34.947702+00:00",
+  "checked_at_utc": "2026-10-08T15:56:16.977303+00:00",
   "verification_scope": {
     "notification_delivery": "User authorized temporary permission; enabled through real Settings UI. System NotificationCenter added actual 09:45 reminder to history; displayShared suppressed banner/sound. Actual click and permission restoration blocked by locked Mac.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,8 +9,8 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "b66ea9e805af2d75aa9d7b568507a7ff39199afbc4500ee41811140be46bd646",
-    "src/app.js": "79dfcbf7a455b904231c12c92f811a7ac23563ea61d2a0038aed0954e64bd7af",
+    "index.html": "d71bda45da2819d3ad2738ac188bf935f8eef2e07948b2e14f30fa73c378a65f",
+    "src/app.js": "20e7edca60433de9504979b30c0e154fc1bfa6dd2540f780714df2b4ff1af62d",
     "src/index.html": "d6fcfe6cd026b45c49ac43ed8207be4224b1933e2af294ee114ca057bb268b0d",
     "src/model.js": "94e4ab1229da3517049065b86968e22796a31aebbbe7910ccef6624fda5ba17c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
@@ -41,7 +41,8 @@
     "tests/desktop-polish.js": "381d21f17bc985d98e942cd2ee09caab0e3ebb4e8530aa4f54c710362bccb64b",
     "tests/desktop-design.js": "d617ccc358de535145f35612f2aaa1fa1fe647fe6385676c5f29c6dfe308a6cd",
     "tests/desktop-design-motion.js": "ea68fe2cfa2a56378381f51a5811824fd045e5a75f01cdad47d4b5959639c943",
-    "tests/desktop-detail.js": "e0f179436847e81f85b52fdc05538ae96760e38c88388396cb0fbaff79d5b93c"
+    "tests/desktop-detail.js": "e0f179436847e81f85b52fdc05538ae96760e38c88388396cb0fbaff79d5b93c",
+    "tests/desktop-editor-navigation.js": "dd92bc524948d4d697117f41ae97c29f0a6c0711c6f1de184d92a708fc4c9301"
   },
   "results": {
     "docs/verification/browser-storage.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
@@ -72,7 +73,10 @@
     "docs/verification/desktop-design.json": "b6150a9f420a0fb8ad2d47468e1b7f08d3a2181bb841c393de95a46626fb1659",
     "docs/verification/desktop-design-dark.json": "22d4c48bd2c0f4c782f2e5a2d142c6dbb047d5ccd8afdd380178daa07d3bc02b",
     "docs/verification/desktop-design-motion.json": "fee0a7311b11b27b3540e012c6922995b65bf49660063593e4442ff93b7e07ba",
-    "docs/verification/desktop-detail.json": "d0cc0c115dcea73bc3087cb9f68706b0b301b0f60efd27c46265e3ca2ab55162"
+    "docs/verification/desktop-detail.json": "d0cc0c115dcea73bc3087cb9f68706b0b301b0f60efd27c46265e3ca2ab55162",
+    "docs/verification/desktop-editor-navigation.json": "26c285c103aa1c3f04be31a96d6a30e01638230f4c444fc1eaea1923c5141689",
+    "docs/verification/desktop-editor-navigation-dark.json": "dc20caa945e3b5cbfa1c5f6666454a8404b91c664e6190d17d1660ec36d1da6c",
+    "docs/verification/desktop-editor-navigation-before.json": "a4552f0cd4743e7f8dd26223ba20d657a399594e0fb5a2275b3c8a4860c6d385"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "d6bf0c81a8b874d1708e01635bfbf37b50ba5e3d770960830cc8655ac7c8a925",
@@ -81,7 +85,7 @@
     "assets/desktop-detail.png": "4d176d55dc9065d616c4f2bdf1cc2d7456ebe9a3ebc326814ce156b05ac3da44"
   },
   "local_app": {
-    "binary_sha256": "70039dd8a82c9a66386eee9a340491631a377716e2f76a910cd098c32f90a60c",
+    "binary_sha256": "fbf4429ecb9f5f4b2fcc73f6944a0d7562b3ebb315f5a6361530ffd1268f6c02",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true
   },
@@ -126,5 +130,20 @@
     ],
     "motion_scope": "Actual WebKit frames show intermediate monotonic widths and restored endpoints. System Reduce Motion was false; the gated CSS branch was inspected, not toggled through real Settings. Trusted pointer feel and aesthetic acceptance remain unproven.",
     "prior_evidence": "Recorded model, file-store, native interaction and other results not listed above were not rerun for this style-focused change."
+  },
+  "editor_navigation_refinement": {
+    "changes": [
+      "resource management focuses the first summary or empty add action",
+      "active tab activation preserves scroll position"
+    ],
+    "current_build_checks": [
+      "editor navigation light/dark 11 each",
+      "design layout light 16",
+      "polish light 20",
+      "desktop final light 49",
+      "portable build",
+      "native build/signature/bundled page"
+    ],
+    "scope": "Actual WebKit focus and scroll behavior with isolated data and synthetic button/key activation. Other listed suites and screenshots are evidence from the preceding visual-design revision, not rerun for this navigation-only change."
   }
 }
