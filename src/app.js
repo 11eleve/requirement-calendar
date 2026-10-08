@@ -59,7 +59,7 @@ window.CalendarReady=(async()=>{
   head.append(el('h3','',kind==='phase'?'阶段安排':'相关资料'),button('rf-text-button',kind==='phase'?'添加阶段':'添加资料',null,()=>addItem({},true)));
   section.append(head,list);
   function addItem(value={},expand=false){
-   const item=el('div','rf-editor-item'),disclosure=el('details','rf-disclosure'),summary=el('summary','rf-item-summary cursor-interaction'+(kind==='phase'?' rf-phase-summary':'')),summaryName=el('span','rf-summary-name'),summaryMeta=el('span','rf-summary-meta'),fields=el('div','rf-item-fields'),name=input('text',value.name||'',kind==='phase'?'例如：评审、开发、联调':'资料名称');
+   const item=el('div','rf-editor-item'),disclosure=el('details','rf-disclosure'),summary=el('summary','rf-item-summary cursor-interaction'+(kind==='phase'?' rf-phase-summary':' rf-resource-summary')),summaryName=el('span','rf-summary-name'),summaryMeta=el('span','rf-summary-meta'),fields=el('div','rf-item-fields'),name=input('text',value.name||'',kind==='phase'?'例如：评审、开发、联调':'资料名称');
    name.maxLength=64;name.required=true;const row={item,disclosure,name};const summaryIcon=kind==='resource'?resourceIcon(value.icon||Model.iconFor(value.url||'',value.type||''),value.url||''):null;if(summaryIcon)summary.append(summaryIcon);summary.append(summaryName,summaryMeta);fields.append(field('名称',name));
    if(kind==='phase'){
     row.start=input('date',value.start||'');row.end=input('date',value.end||'');row.start.required=true;row.end.required=true;

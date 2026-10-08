@@ -16,6 +16,6 @@
       "stored resources preserve their existing data format and custom symbols",
       "saved details display the updated resource symbol"
     ],
-    "scope" : "real WebKit SVG, links and edit\/save flow with isolated data; no live favicon or browser tab lookup"
+    "scope" : "real WebKit SVG, links and edit\/save flow with isolated data; network icons disabled in this deterministic fallback suite; no browser tab lookup"
   }
 }

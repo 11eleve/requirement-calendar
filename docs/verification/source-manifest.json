@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T19:30:29.795713Z",
+  "checked_at_utc": "2026-10-08T19:39:17.894714Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: the authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Screen state was not revalidated by this website-icon batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,12 +9,12 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "588126ec4b1477997393026b271988cdef64f7f5a3efe5b30d200c1af3eb3f1d",
-    "src/app.js": "72b8ef4481c916cccf25084d302663910e39c80dd31edd30ff54825304c65a81",
+    "index.html": "06afd0ca9c41b798a49a5180fcc95189586276281c9fe52b5c54296a193af860",
+    "src/app.js": "c970bc85c325f091885ba4ce600400aab3e552dbd2ef2fd8d427887573d03fd6",
     "src/index.html": "bfffb5032fe63a1907798b3b6f6f78b80114e1a18d95e752baf84c7c09461bb9",
     "src/model.js": "2a41e221832c283ab778d76181e307b15a71c51c6949da3cb70aee5cd732635c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
-    "src/styles.css": "65606023ff3f5b523893bf2f240998eaa117c0c6d1e704f28b4241189a3010df",
+    "src/styles.css": "3ddd82ba2d54f4ac01c4ab6fa21be40c969e230f70836600ef22ac615ceeae8f",
     "native/App.swift": "b57691aeaa1dc95ac7f815b9d09842f60cb8164afe80960e16653c6198deffc0",
     "native/DataStore.swift": "7e2fe913db06f18ee669a799c1675bc99c704bd5e10ab7421510038079c0e091",
     "native/LinkPolicy.swift": "42695a8723abf96f25053ec625d535d985ab172087c2d6b60199a04996963ef1",
@@ -50,7 +50,7 @@
     "tests/desktop-readability.js": "33637bf96344ae88b384d5561697fd058cb349ada57ba9a8c12d8b46ca4a8b71",
     "tests/desktop-panel-continuity.js": "88ae4ed97783af517c0d476a66a660ef0c95ec4e272020677b901a51aae15560",
     "tests/desktop-creation-colors.js": "0c070de5c92ed11c904daf7ac1e6ab8d531e61a06a1db2b3f4a63f33c55f366e",
-    "README.md": "b97676a4e6c4e1f0160b7572cb83f9815b88e17e9b7e6748754a521009b1ac5f",
+    "README.md": "915e3032f47bab0b7be2d6396312d0aecca879cefab5b612f2e95e25a28638a1",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "2f280e5ce9f36a7a9fd0c04f3dcbadc2f7c499efbad572c16ef91c149185ab65",
     "tests/resource-icons.swift": "62528e8913c67b0496c859b0ce22782c94b41e83fc5f9a7cd70df37183c263ca",
@@ -68,14 +68,15 @@
     "tests/desktop-detail-actions.js": "c2412d56ec400cff147f9f247be79243ecf14d04b322699639cd78a987f322b5",
     "tests/desktop-draft-range-continuity.js": "8e88354283cf498693e607cfd3c6c8c22cbc3695c7ac6cd3d7abd920729851c9",
     "tests/desktop-note-sizing.js": "cc4e8709bbcf94db7f1beb2e2d2906c3efdf02557605e58334d973cd509fc8af",
-    "tests/desktop-note-editor.js": "539540ea00c2f1f1c3d00a91519f2a104d5c756cad9f55649a0aae78bd312507"
+    "tests/desktop-note-editor.js": "539540ea00c2f1f1c3d00a91519f2a104d5c756cad9f55649a0aae78bd312507",
+    "tests/desktop-resource-editor.js": "55d63379e3de555d8a66071ea9cc931ad34f3d30e59f038e3bee9ca82bc51d84"
   },
   "results": {
     "docs/verification/browser-storage.json": "70dca1f59a7f7fdde9af7f4eaf6c378e1e9b0347e51c3701d891166ea68807fb",
     "docs/verification/build-tests.txt": "c3dc4ce80790d0a5a68dcff2d3009be59564c24dfe01144e0f6b50051e539cc3",
     "docs/verification/desktop-data-reminders.json": "eacac1f0a1bb0e0b1335278d115bce8e06329beb5418a8f90f25e08766511ad3",
-    "docs/verification/desktop-editor-dark.json": "a7fce1571b2f77b86f72526401dc8c1e94a96aad5df4a7834a53618cf75bda50",
-    "docs/verification/desktop-editor.json": "79d99eaf0d11ac980034c63d55dcc4bb588e8404ffed5a3d03b5cce67b29fb2c",
+    "docs/verification/desktop-editor-dark.json": "d91ecfc0fcea87a85dedacba8c92b63f60835893400aba8efd28f7924abcd262",
+    "docs/verification/desktop-editor.json": "d91ecfc0fcea87a85dedacba8c92b63f60835893400aba8efd28f7924abcd262",
     "docs/verification/desktop-final-dark.json": "64d7d19f481207fdce7a5005e62ecccde9c1cbcada0bffb9f79880b0e46b16b7",
     "docs/verification/desktop-final.json": "b15ca301464c138fef12a41af56e80106f64c6d81566c72f9e052212d6c62c8a",
     "docs/verification/desktop-frame-reload.json": "53fcb30303c58077817dd184ac381fec210c2f6b27c415884d3deae429ed2ebf",
@@ -106,8 +107,8 @@
     "docs/verification/desktop-content.json": "f7555e364e8af18e696f84292a4e72f382b6d16abab90166a7a66eb0701b2479",
     "docs/verification/desktop-content-dark.json": "ac34cbca81d3abda6b084ccb7031d90f07b05f6c4ffb7e97e376932f107b06b0",
     "docs/verification/desktop-content-before.json": "60c2f48d87f873a0d055b219d9e339b716ee376b0f06e4aa835c134ef0d1152d",
-    "docs/verification/desktop-resource-icons.json": "9fc11d16d9f3f844995e0af0a0ab79b239944ab45da0df8d2b3ddd4ed26a6ec3",
-    "docs/verification/desktop-resource-icons-dark.json": "bdf7e00368e6f67ec32695e90e111e9d95232fdebd93e6dc7927bf060d02a1b2",
+    "docs/verification/desktop-resource-icons.json": "6670209a21ce8139f47281597ec49f22739601e1d2826faab01b353c8e1e8e59",
+    "docs/verification/desktop-resource-icons-dark.json": "3a86c0aeb30f2d425a0bc4346bc3f3e5c7e20ed49edfed64efa6674625c72819",
     "docs/verification/desktop-readability.json": "1c3923eef456db228031199f1da074fb751bb05bc520d4d331a80a52bf695719",
     "docs/verification/desktop-readability-dark.json": "85b0e2ab189ecc24fa0ccffb6bb164d03d76c0154f946deda406b6f1c4c56745",
     "docs/verification/desktop-readability-before-light.json": "da3182c89bf45267edb2b322fc4b90d7dd154e139abf54792eff8912f3f3bfd0",
@@ -193,11 +194,22 @@
     "docs/verification/desktop-note-editor-light.json": "80b175fbd5793c12ac91c2f78ec94733c9f686f3d0e0a9c9b62d9464a4079aa1",
     "docs/verification/desktop-note-editor-dark.json": "80b175fbd5793c12ac91c2f78ec94733c9f686f3d0e0a9c9b62d9464a4079aa1",
     "docs/verification/desktop-phase-axis-light.json": "4ce923e14954a961c9e6014b3f68bac4401adb5564d80bfd0d98a7a146f32bb7",
-    "docs/verification/desktop-phase-axis-dark.json": "26df5ad1499e9ee017ee856a4bd6629e29f97445bd4b45c4645c42a3d5cb044e"
+    "docs/verification/desktop-phase-axis-dark.json": "26df5ad1499e9ee017ee856a4bd6629e29f97445bd4b45c4645c42a3d5cb044e",
+    "docs/verification/desktop-resource-reading-before.json": "77f398df7f64e83a5a13e66c2cc80f8774821004b42622077dfd2365ad747f34",
+    "docs/verification/desktop-resource-reading-light.json": "dd706391c09475b8b7e75d527ca86ded8264c91a0dfd23e4958924ed1e68a09d",
+    "docs/verification/desktop-resource-reading-dark.json": "dd706391c09475b8b7e75d527ca86ded8264c91a0dfd23e4958924ed1e68a09d",
+    "docs/verification/desktop-resource-editor-light.json": "0b82c7a40c291d180f4543333f87d2e8fc2c9f37854dd0aeb97bc2518c3b4559",
+    "docs/verification/desktop-resource-editor-dark.json": "0b82c7a40c291d180f4543333f87d2e8fc2c9f37854dd0aeb97bc2518c3b4559",
+    "docs/verification/desktop-resource-types.json": "addd6e4f7ccb1eb499ab3199ede6f48fe62a26d5f1f279aa19cc72ea23910161",
+    "docs/verification/desktop-site-icons.json": "d56f6409d7424664d091d88e68933c28419e021b596dcb538b9010b68b06c95e",
+    "docs/verification/desktop-editor-rows.json": "8868bd3596efb899e715e880f2ef93752feb68594d0432f3f70ba936ac5a870e",
+    "docs/verification/desktop-editor-addition.json": "d30f1561cc728bad1e5f8b8f3646443999f5ac7c7789c39001327565bfa143b7",
+    "docs/verification/desktop-note-sizing.json": "36ae6efedea84e892d7a3887d2113b1156c70bfd2177cb7da66d571cab809e89",
+    "docs/verification/desktop-site-icons-live.json": "391e6aa083c1cc18f6a914bbae7d451a84b690158c17c3da345f044523441efa"
   },
   "screenshots": {
-    "assets/desktop-editor-dark.png": "b550b59e1007c98ab377dafe57198d10e87b782071e15aef7022aaf1e959ae50",
-    "assets/desktop-editor.png": "633000dc9aeae5baacecf14d759b3a0105fc014f5f019a85a2bf3e16083a55f3",
+    "assets/desktop-editor-dark.png": "73530bd8d677494fbeb09a2cf84ad8aee40dcca88298dc4bd0cfa5ff45e5d6e1",
+    "assets/desktop-editor.png": "70aae62aa118bde73e1c66f1b1f4b84c3f9f1af844edcf534a3f0a91ad2a68aa",
     "assets/desktop-overview.png": "b0b5dd52af9c5bc8a8fcc7e54d325c26fa5da53d718aa25b1f1527f5c3289da8",
     "assets/desktop-detail.png": "9f88a4308674343c98371cd64ae443e453f1f5c7ab34b3f2f8419fe028abaf03",
     "assets/desktop-detail-dark.png": "eabeeb519c66302b634ad7e6bf41bf52aed0c59e4582994929d08cf937951f44",
@@ -206,11 +218,13 @@
     "assets/desktop-dense-schedule-dark.png": "e0d91946d26ffce4f110e56d18c2e6f5f728caa15bd90509abe59ed2fc2d2744",
     "assets/desktop-phase-editor.png": "52c65ac08988f3ff8f32fef42676b4e6d7365511ccd82051c123ea0d21d03c06",
     "assets/desktop-phase-editor-dark.png": "b9a5e20e3c6cc41753a013ba3fab1b9ed272f99384c71ccf800943aae3907c67",
-    "assets/desktop-note-editor.png": "3d24c3e31b54ff4a2234fb31dcfe419d1ad23c7cf5296553357ecf461d27e9b5",
-    "assets/desktop-note-editor-dark.png": "307c5cacae3c52248aafc8681254b7b57c76e6de9a93064aa30523a7659509ca"
+    "assets/desktop-note-editor.png": "bfc8319638ee8673ef6913f83fc8d84f7cefebf4693455207921a767306fd715",
+    "assets/desktop-note-editor-dark.png": "1623647e9d98ba53b6e015bd97c5d640ba0a7bc248e3d8a10ebf3b62fed9cb4a",
+    "assets/desktop-resource-editor.png": "3a99f2a0e43ce8316dad07a6d3a9ec42d5df54774aa4a17fd5ba54ee6e945052",
+    "assets/desktop-resource-editor-dark.png": "379df5a3c518b055488d696adcc3733531c44b2f82adb7aa68d408d98ec78fe6"
   },
   "local_app": {
-    "binary_sha256": "494964c17c21485444dd482001f72f8a9eab03076cdf70586bcaf2e59f7eb158",
+    "binary_sha256": "8b84c6ee32804824097039fe194c59fc5fd1bc9aed927e4ab973753d80a3b1a6",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -808,5 +822,81 @@
       "portable build 1 and native signature/bundled page and notices"
     ],
     "scope": "CSS-only refinement. Actual isolated WebKit geometry and synthetic activation/native persistence; animation endpoints only. Other suites are historical evidence. Trusted motion, deferred system gates and user aesthetic acceptance remain open."
+  },
+  "resource_reading_refinement": {
+    "source_before": "fdfbdacd014ee236bc8adf8fd911685d952b3ac1",
+    "changes": [
+      "separate resource names and custom types into readable stacked lines",
+      "wrap complete resource summary names and types",
+      "align expanded resource fields with the summary name column"
+    ],
+    "geometry": {
+      "default_name_width_before": 147,
+      "small_name_width_before": 125,
+      "default_name_width_after": 244,
+      "small_name_width_after": 222,
+      "old_name_scroll_width": 315,
+      "old_type_client_scroll_width": [
+        90,
+        129
+      ],
+      "long_summary_height_after": 59,
+      "field_name_alignment_offset_after": 0,
+      "short_summary_min_height": 48,
+      "viewports": [
+        [
+          1160,
+          780
+        ],
+        [
+          980,
+          668
+        ]
+      ]
+    },
+    "current_build_checks": [
+      "resource types light/dark 14 each",
+      "resource SVG icons light/dark 12 each",
+      "site icons with injected replies light/dark 18 each",
+      "long content light/dark 29 each",
+      "editor rows light/dark 23 each",
+      "editor addition light/dark 36 each",
+      "readability light/dark 9 each",
+      "design layout light/dark 16 each",
+      "panel continuity light/dark 17 each",
+      "note sizing light/dark 25 each",
+      "desktop final light/dark 49 each",
+      "live public website icons light/dark 8 each",
+      "same-fixture before and light/dark default/smaller-window geometry",
+      "six actual resource/basic/note editor screenshots inspected",
+      "portable build 1 and native signature/bundled page and notices"
+    ],
+    "scope": "Actual isolated native WebKit static geometry, synthetic disclosure/input actions and native persistence, plus the three specified public website icon flows. Resource screenshot fixture scrolls to the resource region; long single-line input values retain native horizontal scrolling. No stored data or icon-loading behavior changed. Animation endpoints only; trusted gestures, deferred system gates and user aesthetic acceptance remain open. Other suites are historical evidence.",
+    "current_build_result_paths": [
+      "docs/verification/desktop-resource-types.json",
+      "docs/verification/desktop-resource-types-dark.json",
+      "docs/verification/desktop-resource-icons.json",
+      "docs/verification/desktop-resource-icons-dark.json",
+      "docs/verification/desktop-site-icons.json",
+      "docs/verification/desktop-site-icons-dark.json",
+      "docs/verification/desktop-content.json",
+      "docs/verification/desktop-content-dark.json",
+      "docs/verification/desktop-editor-rows.json",
+      "docs/verification/desktop-editor-rows-dark.json",
+      "docs/verification/desktop-editor-addition.json",
+      "docs/verification/desktop-editor-addition-dark.json",
+      "docs/verification/desktop-readability.json",
+      "docs/verification/desktop-readability-dark.json",
+      "docs/verification/desktop-design.json",
+      "docs/verification/desktop-design-dark.json",
+      "docs/verification/desktop-panel-continuity.json",
+      "docs/verification/desktop-panel-continuity-dark.json",
+      "docs/verification/desktop-note-sizing.json",
+      "docs/verification/desktop-note-sizing-dark.json",
+      "docs/verification/desktop-final.json",
+      "docs/verification/desktop-final-dark.json",
+      "docs/verification/desktop-site-icons-live.json",
+      "docs/verification/desktop-site-icons-live-dark.json"
+    ]
   }
 }

@@ -1,0 +1,109 @@
+{
+  "ok": true,
+  "result": {
+    "clean": true,
+    "dataUnchanged": true,
+    "measurements": [
+      {
+        "documentOverflow": false,
+        "fieldNameAlignmentOffset": 43,
+        "icon": [
+          22,
+          22
+        ],
+        "inputs": [
+          {
+            "clientWidth": 316,
+            "scrollWidth": 350,
+            "type": "text"
+          },
+          {
+            "clientWidth": 316,
+            "scrollWidth": 316,
+            "type": "text"
+          },
+          {
+            "clientWidth": 316,
+            "scrollWidth": 316,
+            "type": "url"
+          }
+        ],
+        "size": "default",
+        "summary": {
+          "height": 40,
+          "name": {
+            "clientHeight": 17,
+            "clientWidth": 147,
+            "scrollHeight": 17,
+            "scrollWidth": 315
+          },
+          "nameBottom": 455.25,
+          "type": {
+            "clientHeight": 15,
+            "clientWidth": 90,
+            "scrollHeight": 15,
+            "scrollWidth": 129
+          },
+          "typeTop": 439.5
+        },
+        "viewport": [
+          1160,
+          780
+        ]
+      },
+      {
+        "documentOverflow": false,
+        "fieldNameAlignmentOffset": 43,
+        "icon": [
+          22,
+          22
+        ],
+        "inputs": [
+          {
+            "clientWidth": 294,
+            "scrollWidth": 350,
+            "type": "text"
+          },
+          {
+            "clientWidth": 294,
+            "scrollWidth": 294,
+            "type": "text"
+          },
+          {
+            "clientWidth": 294,
+            "scrollWidth": 294,
+            "type": "url"
+          }
+        ],
+        "size": "small",
+        "summary": {
+          "height": 40,
+          "name": {
+            "clientHeight": 17,
+            "clientWidth": 125,
+            "scrollHeight": 17,
+            "scrollWidth": 315
+          },
+          "nameBottom": 455.25,
+          "type": {
+            "clientHeight": 15,
+            "clientWidth": 90,
+            "scrollHeight": 15,
+            "scrollWidth": 129
+          },
+          "typeTop": 439.5
+        },
+        "viewport": [
+          980,
+          668
+        ]
+      }
+    ],
+    "scope": "actual isolated native WebKit default/smaller-window geometry and synthetic summary toggles; no trusted gesture or aesthetic acceptance",
+    "strip": true
+  },
+  "provenance": {
+    "source_commit": "fdfbdacd014ee236bc8adf8fd911685d952b3ac1",
+    "source_state": "unmodified published interface"
+  }
+}
