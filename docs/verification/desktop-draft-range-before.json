@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "result": {
+    "empty": [],
+    "initial": [
+      {
+        "left": "calc(42.857143% + 3px)",
+        "tone": "rf-range-preview green continues-right is-visible",
+        "width": "calc(57.142857% - 6px)"
+      },
+      {
+        "left": "calc(0% + 3px)",
+        "tone": "rf-range-preview green continues-left continues-right is-visible",
+        "width": "calc(100% - 6px)"
+      },
+      {
+        "left": "calc(0% + 3px)",
+        "tone": "rf-range-preview green continues-left continues-right is-visible",
+        "width": "calc(100% - 6px)"
+      },
+      {
+        "left": "calc(0% + 3px)",
+        "tone": "rf-range-preview green continues-left continues-right is-visible",
+        "width": "calc(100% - 6px)"
+      },
+      {
+        "left": "calc(0% + 3px)",
+        "tone": "rf-range-preview green continues-left is-visible",
+        "width": "calc(85.714286% - 6px)"
+      }
+    ],
+    "recovered": [
+      {
+        "left": "calc(42.857143% + 3px)",
+        "tone": "rf-range-preview green continues-right is-visible",
+        "width": "calc(57.142857% - 6px)"
+      },
+      {
+        "left": "calc(0% + 3px)",
+        "tone": "rf-range-preview green continues-left continues-right is-visible",
+        "width": "calc(100% - 6px)"
+      },
+      {
+        "left": "calc(0% + 3px)",
+        "tone": "rf-range-preview green continues-left continues-right is-visible",
+        "width": "calc(100% - 6px)"
+      },
+      {
+        "left": "calc(0% + 3px)",
+        "tone": "rf-range-preview green continues-left continues-right is-visible",
+        "width": "calc(100% - 6px)"
+      },
+      {
+        "left": "calc(0% + 3px)",
+        "tone": "rf-range-preview green continues-left is-visible",
+        "width": "calc(85.714286% - 6px)"
+      }
+    ],
+    "reversed": [],
+    "scope": "actual isolated native WebKit date input events and visible range elements; no trusted input or motion measurement"
+  },
+  "provenance": {
+    "base_commit": "06d180265d7d87d517c0ece722842f90fa247bc8",
+    "source": "unmodified base source",
+    "scope": "same isolated native WebKit fixture; synthetic input and visible strip geometry only"
+  }
+}

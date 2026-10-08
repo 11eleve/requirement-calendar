@@ -808,7 +808,8 @@ window.CalendarReady=(async()=>{
    preview.classList.toggle('continues-left',start<dates[0]);preview.classList.toggle('continues-right',end>dates[6]);if(!visible)void preview.offsetWidth;preview.classList.add('is-visible');
   }
  }
- function updateDraftPreview(start,end,tone=''){if(!validDate(start)||!validDate(end)||end<start){clearDraftPreview();return;}draftPreview={start,end,tone};paintDateSelection(draftPreview);}
+ // Keep the last valid range while either date is still being entered.
+ function updateDraftPreview(start,end,tone=''){if(!validDate(start)||!validDate(end)||end<start)return;draftPreview={start,end,tone};paintDateSelection(draftPreview);}
  function clearDraftPreview(){draftPreview=null;paintDateSelection(null);}
  function dateAtPoint(x,y){
   const viewport=calendar.getBoundingClientRect();if(x<viewport.left||x>=viewport.right||y<viewport.top||y>=viewport.bottom)return null;

@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T18:42:08.696Z",
+  "checked_at_utc": "2026-10-08T18:52:41.373Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: the authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Screen state was not revalidated by this website-icon batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,8 +9,8 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "5ee699b18dacf38ec91400fa20d35cd1204ef902bb1f812b4cba66aac7438b43",
-    "src/app.js": "8a4d071adf8d6c1b6c97dba610205c98c5727dd52551de6838d3d257a448e8a6",
+    "index.html": "989ef519de26d8618c2b93c99d2a0a5a84ef86a453c79237f7945f905ca2bb45",
+    "src/app.js": "3236038dee7fcfa5fd4a26dfb5ebbc38e1e3adc8da57887e88a9462d7267cfad",
     "src/index.html": "bfffb5032fe63a1907798b3b6f6f78b80114e1a18d95e752baf84c7c09461bb9",
     "src/model.js": "2a41e221832c283ab778d76181e307b15a71c51c6949da3cb70aee5cd732635c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
@@ -33,7 +33,7 @@
     "tests/desktop-reload-fixture.js": "6ce51e283f927b79d27fbdcd49ced16532087245390eb45ca4c9180c7f8dc237",
     "tests/desktop-reminder-denied.js": "82c2f839b5292b3555aafff7f617ef6be43d728b3da4a55d8e7e4449cc99acc8",
     "tests/desktop-save-fixture.js": "563da7b3570b7a74f95534edfb8bdb0f3d36ade0b1daf1de1a8ded1f19d9a245",
-    "tests/desktop-ui.js": "002e8005727fb6f79d368dd96d3f2d9fdda38a46968908032b2c1ea82f0a89a9",
+    "tests/desktop-ui.js": "f1b18d994fbea22a92d222c3ba9c9617a94d66e1675a7eb6b8ed2d4d7cf1b7b5",
     "tests/link-policy.swift": "9789149a02fc68b68e9ae295cd266c266e8dfc1bbff96d303a297e1f409b9eff",
     "tests/model.test.cjs": "ec5450c3c4710fdd01dff447e3dd2333f2ab674407dc04eff90d1c08fbf3f6c2",
     "tests/reminder-scheduling.swift": "3de859279c90d8101fb7937ebbfb17fc5ea86f9403f6d1ca1a6bdf24b4011647",
@@ -50,7 +50,7 @@
     "tests/desktop-readability.js": "92a77b600bf58511401fa56a46acf3557c2030ac620859bc0d7a03dfd86ee722",
     "tests/desktop-panel-continuity.js": "88ae4ed97783af517c0d476a66a660ef0c95ec4e272020677b901a51aae15560",
     "tests/desktop-creation-colors.js": "0c070de5c92ed11c904daf7ac1e6ab8d531e61a06a1db2b3f4a63f33c55f366e",
-    "README.md": "1810c900f01b44b52cde18761913c044b8e5d322b25b1612ceabb924e1177fac",
+    "README.md": "16e040bb6d392a580a9c6ddb0044a4eb48fb2c2c695447a2102eb985bef3fcd3",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "2f280e5ce9f36a7a9fd0c04f3dcbadc2f7c499efbad572c16ef91c149185ab65",
     "tests/resource-icons.swift": "62528e8913c67b0496c859b0ce22782c94b41e83fc5f9a7cd70df37183c263ca",
@@ -65,11 +65,12 @@
     "tests/desktop-editor-rows.js": "5aabdae8070f99e1fbcaf474def688d5cabf4f3d5e664941dd7c418acd0c4e4e",
     "tests/desktop-phase-editor.js": "c83bd9cd12831fab5c72076b2f7fb78f17115dff936482cbf76fc956a88af0f3",
     "tests/desktop-editor-addition.js": "11be41c2f43f8116c4fce3f4d0e342f502b4890d1117e624091a825253bf5702",
-    "tests/desktop-detail-actions.js": "c2412d56ec400cff147f9f247be79243ecf14d04b322699639cd78a987f322b5"
+    "tests/desktop-detail-actions.js": "c2412d56ec400cff147f9f247be79243ecf14d04b322699639cd78a987f322b5",
+    "tests/desktop-draft-range-continuity.js": "8e88354283cf498693e607cfd3c6c8c22cbc3695c7ac6cd3d7abd920729851c9"
   },
   "results": {
-    "docs/verification/browser-storage.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
-    "docs/verification/build-tests.txt": "24cefc2bc38a1c71e18591075993695fc72546b32ff6b5baab3d98032ce96fb5",
+    "docs/verification/browser-storage.json": "70dca1f59a7f7fdde9af7f4eaf6c378e1e9b0347e51c3701d891166ea68807fb",
+    "docs/verification/build-tests.txt": "c3dc4ce80790d0a5a68dcff2d3009be59564c24dfe01144e0f6b50051e539cc3",
     "docs/verification/desktop-data-reminders.json": "eacac1f0a1bb0e0b1335278d115bce8e06329beb5418a8f90f25e08766511ad3",
     "docs/verification/desktop-editor-dark.json": "5c1e51e36c59d3badcbb09d9521db7440abc59459c98099ba2b963581650561c",
     "docs/verification/desktop-editor.json": "79d99eaf0d11ac980034c63d55dcc4bb588e8404ffed5a3d03b5cce67b29fb2c",
@@ -129,7 +130,7 @@
     "docs/verification/desktop-week-density-light.json": "939f519ab71bee15595e1efa4b7230077b13468877abb0b8cca1aeeae1d9347f",
     "docs/verification/desktop-week-density-dark.json": "42d0bf7162db152c8ce01834efab921fce60a6003c2f7fe639e6139835a4f394",
     "docs/verification/desktop-mixed-schedule-light.json": "dbda6bd571a2e6322468e4ed991cb1a2ea071aecb2a8d8048d21c437c5eef0b4",
-    "docs/verification/desktop-ui-light.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
+    "docs/verification/desktop-ui-light.json": "70dca1f59a7f7fdde9af7f4eaf6c378e1e9b0347e51c3701d891166ea68807fb",
     "docs/verification/model-tests.tap": "968e4d893fe46b666a8299ae2b7f6a8f9bd59302a203566f1bbe681a8ccf0b9f",
     "docs/verification/desktop-resource-types-before.json": "c5f9947d03003c83eff7668367424e1aff37473adaec23b9ed0069fa4dfeecb7",
     "docs/verification/desktop-resource-types-light.json": "addd6e4f7ccb1eb499ab3199ede6f48fe62a26d5f1f279aa19cc72ea23910161",
@@ -170,7 +171,11 @@
     "docs/verification/desktop-detail-actions-dark.json": "0e40cf9d575fbd9868c59598daf0b95d1b5e884879399f53e4b91f9f1edddb40",
     "docs/verification/desktop-detail-actions-live-light.json": "391e6aa083c1cc18f6a914bbae7d451a84b690158c17c3da345f044523441efa",
     "docs/verification/desktop-detail-actions-live-dark.json": "0ebb655c81ab6fdd13682a4743c105a3c4cacd95e9286d1fde67988e8eec7e2f",
-    "docs/verification/desktop-detail-actions-prototype.json": "69ee5c908d5a79ed2f4718f05154ae72127cd8f4164acf611bdf5df9080a0a5e"
+    "docs/verification/desktop-detail-actions-prototype.json": "69ee5c908d5a79ed2f4718f05154ae72127cd8f4164acf611bdf5df9080a0a5e",
+    "docs/verification/desktop-draft-range-continuity-light.json": "f41a6532f73c5a892454e6fde1fbb7cf591dc13366c010f48d55bf62dd210538",
+    "docs/verification/desktop-draft-range-continuity-dark.json": "a3e0ae59b1204952a75a3d64374b3e6cdad612f97c77462b80a06a895ace25ed",
+    "docs/verification/desktop-draft-range-before.json": "2c7d85343cf79c5a5b71f3377d4632bc179f580a15b5a501f3245bc903257686",
+    "docs/verification/desktop-draft-range-after.json": "34670d58919a033b0372d3c0c56861038285b2256c8eb152711af1a49fdc226c"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "ae1002435945b22ec9e16921dcbbbfaea775ebf30eb02d20c57c1d5fe171a908",
@@ -185,7 +190,7 @@
     "assets/desktop-phase-editor-dark.png": "b8512721fe1fb1e12a1aecdc3321df3d4d2222b4d0798be1af45a77b971b3e7b"
   },
   "local_app": {
-    "binary_sha256": "9cdd5125be4efee2361fb879dd9db855578da411ef52dd283a9477d4f0766d8a",
+    "binary_sha256": "22738d58f691cedb04bfd49ef876fb0a09f43bd5f81d79d75cedc0961e87dcf2",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -615,5 +620,26 @@
       "portable build 1 and native signature/bundled page and notices"
     ],
     "scope": "All listed checks reran after the final bottom-padding change. Actual isolated WebKit geometry, hit testing, activeElement and native persistence with synthetic activation; no trusted input or motion claim. Initial before/prototype measurements exclude the final 10px bottom padding and are explicitly scoped. Existing focused task CSS and coarse-pointer limitations, deferred system gates and user aesthetic acceptance remain open."
+  },
+  "draft_range_continuity_refinement": {
+    "source_before": "06d180265d7d87d517c0ece722842f90fa247bc8",
+    "changes": [
+      "retain last valid range during incomplete or reversed date entry",
+      "update only on valid dates; keep cancellation and saved-bar transitions",
+      "correct prior regression expectation against the persistent-strip requirement"
+    ],
+    "current_build_checks": [
+      "draft range continuity light/dark 24 each",
+      "desktop UI and browser storage 21 each",
+      "creation colors light/dark 18 each",
+      "calendar navigation light/dark 21 each",
+      "desktop final light/dark 49 each",
+      "pointer light 6",
+      "polish light 20",
+      "sticky dates light 20",
+      "same-fixture before/after geometry",
+      "portable build 1 and native signature/bundled page and notices"
+    ],
+    "scope": "Actual isolated native WebKit input/change events, geometry and persistence with injected save failure; synthetic activation and completed animation endpoints. Existing screenshots remain representative. Other suites are historical evidence; trusted motion, deferred system gates and user aesthetic acceptance remain open."
   }
 }

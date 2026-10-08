@@ -43,9 +43,9 @@ assert($('[role=tab][aria-selected=true]').textContent==='阶段','17: edit stag
 command('close');Array.from(document.querySelectorAll('.rf-bar')).find(x=>x.textContent.includes('事项编辑验证')).click();buttons('编辑需求').click();
 const dates=$('.rf-form').querySelectorAll('input[type=date]');const previousEnd=dates[1].value;
 set(dates[1],CalendarModel.add(dates[0].value,-1));
-assert(!$('.rf-range-preview.is-visible'),'18: an invalid range clears stale visual feedback');
+assert(!!$('.rf-range-preview.is-visible'),'18: an incomplete range retains the last valid editing strip');
 set(dates[1],previousEnd);
-assert(!!$('.rf-range-preview.is-visible'),'18: fixing the range restores its strip');
+assert(!!$('.rf-range-preview.is-visible'),'18: fixing the range keeps its strip visible');
 const panel=$('#rf-panel');
 assert(getComputedStyle(panel).overflowY==='auto'&&$('#rf-detail').getBoundingClientRect().height<=innerHeight,'19: inspector scrolls within the desktop viewport');
 // No field was changed after restoring the original dates, so close is immediate.
