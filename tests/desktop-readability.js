@@ -2,7 +2,8 @@
 // text contexts only, not a complete accessibility conformance assessment.
 const checks=[], $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 const assert=(value,message)=>{if(!value)throw new Error(message);checks.push(message);};
-const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(requestAnimationFrame);document.getAnimations().forEach(a=>a.finish());};
+// Static layout/focus checks complete animation endpoints; no display-frame measurement.
+const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(resolve=>setTimeout(resolve,30));document.getAnimations().forEach(a=>a.finish());};
 const tones=['','blue','green'];
 assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-01',requirements:tones.map((tone,i)=>({id:'read-'+i,title:'阶段文字可读性',tone,start:'2026-10-01',end:'2026-10-31',phases:[{name:'评审',start:'2026-10-01',end:'2026-10-09'},{name:'开发',start:'2026-10-10',end:'2026-10-31'}],resources:[{name:'需求说明',type:'自定义资料',url:'https://example.com'}],tasks:['确认阶段日期'],done:[true],note:'保留阅读层次。'}))})),'isolated reading fixture restored');await settle();
 const context=document.createElement('canvas').getContext('2d');

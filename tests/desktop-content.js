@@ -1,7 +1,8 @@
 // Long programmer-oriented content and long-range schedules in real WebKit.
 const checks=[], $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 const assert=(value,message)=>{if(!value)throw new Error(message);checks.push(message);};
-const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(requestAnimationFrame);document.getAnimations().forEach(a=>a.finish());};
+// Static layout/focus checks complete animation endpoints; no display-frame measurement.
+const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(resolve=>setTimeout(resolve,30));document.getAnimations().forEach(a=>a.finish());};
 const title='跨年度认证服务升级 AuthenticationServiceMigration',phase='AuthenticationServiceMigrationAndCompatibilityValidation',task=phase+'AcrossAllClients';
 const item={id:'content',title,start:'2026-12-20',end:'2027-02-10',phases:[{name:phase,start:'2026-12-20',end:'2027-02-10'}],resources:[{name:phase,type:'OpenAPICompatibilityAndAuthenticationContract',url:'https://example.com'}],tasks:[task],done:[false],note:'需要确认跨年期间的灰度与回滚安排。'};
 const restore=async(value=item)=>{assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-12-01',requirements:[value]})),'isolated long-content fixture restored');CalendarApp.openRequirement('content');await settle();$('#rf-close').blur();};
@@ -10,7 +11,7 @@ function checkLayout(){
  assert(elements.every(node=>node.scrollWidth<=node.clientWidth+1),'long titles, phases, resource types and tasks fit their own widths');
  assert($('.rf-phase-name').textContent===phase&&$('.rf-task span').textContent===task,'complete phase and task text stays present rather than truncated');
  assert($('.rf-phase-period').getBoundingClientRect().top>=$('.rf-phase-name').getBoundingClientRect().bottom-1&&$('.rf-phase-period').getBoundingClientRect().height<20,'long date ranges move below the full-width phase name instead of squeezing it');
- assert($('.rf-phase-period').getBoundingClientRect().right<=$('.rf-section').getBoundingClientRect().right-10,'phase dates stay within the timeline card');
+ assert($('.rf-phase-period').getBoundingClientRect().right<=$('.rf-section').getBoundingClientRect().right-10,'phase dates stay within the timeline section');
 }
 await restore();
 assert($('.rf-period').textContent==='2026.12.20 — 2027.2.10','cross-year requirement periods show both years');

@@ -1,7 +1,8 @@
 // Preserve reading context when an existing requirement returns from editing.
 const checks=[], $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 const assert=(value,message)=>{if(!value)throw new Error(message);checks.push(message);};
-const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(requestAnimationFrame);document.getAnimations().forEach(a=>a.finish());};
+// Static layout/focus checks complete animation endpoints; no display-frame measurement.
+const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(resolve=>setTimeout(resolve,30));document.getAnimations().forEach(a=>a.finish());};
 const item={id:'continuity',title:'长详情衔接检查',start:'2026-10-01',end:'2026-10-31',phases:[{name:'开发',start:'2026-10-01',end:'2026-10-31'}],resources:Array.from({length:18},(_,i)=>({name:'需求资料 '+i,type:'文档',url:'https://example.com/'+i})),tasks:Array.from({length:12},(_,i)=>'验收事项 '+i),done:Array(12).fill(false),note:'待确认的上下文。'};
 assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-01',requirements:[item]})),'isolated reading-context fixture restored');
 const panel=$('#rf-panel'),click=text=>$$('button').find(node=>node.textContent===text).click();

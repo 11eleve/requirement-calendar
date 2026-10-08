@@ -1,7 +1,8 @@
 // Layout acceptance for the redesigned interface, using the product WebKit host.
 const checks=[], $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 const assert=(value,message)=>{if(!value)throw new Error(message);checks.push(message);};
-const settle=async()=>{document.getAnimations().forEach(animation=>animation.finish());await new Promise(requestAnimationFrame);document.getAnimations().forEach(animation=>animation.finish());};
+// Static layout/focus checks complete animation endpoints; no display-frame measurement.
+const settle=async()=>{document.getAnimations().forEach(animation=>animation.finish());await new Promise(resolve=>setTimeout(resolve,30));document.getAnimations().forEach(animation=>animation.finish());};
 const set=(node,value)=>{node.value=value;node.dispatchEvent(new Event('input',{bubbles:true}));};
 const item=(id,overrides={})=>({id,title:'结算流程改版',start:'2026-11-01',end:'2026-11-30',phases:[{name:'需求评审',start:'2026-11-01',end:'2026-11-03'},{name:'开发与联调',start:'2026-11-04',end:'2026-11-22'},{name:'测试验收',start:'2026-11-23',end:'2026-11-30'}],resources:[],tasks:[],done:[],note:'',...overrides});
 const restore=async items=>{assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-11-01',requirements:items})),'isolated design fixture restored');await settle();};

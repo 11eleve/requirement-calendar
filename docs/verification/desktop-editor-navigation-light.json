@@ -1,0 +1,20 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "light",
+    "checks" : [
+      "isolated navigation fixture restored",
+      "manage resources lands on the first resource without expanding every item",
+      "the resource target is visible between the sticky navigation and actions",
+      "targeting resources does not change the requirement",
+      "clicking the active tab preserves the reading position",
+      "keyboard navigation to the active tab preserves the reading position",
+      "switching to stages opens its content at the top",
+      "switching back to basic information begins at the top",
+      "isolated navigation fixture restored",
+      "empty resources focus the available add action",
+      "resource navigation retains the date strip and a clean draft"
+    ],
+    "scope" : "actual WebKit focus, keyboard handler and scroll behavior; isolated native data"
+  }
+}
