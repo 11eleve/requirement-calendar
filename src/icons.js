@@ -36,8 +36,9 @@
     '码': { name:'code', paths:['m8 7-5 5 5 5','m16 7 5 5-5 5','m14 4-4 16'] },
     '文': { name:'document', paths:['M14 3H5v18h14V8z','M14 3v5h5','M8 12h8','M8 16h6'] }
   };
+  const hasSymbol=value=>Object.hasOwn(symbols,value);
   function symbol(value='文') {
-    const definition = Object.hasOwn(symbols,value) ? symbols[value] : null;
+    const definition = hasSymbol(value) ? symbols[value] : null;
     if (!definition) return document.createTextNode(value);
     const svg = document.createElementNS(namespace,'svg');
     svg.setAttribute('viewBox',definition.viewBox || '0 0 24 24');
@@ -57,5 +58,5 @@
     }
     return svg;
   }
-  window.CalendarIcons=Object.freeze({symbol});
+  window.CalendarIcons=Object.freeze({symbol,hasSymbol});
 })();

@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "result": {
+    "detailSymbol": "document",
+    "editingSymbol": "document",
+    "savedResource": {
+      "icon": "文",
+      "name": "接口说明",
+      "type": "接口约定",
+      "url": ""
+    }
+  },
+  "source_commit": "258b8cbe6dd0a3345508e53df0e997e93c2b531b",
+  "scope": "Actual isolated WebKit input, native save and detail return: an unlinked resource type changes from document to interface but the old icon persists."
+}

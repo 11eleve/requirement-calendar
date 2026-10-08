@@ -1,0 +1,23 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "only bundled symbols participate in automatic type updates",
+      "existing unlinked brand symbols remain unchanged on entering the editor",
+      "changing an unlinked document to an interface updates its badge immediately",
+      "successive type edits update the same unlinked row",
+      "clearing a custom type returns to the document fallback",
+      "whitespace-only type edits preserve an intentional legacy brand marker",
+      "literal custom markers survive type changes",
+      "removing a website link falls back to the unchanged resource type",
+      "removing a link and changing type does not retain the old website brand",
+      "changed resource types save through the native file bridge",
+      "saved icon markers match editing summaries while preserving legacy values",
+      "detail icons match the saved resource types",
+      "reopening retains the corrected icon without adding dirty state",
+      "discarding a later type edit restores the committed icon"
+    ],
+    "scope" : "actual WebKit summary\/detail symbols, input events and isolated native persistence, with website icon requests disabled"
+  }
+}
