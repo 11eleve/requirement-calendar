@@ -89,7 +89,7 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-date:hover .rf-date-number { color:var(--rf-purple); }
 #req-calendar-refined .rf-date:focus-visible { outline:0; }
 #req-calendar-refined .rf-date:focus-visible .rf-date-number { outline:2px solid var(--rf-purple); outline-offset:-1px; }
-#req-calendar-refined .rf-bars { position:relative; display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); grid-auto-rows:38px; gap:6px 0; padding-top:35px; pointer-events:none; }
+#req-calendar-refined .rf-bars { position:relative; display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); grid-auto-rows:40px; gap:4px 0; padding-top:35px; pointer-events:none; }
 #req-calendar-refined .rf-bar {
  --rf-tone:var(--rf-purple); --rf-fill:var(--rf-purple-bg); --rf-phase-fill:var(--rf-purple-stage);
  position:relative; display:flex; flex-direction:column; justify-content:center; min-width:0; margin:0 4px; padding:0;
@@ -99,15 +99,15 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-bar.blue { --rf-tone:var(--rf-blue); --rf-fill:var(--rf-blue-bg); --rf-phase-fill:var(--rf-blue-stage); }
 #req-calendar-refined .rf-bar.green { --rf-tone:var(--rf-green); --rf-fill:var(--rf-green-bg); --rf-phase-fill:var(--rf-green-stage); }
 #req-calendar-refined .rf-bar::before { content:''; position:absolute; inset:6px auto 6px 0; width:2px; border-radius:2px; background:color-mix(in srgb,var(--rf-tone) 48%,transparent); }
-#req-calendar-refined .rf-bar.continued-left { border-top-left-radius:3px; border-bottom-left-radius:3px; }
+#req-calendar-refined .rf-bar.continued-left { border-left-width:0; border-top-left-radius:0; border-bottom-left-radius:0; }
 #req-calendar-refined .rf-bar.continued-left::before { display:none; }
-#req-calendar-refined .rf-bar.continued-right { border-top-right-radius:3px; border-bottom-right-radius:3px; }
+#req-calendar-refined .rf-bar.continued-right { border-right-width:0; border-top-right-radius:0; border-bottom-right-radius:0; }
 #req-calendar-refined .rf-bar:hover { border-color:color-mix(in srgb,var(--rf-tone) 28%,transparent); box-shadow:0 1px 4px #26203508; }
 #req-calendar-refined .rf-bar.is-selected { border-color:color-mix(in srgb,var(--rf-tone) 48%,transparent); box-shadow:inset 0 0 0 .5px color-mix(in srgb,var(--rf-tone) 25%,transparent),0 1px 4px #5140780c; }
-#req-calendar-refined .rf-bar-title { display:block; min-width:0; padding:2px 9px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:11.5px; font-weight:550; line-height:18px; }
+#req-calendar-refined .rf-bar-title { display:block; min-width:0; padding:2px 9px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; font-weight:600; line-height:18px; }
 #req-calendar-refined .rf-phases { display:grid; grid-template-columns:repeat(var(--rf-days),minmax(0,1fr)); flex:none; width:100%; min-height:16px; margin-top:auto; }
 #req-calendar-refined .rf-bar:not(.has-phases) .rf-phases { display:none; }
-#req-calendar-refined .rf-phase { position:relative; display:block; min-width:0; height:16px; padding:0 8px 2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:10px; line-height:14px; background:color-mix(in srgb,var(--rf-phase-fill) 12%,var(--rf-fill)); border-left:1px solid color-mix(in srgb,var(--rf-tone) 12%,transparent); }
+#req-calendar-refined .rf-phase { position:relative; display:block; min-width:0; height:16px; padding:0 8px 2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:11px; line-height:14px; background:color-mix(in srgb,var(--rf-phase-fill) 12%,var(--rf-fill)); border-left:1px solid color-mix(in srgb,var(--rf-tone) 12%,transparent); }
 #req-calendar-refined .rf-phase.phase-alt { background:color-mix(in srgb,var(--rf-phase-fill) 7%,var(--rf-fill)); }
 #req-calendar-refined .rf-phase::after { content:''; position:absolute; inset:auto 0 0; height:2px; background:currentColor; opacity:.24; }
 #req-calendar-refined .rf-phase.is-current::after { opacity:.5; }

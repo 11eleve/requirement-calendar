@@ -1,0 +1,127 @@
+{
+  "ok": true,
+  "result": {
+    "bands": [
+      {
+        "barHeight": 40,
+        "borderLeft": "1px",
+        "borderRight": "0px",
+        "continuedLeft": false,
+        "continuedRight": true,
+        "id": "long",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": "11px",
+        "titleFont": "12px",
+        "titleHeight": 22,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 40,
+        "borderLeft": "1px",
+        "borderRight": "1px",
+        "continuedLeft": false,
+        "continuedRight": false,
+        "id": "export",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": null,
+        "titleFont": "12px",
+        "titleHeight": 22,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 40,
+        "borderLeft": "1px",
+        "borderRight": "1px",
+        "continuedLeft": false,
+        "continuedRight": false,
+        "id": "api",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": null,
+        "titleFont": "12px",
+        "titleHeight": 22,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 40,
+        "borderLeft": "1px",
+        "borderRight": "1px",
+        "continuedLeft": false,
+        "continuedRight": false,
+        "id": "login",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": null,
+        "titleFont": "12px",
+        "titleHeight": 22,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 40,
+        "borderLeft": "0px",
+        "borderRight": "0px",
+        "continuedLeft": true,
+        "continuedRight": true,
+        "id": "long",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": "11px",
+        "titleFont": "12px",
+        "titleHeight": 22,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 40,
+        "borderLeft": "0px",
+        "borderRight": "0px",
+        "continuedLeft": true,
+        "continuedRight": true,
+        "id": "long",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": "11px",
+        "titleFont": "12px",
+        "titleHeight": 22,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 40,
+        "borderLeft": "0px",
+        "borderRight": "0px",
+        "continuedLeft": true,
+        "continuedRight": true,
+        "id": "long",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": "11px",
+        "titleFont": "12px",
+        "titleHeight": 22,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 40,
+        "borderLeft": "0px",
+        "borderRight": "1px",
+        "continuedLeft": true,
+        "continuedRight": false,
+        "id": "long",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": "11px",
+        "titleFont": "12px",
+        "titleHeight": 22,
+        "titleScrollHeight": 22
+      }
+    ],
+    "calendarHeight": 690,
+    "lanePitch": "40px + 4px",
+    "scope": "actual isolated native WebKit mixed-schedule geometry; synthetic fixture restore and completed animation endpoints",
+    "scrollHeight": 690
+  },
+  "provenance": {
+    "base_commit": "a8c49526db83ad9af65f19c3934f785e42bba2e9",
+    "source": "final local band-reading refinement with inset continuation edges"
+  }
+}

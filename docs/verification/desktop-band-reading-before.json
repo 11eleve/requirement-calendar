@@ -1,0 +1,127 @@
+{
+  "ok": true,
+  "result": {
+    "bands": [
+      {
+        "barHeight": 38,
+        "borderLeft": "1px",
+        "borderRight": "1px",
+        "continuedLeft": false,
+        "continuedRight": true,
+        "id": "long",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": "10px",
+        "titleFont": "11.5px",
+        "titleHeight": 20,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 38,
+        "borderLeft": "1px",
+        "borderRight": "1px",
+        "continuedLeft": false,
+        "continuedRight": false,
+        "id": "export",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": null,
+        "titleFont": "11.5px",
+        "titleHeight": 22,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 38,
+        "borderLeft": "1px",
+        "borderRight": "1px",
+        "continuedLeft": false,
+        "continuedRight": false,
+        "id": "api",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": null,
+        "titleFont": "11.5px",
+        "titleHeight": 22,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 38,
+        "borderLeft": "1px",
+        "borderRight": "1px",
+        "continuedLeft": false,
+        "continuedRight": false,
+        "id": "login",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": null,
+        "titleFont": "11.5px",
+        "titleHeight": 22,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 38,
+        "borderLeft": "1px",
+        "borderRight": "1px",
+        "continuedLeft": true,
+        "continuedRight": true,
+        "id": "long",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": "10px",
+        "titleFont": "11.5px",
+        "titleHeight": 20,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 38,
+        "borderLeft": "1px",
+        "borderRight": "1px",
+        "continuedLeft": true,
+        "continuedRight": true,
+        "id": "long",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": "10px",
+        "titleFont": "11.5px",
+        "titleHeight": 20,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 38,
+        "borderLeft": "1px",
+        "borderRight": "1px",
+        "continuedLeft": true,
+        "continuedRight": true,
+        "id": "long",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": "10px",
+        "titleFont": "11.5px",
+        "titleHeight": 20,
+        "titleScrollHeight": 22
+      },
+      {
+        "barHeight": 38,
+        "borderLeft": "1px",
+        "borderRight": "1px",
+        "continuedLeft": true,
+        "continuedRight": false,
+        "id": "long",
+        "marginLeft": "4px",
+        "marginRight": "4px",
+        "phaseFont": "10px",
+        "titleFont": "11.5px",
+        "titleHeight": 20,
+        "titleScrollHeight": 22
+      }
+    ],
+    "calendarHeight": 690,
+    "lanePitch": "38px + 6px",
+    "scope": "actual isolated native WebKit mixed-schedule geometry; synthetic fixture restore and completed animation endpoints",
+    "scrollHeight": 690
+  },
+  "provenance": {
+    "source_commit": "a8c49526db83ad9af65f19c3934f785e42bba2e9",
+    "source": "unmodified source at base commit"
+  }
+}
