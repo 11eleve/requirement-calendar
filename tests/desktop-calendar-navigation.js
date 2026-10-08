@@ -6,7 +6,7 @@ const snapshot=()=>JSON.parse(CalendarApp.exportSnapshot()),item=(id,start,end,e
 const items=[...Array.from({length:14},(_,i)=>item('oct-'+i,'2026-10-01','2026-10-31')),...Array.from({length:14},(_,i)=>item('nov-'+i,'2026-11-01','2026-11-30')),item('target','2026-10-30','2026-10-30',{title:'目标需求',resources:Array.from({length:18},(_,i)=>({name:'资料 '+i,type:'接口约定',url:''}))})];
 const restore=async()=>{if(!await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-01',requirements:items})))throw Error('fixture restore failed');settle();};
 const calendar=$('#rf-calendar'),panel=$('#rf-panel'),bridge=webkit.messageHandlers.calendar;
-const visible=id=>{const node=$$('[data-requirement-id]').find(node=>node.dataset.requirementId===id);if(!node)return false;const bounds=node.getBoundingClientRect(),head=$('.rf-weekdays').getBoundingClientRect(),view=calendar.getBoundingClientRect();return bounds.top>=head.bottom+7&&bounds.bottom<=view.bottom-7;};
+const visible=id=>{const node=$$('[data-requirement-id]').find(node=>node.dataset.requirementId===id);if(!node)return false;const bounds=node.getBoundingClientRect(),head=$('.rf-weekdays').getBoundingClientRect(),view=calendar.getBoundingClientRect();return bounds.top>=Math.max(head.bottom,node.closest('.rf-week').querySelector('.rf-date-label').getBoundingClientRect().bottom)-1&&bounds.bottom<=view.bottom-7;};
 const set=(node,value)=>{node.value=value;node.dispatchEvent(new Event('input',{bubbles:true}));};
 await restore();const original=JSON.stringify(snapshot().requirements);calendar.scrollTop=1200;
 assert(calendar.scrollTop===1200&&calendar.scrollHeight>calendar.clientHeight,'dense monthly work genuinely requires calendar scrolling');

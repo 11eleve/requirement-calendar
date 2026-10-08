@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "result": {
+    "after": {
+      "headerBottom": 106,
+      "hitDate": "2026-10-05",
+      "labelBottom": 141,
+      "labelTop": 106,
+      "scroll": 930,
+      "weekBottom": 516
+    },
+    "before": {
+      "date": "2026-10-05",
+      "headerBottom": 105.75,
+      "numberTop": -149.25,
+      "scroll": 930
+    },
+    "scope": "actual isolated WebKit scroll before and after a temporary sticky-date prototype; no product source edits or trusted input"
+  },
+  "source_commit": "83dd427988bb8579a822383a78d1ba96c5aa26f2"
+}

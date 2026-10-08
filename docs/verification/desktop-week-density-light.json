@@ -27,31 +27,31 @@
       "scrollHeight" : 690,
       "weeks" : [
         {
-          "height" : 236.65625,
+          "height" : 236.59375,
           "longLane" : 1,
           "start" : "2026-09-28",
           "visibleRequirements" : 4
         },
         {
-          "height" : 104.65625,
+          "height" : 104.59375,
           "longLane" : 1,
           "start" : "2026-10-05",
           "visibleRequirements" : 1
         },
         {
-          "height" : 104.65625,
+          "height" : 104.59375,
           "longLane" : 1,
           "start" : "2026-10-12",
           "visibleRequirements" : 1
         },
         {
-          "height" : 104.65625,
+          "height" : 104.59375,
           "longLane" : 1,
           "start" : "2026-10-19",
           "visibleRequirements" : 1
         },
         {
-          "height" : 104.65625,
+          "height" : 104.59375,
           "longLane" : 1,
           "start" : "2026-10-26",
           "visibleRequirements" : 1

@@ -2,7 +2,7 @@
   "ok" : true,
   "result" : {
     "appearance" : "light",
-    "calendarScroll" : 2833,
+    "calendarScroll" : 2834,
     "checks" : [
       "dense monthly work genuinely requires calendar scrolling",
       "switching to a dense next month begins at its first week",

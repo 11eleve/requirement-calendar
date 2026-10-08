@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T17:54:53.608Z",
+  "checked_at_utc": "2026-10-08T18:12:27.525Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: the authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Screen state was not revalidated by this website-icon batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,12 +9,12 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "979338c1861cf1d4f2960fe34eb9577b940afd96f6872b1c0b3f9529c1122f45",
-    "src/app.js": "e1f6e3841ac04a7a3d09c0e4b43b9a136e2cb897469b44ffb76ef32df301f08b",
+    "index.html": "43f614fd1ce0d1a3eefb06f09bf2d476b54f58aee0b3116c576822adb874e89d",
+    "src/app.js": "b77ad08df37d15b6bcc17f0738fa38e8947e6b090a25f819b3112cc5867df1a9",
     "src/index.html": "bfffb5032fe63a1907798b3b6f6f78b80114e1a18d95e752baf84c7c09461bb9",
     "src/model.js": "2a41e221832c283ab778d76181e307b15a71c51c6949da3cb70aee5cd732635c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
-    "src/styles.css": "96e2b9be219623b474e7def7a331d0baa4e1fd86694a3ef1b96a7a971275c677",
+    "src/styles.css": "9a248d9e79b3a7ad9e927cafedcd8f1d469d9f4989eb0ce0a2c91f69b08d9f7f",
     "native/App.swift": "b57691aeaa1dc95ac7f815b9d09842f60cb8164afe80960e16653c6198deffc0",
     "native/DataStore.swift": "7e2fe913db06f18ee669a799c1675bc99c704bd5e10ab7421510038079c0e091",
     "native/LinkPolicy.swift": "42695a8723abf96f25053ec625d535d985ab172087c2d6b60199a04996963ef1",
@@ -50,7 +50,7 @@
     "tests/desktop-readability.js": "e08c08635c7dd20fa43b09d05c63455d5e28daac6e229a8132245bd8010536ee",
     "tests/desktop-panel-continuity.js": "3dfe463107504cb679cb9fd637027d0fe82dac3c815614728cb7e04cc8086259",
     "tests/desktop-creation-colors.js": "0c070de5c92ed11c904daf7ac1e6ab8d531e61a06a1db2b3f4a63f33c55f366e",
-    "README.md": "08d418512aa82dc3391a67166c8e8f13dd7809a77456ca72a59fdc9308282591",
+    "README.md": "e93653db1cf685aeb49af1290447b901297ec53037e85437357dc454987037f3",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "2f280e5ce9f36a7a9fd0c04f3dcbadc2f7c499efbad572c16ef91c149185ab65",
     "tests/resource-icons.swift": "62528e8913c67b0496c859b0ce22782c94b41e83fc5f9a7cd70df37183c263ca",
@@ -59,7 +59,9 @@
     "tests/desktop-week-density.js": "240769e1c3ad62f07731ea0b747518dca13e0fbb39d9f2e8381a519edd581b29",
     "tests/desktop-mixed-schedule.js": "92681d6c9d6ffce57d2fcb7914cc644264321aa3b2fab14cc1bee8f24c42dda6",
     "tests/desktop-resource-types.js": "7d78014dca19cb78f42bda22e8c81b7d1a9902369ba392942567a375702917d0",
-    "tests/desktop-calendar-navigation.js": "9f2a3f1091c66f213f84ff674e16f925ecd55306a0f0b2d01f94e7f90b73b11d"
+    "tests/desktop-calendar-navigation.js": "5fdfe83ce9aa1d6b9c7bd96a5fd18a326ef7734233975bb15416edf76da54201",
+    "tests/desktop-sticky-dates.js": "b203da19aebdd58a1084ffb79881582bd2a68b66639a1fab600b125bcfde5dce",
+    "tests/desktop-dense-schedule.js": "5a95f6905478e3c50c92d3f76c4199c2cbc1e505f622264d56d24485d143aad1"
   },
   "results": {
     "docs/verification/browser-storage.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
@@ -120,7 +122,7 @@
     "docs/verification/desktop-resource-icons-light.json": "6670209a21ce8139f47281597ec49f22739601e1d2826faab01b353c8e1e8e59",
     "docs/verification/desktop-data-reminders-light.json": "38b5552590e9fc8717edb376320bd35e456d8c829594ebddc199b133c0b9411e",
     "docs/verification/desktop-week-density-before.json": "815700e3b48091e98e29b62437e1c7d2f4938be5fb5671aa7185ed4528adcb5a",
-    "docs/verification/desktop-week-density-light.json": "06e01026aa764be871807414faa9a06a1c39b6c7ae5db69f24cff8c569325192",
+    "docs/verification/desktop-week-density-light.json": "939f519ab71bee15595e1efa4b7230077b13468877abb0b8cca1aeeae1d9347f",
     "docs/verification/desktop-week-density-dark.json": "42d0bf7162db152c8ce01834efab921fce60a6003c2f7fe639e6139835a4f394",
     "docs/verification/desktop-mixed-schedule-light.json": "dbda6bd571a2e6322468e4ed991cb1a2ea071aecb2a8d8048d21c437c5eef0b4",
     "docs/verification/desktop-ui-light.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
@@ -142,8 +144,13 @@
     "docs/verification/desktop-inspector-context-live-light.json": "298b22ea59a56add618a7685e4e344b1eb9cbe4d2f8afb5b07ce8946e0a92aed",
     "docs/verification/desktop-inspector-context-live-dark.json": "2394a169665342042d944da7b9f709efabdd9c21b1d0503029a1871d50c74cad",
     "docs/verification/desktop-calendar-navigation-before.json": "11f4342c0fd3b8db68f4b70fcd3b42bae0593675659a3d885387bc7fbc282ba1",
-    "docs/verification/desktop-calendar-navigation-light.json": "89acf2b9867d5d88ac0f210be5dae2293c45b5ec968110ab9f624c0699d9892c",
-    "docs/verification/desktop-calendar-navigation-dark.json": "1d59dc80502f680144b7499b96e65a1d1c92c1ff002bba0adfc7940e169d5c98"
+    "docs/verification/desktop-calendar-navigation-light.json": "99bf117cdcec60c661ab2d1bad66738140e1d1d48eeb264f8a1a840c2f63ac05",
+    "docs/verification/desktop-calendar-navigation-dark.json": "bb3394c5bbd11d5adaef809122b1b8bf39a024f9eba299fbdd999b65b139e3d4",
+    "docs/verification/desktop-sticky-dates-before.json": "4bfb8818e0308fc663c747359c59355f7b9685fbdeecb765a5f5656b95c62fc5",
+    "docs/verification/desktop-sticky-dates-light.json": "5bccda82d6e88e49cc9f4b529a9a2f6dc869287017e5419080075310c902ec3d",
+    "docs/verification/desktop-sticky-dates-dark.json": "c8fc188e2ffa1823ecf37f06e2741f0fbf1a57bd16c60379750a0dede648fe5a",
+    "docs/verification/desktop-dense-schedule-light.json": "8b9ff79f4b79750b336d84227e64f0a55f3382845cbfe5de60879c9577725def",
+    "docs/verification/desktop-dense-schedule-dark.json": "8b9ff79f4b79750b336d84227e64f0a55f3382845cbfe5de60879c9577725def"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "7d525ee2fab93bf6261c74704af345489e2786426c4dc86deed6d80ae57eff29",
@@ -151,10 +158,12 @@
     "assets/desktop-overview.png": "32b6ac107236a9d591eee362421db14bac002b8201d560660b41fb078ec6938b",
     "assets/desktop-detail.png": "6b76bfe486d7fe6973dc04dc4e424bb8949eee6a29fd829e25138ac1db75794e",
     "assets/desktop-detail-dark.png": "f67b503f8c0d6f0fcd786d4d0252e1ee697812965fbd57159009c4780637c62c",
-    "assets/desktop-mixed-schedule.png": "24d4e47478cb8b7d2f6958ad10d3a1705750c7e519f49d8e7a4486a4663c9eae"
+    "assets/desktop-mixed-schedule.png": "24d4e47478cb8b7d2f6958ad10d3a1705750c7e519f49d8e7a4486a4663c9eae",
+    "assets/desktop-dense-schedule.png": "1d4ccca261c49c488888d264ea2cf59936bcd5a12299d0ae8a3bbd739f7cae76",
+    "assets/desktop-dense-schedule-dark.png": "5e28aa948c097688a5bdc75c9b86bcea1d09e85b71c70cae3218ee86ec9cb6b9"
   },
   "local_app": {
-    "binary_sha256": "cf2ed1a15f83d05531109832802ce295190380a6de313f5294469fba88fdf70b",
+    "binary_sha256": "68d0ced6ea4a4be4382833f86cefaa65d7dd17609224f946e654c33af741daa9",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -472,5 +481,28 @@
     ],
     "source_before": "5841446ea97c696cceb11af8fb54778dc7dcfa81",
     "scope": "Actual WebKit scroll and visibility geometry with isolated native persistence, injected save failure and synthetic commands/buttons. Includes save-and-open after moving a requirement across months and the smaller native window. Existing screenshots remain representative because styles did not change. This does not prove a real system-notification click, trusted pointer motion or user aesthetic acceptance; deferred gates remain open."
+  },
+  "sticky_dates_refinement": {
+    "changes": [
+      "keep the current week dates visible below weekdays",
+      "replace date headings naturally at week boundaries",
+      "cover requirement bands at date column edges",
+      "reserve both heading rows when revealing a requirement"
+    ],
+    "source_before": "83dd427988bb8579a822383a78d1ba96c5aa26f2",
+    "current_build_checks": [
+      "sticky dates light/dark 20 each",
+      "calendar navigation light/dark 21 each",
+      "desktop final light/dark 49 each",
+      "actual dense-schedule light/dark screenshots inspected",
+      "portable build and native signature/bundled page and notices"
+    ],
+    "pre_final_edge_adjustment_checks": [
+      "polish light/dark 20 each",
+      "weekly density light 18",
+      "readability light/dark 8 each",
+      "pointer handlers light 6"
+    ],
+    "scope": "Actual isolated WebKit geometry, hit testing and static screenshots. Synthetic pointer capture is stubbed. At subpixel column boundaries either adjacent date may be hit; covered bands must not be hit. No trusted animation, aesthetic acceptance or deferred system gate completion claim."
   }
 }

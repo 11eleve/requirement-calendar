@@ -1,0 +1,52 @@
+// Actual WebKit sticky-date geometry, hit testing and calendar creation behavior.
+const checks=[],$=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
+const assert=(value,message)=>{if(!value)throw Error(message);checks.push(message);},settle=()=>{document.getAnimations().forEach(a=>a.finish());void $('#rf-calendar').offsetHeight;};
+const titles=['认证链路重构','结算流程改版','报表导出优化','文件预览改造','权限策略调整','消息中心迭代','搜索接口提速','缓存一致性修复','CI 构建优化','错误监控接入','计费规则更新','批量导入支持','审计日志补齐','支付回调回归'];
+const requirements=titles.map((title,i)=>({id:'dense-'+String(i).padStart(2,'0'),title,tone:['','blue','green'][i%3],start:'2026-10-01',end:'2026-10-31',phases:[{name:'需求评审',start:'2026-10-01',end:'2026-10-03'},{name:'开发与联调',start:'2026-10-05',end:'2026-10-23'},{name:'测试验收',start:'2026-10-26',end:'2026-10-31'}],resources:[],tasks:[],done:[],note:''}));
+const calendar=$('#rf-calendar'),weeks=()=>$$('.rf-week'),restore=async()=>{if(!await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-01',requirements})))throw Error('fixture restore failed');settle();};
+const within=(index,offset)=>{calendar.scrollTop+=weeks()[index].getBoundingClientRect().top-$('.rf-weekdays').getBoundingClientRect().bottom+offset;settle();};
+const point=node=>{const r=node.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2};},hit=point=>document.elementFromPoint(point.x,point.y);
+const dateValues=()=>$$('.rf-form .rf-pair input[type=date]').map(node=>node.value);
+await restore();const saved=JSON.stringify(JSON.parse(CalendarApp.exportSnapshot()).requirements);within(1,260);
+const week=weeks()[1],head=$('.rf-weekdays'),labels=Array.from(week.querySelectorAll('.rf-date-label')),headerBottom=head.getBoundingClientRect().bottom;
+assert(calendar.scrollTop>600&&week.getBoundingClientRect().top<headerBottom-200,'the fixture genuinely scrolls through a dense week');
+assert(labels.length===7&&labels.every(node=>Math.abs(node.getBoundingClientRect().top-headerBottom)<1),'all seven dates remain aligned below the weekday header while their week is scrolled');
+assert(labels.map(node=>node.textContent).join(',')==='5,6,7,8,9,10,11','the pinned date row retains the correct week numbers');
+assert(labels.every(node=>hit(point(node))?.closest('.rf-date')===node.closest('.rf-date')),'the entire visible date heading still hits its own date button');
+assert(labels.slice(0,5).every(node=>getComputedStyle(node).backgroundColor===getComputedStyle(calendar).backgroundColor)&&labels.slice(5).every(node=>getComputedStyle(node).backgroundColor===getComputedStyle(node.closest('.rf-date')).backgroundColor),'date headings retain the calendar and weekend surfaces rather than a selected-cell fill');
+// At subpixel boundaries, hit testing may choose either adjacent date label.
+assert(labels.slice(0,6).every(node=>{const target=hit({x:node.closest('.rf-date').getBoundingClientRect().right-.5,y:headerBottom+10});return labels.some(label=>label.contains(target))&&!target?.closest('.rf-bar');}),'date-column boundaries cover underlying bands and remain inside the current date row');
+const masked={x:point(labels[3]).x,y:headerBottom+10};
+assert(hit(masked)?.closest('.rf-date')?.dataset.date==='2026-10-08'&&!hit(masked)?.closest('.rf-bar'),'the pinned row prevents a covered requirement from receiving a date-heading click');
+assert(hit({x:calendar.getBoundingClientRect().left+20,y:head.getBoundingClientRect().top+10})?.closest('.rf-weekdays')===head,'weekday labels remain above the per-week date row');
+labels[2].click();settle();
+assert(dateValues().join(',')==='2026-10-07,2026-10-07'&&!!$('.rf-range-preview.is-visible'),'clicking a pinned date creates the correct one-day draft with its persistent strip');
+await CalendarApp.command('close');settle();
+assert(!$('.rf-range-preview.is-visible'),'cancelling pinned-date creation clears its strip');
+const originalSet=Element.prototype.setPointerCapture,originalHas=Element.prototype.hasPointerCapture;
+Element.prototype.setPointerCapture=()=>{};Element.prototype.hasPointerCapture=()=>false;
+const send=(node,type,p)=>node.dispatchEvent(new PointerEvent(type,{pointerId:91,isPrimary:true,button:0,bubbles:true,cancelable:true,clientX:p.x,clientY:p.y}));
+try{
+ const from=labels[0],to=labels[4];send(from,'pointerdown',point(from));send(from,'pointermove',point(to));send(from,'pointerup',point(to));settle();
+ assert(dateValues().join(',')==='2026-10-05,2026-10-09','dragging pinned dates uses their original calendar range');
+ await CalendarApp.command('close');settle();
+ const next=weeks()[2].querySelectorAll('.rf-date-label')[1];send(labels[4],'pointerdown',point(labels[4]));send(labels[4],'pointermove',point(next));send(labels[4],'pointerup',point(next));settle();
+ assert(dateValues().join(',')==='2026-10-09,2026-10-13'&&$$('.rf-range-preview.is-visible').length===2,'dragging from a pinned date into the next week preserves cross-week creation');
+ await CalendarApp.command('close');settle();
+ send(labels[0],'pointerdown',point(labels[0]));window.dispatchEvent(new Event('blur'));send(labels[0],'pointerup',point(labels[0]));labels[0].click();settle();
+ assert($('#rf-detail').hidden&&!$('.rf-range-preview.is-visible'),'focus-loss cancellation still rejects the trailing click on a pinned date');
+}finally{Element.prototype.setPointerCapture=originalSet;Element.prototype.hasPointerCapture=originalHas;}
+within(1,weeks()[1].getBoundingClientRect().height-16);
+const previous=weeks()[1].querySelector('.rf-date-label').getBoundingClientRect(),next=weeks()[2].querySelector('.rf-date-label').getBoundingClientRect(),edge=weeks()[1].getBoundingClientRect().bottom;
+assert(previous.bottom<=edge+1&&next.top>=previous.bottom-1,'date rows stay within their own weeks and push off without overlapping the next row');
+within(2,80);
+assert(Math.abs(weeks()[2].querySelector('.rf-date-label').getBoundingClientRect().top-head.getBoundingClientRect().bottom)<1&&weeks()[1].querySelector('.rf-date-label').getBoundingClientRect().bottom<=head.getBoundingClientRect().bottom+1,'the next week replaces the earlier pinned dates');
+assert($$('.rf-bar').length===70&&$$('.rf-phase').every(node=>{const p=node.getBoundingClientRect(),b=node.closest('.rf-bar').getBoundingClientRect();return p.top>=b.top-1&&p.bottom<=b.bottom+1;}),'all requirement bands and their embedded phases remain in the month');
+assert(JSON.stringify(JSON.parse(CalendarApp.exportSnapshot()).requirements)===saved,'scrolling and cancelled date creation alter no stored requirements');
+CalendarApp.openRequirement('dense-13');settle();
+const band=$$('[data-requirement-id=dense-13]')[0],r=band.getBoundingClientRect(),center={x:r.left+r.width/2,y:r.top+r.height/2};
+assert(hit(center)?.closest('.rf-bar')===band,'explicit requirement positioning accounts for both pinned heading rows');
+await CalendarApp.command('close');const frame=await webkit.messageHandlers.calendar.postMessage({action:'verifyWindow',save:true});settle();await restore();within(1,260);
+assert(frame.width===980&&frame.height===700&&Math.abs(weeks()[1].querySelector('.rf-date-label').getBoundingClientRect().top-$('.rf-weekdays').getBoundingClientRect().bottom)<1,'weekly dates remain readable in the smaller native window');
+assert(document.documentElement.scrollHeight<=innerHeight+1&&document.documentElement.scrollWidth<=innerWidth+1,'sticky dates create no application overflow');
+return {checks,appearance:matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light',viewport:[innerWidth,innerHeight],scroll:calendar.scrollTop,scope:'actual WebKit layout and hit testing with isolated native data; pointer events synthetic and capture bookkeeping stubbed, not trusted gesture or animation evidence'};
