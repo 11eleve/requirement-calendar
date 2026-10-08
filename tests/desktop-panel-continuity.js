@@ -33,7 +33,7 @@ assert(!$('.rf-range-preview.is-visible')&&!CalendarApp.hasUnsavedChanges(),'ret
 await CalendarApp.command('close');CalendarApp.openRequirement('continuity');await settle();
 assert(panel.scrollTop===0&&document.activeElement===$('#rf-close'),'a fresh opening begins at the heading without reusing old reading state');
 CalendarApp.editRequirement('continuity');await settle();click('取消');await settle();
-assert(panel.scrollTop===0&&document.activeElement===$('#rf-close'),'calendar-initiated editing keeps the heading context with a visible return focus');
+assert(panel.scrollTop===0&&document.activeElement.textContent==='编辑需求','calendar-initiated editing keeps the heading context and returns focus to the now-visible edit action');
 click('编辑');await settle();click('取消');await settle();
 assert(document.activeElement.textContent==='编辑'&&panel.scrollTop===0,'stage cancellation returns to its original action');
 await CalendarApp.command('close');CalendarApp.editRequirement('continuity');await settle();click('取消');await settle();

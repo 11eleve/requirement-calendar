@@ -1,0 +1,85 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "light",
+    "checks" : [
+      "isolated long-detail fixture restored",
+      "default: the fixture requires substantial detail scrolling",
+      "default top: edit and delete actions remain visible and independently hittable",
+      "default middle: edit and delete actions remain visible and independently hittable",
+      "default bottom: edit and delete actions remain visible and independently hittable",
+      "default: reading details preserves the independent calendar position",
+      "default: focusing a deep resource keeps its complete row above the action area",
+      "default: focusing a deep task retains an unobscured checkbox",
+      "a visible task still saves completion without changing the reading position",
+      "the pinned edit action opens the existing editor with its persistent date strip",
+      "cancelling returns to the same detail reading position and visible edit action",
+      "pinning actions does not hide or collapse requirement content",
+      "small: the fixture requires substantial detail scrolling",
+      "small top: edit and delete actions remain visible and independently hittable",
+      "small middle: edit and delete actions remain visible and independently hittable",
+      "small bottom: edit and delete actions remain visible and independently hittable",
+      "small: reading details preserves the independent calendar position",
+      "small: focusing a deep resource keeps its complete row above the action area",
+      "small: focusing a deep task retains an unobscured checkbox",
+      "the smaller native window retains internal scrolling without page overflow",
+      "isolated short-detail fixture restored",
+      "short details keep their natural height and visible actions without a large empty panel"
+    ],
+    "measurements" : [
+      {
+        "actionBottom" : 761,
+        "actionTop" : 708,
+        "editBottom" : 751,
+        "panelBottom" : 761,
+        "position" : "top",
+        "size" : "default"
+      },
+      {
+        "actionBottom" : 761,
+        "actionTop" : 708,
+        "editBottom" : 751,
+        "panelBottom" : 761,
+        "position" : "middle",
+        "size" : "default"
+      },
+      {
+        "actionBottom" : 744.796875,
+        "actionTop" : 691.796875,
+        "editBottom" : 734.796875,
+        "panelBottom" : 761,
+        "position" : "bottom",
+        "size" : "default"
+      },
+      {
+        "actionBottom" : 649,
+        "actionTop" : 596,
+        "editBottom" : 639,
+        "panelBottom" : 649,
+        "position" : "top",
+        "size" : "small"
+      },
+      {
+        "actionBottom" : 649,
+        "actionTop" : 596,
+        "editBottom" : 639,
+        "panelBottom" : 649,
+        "position" : "middle",
+        "size" : "small"
+      },
+      {
+        "actionBottom" : 632.796875,
+        "actionTop" : 579.796875,
+        "editBottom" : 622.796875,
+        "panelBottom" : 649,
+        "position" : "bottom",
+        "size" : "small"
+      }
+    ],
+    "scope" : "actual isolated native WebKit scroll, hit testing, activeElement and task persistence with synthetic activation; not trusted pointer or motion evidence",
+    "viewport" : [
+      980,
+      668
+    ]
+  }
+}

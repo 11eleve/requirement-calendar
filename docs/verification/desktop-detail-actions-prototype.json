@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "result": {
+    "after": {
+      "actionBottom": 761,
+      "actionTop": 718,
+      "panelBottom": 761,
+      "panelTop": 106,
+      "scroll": 0
+    },
+    "before": {
+      "actionBottom": 1891.796875,
+      "actionTop": 1861.796875,
+      "panelBottom": 761,
+      "panelTop": 106,
+      "scroll": 0
+    },
+    "focused": {
+      "actionTop": 718,
+      "active": true,
+      "bottom": 430.796875,
+      "top": 385.296875
+    },
+    "hit": true,
+    "scope": "actual isolated WebKit before and after temporary CSS prototype; no product source edits or trusted input"
+  },
+  "source_commit": "d6bd4645a9a42f3fc08eda5c28332bbd2c916791",
+  "scope": "Before-source and temporary pinned-footer prototype only. The final source additionally includes 10px bottom action padding; its geometry is recorded in desktop-detail-actions light/dark results."
+}

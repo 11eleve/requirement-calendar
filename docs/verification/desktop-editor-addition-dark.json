@@ -43,51 +43,51 @@
     "measurements" : [
       {
         "bottom" : 450,
-        "footerTop" : 718,
+        "footerTop" : 708,
         "kind" : "资料",
         "size" : "default",
         "tabsBottom" : 140.5,
         "top" : 416
       },
       {
-        "bottom" : 608.5,
-        "footerTop" : 701.5,
+        "bottom" : 598.5,
+        "footerTop" : 691.5,
         "kind" : "阶段",
         "size" : "default",
         "tabsBottom" : 140.5,
-        "top" : 574.5
+        "top" : 564.5
       },
       {
-        "bottom" : 572,
-        "footerTop" : 701.5,
+        "bottom" : 562,
+        "footerTop" : 691.5,
         "kind" : "事项",
         "size" : "default",
         "tabsBottom" : 140.5,
-        "top" : 540
+        "top" : 530
       },
       {
         "bottom" : 394,
-        "footerTop" : 606,
+        "footerTop" : 596,
         "kind" : "资料",
         "size" : "small",
         "tabsBottom" : 140.5,
         "top" : 360
       },
       {
-        "bottom" : 496.5,
-        "footerTop" : 589.5,
+        "bottom" : 486.5,
+        "footerTop" : 579.5,
         "kind" : "阶段",
         "size" : "small",
         "tabsBottom" : 140.5,
-        "top" : 462.5
+        "top" : 452.5
       },
       {
-        "bottom" : 460,
-        "footerTop" : 589.5,
+        "bottom" : 450,
+        "footerTop" : 579.5,
         "kind" : "事项",
         "size" : "small",
         "tabsBottom" : 140.5,
-        "top" : 428
+        "top" : 418
       }
     ],
     "scope" : "actual isolated native WebKit geometry, activeElement and persistence using synthetic button\/input actions; no trusted pointer or motion evidence"

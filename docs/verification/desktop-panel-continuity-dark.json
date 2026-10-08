@@ -17,7 +17,7 @@
       "saving preserves the resource section position when the title height changes",
       "returning after save clears draft feedback and dirty state",
       "a fresh opening begins at the heading without reusing old reading state",
-      "calendar-initiated editing keeps the heading context with a visible return focus",
+      "calendar-initiated editing keeps the heading context and returns focus to the now-visible edit action",
       "stage cancellation returns to its original action",
       "editing without a previous detail view uses the normal detail opening"
     ],

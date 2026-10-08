@@ -20,5 +20,5 @@ $$('.rf-form-actions button').find(button=>button.textContent==='取消').click(
 const returnDeadline=Date.now()+3000;
 while($$('.rf-resource-row img').length<3&&Date.now()<returnDeadline)await new Promise(resolve=>setTimeout(resolve,20));
 assert($$('.rf-resource-row img').length===3&&CalendarApp.exportSnapshot()===original,'returning to details reuses icons without changing requirement data');
-$('#rf-close').blur();
+document.activeElement?.blur();
 return {checks,appearance:matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light',origins:item.resources.map(r=>new URL(r.url).origin),scope:'actual production native network-to-WebKit PNG rendering for these three public sites; not browser-tab or authenticated favicon access'};
