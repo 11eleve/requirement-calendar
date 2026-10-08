@@ -1,0 +1,35 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "calendarScroll" : 2833,
+    "checks" : [
+      "dense monthly work genuinely requires calendar scrolling",
+      "switching to a dense next month begins at its first week",
+      "previous-month navigation also starts at the first week",
+      "month navigation changes no requirement dates, order or content",
+      "failed month persistence restores both the prior month and its reading position",
+      "successful retry starts at the new month and clears the save error",
+      "an explicit open reveals a late-month requirement below dense earlier weeks",
+      "the revealed requirement retains its selected identity",
+      "explicit opening begins the corresponding detail at its heading",
+      "reopening resolves the same visible target without depending on old scroll",
+      "a neighboring requirement is visibly available in the dense final week",
+      "clicking an already visible band preserves the calendar reading position",
+      "month navigation preserves the edited fields and independent inspector position",
+      "returning to the edited month restores its persistent range feedback",
+      "an explicit open still protects a dirty draft",
+      "continuing the draft changes neither its input nor the calendar reading position",
+      "save-and-open commits the updated date and complete title through native persistence",
+      "pending open resolves the freshly saved requirement rather than its old date",
+      "the saved detail clears draft feedback and confirmation state",
+      "target visibility also holds in a smaller native window",
+      "reveal positioning stays within the application viewport"
+    ],
+    "scope" : "actual WebKit geometry and isolated native persistence; commands\/buttons are synthetic and animation endpoints are completed; not a real system-notification click",
+    "viewport" : [
+      980,
+      668
+    ]
+  }
+}

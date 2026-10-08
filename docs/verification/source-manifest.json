@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T17:45:25.442Z",
+  "checked_at_utc": "2026-10-08T17:54:53.608Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: the authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Screen state was not revalidated by this website-icon batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,8 +9,8 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "1b32b72d060c187920a0c76717fcbff2c48d124ce4d1660c663126923bcb6fc7",
-    "src/app.js": "3f2765c8a1a373004fd970e4717ab7f585409d3301679b192503a0695b28b1c0",
+    "index.html": "979338c1861cf1d4f2960fe34eb9577b940afd96f6872b1c0b3f9529c1122f45",
+    "src/app.js": "e1f6e3841ac04a7a3d09c0e4b43b9a136e2cb897469b44ffb76ef32df301f08b",
     "src/index.html": "bfffb5032fe63a1907798b3b6f6f78b80114e1a18d95e752baf84c7c09461bb9",
     "src/model.js": "2a41e221832c283ab778d76181e307b15a71c51c6949da3cb70aee5cd732635c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
@@ -50,7 +50,7 @@
     "tests/desktop-readability.js": "e08c08635c7dd20fa43b09d05c63455d5e28daac6e229a8132245bd8010536ee",
     "tests/desktop-panel-continuity.js": "3dfe463107504cb679cb9fd637027d0fe82dac3c815614728cb7e04cc8086259",
     "tests/desktop-creation-colors.js": "0c070de5c92ed11c904daf7ac1e6ab8d531e61a06a1db2b3f4a63f33c55f366e",
-    "README.md": "8c9db2d574d201b7d579998538908de123538e3d82570108ea9a7f33ee448ba3",
+    "README.md": "08d418512aa82dc3391a67166c8e8f13dd7809a77456ca72a59fdc9308282591",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "2f280e5ce9f36a7a9fd0c04f3dcbadc2f7c499efbad572c16ef91c149185ab65",
     "tests/resource-icons.swift": "62528e8913c67b0496c859b0ce22782c94b41e83fc5f9a7cd70df37183c263ca",
@@ -58,7 +58,8 @@
     "tests/desktop-site-icons-live.js": "1de506bf9d85934ae093c54d4c937621a5907e58381238f4d4b0cad895d73425",
     "tests/desktop-week-density.js": "240769e1c3ad62f07731ea0b747518dca13e0fbb39d9f2e8381a519edd581b29",
     "tests/desktop-mixed-schedule.js": "92681d6c9d6ffce57d2fcb7914cc644264321aa3b2fab14cc1bee8f24c42dda6",
-    "tests/desktop-resource-types.js": "7d78014dca19cb78f42bda22e8c81b7d1a9902369ba392942567a375702917d0"
+    "tests/desktop-resource-types.js": "7d78014dca19cb78f42bda22e8c81b7d1a9902369ba392942567a375702917d0",
+    "tests/desktop-calendar-navigation.js": "9f2a3f1091c66f213f84ff674e16f925ecd55306a0f0b2d01f94e7f90b73b11d"
   },
   "results": {
     "docs/verification/browser-storage.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
@@ -123,7 +124,7 @@
     "docs/verification/desktop-week-density-dark.json": "42d0bf7162db152c8ce01834efab921fce60a6003c2f7fe639e6139835a4f394",
     "docs/verification/desktop-mixed-schedule-light.json": "dbda6bd571a2e6322468e4ed991cb1a2ea071aecb2a8d8048d21c437c5eef0b4",
     "docs/verification/desktop-ui-light.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
-    "docs/verification/model-tests.tap": "5458fc92fea6d772eead04619c46ded152bf3748845c5d53189f738201c27355",
+    "docs/verification/model-tests.tap": "968e4d893fe46b666a8299ae2b7f6a8f9bd59302a203566f1bbe681a8ccf0b9f",
     "docs/verification/desktop-resource-types-before.json": "c5f9947d03003c83eff7668367424e1aff37473adaec23b9ed0069fa4dfeecb7",
     "docs/verification/desktop-resource-types-light.json": "addd6e4f7ccb1eb499ab3199ede6f48fe62a26d5f1f279aa19cc72ea23910161",
     "docs/verification/desktop-resource-types-dark.json": "44c4d30f25c6e155d5b01723f854f04c9c5cc4180776d33b9f8a50082b316655",
@@ -139,7 +140,10 @@
     "docs/verification/desktop-inspector-context-light.json": "512d11c82b4cf3942179d5fc44ce94474d19a210bbda7d394caf946167fb1cbc",
     "docs/verification/desktop-inspector-context-dark.json": "d43dabbdd83087a187f317343aeae7437fb4aa548bb982159843db62b5b6ad1b",
     "docs/verification/desktop-inspector-context-live-light.json": "298b22ea59a56add618a7685e4e344b1eb9cbe4d2f8afb5b07ce8946e0a92aed",
-    "docs/verification/desktop-inspector-context-live-dark.json": "2394a169665342042d944da7b9f709efabdd9c21b1d0503029a1871d50c74cad"
+    "docs/verification/desktop-inspector-context-live-dark.json": "2394a169665342042d944da7b9f709efabdd9c21b1d0503029a1871d50c74cad",
+    "docs/verification/desktop-calendar-navigation-before.json": "11f4342c0fd3b8db68f4b70fcd3b42bae0593675659a3d885387bc7fbc282ba1",
+    "docs/verification/desktop-calendar-navigation-light.json": "89acf2b9867d5d88ac0f210be5dae2293c45b5ec968110ab9f624c0699d9892c",
+    "docs/verification/desktop-calendar-navigation-dark.json": "1d59dc80502f680144b7499b96e65a1d1c92c1ff002bba0adfc7940e169d5c98"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "7d525ee2fab93bf6261c74704af345489e2786426c4dc86deed6d80ae57eff29",
@@ -150,7 +154,7 @@
     "assets/desktop-mixed-schedule.png": "24d4e47478cb8b7d2f6958ad10d3a1705750c7e519f49d8e7a4486a4663c9eae"
   },
   "local_app": {
-    "binary_sha256": "cb83e4793f4a1ca677d15d8579e00fd3e42df46f7bddc94129b548101a87bb56",
+    "binary_sha256": "cf2ed1a15f83d05531109832802ce295190380a6de313f5294469fba88fdf70b",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -446,5 +450,27 @@
     },
     "source_before": "a2bb51def09fed11a3863a797678f7094ada4a6f",
     "scope": "Actual resolved WebKit colors and isolated requirement data using a temporary local measurement probe, not a new formal test suite. Opening/editing/cancellation use synthetic actions and completed animation endpoints. The live-icon fixture only changes the demonstrated checkout requirement tone to blue. Other suites and screenshots are historical evidence; user aesthetic acceptance and previously deferred system gates remain open."
+  },
+  "calendar_navigation_refinement": {
+    "changes": [
+      "start month-button navigation at the first week",
+      "restore previous calendar scroll when month persistence fails",
+      "reveal the opened requirement below the sticky weekday header",
+      "resolve saved requirement dates when executing pending open actions",
+      "preserve calendar position for direct visible-band clicks and independent editing"
+    ],
+    "current_build_checks": [
+      "calendar navigation light/dark 21 each",
+      "model 16 tests including 80 seeded allocation samples",
+      "desktop final light 49",
+      "data/reminder bridge light 14",
+      "polish light 20",
+      "panel continuity light 17",
+      "weekly density light 18",
+      "desktop UI light 21",
+      "portable build and native signature/bundled page and notices"
+    ],
+    "source_before": "5841446ea97c696cceb11af8fb54778dc7dcfa81",
+    "scope": "Actual WebKit scroll and visibility geometry with isolated native persistence, injected save failure and synthetic commands/buttons. Includes save-and-open after moving a requirement across months and the smaller native window. Existing screenshots remain representative because styles did not change. This does not prove a real system-notification click, trusted pointer motion or user aesthetic acceptance; deferred gates remain open."
   }
 }

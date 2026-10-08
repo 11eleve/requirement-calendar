@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "result": {
+    "afterSave": {
+      "anchor": "2026-10-30",
+      "guarded": true,
+      "savedStart": "2027-01-30",
+      "targetBars": 0
+    },
+    "before": 1200,
+    "next": {
+      "anchor": "2026-11-01",
+      "scroll": 1200
+    },
+    "opened": {
+      "scroll": 1200,
+      "targetBottom": 2274.75,
+      "targetTop": 2236.75,
+      "visible": false,
+      "visibleBottom": 762,
+      "visibleTop": 105.75
+    },
+    "scope": "actual WebKit calendar scroll and isolated native save, with synthetic commands and completed animation endpoints"
+  },
+  "source_commit": "5841446ea97c696cceb11af8fb54778dc7dcfa81"
+}
