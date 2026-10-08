@@ -1,0 +1,114 @@
+{
+  "ok" : true,
+  "result" : {
+    "normal" : {
+      "actions" : {
+        "height" : 53,
+        "width" : 318,
+        "x" : 807,
+        "y" : 708
+      },
+      "dates" : [
+        {
+          "clientWidth" : 138,
+          "height" : 24,
+          "scrollWidth" : 138,
+          "value" : "2026-10-09",
+          "width" : 138,
+          "x" : 818,
+          "y" : 274.5
+        },
+        {
+          "clientWidth" : 137,
+          "height" : 24,
+          "scrollWidth" : 137,
+          "value" : "2026-11-08",
+          "width" : 137,
+          "x" : 977,
+          "y" : 274.5
+        }
+      ],
+      "dirty" : false,
+      "pageOverflow" : false,
+      "panel" : {
+        "height" : 655,
+        "width" : 350,
+        "x" : 791,
+        "y" : 106
+      },
+      "period" : {
+        "height" : 57.5,
+        "width" : 318,
+        "x" : 807,
+        "y" : 248
+      },
+      "strips" : 4,
+      "title" : {
+        "height" : 44,
+        "width" : 318,
+        "x" : 807,
+        "y" : 192
+      },
+      "titleFont" : "20px",
+      "viewport" : [
+        1160,
+        780
+      ]
+    },
+    "scope" : "actual isolated WebKit geometry at completed animation endpoints; synthetic open\/edit and window resize; no native active-focus or aesthetic acceptance claim",
+    "smaller" : {
+      "actions" : {
+        "height" : 53,
+        "width" : 296,
+        "x" : 655,
+        "y" : 596
+      },
+      "dates" : [
+        {
+          "clientWidth" : 127,
+          "height" : 24,
+          "scrollWidth" : 127,
+          "value" : "2026-10-09",
+          "width" : 127,
+          "x" : 666,
+          "y" : 274.5
+        },
+        {
+          "clientWidth" : 126,
+          "height" : 24,
+          "scrollWidth" : 126,
+          "value" : "2026-11-08",
+          "width" : 126,
+          "x" : 814,
+          "y" : 274.5
+        }
+      ],
+      "dirty" : false,
+      "pageOverflow" : false,
+      "panel" : {
+        "height" : 543,
+        "width" : 328,
+        "x" : 639,
+        "y" : 106
+      },
+      "period" : {
+        "height" : 57.5,
+        "width" : 296,
+        "x" : 655,
+        "y" : 248
+      },
+      "strips" : 4,
+      "title" : {
+        "height" : 44,
+        "width" : 296,
+        "x" : 655,
+        "y" : 192
+      },
+      "titleFont" : "20px",
+      "viewport" : [
+        980,
+        668
+      ]
+    }
+  }
+}

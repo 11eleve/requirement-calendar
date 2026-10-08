@@ -170,15 +170,15 @@
         "opacity" : 1
       },
       {
-        "background" : "rgb(231, 231, 238)",
-        "contrast" : 4.5946351599116921,
+        "background" : "color(srgb 0.935882 0.935882 0.956275)",
+        "contrast" : 4.9340112909066089,
         "foreground" : "rgb(100, 102, 120)",
         "name" : "inactive editor tab",
         "opacity" : 1
       },
       {
-        "background" : "rgb(255, 255, 255)",
-        "contrast" : 5.024279561444903,
+        "background" : "rgb(248, 248, 251)",
+        "contrast" : 4.7398716801934704,
         "foreground" : "rgb(108, 110, 128)",
         "name" : "field placeholder",
         "opacity" : 1

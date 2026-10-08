@@ -169,7 +169,7 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 
 /* Compact editing with a typographic title, small surfaces and a stable footer. */
 #req-calendar-refined .rf-form { display:flex; flex-direction:column; gap:14px; min-height:0; }
-#req-calendar-refined .rf-editor-tabs { position:sticky; top:-16px; z-index:3; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); flex:none; gap:3px; padding:3px; background:var(--rf-line); border-radius:8px; box-shadow:0 -16px 0 var(--rf-panel-surface),0 7px 0 var(--rf-panel-surface); }
+#req-calendar-refined .rf-editor-tabs { position:sticky; top:-16px; z-index:3; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); flex:none; gap:3px; padding:3px; background:color-mix(in srgb,var(--rf-line) 55%,var(--rf-panel-surface)); border-radius:8px; box-shadow:0 -16px 0 var(--rf-panel-surface),0 7px 0 var(--rf-panel-surface); }
 #req-calendar-refined .rf-editor-tab { min-width:0; padding:6px 5px; border-radius:5px; font-size:11px; font-weight:500; color:light-dark(#646678,var(--rf-muted)); }
 #req-calendar-refined .rf-editor-tab[aria-selected=true] { color:var(--rf-text); background:var(--rf-bg); box-shadow:0 1px 3px #21203113; }
 #req-calendar-refined .rf-tab-panel { display:flex; flex-direction:column; gap:12px; min-height:0; min-width:0; }
@@ -177,11 +177,20 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-field :is(input,textarea) { width:100%; min-width:0; min-height:34px; padding:7px 9px; color:var(--rf-text); background:var(--rf-bg); border:1px solid var(--rf-line); border-radius:7px; box-shadow:0 1px 2px #00000002; font-size:12px; font-weight:400; }
 #req-calendar-refined .rf-field :is(input,textarea):focus { outline:none; border-color:color-mix(in srgb,var(--rf-purple) 55%,var(--rf-line)); box-shadow:0 0 0 3px color-mix(in srgb,var(--rf-purple) 11%,transparent); }
 #req-calendar-refined .rf-field input::placeholder,#req-calendar-refined textarea::placeholder { color:var(--rf-muted); opacity:1; }
-#req-calendar-refined .rf-tab-panel[data-editor-panel=basic]>.rf-field:first-child input { min-height:41px; padding:8px 10px; font-size:16px; font-weight:550; letter-spacing:-.2px; }
+#req-calendar-refined .rf-tab-panel[data-editor-panel=basic]>.rf-field:first-child input { min-height:41px; padding:5px 0 8px; background:transparent; border:0; border-bottom:1px solid var(--rf-line); border-radius:0; box-shadow:none; font-size:20px; font-weight:600; letter-spacing:-.4px; }
+#req-calendar-refined .rf-tab-panel[data-editor-panel=basic]>.rf-field:first-child input:focus { border-bottom-color:var(--rf-purple); box-shadow:0 1px 0 var(--rf-purple); }
+#req-calendar-refined .rf-tab-panel[data-editor-panel=basic]>.rf-field:first-child input[aria-invalid=true] { border-bottom-color:light-dark(#a34756,#ffb2be); }
 #req-calendar-refined .rf-field input[type=date] { padding:7px 5px; font-size:11px; font-variant-numeric:tabular-nums; }
 #req-calendar-refined .rf-field input[type=datetime-local] { font-size:11px; font-variant-numeric:tabular-nums; }
 #req-calendar-refined .rf-field textarea { min-height:78px; resize:vertical; line-height:1.65; }
 #req-calendar-refined .rf-pair { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; }
+/* Dates share a surface; other fields keep their own controls. */
+#req-calendar-refined .rf-pair:has(input[type=date]) { gap:0; background:var(--rf-bg); border:1px solid var(--rf-line); border-radius:9px; }
+#req-calendar-refined .rf-pair:has(input[type=date])>.rf-field { gap:3px; padding:6px 10px; }
+#req-calendar-refined .rf-pair:has(input[type=date])>.rf-field+ .rf-field { border-left:1px solid var(--rf-line); }
+#req-calendar-refined .rf-pair:has(input[type=date]) input { min-height:24px; padding:0; background:transparent; border:0; border-radius:0; box-shadow:none; font-size:12px; }
+#req-calendar-refined .rf-pair:has(input[type=date]):focus-within { border-color:color-mix(in srgb,var(--rf-purple) 55%,var(--rf-line)); box-shadow:0 0 0 3px color-mix(in srgb,var(--rf-purple) 11%,transparent); }
+#req-calendar-refined .rf-pair:has(input[type=date]):has([aria-invalid=true]) { border-color:light-dark(#a34756,#ffb2be); }
 #req-calendar-refined .rf-editor-section { padding:12px 0 0; border-top:1px solid var(--rf-line); }
 #req-calendar-refined [data-editor-panel=phases]>.rf-editor-section { padding-top:0; border-top:0; }
 #req-calendar-refined .rf-editor-section .rf-heading { margin-bottom:4px; }

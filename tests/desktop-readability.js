@@ -23,7 +23,9 @@ CalendarApp.editRequirement('read-0');await settle();
 const tabs=$$('.rf-editor-tab'),tabBackground=getComputedStyle($('.rf-editor-tabs')).backgroundColor;
 assert(measure('inactive editor tab',tabs[1],tabBackground)>=4.5,'the other editor tab remains legible on the segmented background');
 const placeholder=$('.rf-form input[placeholder]');
-assert(measure('field placeholder',placeholder,getComputedStyle(placeholder).backgroundColor,'::placeholder')>=4.5,'field placeholder text remains readable on its input surface');
+// Transparent title inputs inherit the visible surface from their ancestors.
+const surface=node=>{for(let current=node;current;current=current.parentElement){const color=getComputedStyle(current).backgroundColor;if(color!=='rgba(0, 0, 0, 0)'&&color!=='transparent')return color;}throw Error('No opaque field surface');};
+assert(measure('field placeholder',placeholder,surface(placeholder),'::placeholder')>=4.5,'field placeholder text remains readable on its input surface');
 const label=$('.rf-field>span');
 assert(measure('field label',label,getComputedStyle($('#rf-detail')).backgroundColor)>=4.5,'form labels preserve hierarchy with sufficient text contrast');
 tabs[1].click();await settle();
