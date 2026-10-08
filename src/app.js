@@ -169,6 +169,11 @@ window.CalendarReady=(async()=>{
  get('rf-new').addEventListener('click',()=>command('new'));get('rf-close').addEventListener('click',()=>command('close'));get('rf-prev').addEventListener('click',()=>command('previous'));get('rf-next').addEventListener('click',()=>command('next'));
  window.addEventListener('keydown',event=>{if(event.isComposing||event.defaultPrevented)return;const modifier=event.metaKey||event.ctrlKey;const key=event.key.toLowerCase();if(modifier&&!event.altKey&&!event.shiftKey&&key==='z'&&canUndoDeletion()){event.preventDefault();void command('undo');}else if(modifier&&!event.altKey&&['n','s'].includes(key)){event.preventDefault();command(key==='n'?'new':'save');}else if(modifier&&event.altKey&&['arrowleft','arrowright'].includes(key)){event.preventDefault();command(key==='arrowleft'?'previous':'next');}else if(event.key==='Escape'&&!dateSelection&&!barSelection&&!get('rf-detail').hidden&&!get('rf-discard').open){event.preventDefault();command('close');}});render();
  const calendar=get('rf-calendar');
+ const bandAt=node=>{const bar=node?.closest?.('.rf-bar');return bar&&calendar.contains(bar)?bar:null;};
+ calendar.addEventListener('pointerover',event=>{if(event.pointerType==='touch'||barSelection?.dragged||saving)return;const bar=bandAt(event.target);if(bar)markBandState('is-hovered',bar.dataset.requirementId);});
+ calendar.addEventListener('pointerout',event=>{const bar=bandAt(event.target);if(bar&&bandAt(event.relatedTarget)?.dataset.requirementId!==bar.dataset.requirementId)markBandState('is-hovered',null);});
+ calendar.addEventListener('focusin',event=>{const bar=bandAt(event.target);markBandState('is-focused',bar?.dataset.requirementId);});
+ calendar.addEventListener('focusout',event=>{if(bandAt(event.target))markBandState('is-focused',bandAt(event.relatedTarget)?.dataset.requirementId);});
  calendar.addEventListener('contextmenu',event=>{const bar=event.target.closest('.rf-bar');if(!nativeBridge||!bar||saving)return;event.preventDefault();nativeBridge.postMessage({action:'contextMenu',id:bar.dataset.requirementId}).catch(()=>showStorageIssue('无法打开需求菜单，请点击需求查看详情。'));});
  calendar.addEventListener('keydown',async event=>{const cell=event.target.closest('.rf-date');if(!cell||saving||event.metaKey||event.ctrlKey||event.altKey||event.shiftKey)return;const delta={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[event.key];if(!delta)return;event.preventDefault();const date=boundedAdd(cell.dataset.date,delta);if(!date)return;let target=Array.from(calendar.querySelectorAll('.rf-date')).find(x=>x.dataset.date===date);if(!target){const previous=state.anchor;state.anchor=date;render();setSaving(true);const ok=await save();setSaving(false);if(!ok)state.anchor=previous;render();target=Array.from(calendar.querySelectorAll('.rf-date')).find(x=>x.dataset.date===(ok?date:cell.dataset.date));}target?.focus({preventScroll:true});target?.querySelector('span')?.scrollIntoView({block:'nearest',inline:'nearest'});});
  function paintDateSelection(range=dateSelection){
@@ -194,12 +199,13 @@ window.CalendarReady=(async()=>{
  function cancelDateSelection(){if(!dateSelection)return;cancelledDatePointer=dateSelection.pointerId;suppressDateClickUntil=performance.now()+400;clearDateSelection();}
  function clearBarSelection(keepPreview=false){
   const selection=barSelection;barSelection=null;cancelAnimationFrame(replanFrame);replanFrame=0;
-  root.classList.remove('is-replanning','is-replan-invalid');calendar.querySelectorAll('.rf-bar.is-moving').forEach(bar=>bar.classList.remove('is-moving'));
+  root.classList.remove('is-replanning','is-replan-invalid');calendar.querySelectorAll('.rf-bar.is-moving,.rf-bar.is-pressed').forEach(bar=>bar.classList.remove('is-moving','is-pressed'));
   if(!keepPreview)paintDateSelection(draftPreview);
   if(selection?.button.hasPointerCapture(selection.pointerId))selection.button.releasePointerCapture(selection.pointerId);
  }
  function cancelBarSelection(){if(!barSelection)return;cancelledDatePointer=barSelection.pointerId;suppressDateClickUntil=performance.now()+400;clearBarSelection();}
- function cancelCalendarGesture(){cancelDateSelection();cancelBarSelection();}
+ function markBandState(className,id){get('rf-calendar').querySelectorAll('.rf-bar').forEach(bar=>bar.classList.toggle(className,!!id&&bar.dataset.requirementId===id));}
+ function cancelCalendarGesture(){cancelDateSelection();cancelBarSelection();for(const name of ['is-hovered','is-focused','is-pressed'])markBandState(name,null);}
  function shiftedAtPoint(selection,x,y){
   const date=dateAtPoint(x,y);if(!date)return null;
   const offset=days(selection.origin,date);
@@ -235,7 +241,7 @@ window.CalendarReady=(async()=>{
    const origin=dateAtPoint(event.clientX,event.clientY),original=req(bar.dataset.requirementId);if(!origin||!original)return;
    cancelledDatePointer=null;suppressDateClickUntil=0;
    barSelection={button:bar,pointerId:event.pointerId,original,origin,x:event.clientX,y:event.clientY,point:{x:event.clientX,y:event.clientY},dragged:false,offset:null};
-   bar.setPointerCapture(event.pointerId);return;
+   markBandState('is-pressed',original.id);bar.setPointerCapture(event.pointerId);return;
   }
   const button=event.target.closest?.('.rf-date');if(!button?.dataset.date||!calendar.contains(button)||event.button!==0||event.isPrimary===false||saving||dateSelection||barSelection||editor?.isDirty()||get('rf-discard').open)return;
   cancelledDatePointer=null;suppressDateClickUntil=0;dateSelection={start:button.dataset.date,end:button.dataset.date,tone:nextRequirementTone(),pointerId:event.pointerId,button,dragged:false};button.setPointerCapture(event.pointerId);paintDateSelection();
@@ -244,7 +250,7 @@ window.CalendarReady=(async()=>{
   if(barSelection?.pointerId===event.pointerId){
    barSelection.point={x:event.clientX,y:event.clientY};
    if(!barSelection.dragged&&Math.hypot(event.clientX-barSelection.x,event.clientY-barSelection.y)<6)return;
-   if(!barSelection.dragged){barSelection.dragged=true;root.classList.add('is-replanning');calendar.querySelectorAll('.rf-bar').forEach(bar=>bar.classList.toggle('is-moving',bar.dataset.requirementId===barSelection.original.id));}
+   if(!barSelection.dragged){barSelection.dragged=true;markBandState('is-pressed',null);markBandState('is-hovered',null);root.classList.add('is-replanning');calendar.querySelectorAll('.rf-bar').forEach(bar=>bar.classList.toggle('is-moving',bar.dataset.requirementId===barSelection.original.id));}
    event.preventDefault();updateBarPreview(event.clientX,event.clientY);if(!replanFrame)replanFrame=requestAnimationFrame(scrollReplan);return;
   }
   if(!dateSelection||dateSelection.pointerId!==event.pointerId)return;const date=dateAtPoint(event.clientX,event.clientY);if(!date||date===dateSelection.end)return;dateSelection.end=date;dateSelection.dragged=true;paintDateSelection();

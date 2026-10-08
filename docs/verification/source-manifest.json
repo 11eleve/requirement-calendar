@@ -1,20 +1,21 @@
 {
-  "rounds_implemented": "01–53",
+  "rounds_implemented": "01–54",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T20:41:17.406289Z",
+  "checked_at_utc": "2026-10-08T20:50:58.777336Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: the authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Screen state was not revalidated by this website-icon batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
     "pointer_events": "Trusted single click, forward/reverse/cross-week drag and outside calendar release passed; held-gesture focus loss and intermediate animation remain unobserved",
-    "screenshots": "actual WebKit rendering; animations advanced to endpoints"
+    "screenshots": "actual WebKit rendering; animations advanced to endpoints",
+    "band_feedback": "Current round: actual native WebKit styling/geometry/persistence with synthetic hover/focus/pointers and stubbed capture; transition endpoints only. Inactive host focus-visible=false in both appearances, so visible keyboard ring was not exercised."
   },
   "sources": {
-    "index.html": "641f5b647d9f20ec2e0a4e12d87f93e99704ddf99a17d8bfacfddde4cdb09272",
-    "src/app.js": "480f32b3c3e7a94db770b083b39eaf52146a046bbeb9b8b49175d18089b3e4b3",
+    "index.html": "d198bd53bab11bc58036f91910a45fde475d8103b526a495909bc568e644e7e5",
+    "src/app.js": "48ee2dba63ff63d99d4b828f3d2252a2e896217cc5784e90daaa526099ee53e5",
     "src/index.html": "40f930bd1104ffad4ea5dda843e9112262434eb1a595c6bd24cd1d8abcc77583",
     "src/model.js": "bcdc293a2077297eeff99c59b4188977b83b11564e89d93a1a12eb754c373128",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
-    "src/styles.css": "a0cc3bb824eebecbc2dfebe015d3697535683fa1e74787ed08c830917c9a0a0c",
+    "src/styles.css": "6395eabd5c4ab02168e98eec36e96da85944db894a71e6a22fba8badfbdf4c5f",
     "native/App.swift": "b57691aeaa1dc95ac7f815b9d09842f60cb8164afe80960e16653c6198deffc0",
     "native/DataStore.swift": "7e2fe913db06f18ee669a799c1675bc99c704bd5e10ab7421510038079c0e091",
     "native/LinkPolicy.swift": "42695a8723abf96f25053ec625d535d985ab172087c2d6b60199a04996963ef1",
@@ -50,7 +51,7 @@
     "tests/desktop-readability.js": "57c785525a5b58f96092fab51a4a499ab0d7588aced729528fc3201519dd7c14",
     "tests/desktop-panel-continuity.js": "88ae4ed97783af517c0d476a66a660ef0c95ec4e272020677b901a51aae15560",
     "tests/desktop-creation-colors.js": "6526cc89b675a66b50e84f6d774055c2f7cce1580cff05f4aee6470a7dafab2a",
-    "README.md": "1b327ca2b90b1a063e24a41a6949de9851fd761d580daa10ec5870a797e11ae3",
+    "README.md": "5efa936450c9632bdf3c9197319b54cde7806df93b75ab20f0d918886c613dfe",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "2f280e5ce9f36a7a9fd0c04f3dcbadc2f7c499efbad572c16ef91c149185ab65",
     "tests/resource-icons.swift": "62528e8913c67b0496c859b0ce22782c94b41e83fc5f9a7cd70df37183c263ca",
@@ -74,8 +75,9 @@
     "tests/desktop-disclosure.js": "203597dd657999d22e38375c72ccf3a9f546702c704e5bba4fa4e67de498aadc",
     "tests/desktop-replan.js": "05601a673b89f9a5c6f19563ab61208525cf74a1a20d8848f3281c5d79a85927",
     "tests/desktop-replan-editor.js": "4a1c703a1ec94e6c01e234aa65e7fc4f39b17fea4e05d223b449c68b9123cc7b",
-    "docs/OPTIMIZATION_LOG.md": "d8429a710df28582104c6fa436ef36ebc3272110775c9f581b3c6376a76e3af2",
-    "docs/COMPLETION_AUDIT.md": "28fb80dd19ebe919a65f2271517cecd513bbbd3c45a0f93934ed1c11aa3d6937"
+    "docs/OPTIMIZATION_LOG.md": "2877a722030d85ad1832a7b2b593b38c9756aae410d04acd5be4cd24dc5c8b4f",
+    "docs/COMPLETION_AUDIT.md": "49e93ea9c0478904a230705b87d2b4d6355b9051b5bf4b8cedffe761c345200b",
+    "tests/desktop-band-feedback.js": "52ac7a08e0d98e4ec802b20534dcc221cdbb6005adfe1f6c8cd64cf8caccde1f"
   },
   "results": {
     "docs/verification/browser-storage.json": "70dca1f59a7f7fdde9af7f4eaf6c378e1e9b0347e51c3701d891166ea68807fb",
@@ -235,7 +237,9 @@
     "docs/verification/desktop-replan-editor-dark.json": "dde61253c579512b8bb33e47fdb08e1fd1ff25cb9c97d8320c77f91153138511",
     "docs/verification/browser-storage-replan-light.json": "60d7698b74dbd83d0180b67d99fe7cdfdd18916d2cc0f28dc1d51ce5cbaa6a21",
     "docs/verification/browser-storage-replan-dark.json": "60d7698b74dbd83d0180b67d99fe7cdfdd18916d2cc0f28dc1d51ce5cbaa6a21",
-    "docs/verification/desktop-replan-range-before.json": "e84f67f1848076d6de4be918ef3a6f32a06f20ea3c930232beef95566941612e"
+    "docs/verification/desktop-replan-range-before.json": "e84f67f1848076d6de4be918ef3a6f32a06f20ea3c930232beef95566941612e",
+    "docs/verification/desktop-band-feedback-light.json": "758e32374877f5e81596738ec54f621d5eac116a61caa2eef89ff159a4249734",
+    "docs/verification/desktop-band-feedback-dark.json": "ed986edf7c18d0bf9a5876e21428493d25a537db5592236299967477f9814cf1"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "e295dc1ab0df81c37dcb2f2e313d166e937db8f1f58a40f0d97124566cb8cef4",
@@ -253,10 +257,12 @@
     "assets/desktop-resource-editor.png": "79b5db8999f1b63e23d6b249e0d929ca532e5c2d4efafc1fdfde645a28d4cff4",
     "assets/desktop-resource-editor-dark.png": "758336329c979dec8738bc887bd89a03474a50ba352b032258e6df381454c570",
     "assets/desktop-replan-editor.png": "028126d6a37a08c7e27e18a66061e174362e0388cf8177e34f775b07a9b9dcff",
-    "assets/desktop-replan-editor-dark.png": "741ad6068054de84f739e43b684248d4e87d9ff6ff1858c07ec9be041fec133b"
+    "assets/desktop-replan-editor-dark.png": "741ad6068054de84f739e43b684248d4e87d9ff6ff1858c07ec9be041fec133b",
+    "assets/desktop-band-feedback-light.png": "fe06d68efb855eca79df58d072a4defb577c45342a6bc5fc5b63e3b860f5079b",
+    "assets/desktop-band-feedback-dark.png": "89e45922e95ce6af0c883d319cb9bcf21d13fe0e91cce963f1cd13123ec91e98"
   },
   "local_app": {
-    "binary_sha256": "81e2036f7c4692a4b842fa2e6f9a2c90f6504a302d181a2b592451bacffc669b",
+    "binary_sha256": "ff73e717c6963f26f99d0816a84d181cb92a98b17dcbf54c58510dad629cef83",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -1187,5 +1193,74 @@
       "assets/desktop-replan-editor-dark.png"
     ],
     "scope": "Actual isolated native WebKit geometry/hit testing, synthetic events, native persistence and injected failures; pointer capture bookkeeping and edge-frame delivery stubbed. Screenshot motion completed to endpoints. Does not prove trusted pointer capture/release, intermediate motion, deferred system gates or subjective acceptance. Explicit current result paths only; other records are historical evidence."
+  },
+  "band_feedback_refinement": {
+    "source_before": "fe2a880c7451596167b2a3965df76622a4695607",
+    "changes": [
+      "shared hover identity across continuation pieces",
+      "subtle same-tone press border/fill before the existing drag threshold",
+      "shared focus identity and own-tone focus-visible outline rule",
+      "clear transient feedback on cancellation, focus loss, navigation and persistence; ignore touch hover",
+      "retain selection, geometry, phase layout and saved data"
+    ],
+    "minimum_sampled_pressed_title_contrast": {
+      "light": 5.017760098584451,
+      "dark": 6.365898738936501
+    },
+    "focus_visible_observed": {
+      "light": false,
+      "dark": false
+    },
+    "current_build_checks": [
+      "shared feedback light/dark 39 each",
+      "replan light/dark 63 each",
+      "pointer light/dark 6 each",
+      "polish light/dark 20 each",
+      "readability light/dark 10 each",
+      "creation-colors light/dark 18 each",
+      "draft-range-continuity light/dark 24 each",
+      "sticky-dates light/dark 20 each",
+      "calendar-navigation light/dark 21 each",
+      "week-density light/dark 18 each",
+      "design light/dark 16 each",
+      "final light/dark 49 each",
+      "ui light/dark 21 each",
+      "portable build 1; signature and bundled page/notices consistency",
+      "2 actual native WebKit hover endpoint screenshots visually inspected"
+    ],
+    "current_build_result_paths": [
+      "docs/verification/desktop-replan-light.json",
+      "docs/verification/desktop-replan-dark.json",
+      "docs/verification/desktop-pointer.json",
+      "docs/verification/desktop-pointer-dark.json",
+      "docs/verification/desktop-polish.json",
+      "docs/verification/desktop-polish-dark.json",
+      "docs/verification/desktop-readability.json",
+      "docs/verification/desktop-readability-dark.json",
+      "docs/verification/desktop-creation-colors.json",
+      "docs/verification/desktop-creation-colors-dark.json",
+      "docs/verification/desktop-draft-range.json",
+      "docs/verification/desktop-draft-range-dark.json",
+      "docs/verification/desktop-sticky-dates.json",
+      "docs/verification/desktop-sticky-dates-dark.json",
+      "docs/verification/desktop-calendar-navigation.json",
+      "docs/verification/desktop-calendar-navigation-dark.json",
+      "docs/verification/desktop-week-density.json",
+      "docs/verification/desktop-week-density-dark.json",
+      "docs/verification/desktop-design.json",
+      "docs/verification/desktop-design-dark.json",
+      "docs/verification/desktop-final.json",
+      "docs/verification/desktop-final-dark.json",
+      "docs/verification/desktop-ui.json",
+      "docs/verification/desktop-ui-dark.json",
+      "docs/verification/desktop-band-feedback-light.json",
+      "docs/verification/desktop-band-feedback-dark.json",
+      "docs/verification/build-tests.txt"
+    ],
+    "screenshots_refreshed": [
+      "assets/desktop-band-feedback-light.png",
+      "assets/desktop-band-feedback-dark.png"
+    ],
+    "scope": "Synthetic native WebKit hover/focus/pointer events, resolved colors, every bar geometry and full saved snapshot. Capture bookkeeping stubbed and transitions completed to endpoints. Own-tone focus-visible rule exists but actual visible focus branch was not exercised in inactive host. Does not prove trusted intermediate motion, deferred system gates or user aesthetic acceptance. Only listed checks rerun; other records are historical."
   }
 }
