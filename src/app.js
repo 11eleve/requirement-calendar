@@ -94,7 +94,7 @@ window.CalendarReady=(async()=>{
   const form=el('form','rf-form rf-tabbed-form');form.noValidate=true;
   const tabs=el('div','rf-editor-tabs'),tabButtons={},panels={},prefix='rf-editor-'+Date.now();tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','需求编辑内容');
   let activeTab=null;
-  function showTab(key){if(key===activeTab)return;activeTab=key;for(const name of Object.keys(panels)){panels[name].hidden=name!==key;tabButtons[name].setAttribute('aria-selected',String(name===key));tabButtons[name].tabIndex=name===key?0:-1;}get('rf-panel').scrollTop=0;}
+  function showTab(key){if(key===activeTab)return;activeTab=key;for(const name of Object.keys(panels)){panels[name].hidden=name!==key;tabButtons[name].setAttribute('aria-selected',String(name===key));tabButtons[name].tabIndex=name===key?0:-1;}get('rf-panel').scrollTop=0;if(key==='basic')resizeNote();}
   for(const [key,label] of [['basic','基本信息'],['phases','阶段']]){
    const tab=button('rf-editor-tab',label,null,()=>showTab(key)),panel=el('div','rf-tab-panel');tab.id=prefix+'-'+key;tab.setAttribute('role','tab');tab.setAttribute('aria-controls',prefix+'-'+key+'-panel');tab.setAttribute('aria-selected',String(key==='basic'));panel.id=prefix+'-'+key+'-panel';panel.dataset.editorPanel=key;panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby',tab.id);tabButtons[key]=tab;panels[key]=panel;tabs.append(tab);
   }
@@ -104,6 +104,16 @@ window.CalendarReady=(async()=>{
   const syncDraftPreview=()=>updateDraftPreview(start.value,end.value,draft.tone);for(const control of [start,end]){control.addEventListener('input',syncDraftPreview);control.addEventListener('change',syncDraftPreview);}
   const pair=el('div','rf-pair');pair.append(field('开始日期',start),field('结束日期',end));
   const note=el('textarea');note.value=draft.note;note.placeholder='评审结论、阻塞事项、接口约定…';
+  let noteAutoHeight=null,noteWidth=0;
+  function fitNote(){
+   if(!note.clientWidth||(noteAutoHeight!==null&&note.style.height!==noteAutoHeight))return;
+   const scroll=note.scrollTop;note.style.height='auto';const style=getComputedStyle(note);
+   note.style.height=Math.min(240,note.scrollHeight+parseFloat(style.borderTopWidth)+parseFloat(style.borderBottomWidth))+'px';
+   noteAutoHeight=note.style.height;note.scrollTop=scroll;
+   if(document.activeElement===note)note.scrollIntoView({block:'nearest'});
+  }
+  function resizeNote(){const width=note.clientWidth;if(width&&width!==noteWidth){noteWidth=width;fitNote();}}
+  note.addEventListener('input',fitNote);
   panels.basic.append(field('需求名称',name),pair);
   const reminder=input('datetime-local',draft.reminder||'');if(nativeBridge)panels.basic.append(field('提醒（可选，本机时间）',reminder));
   const phases=collection('phase',draft.phases),resources=collection('resource',draft.resources);panels.phases.append(phases.node);panels.basic.append(resources.node,taskEditor(draft),field('事项与备忘',note));
@@ -127,7 +137,7 @@ window.CalendarReady=(async()=>{
    editor=null;clearDraftPreview();render();detail(draft.id,undefined,true,returnContext);get('rf-feedback').textContent='已保存：'+draft.title+' · '+rangeText(draft.start,draft.end);if(pendingAction){const action=pendingAction;pendingAction=null;get('rf-discard').close();action();}return true;
   }
   form.addEventListener('submit',event=>{event.preventDefault();void submitDraft();});
-  get('rf-panel').append(form);syncDraftPreview();const fingerprint=()=>JSON.stringify(Array.from(form.querySelectorAll('input,textarea'),control=>[control.type,control.value,control.checked]));const original=fingerprint();editor={form,submit:submitDraft,isDirty:()=>fingerprint()!==original,cancel:()=>existing?detail(id,undefined,true,returnContext):closePanel(true)};if(initialTab==='resources')resources.reveal();else if(initialTab==='phases')tabButtons.phases.focus({preventScroll:true});else name.focus({preventScroll:true});
+  get('rf-panel').append(form);syncDraftPreview();const fingerprint=()=>JSON.stringify(Array.from(form.querySelectorAll('input,textarea'),control=>[control.type,control.value,control.checked]));const original=fingerprint();editor={form,submit:submitDraft,resizeNote,isDirty:()=>fingerprint()!==original,cancel:()=>existing?detail(id,undefined,true,returnContext):closePanel(true)};resizeNote();if(initialTab==='resources')resources.reveal();else if(initialTab==='phases')tabButtons.phases.focus({preventScroll:true});else name.focus({preventScroll:true});
  }
  function setSaving(value){saving=value;root.setAttribute('aria-busy',String(value));get('rf-panel').inert=value;for(const id of ['rf-new','rf-prev','rf-next','rf-close','rf-undo'])get(id).disabled=value;const submit=editor?.form.querySelector('[type=submit]');if(submit){submit.disabled=value;submit.textContent=value?'正在保存…':'保存需求';}updateNavigation();if(!value&&queuedNotification){const id=queuedNotification;queuedNotification=null;queueMicrotask(()=>CalendarApp.openRequirement(id));}}
  function mayLeave(action){if(saving)return false;if(!editor?.isDirty())return true;pendingAction=action;const dialog=get('rf-discard');if(!dialog.open)dialog.showModal();return false;}
@@ -195,5 +205,5 @@ window.CalendarReady=(async()=>{
  root.addEventListener('keydown',event=>{if(event.key==='Escape'&&dateSelection){event.preventDefault();cancelDateSelection();}});window.addEventListener('blur',cancelDateSelection);
 
 
- const syncPanelHeight=()=>root.style.setProperty('--rf-calendar-height',Math.max(260,get('rf-calendar').getBoundingClientRect().height)+'px');syncPanelHeight();if(globalThis.ResizeObserver)new ResizeObserver(syncPanelHeight).observe(get('rf-calendar'));
+ const syncPanelHeight=()=>{root.style.setProperty('--rf-calendar-height',Math.max(260,get('rf-calendar').getBoundingClientRect().height)+'px');editor?.resizeNote();};syncPanelHeight();if(globalThis.ResizeObserver)new ResizeObserver(syncPanelHeight).observe(get('rf-calendar'));
 })();

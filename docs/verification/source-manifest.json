@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T19:07:51.106Z",
+  "checked_at_utc": "2026-10-08T19:22:03.857Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: the authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Screen state was not revalidated by this website-icon batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,8 +9,8 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "cb4326217328b3a314b3cd1d34182fd9f56f964b9d28be694b259fee33f82d18",
-    "src/app.js": "3236038dee7fcfa5fd4a26dfb5ebbc38e1e3adc8da57887e88a9462d7267cfad",
+    "index.html": "eb8163d7e5d4e40155660e22a25e831f3c915f1916ba9d8c27803f5c8c6dc66c",
+    "src/app.js": "72b8ef4481c916cccf25084d302663910e39c80dd31edd30ff54825304c65a81",
     "src/index.html": "bfffb5032fe63a1907798b3b6f6f78b80114e1a18d95e752baf84c7c09461bb9",
     "src/model.js": "2a41e221832c283ab778d76181e307b15a71c51c6949da3cb70aee5cd732635c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
@@ -50,7 +50,7 @@
     "tests/desktop-readability.js": "33637bf96344ae88b384d5561697fd058cb349ada57ba9a8c12d8b46ca4a8b71",
     "tests/desktop-panel-continuity.js": "88ae4ed97783af517c0d476a66a660ef0c95ec4e272020677b901a51aae15560",
     "tests/desktop-creation-colors.js": "0c070de5c92ed11c904daf7ac1e6ab8d531e61a06a1db2b3f4a63f33c55f366e",
-    "README.md": "f097669b06573a95ec6b6578891f0523731b9e58afbf82e055e88a839f544bf6",
+    "README.md": "c10f55b8b2d7855298ae521cd3f063af6b0bfd9687ffbd2e6133cb54d95136dc",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "2f280e5ce9f36a7a9fd0c04f3dcbadc2f7c499efbad572c16ef91c149185ab65",
     "tests/resource-icons.swift": "62528e8913c67b0496c859b0ce22782c94b41e83fc5f9a7cd70df37183c263ca",
@@ -66,7 +66,9 @@
     "tests/desktop-phase-editor.js": "c83bd9cd12831fab5c72076b2f7fb78f17115dff936482cbf76fc956a88af0f3",
     "tests/desktop-editor-addition.js": "11be41c2f43f8116c4fce3f4d0e342f502b4890d1117e624091a825253bf5702",
     "tests/desktop-detail-actions.js": "c2412d56ec400cff147f9f247be79243ecf14d04b322699639cd78a987f322b5",
-    "tests/desktop-draft-range-continuity.js": "8e88354283cf498693e607cfd3c6c8c22cbc3695c7ac6cd3d7abd920729851c9"
+    "tests/desktop-draft-range-continuity.js": "8e88354283cf498693e607cfd3c6c8c22cbc3695c7ac6cd3d7abd920729851c9",
+    "tests/desktop-note-sizing.js": "cc4e8709bbcf94db7f1beb2e2d2906c3efdf02557605e58334d973cd509fc8af",
+    "tests/desktop-note-editor.js": "539540ea00c2f1f1c3d00a91519f2a104d5c756cad9f55649a0aae78bd312507"
   },
   "results": {
     "docs/verification/browser-storage.json": "70dca1f59a7f7fdde9af7f4eaf6c378e1e9b0347e51c3701d891166ea68807fb",
@@ -182,7 +184,14 @@
     "docs/verification/desktop-band-reading-light.json": "3dee5d6a1e073a9ab519f58f93fc0736915cd5b2e3afe21a787aa595d33c72c8",
     "docs/verification/desktop-band-reading-dark.json": "3dee5d6a1e073a9ab519f58f93fc0736915cd5b2e3afe21a787aa595d33c72c8",
     "docs/verification/desktop-band-reading-live-light.json": "391e6aa083c1cc18f6a914bbae7d451a84b690158c17c3da345f044523441efa",
-    "docs/verification/desktop-band-reading-live-dark.json": "0ebb655c81ab6fdd13682a4743c105a3c4cacd95e9286d1fde67988e8eec7e2f"
+    "docs/verification/desktop-band-reading-live-dark.json": "0ebb655c81ab6fdd13682a4743c105a3c4cacd95e9286d1fde67988e8eec7e2f",
+    "docs/verification/desktop-note-sizing-before.json": "837f3c55decbf2343fa6ce28a0de0a3f236f682c19f521ca73bbc2d6e5432d97",
+    "docs/verification/desktop-note-sizing-light.json": "36ae6efedea84e892d7a3887d2113b1156c70bfd2177cb7da66d571cab809e89",
+    "docs/verification/desktop-note-sizing-dark.json": "8e386376ec72ed3c6bf6fea71aac10bd03a57083d20af0432f9f4ad67edc2bff",
+    "docs/verification/desktop-note-sizing-measure-light.json": "31f799e1ac774bd0c7248ce1f8a127a29b64e6923687988eb2833df9ab952da1",
+    "docs/verification/desktop-note-sizing-measure-dark.json": "31f799e1ac774bd0c7248ce1f8a127a29b64e6923687988eb2833df9ab952da1",
+    "docs/verification/desktop-note-editor-light.json": "80b175fbd5793c12ac91c2f78ec94733c9f686f3d0e0a9c9b62d9464a4079aa1",
+    "docs/verification/desktop-note-editor-dark.json": "80b175fbd5793c12ac91c2f78ec94733c9f686f3d0e0a9c9b62d9464a4079aa1"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "b550b59e1007c98ab377dafe57198d10e87b782071e15aef7022aaf1e959ae50",
@@ -194,10 +203,12 @@
     "assets/desktop-dense-schedule.png": "50f8eade37dfedc46767f805db9a707dc60dadfcd7cfd8185ee42a1c2c233dd6",
     "assets/desktop-dense-schedule-dark.png": "e0d91946d26ffce4f110e56d18c2e6f5f728caa15bd90509abe59ed2fc2d2744",
     "assets/desktop-phase-editor.png": "ad0c993e7877a555e0c2537bd9a25dabc28c38c8d039e1ed3e961d86e057359b",
-    "assets/desktop-phase-editor-dark.png": "01a9be907fd3e59335d765687d40470cff0733ebf612c3075ca623e1dab4dc72"
+    "assets/desktop-phase-editor-dark.png": "01a9be907fd3e59335d765687d40470cff0733ebf612c3075ca623e1dab4dc72",
+    "assets/desktop-note-editor.png": "3d24c3e31b54ff4a2234fb31dcfe419d1ad23c7cf5296553357ecf461d27e9b5",
+    "assets/desktop-note-editor-dark.png": "307c5cacae3c52248aafc8681254b7b57c76e6de9a93064aa30523a7659509ca"
   },
   "local_app": {
-    "binary_sha256": "99c9f2258742b20e76d05b0ef53fe6e0ea32e6afa589afadca7ad49e8d8a6d6c",
+    "binary_sha256": "731edbd885b579788453b31440e88504c0cc464604d558d69c798d13ff2496f1",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -720,5 +731,36 @@
       "portable build 1 and native signature/bundled page and notices"
     ],
     "scope": "All listed checks and screenshots reran after restoring continuation-edge insets. Actual isolated WebKit geometry, synthetic actions and native save; animation endpoints only. Other suites are historical evidence. Trusted motion, deferred system gates and user aesthetic acceptance remain open."
+  },
+  "note_sizing_refinement": {
+    "source_before": "e204cf2b232e54db1b95503c9c9d6cf04f2db900",
+    "changes": [
+      "grow and shrink note fields with bounded automatic height",
+      "refit current notes through the existing resize observer and returning basic tab",
+      "preserve explicit user sizing within an editing session",
+      "keep selection, inner reading position and focused field visibility"
+    ],
+    "geometry": {
+      "empty_or_short_height": 78,
+      "eight_lines_before": 78,
+      "eight_lines_after": 174,
+      "automatic_maximum_height": 240,
+      "screenshot_note_bottom": 703,
+      "screenshot_footer_top": 708
+    },
+    "current_build_checks": [
+      "note sizing light/dark 25 each",
+      "editor navigation light/dark 11 each",
+      "editor addition light/dark 36 each",
+      "panel continuity light/dark 17 each",
+      "design layout light/dark 16 each",
+      "desktop final light/dark 49 each",
+      "desktop UI and browser storage 21 each",
+      "polish light 20",
+      "same-fixture before and light/dark after geometry",
+      "two actual multiline-note screenshots inspected",
+      "portable build 1 and native signature/bundled page and notices"
+    ],
+    "scope": "Actual isolated native WebKit geometry, activeElement/selection and native persistence with synthetic input and injected save failure. Explicit resize simulated with inline height and some width reflow with an inspector CSS variable; narrower native window also tested. Screenshot fixture waits for stable layout and checks footer avoidance. Trusted resize gestures, IME/caret motion, deferred system gates and user aesthetic acceptance remain unverified. Other suites are historical evidence."
   }
 }

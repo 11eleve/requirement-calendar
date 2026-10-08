@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "result": {
+    "samples": [
+      {
+        "clientHeight": 76,
+        "height": 78,
+        "lines": 0,
+        "scrollHeight": 76,
+        "scrollTop": 0
+      },
+      {
+        "clientHeight": 76,
+        "height": 78,
+        "lines": 1,
+        "scrollHeight": 76,
+        "scrollTop": 0
+      },
+      {
+        "clientHeight": 172,
+        "height": 174,
+        "lines": 8,
+        "scrollHeight": 172,
+        "scrollTop": 0
+      },
+      {
+        "clientHeight": 238,
+        "height": 240,
+        "lines": 160,
+        "scrollHeight": 3182,
+        "scrollTop": 0
+      }
+    ],
+    "scope": "actual isolated native WebKit note input and geometry, synthetic input events and animation endpoints; no trusted caret or resize gesture claim"
+  },
+  "provenance": {
+    "base_commit": "e204cf2b232e54db1b95503c9c9d6cf04f2db900",
+    "source": "local note-sizing refinement"
+  }
+}

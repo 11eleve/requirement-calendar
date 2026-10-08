@@ -1,0 +1,57 @@
+// Note growth, reflow and explicit sizing in the isolated native WebKit host.
+const checks=[], $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const assert=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
+const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(r=>setTimeout(r,30));document.getAnimations().forEach(a=>a.finish());};
+const set=value=>{const note=$('textarea');note.value=value;note.dispatchEvent(new Event('input',{bubbles:true}));};
+const height=()=>$('textarea').getBoundingClientRect().height;
+const eight=Array.from({length:8},(_,i)=>'    '+i+' 确认接口契约与灰度回滚边界').join('\n');
+const long='\n    function resolve() {\n\treturn true;\n    }\n'+('    // review\n'.repeat(160))+'  ';
+const item={id:'notes',title:'认证接口与发布安排',tone:'blue',start:'2026-10-01',end:'2026-10-31',phases:[{name:'方案确认',start:'2026-10-01',end:'2026-10-03'}],resources:[],tasks:[],done:[],note:long};
+const others=Array.from({length:13},(_,i)=>({...item,id:'overlap-'+i,title:'并行需求 '+i,phases:[],note:''}));
+assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-01',requirements:[item,...others]})),'isolated note fixture restored');
+CalendarApp.editRequirement(item.id);await settle();const original=CalendarApp.exportSnapshot(),calendar=$('#rf-calendar');calendar.scrollTop=240;
+assert(height()===240&&$('textarea').scrollHeight>$('textarea').clientHeight&&$('textarea').value===long,'a saved long note opens at a bounded readable height with its original whitespace');
+assert(!CalendarApp.hasUnsavedChanges()&&$$('.rf-range-preview.is-visible').length===5,'initial note sizing leaves the draft clean and its period visible');
+set('简短结论');assert(height()===78&&$('textarea').scrollHeight===$('textarea').clientHeight,'shortening a long note restores the compact input height');
+set(eight);const grown=height();
+assert(grown>78&&grown<240&&$('textarea').scrollHeight===$('textarea').clientHeight,'eight lines fit without an inner scrollbar or excess fixed-height space');
+assert(CalendarApp.hasUnsavedChanges()&&CalendarApp.exportSnapshot()===original,'note edits remain draft changes until an explicit save');
+$('textarea').focus();$('textarea').setSelectionRange(4,18);$('textarea').dispatchEvent(new Event('input',{bubbles:true}));await settle();
+assert(document.activeElement===$('textarea')&&$('textarea').selectionStart===4&&$('textarea').selectionEnd===18,'fitting does not replace the field or disturb its text selection');
+set('接口约定'.repeat(24));const wider=height(),wrapped=$('textarea').value;
+const frame=await webkit.messageHandlers.calendar.postMessage({action:'verifyWindow',save:true});await settle();
+assert(frame.width===980&&frame.height===700&&height()>wider&&$('textarea').scrollHeight===$('textarea').clientHeight,'a narrower native window refits visible wrapped text without another input event');
+$$('.rf-editor-tab').find(node=>node.textContent==='阶段').click();await settle();
+assert($('[data-editor-panel=basic]').hidden&&$('textarea').value===wrapped,'hidden basic information retains the note draft');
+$('#req-calendar-refined').style.setProperty('--rf-inspector-width','352px');await settle();
+$$('.rf-editor-tab').find(node=>node.textContent==='基本信息').click();await settle();
+assert(height()===wider&&$('textarea').value===wrapped,'returning after a hidden-panel width change refits the retained text');
+$('#req-calendar-refined').style.removeProperty('--rf-inspector-width');await settle();
+assert(height()>wider&&$('textarea').scrollHeight===$('textarea').clientHeight,'subsequent visible inspector width changes also refit the text');
+$('textarea').focus();set(long);await settle();const bounds=$('textarea').getBoundingClientRect();
+assert(height()===240&&bounds.top>=$('.rf-editor-tabs').getBoundingClientRect().bottom-1&&bounds.bottom<=$('.rf-form-actions').getBoundingClientRect().top+1,'a growing focused note stays visible between the tabs and save actions in a smaller window');
+assert(calendar.scrollTop===240&&$$('.rf-range-preview.is-visible').length===5,'note fitting does not move the dense calendar or remove draft feedback');
+$('textarea').scrollTop=600;set(long+'\n末尾继续记录');
+assert($('textarea').scrollTop>=599&&height()===240,'editing a capped long note preserves its internal reading position');
+// A native resize writes an explicit inline height; this simulates that state,
+// not the trusted pointer gesture used to reach it.
+$('textarea').style.height='192px';set(long+'\n末尾继续记录\n    回滚分支已确认  ');const manual=$('textarea').value;
+assert(height()===192,'an explicitly resized field keeps its chosen height during further input');
+$$('.rf-editor-tab').find(node=>node.textContent==='阶段').click();$$('.rf-editor-tab').find(node=>node.textContent==='基本信息').click();await settle();
+assert(height()===192&&$('textarea').value===manual,'tab changes retain the explicit height and the complete draft');
+$('#req-calendar-refined').style.setProperty('--rf-inspector-width','352px');await settle();$('#req-calendar-refined').style.removeProperty('--rf-inspector-width');await settle();
+assert(height()===192&&$('textarea').value===manual,'inspector width changes preserve an explicitly chosen height');
+$$('.rf-form-actions button').find(node=>node.textContent==='取消').click();await settle();
+assert($('#rf-discard').open&&height()===192,'the unsaved confirmation preserves the note editor');
+$('#rf-discard-keep').click();await settle();assert($('textarea').value===manual&&height()===192,'continuing editing retains text and sizing');
+const bridge=webkit.messageHandlers.calendar,post=bridge.postMessage;let saved;
+try{bridge.postMessage=async message=>{if(message.action==='save')throw Error('isolated note save failure');return post.call(bridge,message);};saved=await CalendarApp.command('save');}finally{bridge.postMessage=post;}
+assert(saved===false&&$('textarea').value===manual&&height()===192&&CalendarApp.exportSnapshot()===original,'a failed native save retains the text, chosen height and previous stored data');
+assert(await CalendarApp.command('save'),'the note saves successfully on retry');await settle();
+const stored=CalendarApp.exportSnapshot();assert(JSON.parse(stored).requirements[0].note===manual&&!CalendarApp.hasUnsavedChanges()&&!$('.rf-range-preview.is-visible'),'successful save preserves indentation and trailing spaces and returns to clean details');
+CalendarApp.editRequirement(item.id);await settle();
+assert(height()===240&&$('textarea').value===manual&&!CalendarApp.hasUnsavedChanges(),'a new edit sizes saved content afresh without storing a previous presentation preference');
+set(eight);$$('.rf-form-actions button').find(node=>node.textContent==='取消').click();$('#rf-discard-drop').click();await settle();
+assert(CalendarApp.exportSnapshot()===stored&&!$('.rf-range-preview.is-visible')&&!$('textarea'),'discarding note edits restores saved content and clears the temporary editor');
+assert(document.documentElement.scrollHeight<=innerHeight+1&&document.documentElement.scrollWidth<=innerWidth+1,'note fitting causes no document overflow');
+return {checks,appearance:matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light',eightLineHeight:grown,wrappedHeightBeforeResize:wider,scope:'actual isolated WebKit geometry, activeElement/selection, synthetic input and native save with injected failure; explicit resize represented by inline height, not a trusted resize gesture or caret-motion observation'};
