@@ -14,16 +14,16 @@ html,body { margin:0; min-height:100%; background:light-dark(#f5f5f8,#191b20); }
  --rf-bg:light-dark(#fff,#24262d);
  --rf-soft:light-dark(#f8f8fb,#202229);
  --rf-text:light-dark(#30313e,#edeef5);
- --rf-muted:light-dark(#727486,#a3a6b9);
+ --rf-muted:light-dark(#6c6e80,#a3a6b9);
  --rf-line:light-dark(#e7e7ee,#343741);
  --rf-grid:light-dark(#eeedf3,#2c2f38);
- --rf-purple:light-dark(#6d5caa,#c4b5f4);
+ --rf-purple:light-dark(#63529e,#c4b5f4);
  --rf-purple-bg:light-dark(#f0ecfa,#342e49);
  --rf-purple-stage:light-dark(#e5def4,#43385d);
- --rf-blue:light-dark(#4b7099,#b0cceb);
+ --rf-blue:light-dark(#41648c,#b0cceb);
  --rf-blue-bg:light-dark(#eaf1f9,#28394c);
  --rf-blue-stage:light-dark(#dae7f5,#354c66);
- --rf-green:light-dark(#407b6d,#a3d5c5);
+ --rf-green:light-dark(#346e60,#a3d5c5);
  --rf-green-bg:light-dark(#eaf4ef,#293d35);
  --rf-green-stage:light-dark(#d8ebe2,#375447);
  --rf-shadow:0 2px 8px light-dark(#27213b04,#0000000f),0 0 0 1px light-dark(#27213b03,#ffffff02);
@@ -80,7 +80,7 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-date { display:flex; align-items:flex-start; justify-content:flex-end; min-width:0; padding:5px 9px; border-right:1px solid var(--rf-grid); text-align:right; }
 #req-calendar-refined .rf-date:last-child { border-right:0; }
 #req-calendar-refined .rf-date:nth-child(n+6) { background:light-dark(#fcfbfe,#23252c); }
-#req-calendar-refined .rf-date.outside { color:color-mix(in srgb,var(--rf-muted) 68%,var(--rf-bg)); background:var(--rf-soft); }
+#req-calendar-refined .rf-date.outside { color:var(--rf-muted); background:var(--rf-soft); }
 #req-calendar-refined .rf-date span { display:grid; place-items:center; width:25px; height:25px; border-radius:7px; font-size:12px; font-weight:450; font-variant-numeric:tabular-nums; scroll-margin-top:44px; scroll-margin-bottom:8px; }
 #req-calendar-refined .rf-date:hover span { color:var(--rf-purple); }
 #req-calendar-refined .rf-date:focus-visible { outline:0; }
@@ -160,13 +160,13 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 /* Compact editing with a typographic title, small surfaces and a stable footer. */
 #req-calendar-refined .rf-form { display:flex; flex-direction:column; gap:14px; min-height:0; }
 #req-calendar-refined .rf-editor-tabs { position:sticky; top:-16px; z-index:3; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); flex:none; gap:3px; padding:3px; background:var(--rf-line); border-radius:8px; box-shadow:0 -16px 0 var(--rf-soft),0 7px 0 var(--rf-soft); }
-#req-calendar-refined .rf-editor-tab { min-width:0; padding:6px 5px; border-radius:5px; font-size:11px; font-weight:500; color:var(--rf-muted); }
+#req-calendar-refined .rf-editor-tab { min-width:0; padding:6px 5px; border-radius:5px; font-size:11px; font-weight:500; color:light-dark(#646678,var(--rf-muted)); }
 #req-calendar-refined .rf-editor-tab[aria-selected=true] { color:var(--rf-text); background:var(--rf-bg); box-shadow:0 1px 3px #21203113; }
 #req-calendar-refined .rf-tab-panel { display:flex; flex-direction:column; gap:12px; min-height:0; min-width:0; }
 #req-calendar-refined .rf-field { display:grid; gap:5px; min-width:0; color:var(--rf-muted); font-size:11px; font-weight:500; }
 #req-calendar-refined .rf-field :is(input,textarea) { width:100%; min-width:0; min-height:34px; padding:7px 9px; color:var(--rf-text); background:var(--rf-bg); border:1px solid var(--rf-line); border-radius:7px; box-shadow:0 1px 2px #00000002; font-size:12px; font-weight:400; }
 #req-calendar-refined .rf-field :is(input,textarea):focus { outline:none; border-color:color-mix(in srgb,var(--rf-purple) 55%,var(--rf-line)); box-shadow:0 0 0 3px color-mix(in srgb,var(--rf-purple) 11%,transparent); }
-#req-calendar-refined .rf-field input::placeholder,#req-calendar-refined textarea::placeholder { color:var(--rf-muted); opacity:.7; }
+#req-calendar-refined .rf-field input::placeholder,#req-calendar-refined textarea::placeholder { color:var(--rf-muted); opacity:1; }
 #req-calendar-refined .rf-tab-panel[data-editor-panel=basic]>.rf-field:first-child input { min-height:41px; padding:8px 10px; font-size:16px; font-weight:550; letter-spacing:-.2px; }
 #req-calendar-refined .rf-field input[type=date] { padding:7px 5px; font-size:11px; font-variant-numeric:tabular-nums; }
 #req-calendar-refined .rf-field input[type=datetime-local] { font-size:11px; font-variant-numeric:tabular-nums; }

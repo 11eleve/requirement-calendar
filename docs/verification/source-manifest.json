@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T16:10:57.932186+00:00",
+  "checked_at_utc": "2026-10-08T16:18:38.985364+00:00",
   "verification_scope": {
     "notification_delivery": "User authorized temporary permission; enabled through real Settings UI. System NotificationCenter added actual 09:45 reminder to history; displayShared suppressed banner/sound. Actual click and permission restoration blocked by locked Mac.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,12 +9,12 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "2985b72fbc4d2fbd5037f8eeec24998ef124e9e389d0749ffbdc70757f1af1d3",
+    "index.html": "ecdf420ab585ae8a7209ff9e1cf5e684cb36e0b37f3c700800ff0281500c18f7",
     "src/app.js": "e11c9266a37d667ca346f03490896bb4da7b5af47459d4b62a7fd748472a95f4",
     "src/index.html": "f6dec4a04b1b2ff0ff224981648869e13300d361f9853d01533bf2991d77010e",
     "src/model.js": "94e4ab1229da3517049065b86968e22796a31aebbbe7910ccef6624fda5ba17c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
-    "src/styles.css": "54e1a8a98490b5f05891da120d874a70318d0468301ac52a8e505113ad8023df",
+    "src/styles.css": "900c17575b8e99d84ab8ea3e3b0b0deed769266e5582d07d400b7016b11152e2",
     "native/App.swift": "a575f6b0662917446218844d3beb0e3d48fa6eeaf78f632353f3244ed00f00e2",
     "native/DataStore.swift": "7e2fe913db06f18ee669a799c1675bc99c704bd5e10ab7421510038079c0e091",
     "native/LinkPolicy.swift": "42695a8723abf96f25053ec625d535d985ab172087c2d6b60199a04996963ef1",
@@ -46,7 +46,8 @@
     "tests/desktop-content.js": "a609b81769499f3691c3dbd6e7df11d6f0e87bbd296b07c697f35c9d3baa9595",
     "src/icons.js": "5c26f6938fdafa8ec75d4e6999583c50178f7974c3dc400cc964428cded35262",
     "tests/desktop-resource-icons.js": "a63b2b682c0d3a345cf9803eb008441ce09c8f773fdb6e7d0d1b81f5dd5c933b",
-    "THIRD_PARTY_NOTICES.md": "63271b114e4cdcc129178228b3aa3ea36d233267c0d17bdf626350a384900b0e"
+    "THIRD_PARTY_NOTICES.md": "63271b114e4cdcc129178228b3aa3ea36d233267c0d17bdf626350a384900b0e",
+    "tests/desktop-readability.js": "bd10db966c9afb37869a8b51e8c849e6aad3ef5342197948d27cb6c99ca77fc6"
   },
   "results": {
     "docs/verification/browser-storage.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
@@ -85,16 +86,20 @@
     "docs/verification/desktop-content-dark.json": "2cf465b0093c9df7ad25f258b56250342477f3b20191dddef3f2bc74e64c7959",
     "docs/verification/desktop-content-before.json": "60c2f48d87f873a0d055b219d9e339b716ee376b0f06e4aa835c134ef0d1152d",
     "docs/verification/desktop-resource-icons.json": "9fc11d16d9f3f844995e0af0a0ab79b239944ab45da0df8d2b3ddd4ed26a6ec3",
-    "docs/verification/desktop-resource-icons-dark.json": "bdf7e00368e6f67ec32695e90e111e9d95232fdebd93e6dc7927bf060d02a1b2"
+    "docs/verification/desktop-resource-icons-dark.json": "bdf7e00368e6f67ec32695e90e111e9d95232fdebd93e6dc7927bf060d02a1b2",
+    "docs/verification/desktop-readability.json": "b2b80661d04653f0aae90395f7ba0b2a78ba3a7fc9c14c17e285c5f2c797e083",
+    "docs/verification/desktop-readability-dark.json": "17f1b2894076caf76030ff4bbe0a183b7cee8b1a9f00cf2f80ca93992750c088",
+    "docs/verification/desktop-readability-before-light.json": "da3182c89bf45267edb2b322fc4b90d7dd154e139abf54792eff8912f3f3bfd0",
+    "docs/verification/desktop-readability-before-dark.json": "78f652e358f308b7e3901291faccdde0a520bae0af4403e8abca174c88fb3f72"
   },
   "screenshots": {
-    "assets/desktop-editor-dark.png": "9ab1ce33991d7e07b325cadc669b126a7bd838b4463831cef5e311eb351fa072",
-    "assets/desktop-editor.png": "5d7789b747f56dd7d1ef57e31751423be91172564e7792362ca865d90c494cc3",
-    "assets/desktop-overview.png": "d273bf933da7a1c06f9c4e54d16138b8ce4f9a7b2885fd56294810f408fbba4b",
-    "assets/desktop-detail.png": "bb6a905ed5d8577ec10674b7dc335a18c76b0f358aaa3834ffd4eb5afe4273b5"
+    "assets/desktop-editor-dark.png": "969f205549243d7ec7322a72dab0e1617dafa2f55561b0c25d80646f01baffa5",
+    "assets/desktop-editor.png": "faf5b0063f6bd040fc0e3a40fa67da5551aa85e83885648e81f789977b01116d",
+    "assets/desktop-overview.png": "a4cb77dbd217f621ed7c8c8303447ad69aabea16414a4a296d8203bd2b0dffe8",
+    "assets/desktop-detail.png": "1ba9a369c5ab062c191c59aed00683ea336280b431f1d54e9862072fc61d3d13"
   },
   "local_app": {
-    "binary_sha256": "aeb2ec42f0650519c99a5237e62902d6fb48db43d81bb472fef3831fa733b641",
+    "binary_sha256": "69a7d2d8969c0bcfb4de8ea3f8ef4b1284f9b08dbc79d2836a809b06a5bf5c79",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -194,5 +199,37 @@
       "native build/signature/bundled page and notices"
     ],
     "scope": "Actual WebKit SVG rendering, destination links and edit/save with isolated native data. Built-in symbols are not live favicons or browser-tab lookup. Other recorded results are earlier evidence; system and aesthetic acceptance remain pending."
+  },
+  "readability_refinement": {
+    "changes": [
+      "deeper light-theme text tones while preserving surfaces",
+      "readable outside-month dates",
+      "opaque placeholder text and clearer inactive editor tabs"
+    ],
+    "current_build_checks": [
+      "readability light/dark 8 each",
+      "design light 16",
+      "four actual overview/detail/editor screenshots",
+      "portable build",
+      "native build/signature/bundled page"
+    ],
+    "minimum_ratios": {
+      "light": {
+        "phase": 4.767258137172419,
+        "outside": 4.73987168019347,
+        "detail": 5.024279561444903,
+        "inactive": 4.594635159911692,
+        "field": 4.73987168019347
+      },
+      "dark": {
+        "phase": 5.108442619227363,
+        "outside": 6.589057162205963,
+        "detail": 6.267195812710582,
+        "inactive": 4.92551809655424,
+        "field": 6.267195812710582
+      }
+    },
+    "reference": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+    "scope": "Resolved WebKit colors only for the text contexts recorded in desktop-readability results. This is not a complete app accessibility assessment or aesthetic acceptance. Unaffected interaction, persistence and notification checks were not rerun for this palette-only change."
   }
 }

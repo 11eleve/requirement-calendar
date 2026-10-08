@@ -1,0 +1,141 @@
+{
+  "ok": true,
+  "result": {
+    "appearance": "light",
+    "outside": {
+      "background": "rgb(248, 248, 251)",
+      "contrast": 2.444043997384032,
+      "foreground": "color(srgb 0.624 0.629333 0.677333)"
+    },
+    "phases": [
+      {
+        "alternate": false,
+        "background": "rgb(229, 222, 244)",
+        "contrast": 4.276539346435384,
+        "foreground": "rgb(109, 92, 170)",
+        "tone": "rf-bar continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": false,
+        "background": "rgb(218, 231, 245)",
+        "contrast": 4.1036792691553545,
+        "foreground": "rgb(75, 112, 153)",
+        "tone": "rf-bar blue continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": false,
+        "background": "rgb(216, 235, 226)",
+        "contrast": 3.9562943237934394,
+        "foreground": "rgb(64, 123, 109)",
+        "tone": "rf-bar green continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": false,
+        "background": "rgb(229, 222, 244)",
+        "contrast": 4.276539346435384,
+        "foreground": "rgb(109, 92, 170)",
+        "tone": "rf-bar continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.91098 0.887059 0.963922)",
+        "contrast": 4.423825152555541,
+        "foreground": "rgb(109, 92, 170)",
+        "tone": "rf-bar continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": false,
+        "background": "rgb(218, 231, 245)",
+        "contrast": 4.1036792691553545,
+        "foreground": "rgb(75, 112, 153)",
+        "tone": "rf-bar blue continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.873725 0.917647 0.96549)",
+        "contrast": 4.22816877805875,
+        "foreground": "rgb(75, 112, 153)",
+        "tone": "rf-bar blue continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": false,
+        "background": "rgb(216, 235, 226)",
+        "contrast": 3.9562943237934394,
+        "foreground": "rgb(64, 123, 109)",
+        "tone": "rf-bar green continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.868235 0.932157 0.901569)",
+        "contrast": 4.084000878355422,
+        "foreground": "rgb(64, 123, 109)",
+        "tone": "rf-bar green continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.91098 0.887059 0.963922)",
+        "contrast": 4.423825152555541,
+        "foreground": "rgb(109, 92, 170)",
+        "tone": "rf-bar continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.873725 0.917647 0.96549)",
+        "contrast": 4.22816877805875,
+        "foreground": "rgb(75, 112, 153)",
+        "tone": "rf-bar blue continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.868235 0.932157 0.901569)",
+        "contrast": 4.084000878355422,
+        "foreground": "rgb(64, 123, 109)",
+        "tone": "rf-bar green continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.91098 0.887059 0.963922)",
+        "contrast": 4.423825152555541,
+        "foreground": "rgb(109, 92, 170)",
+        "tone": "rf-bar continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.873725 0.917647 0.96549)",
+        "contrast": 4.22816877805875,
+        "foreground": "rgb(75, 112, 153)",
+        "tone": "rf-bar blue continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.868235 0.932157 0.901569)",
+        "contrast": 4.084000878355422,
+        "foreground": "rgb(64, 123, 109)",
+        "tone": "rf-bar green continued-left continued-right cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.91098 0.887059 0.963922)",
+        "contrast": 4.423825152555541,
+        "foreground": "rgb(109, 92, 170)",
+        "tone": "rf-bar continued-left cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.873725 0.917647 0.96549)",
+        "contrast": 4.22816877805875,
+        "foreground": "rgb(75, 112, 153)",
+        "tone": "rf-bar blue continued-left cursor-interaction has-phases"
+      },
+      {
+        "alternate": true,
+        "background": "color(srgb 0.868235 0.932157 0.901569)",
+        "contrast": 4.084000878355422,
+        "foreground": "rgb(64, 123, 109)",
+        "tone": "rf-bar green continued-left cursor-interaction has-phases"
+      }
+    ]
+  },
+  "source_revision": "49556eb584d67e9a2fd122d6735fc715cef9d600",
+  "scope": "Resolved foreground/background colors in isolated WebKit before the readability palette change."
+}
