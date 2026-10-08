@@ -1,0 +1,144 @@
+{
+  "ok": true,
+  "result": {
+    "dataUnchanged": true,
+    "editing": {
+      "clean": true,
+      "strip": true,
+      "tone": "green"
+    },
+    "returned": {
+      "status": "rgb(163, 213, 197)",
+      "tone": "green"
+    },
+    "samples": [
+      {
+        "background": "rgb(52, 46, 73)",
+        "contrast": 6.897062652951207,
+        "currentStage": "rgb(196, 181, 244)",
+        "dot": "block",
+        "expected": "rgb(196, 181, 244)",
+        "foreground": "rgb(196, 181, 244)",
+        "id": "purple",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": ""
+      },
+      {
+        "background": "rgb(40, 57, 76)",
+        "contrast": 7.1258295969640555,
+        "currentStage": "rgb(176, 204, 235)",
+        "dot": "block",
+        "expected": "rgb(176, 204, 235)",
+        "foreground": "rgb(176, 204, 235)",
+        "id": "blue",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": "blue"
+      },
+      {
+        "background": "rgb(41, 61, 53)",
+        "contrast": 7.104195484235739,
+        "currentStage": "rgb(163, 213, 197)",
+        "dot": "block",
+        "expected": "rgb(163, 213, 197)",
+        "foreground": "rgb(163, 213, 197)",
+        "id": "green",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": "green"
+      },
+      {
+        "background": "rgb(32, 34, 41)",
+        "contrast": 6.589057162205963,
+        "currentStage": null,
+        "dot": "none",
+        "expected": "rgb(163, 166, 185)",
+        "foreground": "rgb(163, 166, 185)",
+        "id": "future",
+        "inactive": true,
+        "label": "未开始",
+        "phaseCount": 0,
+        "tone": "green"
+      },
+      {
+        "background": "rgb(32, 34, 41)",
+        "contrast": 6.589057162205963,
+        "currentStage": null,
+        "dot": "none",
+        "expected": "rgb(163, 166, 185)",
+        "foreground": "rgb(163, 166, 185)",
+        "id": "past",
+        "inactive": true,
+        "label": "计划已结束",
+        "phaseCount": 0,
+        "tone": "blue"
+      },
+      {
+        "background": "rgb(40, 57, 76)",
+        "contrast": 7.1258295969640555,
+        "currentStage": null,
+        "dot": "block",
+        "expected": "rgb(176, 204, 235)",
+        "foreground": "rgb(176, 204, 235)",
+        "id": "gap",
+        "inactive": false,
+        "label": "进行中",
+        "phaseCount": 2,
+        "tone": "blue"
+      },
+      {
+        "background": "rgb(41, 61, 53)",
+        "contrast": 7.104195484235739,
+        "currentStage": "rgb(163, 213, 197)",
+        "dot": "block",
+        "expected": "rgb(163, 213, 197)",
+        "foreground": "rgb(163, 213, 197)",
+        "id": "green",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": "green"
+      },
+      {
+        "background": "rgb(52, 46, 73)",
+        "contrast": 6.897062652951207,
+        "currentStage": "rgb(196, 181, 244)",
+        "dot": "block",
+        "expected": "rgb(196, 181, 244)",
+        "foreground": "rgb(196, 181, 244)",
+        "id": "purple",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": ""
+      },
+      {
+        "background": "rgb(40, 57, 76)",
+        "contrast": 7.1258295969640555,
+        "currentStage": "rgb(176, 204, 235)",
+        "dot": "block",
+        "expected": "rgb(176, 204, 235)",
+        "foreground": "rgb(176, 204, 235)",
+        "id": "blue",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": "blue"
+      }
+    ],
+    "scope": "actual WebKit resolved colors, synthetic opening/editing/cancellation and isolated native data; no trusted pointer or aesthetic acceptance claim",
+    "today": "2026-10-09"
+  },
+  "measurement_source_sha256": "1d4ec1bb8f8e71d5ace6104d89ad2f77aa6c9184c64e46f5ff61ef8921d79f3b",
+  "verification_summary": {
+    "sampled_contexts": 9,
+    "colors_match": true,
+    "minimum_sampled_contrast": 6.589057162205963,
+    "inactive_dots_hidden": true,
+    "requirement_data_unchanged": true
+  }
+}

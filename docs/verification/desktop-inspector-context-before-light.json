@@ -1,0 +1,128 @@
+{
+  "ok": true,
+  "result": {
+    "dataUnchanged": true,
+    "editing": {
+      "clean": true,
+      "strip": true,
+      "tone": null
+    },
+    "returned": {
+      "status": "rgb(99, 82, 158)",
+      "tone": null
+    },
+    "samples": [
+      {
+        "background": "rgb(240, 236, 250)",
+        "currentStage": "rgb(99, 82, 158)",
+        "dot": "block",
+        "expected": "rgb(99, 82, 158)",
+        "foreground": "rgb(99, 82, 158)",
+        "id": "purple",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": ""
+      },
+      {
+        "background": "rgb(240, 236, 250)",
+        "currentStage": "rgb(99, 82, 158)",
+        "dot": "block",
+        "expected": "rgb(65, 100, 140)",
+        "foreground": "rgb(99, 82, 158)",
+        "id": "blue",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": "blue"
+      },
+      {
+        "background": "rgb(240, 236, 250)",
+        "currentStage": "rgb(99, 82, 158)",
+        "dot": "block",
+        "expected": "rgb(52, 110, 96)",
+        "foreground": "rgb(99, 82, 158)",
+        "id": "green",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": "green"
+      },
+      {
+        "background": "rgb(240, 236, 250)",
+        "currentStage": null,
+        "dot": "block",
+        "expected": "rgb(108, 110, 128)",
+        "foreground": "rgb(99, 82, 158)",
+        "id": "future",
+        "inactive": true,
+        "label": "未开始",
+        "phaseCount": 0,
+        "tone": "green"
+      },
+      {
+        "background": "rgb(240, 236, 250)",
+        "currentStage": null,
+        "dot": "block",
+        "expected": "rgb(108, 110, 128)",
+        "foreground": "rgb(99, 82, 158)",
+        "id": "past",
+        "inactive": true,
+        "label": "计划已结束",
+        "phaseCount": 0,
+        "tone": "blue"
+      },
+      {
+        "background": "rgb(240, 236, 250)",
+        "currentStage": null,
+        "dot": "block",
+        "expected": "rgb(65, 100, 140)",
+        "foreground": "rgb(99, 82, 158)",
+        "id": "gap",
+        "inactive": false,
+        "label": "进行中",
+        "phaseCount": 2,
+        "tone": "blue"
+      },
+      {
+        "background": "rgb(240, 236, 250)",
+        "currentStage": "rgb(99, 82, 158)",
+        "dot": "block",
+        "expected": "rgb(52, 110, 96)",
+        "foreground": "rgb(99, 82, 158)",
+        "id": "green",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": "green"
+      },
+      {
+        "background": "rgb(240, 236, 250)",
+        "currentStage": "rgb(99, 82, 158)",
+        "dot": "block",
+        "expected": "rgb(99, 82, 158)",
+        "foreground": "rgb(99, 82, 158)",
+        "id": "purple",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": ""
+      },
+      {
+        "background": "rgb(240, 236, 250)",
+        "currentStage": "rgb(99, 82, 158)",
+        "dot": "block",
+        "expected": "rgb(65, 100, 140)",
+        "foreground": "rgb(99, 82, 158)",
+        "id": "blue",
+        "inactive": false,
+        "label": "开发与联调",
+        "phaseCount": 3,
+        "tone": "blue"
+      }
+    ],
+    "scope": "actual WebKit resolved colors, synthetic opening/editing/cancellation and isolated native data; no trusted pointer or aesthetic acceptance claim",
+    "today": "2026-10-09"
+  },
+  "source_commit": "a2bb51def09fed11a3863a797678f7094ada4a6f"
+}

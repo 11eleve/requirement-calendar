@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "result": {
+    "appearance": "light",
+    "checks": [
+      "public-site fixture restored in isolated native data",
+      "DingTalk, Figma and GitHub icons arrive through the production URLSession bridge",
+      "live ICO responses are decoded and reduced to local PNG data",
+      "live arrival does not shift resource row heights",
+      "live icon loading does not change stored data",
+      "cached website icons carry into compact editing summaries",
+      "website image arrival leaves the editor clean and its date strip visible",
+      "returning to details reuses icons without changing requirement data"
+    ],
+    "origins": [
+      "https://alidocs.dingtalk.com",
+      "https://www.figma.com",
+      "https://github.com"
+    ],
+    "scope": "actual production native network-to-WebKit PNG rendering for these three public sites; not browser-tab or authenticated favicon access"
+  },
+  "fixture": "tests/desktop-site-icons-live.js with the checkout requirement tone set to blue before fixture restore; same public origins and checks"
+}
