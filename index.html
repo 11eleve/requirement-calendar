@@ -142,11 +142,11 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:7px; }
 #req-calendar-refined .rf-text-button { padding:3px 0; color:var(--rf-purple); font-size:11px; font-weight:500; }
 #req-calendar-refined .rf-text-button:hover { text-decoration:underline; text-underline-offset:3px; }
-#req-calendar-refined .rf-phase-row { position:relative; display:flex; flex-wrap:wrap; align-items:flex-start; gap:2px 8px; padding:8px 0 8px 16px; font-size:12px; font-variant-numeric:tabular-nums; }
+#req-calendar-refined .rf-phase-row { position:relative; display:flex; flex-wrap:wrap; align-items:flex-start; gap:2px 8px; padding:8px 0 8px 26px; font-size:12px; font-variant-numeric:tabular-nums; }
 #req-calendar-refined .rf-phase-name { flex:1 1 180px; min-width:0; overflow-wrap:anywhere; }
 #req-calendar-refined .rf-phase-period { flex:none; white-space:nowrap; }
-#req-calendar-refined .rf-phase-row::before { content:''; position:absolute; top:14px; left:2px; width:5px; height:5px; border-radius:50%; background:var(--rf-line); }
-#req-calendar-refined .rf-phase-row:not(:last-child)::after { content:''; position:absolute; top:22px; bottom:-10px; left:4px; width:1px; background:var(--rf-line); }
+#req-calendar-refined .rf-phase-row::before { content:''; position:absolute; top:14px; left:6px; width:7px; height:7px; border-radius:50%; background:var(--rf-line); }
+#req-calendar-refined .rf-phase-row:not(:last-child)::after { content:''; position:absolute; top:24px; bottom:-10px; left:9px; width:1px; background:var(--rf-line); }
 #req-calendar-refined .rf-phase-row.current { color:var(--rf-context-tone); }
 #req-calendar-refined .rf-phase-row.current::before { background:var(--rf-context-tone); box-shadow:0 0 0 3px var(--rf-context-fill); }
 #req-calendar-refined .rf-resource-row { display:flex; align-items:center; gap:9px; min-width:0; padding:9px 0; color:inherit; text-decoration:none; border-bottom:1px solid var(--rf-grid); }
@@ -211,11 +211,16 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-item-summary .rf-resource-icon { width:22px; height:22px; border-radius:5px; font-size:10px; }
 #req-calendar-refined .rf-summary-name { flex:1; min-width:0; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 #req-calendar-refined .rf-summary-meta { flex:none; max-width:90px; font-size:10px; color:var(--rf-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-#req-calendar-refined .rf-phase-summary { display:grid; grid-template-columns:7px minmax(0,1fr); gap:1px 7px; min-height:44px; }
-#req-calendar-refined .rf-phase-summary::before { grid-row:1 / span 2; }
+#req-calendar-refined [data-editor-panel=phases] .rf-editor-item { border-bottom:0; }
+#req-calendar-refined [data-editor-panel=phases] .rf-editor-item:not(:last-child)::before { content:''; position:absolute; top:25px; bottom:-19px; left:9px; width:1px; background:var(--rf-line); }
+#req-calendar-refined .rf-phase-summary { position:relative; display:grid; grid-template-columns:18px minmax(0,1fr); gap:1px 8px; min-height:48px; }
+#req-calendar-refined .rf-phase-summary::before { display:grid; place-items:center; grid-row:1 / span 2; width:18px; height:18px; border:1px solid var(--rf-line); border-radius:50%; background:var(--rf-panel-surface); font-size:14px; }
+#req-calendar-refined .rf-phase-summary:hover::before { color:var(--rf-context-tone); border-color:var(--rf-context-tone); }
+#req-calendar-refined details[open]>.rf-phase-summary::before { color:var(--rf-context-tone); background:var(--rf-context-fill); border-color:color-mix(in srgb,var(--rf-context-tone) 30%,var(--rf-line)); }
 #req-calendar-refined .rf-phase-summary .rf-summary-name { grid-column:2; font-size:12px; line-height:16px; white-space:normal; overflow:visible; overflow-wrap:anywhere; }
 #req-calendar-refined .rf-phase-summary .rf-summary-meta { grid-column:2; max-width:none; font-size:11px; line-height:14px; font-variant-numeric:tabular-nums; overflow:visible; text-overflow:clip; }
 #req-calendar-refined .rf-item-fields { display:grid; gap:9px; padding:5px 0 12px; }
+#req-calendar-refined [data-editor-panel=phases] .rf-item-fields { margin-left:26px; padding-top:8px; padding-bottom:16px; }
 #req-calendar-refined .rf-editor-item>.rf-remove { position:absolute; top:8px; right:0; }
 #req-calendar-refined .rf-remove { display:grid; place-items:center; flex:none; width:var(--rf-remove-size); height:var(--rf-remove-size); padding:0; border-radius:5px; color:var(--rf-muted); }
 #req-calendar-refined .rf-remove svg { width:14px; height:14px; stroke-width:1.5; }

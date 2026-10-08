@@ -50,12 +50,12 @@
         "top" : 416.5
       },
       {
-        "bottom" : 599.5,
+        "bottom" : 595.5,
         "footerTop" : 692,
         "kind" : "阶段",
         "size" : "default",
         "tabsBottom" : 140.5,
-        "top" : 565.5
+        "top" : 561.5
       },
       {
         "bottom" : 562.5,
@@ -74,12 +74,12 @@
         "top" : 360.5
       },
       {
-        "bottom" : 487.5,
+        "bottom" : 483.5,
         "footerTop" : 580,
         "kind" : "阶段",
         "size" : "small",
         "tabsBottom" : 140.5,
-        "top" : 453.5
+        "top" : 449.5
       },
       {
         "bottom" : 450.5,

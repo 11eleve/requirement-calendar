@@ -1,0 +1,47 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "measurements" : [
+      {
+        "collapsedHeight" : 48,
+        "dates" : [
+          {
+            "clientWidth" : 125,
+            "scrollWidth" : 125
+          },
+          {
+            "clientWidth" : 124,
+            "scrollWidth" : 124
+          }
+        ],
+        "fieldAlignmentOffset" : 0,
+        "size" : "default",
+        "viewport" : [
+          1160,
+          780
+        ]
+      },
+      {
+        "collapsedHeight" : 48,
+        "dates" : [
+          {
+            "clientWidth" : 114,
+            "scrollWidth" : 114
+          },
+          {
+            "clientWidth" : 113,
+            "scrollWidth" : 113
+          }
+        ],
+        "fieldAlignmentOffset" : 0,
+        "size" : "small",
+        "viewport" : [
+          980,
+          668
+        ]
+      }
+    ],
+    "scope" : "actual isolated native WebKit geometry, default and smaller native windows; static layout only, not trusted mouse or aesthetic acceptance"
+  }
+}
