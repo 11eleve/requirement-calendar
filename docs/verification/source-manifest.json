@@ -1,9 +1,9 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T01:38:34.974680+00:00",
+  "checked_at_utc": "2026-10-08T02:08:49.693292+00:00",
   "verification_scope": {
-    "notification_delivery": "Real system adapter attempted; authorization unavailable and display-sharing suppression observed; no permission granted or delivery/click verified. Saving now independent from notification wait; delayed fake adapter regression passed.",
+    "notification_delivery": "User authorized temporary permission; enabled through real Settings UI. System NotificationCenter added actual 09:45 reminder to history; displayShared suppressed banner/sound. Actual click and permission restoration blocked by locked Mac.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
     "pointer_events": "Trusted single click, forward/reverse/cross-week drag and outside calendar release passed; held-gesture focus loss and intermediate animation remain unobserved",
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
@@ -60,7 +60,8 @@
     "docs/verification/model-tests.txt": "879d9dc1b169e90a1e78bb7ca0a08a81622e4c7cb1bdb276735534d83818131f",
     "docs/verification/reminder-scheduling.txt": "a6183a6c6b201af5a94637e8a9b1691450319079113bf809c563181a1d717a95",
     "docs/verification/desktop-permission-pending.json": "36d06a803ed98faabdd72f07bad55f15608e5c9d5372749103b9e2cebe9cac28",
-    "docs/verification/manual-acceptance.json": "1e86dd74f3977945f0863b090f1ddfdceff45c445896241ee3f9e4889da90139"
+    "docs/verification/manual-acceptance.json": "7a1a6ab7681a145eb5e3dbe4612369a68e76ebea0d3cae7a300c65959cf686a0",
+    "docs/verification/notification-system-delivery.txt": "8f71e8fdef1447680c51936d1e7d69aa67e7f6daf5ccc9cf78819be42c5a4950"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "ff0812b66bbf82a5daf43cf00b0a7e53f997f1332e8fe5adfda2c7d0ca9c86e3",
@@ -74,6 +75,7 @@
   },
   "pending_manual_gates": [
     "trusted held-drag focus loss and intermediate animation",
-    "real notification permission, delivery and click"
+    "real notification click with dirty draft protection",
+    "restore temporary notification permission after unlock"
   ]
 }

@@ -1,0 +1,5 @@
+Timestamp               Ty Process[PID:TID]
+2026-10-08 09:45:00.142 Df NotificationCenter[1235:3aa8] [com.apple.unc:application] CB0E-4030 (dev.11eleve.requirement-calendar.manual) muted by display state (displayShared)
+2026-10-08 09:45:00.142 Df NotificationCenter[1235:3aa8] [com.apple.unc:application] Adding notification to storage: dev.11eleve.requirement-calendar.manual:09CDAFD0:CB0E-4030
+2026-10-08 09:45:00.143 Df NotificationCenter[1235:3aa8] [com.apple.unc:application] [dev.11eleve.requirement-calendar.manual:09CDAFD0:CB0E-4030] added to history with groupingIdentifier <private>, readCount: 0
+2026-10-08 09:45:00.153 Df NotificationCenter[1235:3aa8] [com.apple.unc:application] Adding notification to storage: dev.11eleve.requirement-calendar.manual:09CDAFD0:CB0E-4030

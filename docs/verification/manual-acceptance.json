@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-10-08T01:38:34.974680+00:00",
+  "checked_at_utc": "2026-10-08T02:08:49.693292+00:00",
   "scope": "Trusted native UI via cua_repl; isolated app identity and data, production interface and native commands",
   "passed": [
     "Single date click opens matching one-day editor; only range strip colored",
@@ -26,22 +26,33 @@
     "pre_restore_archive_count": 3
   },
   "notification_findings": {
-    "real_permission_granted": false,
-    "real_delivery_verified": false,
+    "real_permission_granted": true,
+    "real_delivery_verified": true,
     "real_click_verified": false,
-    "system_ui": "System Settings > Notifications > 需求日历验收, Allow Notifications off",
+    "system_ui": "Last observed: Allow Notifications on for 需求日历验收",
     "observed_system_log": "OS authorization notification suppressed because display shared; no system setting changed",
     "regression_fix": "Native save replies after atomic file persistence; notification reconciliation and status run separately",
-    "new_automated_checks": 6
+    "new_automated_checks": 6,
+    "permission_authorization": "User explicitly replied 开启; enabled only 需求日历验收 via System Settings UI",
+    "delivery_evidence": "NotificationCenter system log at 2026-10-08 09:45:00.143 confirms persisted in actual notification history",
+    "banner_and_sound_observed": false,
+    "delivery_display_limitation": "displayShared suppressed banner and sound; global sharing notification preferences were not changed",
+    "permission_restore_pending": true,
+    "restore_blocker": "Mac locked during native system UI access; cannot restore notification permission until user unlocks"
   },
   "notification_harness": "Isolated copy uses dev.11eleve.requirement-calendar.manual and CALENDAR_EPHEMERAL data. Only scheduler selection and delegate guard are adjusted in generated .build source to exercise real production notification adapter. Product source retains fake notifications for ordinary isolated verification.",
   "remaining": [
-    "Trusted drag focus-loss during held gesture and intermediate animation have not been observed; handler regression and end states only",
-    "Real OS notification permission, delivery and click with dirty draft protection"
+    "Trusted drag focus-loss during held gesture and intermediate animation have not been observed",
+    "Actual notification click with dirty draft protection",
+    "Restore temporary notification permission off after unlock"
   ],
   "local_screenshots": {
     "manual-notification-wait-before.png": "8d90c588c042150dde7741f663387337fe1ec54e8151ab1dd0eb52594ae99a75",
     "manual-notification-save-after.png": "6d723d045617fb745c9a0cb03fabc5d7b107937ff570f937196cff202d6668b5",
     "manual-calendar.png": "18b27b38d6597515608b686f9ed13d11a3420c03059686c9e95e67d0656f2428"
+  },
+  "notification_evidence": {
+    "system_log_sha256": "8f71e8fdef1447680c51936d1e7d69aa67e7f6daf5ccc9cf78819be42c5a4950",
+    "permission_enabled_screenshot_sha256": "db639f01154aebee5fbbd218b0409a996b940943f9c4c7f68a31e552928b5e0d"
   }
 }
