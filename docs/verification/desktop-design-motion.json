@@ -1,0 +1,215 @@
+{
+  "ok" : true,
+  "result" : {
+    "closed" : 1124,
+    "closing" : [
+      {
+        "ms" : 16,
+        "opacity" : 0.64349199999999995,
+        "width" : 860.203125
+      },
+      {
+        "ms" : 31,
+        "opacity" : 0.42040899999999998,
+        "width" : 934.234375
+      },
+      {
+        "ms" : 46,
+        "opacity" : 0.26911200000000002,
+        "width" : 988.5
+      },
+      {
+        "ms" : 64,
+        "opacity" : 0.15365899999999999,
+        "width" : 1038.59375
+      },
+      {
+        "ms" : 79,
+        "opacity" : 0.100996,
+        "width" : 1064.515625
+      },
+      {
+        "ms" : 97,
+        "opacity" : 0.056829999999999999,
+        "width" : 1085.703125
+      },
+      {
+        "ms" : 114,
+        "opacity" : 0.030634000000000002,
+        "width" : 1099.25
+      },
+      {
+        "ms" : 131,
+        "opacity" : 0.014352999999999999,
+        "width" : 1108.171875
+      },
+      {
+        "ms" : 147,
+        "opacity" : 0.0054000000000000003,
+        "width" : 1114.765625
+      },
+      {
+        "ms" : 163,
+        "opacity" : 0.001157,
+        "width" : 1118.96875
+      },
+      {
+        "ms" : 181,
+        "opacity" : 0,
+        "width" : 1121.96875
+      },
+      {
+        "ms" : 197,
+        "opacity" : 0,
+        "width" : 1123.421875
+      },
+      {
+        "ms" : 212,
+        "opacity" : 0,
+        "width" : 1123.96875
+      },
+      {
+        "ms" : 231,
+        "opacity" : 0,
+        "width" : 1124
+      },
+      {
+        "ms" : 247,
+        "opacity" : 0,
+        "width" : 1124
+      },
+      {
+        "ms" : 264,
+        "opacity" : 0,
+        "width" : 1124
+      },
+      {
+        "ms" : 283,
+        "opacity" : 0,
+        "width" : 1124
+      },
+      {
+        "ms" : 297,
+        "opacity" : 0,
+        "width" : 1124
+      },
+      {
+        "ms" : 314,
+        "opacity" : 0,
+        "width" : 1124
+      },
+      {
+        "ms" : 330,
+        "opacity" : 0,
+        "width" : 1124
+      },
+      {
+        "ms" : 347,
+        "opacity" : 0,
+        "width" : 1124
+      }
+    ],
+    "discreteDisplayTransitionSupported" : true,
+    "initial" : 1124,
+    "opened" : 758,
+    "opening" : [
+      {
+        "ms" : 59,
+        "opacity" : 0.80548200000000003,
+        "width" : 861.6875
+      },
+      {
+        "ms" : 85,
+        "opacity" : 0.90790300000000002,
+        "width" : 813.359375
+      },
+      {
+        "ms" : 96,
+        "opacity" : 0.93718699999999999,
+        "width" : 800.328125
+      },
+      {
+        "ms" : 135,
+        "opacity" : 0.98706300000000002,
+        "width" : 772.953125
+      },
+      {
+        "ms" : 140,
+        "opacity" : 0.99021000000000003,
+        "width" : 770.84375
+      },
+      {
+        "ms" : 152,
+        "opacity" : 0.99573500000000004,
+        "width" : 766.640625
+      },
+      {
+        "ms" : 161,
+        "opacity" : 0.99804599999999999,
+        "width" : 764.203125
+      },
+      {
+        "ms" : 172,
+        "opacity" : 0.99972099999999997,
+        "width" : 761.875
+      },
+      {
+        "ms" : 188,
+        "opacity" : 1,
+        "width" : 759.59375
+      },
+      {
+        "ms" : 205,
+        "opacity" : 1,
+        "width" : 758.375
+      },
+      {
+        "ms" : 223,
+        "opacity" : 1,
+        "width" : 758
+      },
+      {
+        "ms" : 238,
+        "opacity" : 1,
+        "width" : 758
+      },
+      {
+        "ms" : 256,
+        "opacity" : 1,
+        "width" : 758
+      },
+      {
+        "ms" : 275,
+        "opacity" : 1,
+        "width" : 758
+      },
+      {
+        "ms" : 289,
+        "opacity" : 1,
+        "width" : 758
+      },
+      {
+        "ms" : 306,
+        "opacity" : 1,
+        "width" : 758
+      },
+      {
+        "ms" : 323,
+        "opacity" : 1,
+        "width" : 758
+      },
+      {
+        "ms" : 338,
+        "opacity" : 1,
+        "width" : 758
+      },
+      {
+        "ms" : 356,
+        "opacity" : 1,
+        "width" : 758
+      }
+    ],
+    "reducedMotion" : false,
+    "scope" : "real WebKit frame geometry for opening and closing; does not prove trusted pointer feel or aesthetic preference"
+  }
+}

@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T14:43:30.274566+00:00",
+  "checked_at_utc": "2026-10-08T15:46:34.947702+00:00",
   "verification_scope": {
     "notification_delivery": "User authorized temporary permission; enabled through real Settings UI. System NotificationCenter added actual 09:45 reminder to history; displayShared suppressed banner/sound. Actual click and permission restoration blocked by locked Mac.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,12 +9,12 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "49e832864719c05822059cc32b1f923c5542d1d633f3785d79e89be80e1d2ec0",
-    "src/app.js": "de283ed6ad188676f4ad65f861154ff310a588ae02cbf60a0b2f6387d2110fe4",
-    "src/index.html": "228842fba037f20fefd6a69663d6ab6a7cbe61e9f4d234d79205025c98b7e389",
+    "index.html": "b66ea9e805af2d75aa9d7b568507a7ff39199afbc4500ee41811140be46bd646",
+    "src/app.js": "79dfcbf7a455b904231c12c92f811a7ac23563ea61d2a0038aed0954e64bd7af",
+    "src/index.html": "d6fcfe6cd026b45c49ac43ed8207be4224b1933e2af294ee114ca057bb268b0d",
     "src/model.js": "94e4ab1229da3517049065b86968e22796a31aebbbe7910ccef6624fda5ba17c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
-    "src/styles.css": "d9f7473e37a04837d436129e326889e7dcd5b5e5a2b771c5f03eace7722b31e7",
+    "src/styles.css": "ea90c963449ca60bf40fb5b5ce420fda954c71325f9660ad511aa1fdb486a6ec",
     "native/App.swift": "a575f6b0662917446218844d3beb0e3d48fa6eeaf78f632353f3244ed00f00e2",
     "native/DataStore.swift": "7e2fe913db06f18ee669a799c1675bc99c704bd5e10ab7421510038079c0e091",
     "native/LinkPolicy.swift": "42695a8723abf96f25053ec625d535d985ab172087c2d6b60199a04996963ef1",
@@ -38,19 +38,22 @@
     "tests/model.test.cjs": "483515a83877cbd15dde2f268a1a244acb81dbac900d236de90285002bb0a58a",
     "tests/reminder-scheduling.swift": "3de859279c90d8101fb7937ebbfb17fc5ea86f9403f6d1ca1a6bdf24b4011647",
     "tests/desktop-permission-pending.js": "e73c03c65d1eb72966bf0920c0c93118366c7bc35b29827fab2d13f8242a065b",
-    "tests/desktop-polish.js": "381d21f17bc985d98e942cd2ee09caab0e3ebb4e8530aa4f54c710362bccb64b"
+    "tests/desktop-polish.js": "381d21f17bc985d98e942cd2ee09caab0e3ebb4e8530aa4f54c710362bccb64b",
+    "tests/desktop-design.js": "d617ccc358de535145f35612f2aaa1fa1fe647fe6385676c5f29c6dfe308a6cd",
+    "tests/desktop-design-motion.js": "ea68fe2cfa2a56378381f51a5811824fd045e5a75f01cdad47d4b5959639c943",
+    "tests/desktop-detail.js": "e0f179436847e81f85b52fdc05538ae96760e38c88388396cb0fbaff79d5b93c"
   },
   "results": {
     "docs/verification/browser-storage.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
     "docs/verification/build-tests.txt": "24cefc2bc38a1c71e18591075993695fc72546b32ff6b5baab3d98032ce96fb5",
     "docs/verification/desktop-data-reminders.json": "eacac1f0a1bb0e0b1335278d115bce8e06329beb5418a8f90f25e08766511ad3",
-    "docs/verification/desktop-editor-dark.json": "4de98b29713d9c8eeed364b7ac664b0ced7891804b60421f7754681000b015f8",
-    "docs/verification/desktop-editor.json": "4de98b29713d9c8eeed364b7ac664b0ced7891804b60421f7754681000b015f8",
+    "docs/verification/desktop-editor-dark.json": "79d99eaf0d11ac980034c63d55dcc4bb588e8404ffed5a3d03b5cce67b29fb2c",
+    "docs/verification/desktop-editor.json": "79d99eaf0d11ac980034c63d55dcc4bb588e8404ffed5a3d03b5cce67b29fb2c",
     "docs/verification/desktop-final-dark.json": "64d7d19f481207fdce7a5005e62ecccde9c1cbcada0bffb9f79880b0e46b16b7",
     "docs/verification/desktop-final.json": "b15ca301464c138fef12a41af56e80106f64c6d81566c72f9e052212d6c62c8a",
     "docs/verification/desktop-frame-reload.json": "53fcb30303c58077817dd184ac381fec210c2f6b27c415884d3deae429ed2ebf",
     "docs/verification/desktop-frame-save.json": "33dad00c07acc66d7b475fde99c1a6944156b150690bf820ed8648ba07f61e05",
-    "docs/verification/desktop-overview.json": "d247424142ac01e103023fdb0983d3d9f595060ab3cdd5d6819b04b7c577f677",
+    "docs/verification/desktop-overview.json": "91ad545b0b3dd82b8f7552864aa723d675f8884ec873a0c28229169bc8f03e9b",
     "docs/verification/desktop-pointer.json": "375c956f623beec47951a4976dcb9beda24fd5156b7f6e83595f2857e095747d",
     "docs/verification/desktop-reload-fixture.json": "bca2b3f3486b9fc5dc869a84e1e5e66842255bd88fc91ea9eb05978fc0535c34",
     "docs/verification/desktop-reminder-denied.json": "3a5daa30ad62dded2568281c395a9941d5b89e5c2d3974b60f07fef7265cad12",
@@ -65,15 +68,20 @@
     "docs/verification/notification-system-delivery.txt": "8f71e8fdef1447680c51936d1e7d69aa67e7f6daf5ccc9cf78819be42c5a4950",
     "docs/verification/desktop-polish.json": "461ac8a90abe50843b31ff956da5e53b5f8b61d4c0b4a3854670fca8982bb498",
     "docs/verification/desktop-polish-dark.json": "461ac8a90abe50843b31ff956da5e53b5f8b61d4c0b4a3854670fca8982bb498",
-    "docs/verification/desktop-polish-before.json": "48d1bb6b2a8731817f67dc12195d9ddb195cb44340640036d8606135598cd4a6"
+    "docs/verification/desktop-polish-before.json": "48d1bb6b2a8731817f67dc12195d9ddb195cb44340640036d8606135598cd4a6",
+    "docs/verification/desktop-design.json": "b6150a9f420a0fb8ad2d47468e1b7f08d3a2181bb841c393de95a46626fb1659",
+    "docs/verification/desktop-design-dark.json": "22d4c48bd2c0f4c782f2e5a2d142c6dbb047d5ccd8afdd380178daa07d3bc02b",
+    "docs/verification/desktop-design-motion.json": "fee0a7311b11b27b3540e012c6922995b65bf49660063593e4442ff93b7e07ba",
+    "docs/verification/desktop-detail.json": "d0cc0c115dcea73bc3087cb9f68706b0b301b0f60efd27c46265e3ca2ab55162"
   },
   "screenshots": {
-    "assets/desktop-editor-dark.png": "ff0812b66bbf82a5daf43cf00b0a7e53f997f1332e8fe5adfda2c7d0ca9c86e3",
-    "assets/desktop-editor.png": "a8be994b149dc69704d8f1e0e9da5d7207a64a0b3ceceeef4fb55f62254ff546",
-    "assets/desktop-overview.png": "7786b0563c87558e043e9da85c3b268ebe5fd2db2d71946378af86d159309f18"
+    "assets/desktop-editor-dark.png": "d6bf0c81a8b874d1708e01635bfbf37b50ba5e3d770960830cc8655ac7c8a925",
+    "assets/desktop-editor.png": "b228bc91481476a80ded41d549bb18f528870a25be16273370855d1db994d29d",
+    "assets/desktop-overview.png": "d273bf933da7a1c06f9c4e54d16138b8ce4f9a7b2885fd56294810f408fbba4b",
+    "assets/desktop-detail.png": "4d176d55dc9065d616c4f2bdf1cc2d7456ebe9a3ebc326814ce156b05ac3da44"
   },
   "local_app": {
-    "binary_sha256": "bceee4d3c6a82569031db347609d7f3cd6f9c475e54576e93fdcb6cb0318c573",
+    "binary_sha256": "70039dd8a82c9a66386eee9a340491631a377716e2f76a910cd098c32f90a60c",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true
   },
@@ -101,5 +109,22 @@
     ],
     "scope": "Only the listed checks were rerun for this follow-up; other recorded results are earlier evidence. Pointer capture remains stubbed in synthetic event checks.",
     "system_acceptance": "User requested deferring lock-related blockers; notification click and temporary permission restoration remain pending."
+  },
+  "design_refinement": {
+    "intent": "Address visual simplicity and lack of elegance, not merely platform resemblance.",
+    "current_build_checks": [
+      "design layout light/dark 16 each",
+      "polish light/dark 20 each",
+      "desktop final light/dark 49 each",
+      "desktop UI 21",
+      "pointer handlers 6",
+      "file/reminders 14",
+      "portable build",
+      "native build/signature/bundled page",
+      "actual opening and closing frame geometry",
+      "overview/detail/editor light/dark screenshots"
+    ],
+    "motion_scope": "Actual WebKit frames show intermediate monotonic widths and restored endpoints. System Reduce Motion was false; the gated CSS branch was inspected, not toggled through real Settings. Trusted pointer feel and aesthetic acceptance remain unproven.",
+    "prior_evidence": "Recorded model, file-store, native interaction and other results not listed above were not rerun for this style-focused change."
   }
 }

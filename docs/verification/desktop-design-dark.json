@@ -1,0 +1,29 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "isolated design fixture restored",
+      "six-week months retain their complete calendar structure",
+      "a normal six-week month fits the default desktop viewport",
+      "the toolbar keeps only month navigation and the new requirement control",
+      "the opened inspector remains inside the desktop viewport",
+      "every phase remains inside its single requirement band",
+      "phase decoration creates no extra calendar requirements",
+      "long resources retain access to the editor tabs",
+      "invalid deep resource links remain rejected",
+      "validation focuses a deep field visibly between sticky tabs and actions",
+      "the product layout is also checked in a smaller native window",
+      "the small-window editor scrolls within its own surface",
+      "the small-window application has no page overflow",
+      "isolated design fixture restored",
+      "dense requirements scroll independently of the editor",
+      "the redesigned editing range remains present in a dense month"
+    ],
+    "scope" : "real WebKit layout and file bridge; animations completed before geometry checks; does not assess trusted mouse feel",
+    "viewport" : [
+      980,
+      668
+    ]
+  }
+}

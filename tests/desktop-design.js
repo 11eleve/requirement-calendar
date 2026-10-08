@@ -1,0 +1,38 @@
+// Layout acceptance for the redesigned interface, using the product WebKit host.
+const checks=[], $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const assert=(value,message)=>{if(!value)throw new Error(message);checks.push(message);};
+const settle=async()=>{document.getAnimations().forEach(animation=>animation.finish());await new Promise(requestAnimationFrame);document.getAnimations().forEach(animation=>animation.finish());};
+const set=(node,value)=>{node.value=value;node.dispatchEvent(new Event('input',{bubbles:true}));};
+const item=(id,overrides={})=>({id,title:'结算流程改版',start:'2026-11-01',end:'2026-11-30',phases:[{name:'需求评审',start:'2026-11-01',end:'2026-11-03'},{name:'开发与联调',start:'2026-11-04',end:'2026-11-22'},{name:'测试验收',start:'2026-11-23',end:'2026-11-30'}],resources:[],tasks:[],done:[],note:'',...overrides});
+const restore=async items=>{assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-11-01',requirements:items})),'isolated design fixture restored');await settle();};
+const inside=(inner,outer)=>inner.left>=outer.left-1&&inner.right<=outer.right+1&&inner.top>=outer.top-1&&inner.bottom<=outer.bottom+1;
+await restore([item('design',{resources:Array.from({length:18},(_,i)=>({name:'接口约定与评审资料 '+i,type:'自定义资料',url:'https://example.com/reference/'+i})),tasks:['确认接口契约与错误处理','验证新旧版本兼容'],done:[true,false]})]);
+assert($$('.rf-week').length===6,'six-week months retain their complete calendar structure');
+assert($('.rf-week:last-child').getBoundingClientRect().bottom<=$('#rf-calendar').getBoundingClientRect().bottom+1,'a normal six-week month fits the default desktop viewport');
+assert($$('.rf-toolbar button').length===3,'the toolbar keeps only month navigation and the new requirement control');
+CalendarApp.openRequirement('design');await settle();
+assert(inside($('#rf-detail').getBoundingClientRect(),$('#req-calendar-refined').getBoundingClientRect()),'the opened inspector remains inside the desktop viewport');
+assert($$('.rf-phase').every(phase=>inside(phase.getBoundingClientRect(),phase.closest('.rf-bar').getBoundingClientRect())),'every phase remains inside its single requirement band');
+assert($$('.rf-bar').every(bar=>bar.dataset.requirementId==='design'),'phase decoration creates no extra calendar requirements');
+CalendarApp.editRequirement('design');await settle();
+const panel=$('#rf-panel'),tabs=$('.rf-editor-tabs');panel.scrollTop=panel.scrollHeight;await settle();
+assert(inside(tabs.getBoundingClientRect(),panel.getBoundingClientRect()),'long resources retain access to the editor tabs');
+const last=$$('[data-editor-panel="basic"] .rf-disclosure').at(-1);last.open=true;
+const link=last.querySelector('input[type=url]'),original=link.value;set(link,'javascript:alert(1)');
+assert(await CalendarApp.command('save')===false,'invalid deep resource links remain rejected');await settle();
+const linkBounds=link.getBoundingClientRect();
+assert(document.activeElement===link&&linkBounds.top>=tabs.getBoundingClientRect().bottom-1&&linkBounds.bottom<=$('.rf-form-actions').getBoundingClientRect().top+1,'validation focuses a deep field visibly between sticky tabs and actions');
+set(link,original);await CalendarApp.command('close');await settle();
+
+const frame=await webkit.messageHandlers.calendar.postMessage({action:'verifyWindow',save:true});await settle();
+assert(frame.width===980&&frame.height===700,'the product layout is also checked in a smaller native window');
+CalendarApp.editRequirement('design');await settle();
+assert(inside($('#rf-detail').getBoundingClientRect(),$('#req-calendar-refined').getBoundingClientRect())&&$('#rf-panel').scrollHeight>$('#rf-panel').clientHeight,'the small-window editor scrolls within its own surface');
+assert(document.documentElement.scrollHeight<=innerHeight+1&&document.documentElement.scrollWidth<=innerWidth+1,'the small-window application has no page overflow');
+await CalendarApp.command('close');await settle();
+await restore(Array.from({length:14},(_,i)=>item('dense-'+i)));
+CalendarApp.editRequirement('dense-0');await settle();
+const calendar=$('#rf-calendar');calendar.scrollTop=240;panel.scrollTop=0;
+assert(calendar.scrollHeight>calendar.clientHeight&&calendar.scrollTop===240&&panel.scrollTop===0,'dense requirements scroll independently of the editor');
+assert(!!$('.rf-range-preview.is-visible'),'the redesigned editing range remains present in a dense month');
+return {checks,appearance:matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light',viewport:[innerWidth,innerHeight],scope:'real WebKit layout and file bridge; animations completed before geometry checks; does not assess trusted mouse feel'};
