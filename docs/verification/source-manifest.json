@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–50",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-08T16:18:38.985364+00:00",
+  "checked_at_utc": "2026-10-08T16:28:12.457841+00:00",
   "verification_scope": {
     "notification_delivery": "User authorized temporary permission; enabled through real Settings UI. System NotificationCenter added actual 09:45 reminder to history; displayShared suppressed banner/sound. Actual click and permission restoration blocked by locked Mac.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -9,8 +9,8 @@
     "screenshots": "actual WebKit rendering; animations advanced to endpoints"
   },
   "sources": {
-    "index.html": "ecdf420ab585ae8a7209ff9e1cf5e684cb36e0b37f3c700800ff0281500c18f7",
-    "src/app.js": "e11c9266a37d667ca346f03490896bb4da7b5af47459d4b62a7fd748472a95f4",
+    "index.html": "41bddc417009aba1101c3350cd440aeece721cab70ec1a696df6be27624ec91c",
+    "src/app.js": "1f5c95247397c52b244d252dd252c9d8f8033a7d529e986d61b6538a33271664",
     "src/index.html": "f6dec4a04b1b2ff0ff224981648869e13300d361f9853d01533bf2991d77010e",
     "src/model.js": "94e4ab1229da3517049065b86968e22796a31aebbbe7910ccef6624fda5ba17c",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
@@ -47,7 +47,8 @@
     "src/icons.js": "5c26f6938fdafa8ec75d4e6999583c50178f7974c3dc400cc964428cded35262",
     "tests/desktop-resource-icons.js": "a63b2b682c0d3a345cf9803eb008441ce09c8f773fdb6e7d0d1b81f5dd5c933b",
     "THIRD_PARTY_NOTICES.md": "63271b114e4cdcc129178228b3aa3ea36d233267c0d17bdf626350a384900b0e",
-    "tests/desktop-readability.js": "bd10db966c9afb37869a8b51e8c849e6aad3ef5342197948d27cb6c99ca77fc6"
+    "tests/desktop-readability.js": "bd10db966c9afb37869a8b51e8c849e6aad3ef5342197948d27cb6c99ca77fc6",
+    "tests/desktop-panel-continuity.js": "11076914dcc9554107ef2245e5cfe34fd0e33ca7c8c6987e1c7f398012c08048"
   },
   "results": {
     "docs/verification/browser-storage.json": "080264f14d942443fe067c61762c8d7fbb734e22cb304e1d6010504fa981abd5",
@@ -90,7 +91,10 @@
     "docs/verification/desktop-readability.json": "b2b80661d04653f0aae90395f7ba0b2a78ba3a7fc9c14c17e285c5f2c797e083",
     "docs/verification/desktop-readability-dark.json": "17f1b2894076caf76030ff4bbe0a183b7cee8b1a9f00cf2f80ca93992750c088",
     "docs/verification/desktop-readability-before-light.json": "da3182c89bf45267edb2b322fc4b90d7dd154e139abf54792eff8912f3f3bfd0",
-    "docs/verification/desktop-readability-before-dark.json": "78f652e358f308b7e3901291faccdde0a520bae0af4403e8abca174c88fb3f72"
+    "docs/verification/desktop-readability-before-dark.json": "78f652e358f308b7e3901291faccdde0a520bae0af4403e8abca174c88fb3f72",
+    "docs/verification/desktop-panel-continuity.json": "9785f0e2e94442b83dbe15df942afaa830e14ae15860f8207495b7620c17fc31",
+    "docs/verification/desktop-panel-continuity-dark.json": "9133119a8fc21e583c8c0ae8f73dc7c74c4482520e7c75dc7b0c41fde9549282",
+    "docs/verification/desktop-panel-continuity-before.json": "d6550d24d3f57726535ab7258ea6f73b6a1d17451e9b53cfa5a344413d5080b6"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "969f205549243d7ec7322a72dab0e1617dafa2f55561b0c25d80646f01baffa5",
@@ -99,7 +103,7 @@
     "assets/desktop-detail.png": "1ba9a369c5ab062c191c59aed00683ea336280b431f1d54e9862072fc61d3d13"
   },
   "local_app": {
-    "binary_sha256": "69a7d2d8969c0bcfb4de8ea3f8ef4b1284f9b08dbc79d2836a809b06a5bf5c79",
+    "binary_sha256": "05e8005dfc04dd8a297df2fec7ee0a06498230a567e4a7eca4d757128920b7aa",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -231,5 +235,25 @@
     },
     "reference": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
     "scope": "Resolved WebKit colors only for the text contexts recorded in desktop-readability results. This is not a complete app accessibility assessment or aesthetic acceptance. Unaffected interaction, persistence and notification checks were not rerun for this palette-only change."
+  },
+  "panel_continuity_refinement": {
+    "changes": [
+      "restore a detail section and local reading offset after editing",
+      "return focus to a visible corresponding action",
+      "fresh detail openings begin at the heading",
+      "temporary reading context stays out of persisted data"
+    ],
+    "current_build_checks": [
+      "panel continuity light/dark 17 each",
+      "editor navigation light 11",
+      "desktop UI light 21",
+      "desktop final light 49",
+      "polish light 20",
+      "design light 16",
+      "resource icons light 12",
+      "portable build",
+      "native build/signature/bundled page"
+    ],
+    "scope": "Actual WebKit scroll and focus geometry, title reflow and isolated save bridge with synthetic button activation. Existing screenshots still represent current visual layout. Other checks not listed here are earlier evidence; notification handler checks do not prove a real system notification click."
   }
 }

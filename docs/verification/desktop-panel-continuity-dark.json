@@ -1,0 +1,26 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "isolated reading-context fixture restored",
+      "the fixture requires substantial detail scrolling",
+      "entering general editing begins with the visible name field",
+      "clean cancellation returns to the previous detail reading position",
+      "clean cancellation restores the general edit action focus",
+      "dirty cancellation still asks how to handle the draft",
+      "continue editing retains the draft, its reading position and date strip",
+      "discarding returns to the original detail without applying draft changes",
+      "resource management still targets the first resource summary",
+      "resource cancellation restores its section and management action",
+      "existing edits persist through the native bridge",
+      "saving preserves the resource section position when the title height changes",
+      "returning after save clears draft feedback and dirty state",
+      "a fresh opening begins at the heading without reusing old reading state",
+      "calendar-initiated editing keeps the heading context with a visible return focus",
+      "stage cancellation returns to its original action",
+      "editing without a previous detail view uses the normal detail opening"
+    ],
+    "scope" : "actual WebKit scroll, focus and isolated save bridge; synthetic button activation"
+  }
+}

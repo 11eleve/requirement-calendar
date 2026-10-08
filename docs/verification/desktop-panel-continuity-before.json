@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "result": {
+    "detailScroll": 1126,
+    "editorFocusTop": 201,
+    "editorScroll": 0,
+    "focusedPlaceholder": null,
+    "returnedDetailScroll": 0,
+    "visiblePanelTop": 115
+  },
+  "source_revision": "5f52cc8430ff8facd152a924973bfa2822a39096",
+  "scope": "Actual isolated WebKit detail scroll, entering editing and clean cancellation; focusedPlaceholder was observed after cancellation."
+}
