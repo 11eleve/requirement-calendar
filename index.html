@@ -107,7 +107,9 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-phase.phase-alt { background:color-mix(in srgb,var(--rf-phase-fill) 70%,var(--rf-fill)); }
 #req-calendar-refined .rf-phase:first-child { border-left:0; }
 #req-calendar-refined .rf-phase.is-current { font-weight:650; }
-#req-calendar-refined .rf-range-preview { position:absolute; bottom:6px; height:8px; z-index:1; pointer-events:none; border-radius:4px; background:linear-gradient(90deg,var(--rf-purple),color-mix(in srgb,var(--rf-purple) 70%,var(--rf-bg))); opacity:0; transform:translateY(2px); }
+#req-calendar-refined .rf-range-preview { position:absolute; bottom:6px; height:8px; z-index:1; pointer-events:none; border-radius:4px; --rf-range-tone:var(--rf-purple); background:linear-gradient(90deg,var(--rf-range-tone),color-mix(in srgb,var(--rf-range-tone) 70%,var(--rf-bg))); opacity:0; transform:translateY(2px); }
+#req-calendar-refined .rf-range-preview.blue { --rf-range-tone:var(--rf-blue); }
+#req-calendar-refined .rf-range-preview.green { --rf-range-tone:var(--rf-green); }
 #req-calendar-refined .rf-range-preview.is-visible { opacity:.48; transform:none; }
 #req-calendar-refined .rf-range-preview.continues-left { border-top-left-radius:2px; border-bottom-left-radius:2px; }
 #req-calendar-refined .rf-range-preview.continues-right { border-top-right-radius:2px; border-bottom-right-radius:2px; }
@@ -616,10 +618,15 @@ window.CalendarReady=(async()=>{
  function resourceError(items){if(items.some(x=>!x.name))return '请填写资料名称。';try{items.forEach(x=>Model.safeURL(x.url));}catch(error){return error.message;}return '';}
  function validateForm(form){const invalid=Array.from(form.elements).find(control=>control.willValidate&&!control.validity.valid);if(!invalid)return true;const disclosure=invalid.closest('details');if(disclosure)disclosure.open=true;invalid.reportValidity();return false;}
  function editResources(id){edit(id,undefined,undefined,'resources');}
- function edit(id=null,date=state.anchor,endDate=date,initialTab='basic',force=false){
+ function nextRequirementTone(){
+  const tones=['','blue','green'],counts=new Map(tones.map(tone=>[tone,0])),grid=Model.monthGrid(state.anchor),end=boundedAdd(grid.start,grid.count*7-1)||'9999-12-31';
+  for(const item of requirements)if(item.start<=end&&item.end>=grid.start)counts.set(item.tone,counts.get(item.tone)+1);
+  return tones.reduce((best,tone)=>counts.get(tone)<counts.get(best)?tone:best);
+ }
+ function edit(id=null,date=state.anchor,endDate=date,initialTab='basic',force=false,draftTone=null){
   if(saving)return;
-  if(!force&&!mayLeave(()=>edit(id,date,endDate,initialTab,true)))return;
-  const existing=req(id),draft=existing?structuredClone(existing):{id:Model.newId(),title:'',short:'',tone:'',start:date,end:endDate,phases:[],resources:[],tasks:[],done:[],note:''};
+  if(!force&&!mayLeave(()=>edit(id,date,endDate,initialTab,true,draftTone)))return;
+  const existing=req(id),draft=existing?structuredClone(existing):{id:Model.newId(),title:'',short:'',tone:draftTone??nextRequirementTone(),start:date,end:endDate,phases:[],resources:[],tasks:[],done:[],note:''};
   const returnContext=existing?captureDetailPosition(id,initialTab):null;
   selectRequirement(existing?id:null);openPanel(existing?'编辑需求':'新建需求');
   const form=el('form','rf-form rf-tabbed-form');form.noValidate=true;
@@ -632,7 +639,7 @@ window.CalendarReady=(async()=>{
   tabs.addEventListener('keydown',event=>{const keys=Object.keys(panels),index=keys.findIndex(key=>tabButtons[key]===event.target);if(index<0)return;let next;if(event.key==='ArrowRight')next=(index+1)%keys.length;else if(event.key==='ArrowLeft')next=(index+keys.length-1)%keys.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=keys.length-1;else return;event.preventDefault();showTab(keys[next]);tabButtons[keys[next]].focus();});
   const name=input('text',draft.title,'例如：支付结果页改版');name.required=true;name.maxLength=64;
   const start=input('date',draft.start),end=input('date',draft.end);start.required=true;end.required=true;
-  const syncDraftPreview=()=>updateDraftPreview(start.value,end.value);for(const control of [start,end]){control.addEventListener('input',syncDraftPreview);control.addEventListener('change',syncDraftPreview);}
+  const syncDraftPreview=()=>updateDraftPreview(start.value,end.value,draft.tone);for(const control of [start,end]){control.addEventListener('input',syncDraftPreview);control.addEventListener('change',syncDraftPreview);}
   const pair=el('div','rf-pair');pair.append(field('开始日期',start),field('结束日期',end));
   const note=el('textarea');note.value=draft.note;note.placeholder='评审结论、阻塞事项、接口约定…';
   panels.basic.append(field('需求名称',name),pair);
@@ -693,11 +700,11 @@ window.CalendarReady=(async()=>{
    const dates=Array.from(week.querySelectorAll('.rf-date'),button=>button.dataset.date),first=dates.findIndex(date=>start&&date>=start&&date<=end);
    let preview=week.querySelector('.rf-range-preview');if(first<0){preview?.classList.remove('is-visible');continue;}
    const last=dates.findLastIndex(date=>date>=start&&date<=end);if(!preview){preview=el('div','rf-range-preview');preview.setAttribute('aria-hidden','true');week.append(preview);}
-   const visible=preview.classList.contains('is-visible');preview.style.left='calc('+(first/7*100)+'% + 3px)';preview.style.width='calc('+((last-first+1)/7*100)+'% - 6px)';
+   const visible=preview.classList.contains('is-visible');for(const tone of ['blue','green'])preview.classList.toggle(tone,range.tone===tone);preview.style.left='calc('+(first/7*100)+'% + 3px)';preview.style.width='calc('+((last-first+1)/7*100)+'% - 6px)';
    preview.classList.toggle('continues-left',start<dates[0]);preview.classList.toggle('continues-right',end>dates[6]);if(!visible)void preview.offsetWidth;preview.classList.add('is-visible');
   }
  }
- function updateDraftPreview(start,end){if(!validDate(start)||!validDate(end)||end<start){clearDraftPreview();return;}draftPreview={start,end};paintDateSelection(draftPreview);}
+ function updateDraftPreview(start,end,tone=''){if(!validDate(start)||!validDate(end)||end<start){clearDraftPreview();return;}draftPreview={start,end,tone};paintDateSelection(draftPreview);}
  function clearDraftPreview(){draftPreview=null;paintDateSelection(null);}
  function dateAtPoint(x,y){
   const viewport=calendar.getBoundingClientRect();if(x<viewport.left||x>=viewport.right||y<viewport.top||y>=viewport.bottom)return null;
@@ -708,7 +715,7 @@ window.CalendarReady=(async()=>{
  function cancelDateSelection(){if(!dateSelection)return;cancelledDatePointer=dateSelection.pointerId;suppressDateClickUntil=performance.now()+400;clearDateSelection();}
  calendar.addEventListener('pointerdown',event=>{
   const button=event.target.closest?.('.rf-date');if(!button?.dataset.date||!calendar.contains(button)||event.button!==0||event.isPrimary===false||saving||editor?.isDirty()||get('rf-discard').open)return;
-  cancelledDatePointer=null;suppressDateClickUntil=0;dateSelection={start:button.dataset.date,end:button.dataset.date,pointerId:event.pointerId,button,dragged:false};button.setPointerCapture(event.pointerId);paintDateSelection();
+  cancelledDatePointer=null;suppressDateClickUntil=0;dateSelection={start:button.dataset.date,end:button.dataset.date,tone:nextRequirementTone(),pointerId:event.pointerId,button,dragged:false};button.setPointerCapture(event.pointerId);paintDateSelection();
  });
  calendar.addEventListener('pointermove',event=>{
   if(!dateSelection||dateSelection.pointerId!==event.pointerId)return;const date=dateAtPoint(event.clientX,event.clientY);if(!date||date===dateSelection.end)return;dateSelection.end=date;dateSelection.dragged=true;paintDateSelection();
@@ -718,7 +725,7 @@ window.CalendarReady=(async()=>{
   selected.end=releaseDate;selected.dragged=selected.dragged||releaseDate!==selected.start;
   const start=selected.start<selected.end?selected.start:selected.end,end=selected.start>selected.end?selected.start:selected.end;
   if(selected.dragged){event.preventDefault();suppressDateClickUntil=performance.now()+400;}
-  clearDateSelection(true);if(selected.dragged){get('rf-feedback').textContent='已选择 '+format(start)+' 至 '+format(end);edit(null,start,end);}
+  clearDateSelection(true);if(selected.dragged){get('rf-feedback').textContent='已选择 '+format(start)+' 至 '+format(end);edit(null,start,end,'basic',false,selected.tone);}
  });
  calendar.addEventListener('click',event=>{if(performance.now()<suppressDateClickUntil&&event.target.closest?.('.rf-date')){event.preventDefault();event.stopImmediatePropagation();}},true);
  calendar.addEventListener('pointercancel',cancelDateSelection);calendar.addEventListener('lostpointercapture',cancelDateSelection);

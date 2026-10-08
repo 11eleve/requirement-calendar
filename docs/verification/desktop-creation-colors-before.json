@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "result": {
+    "created": [
+      {
+        "title": "新建需求 0",
+        "tone": ""
+      },
+      {
+        "title": "新建需求 1",
+        "tone": ""
+      },
+      {
+        "title": "新建需求 2",
+        "tone": ""
+      }
+    ],
+    "editingBarColor": "rgb(52, 110, 96)",
+    "editingRangeBackground": "linear-gradient(90deg, rgb(99, 82, 158), color(srgb 0.571765 0.525098 0.733725))"
+  },
+  "source_commit": "404b9b02dab1c345c7b578f0f8d88ced065b78bc",
+  "scope": "Actual WebKit isolated save flow and resolved colors; synchronous layout measurement without waiting for animation frames. Earlier rAF probe timed out; no successful animation measurement claimed."
+}

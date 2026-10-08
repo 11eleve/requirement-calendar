@@ -1,0 +1,27 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "new requirement 0 saves through native bridge",
+      "saved bar 0 takes over the draft color and clears range strip",
+      "new requirement 1 saves through native bridge",
+      "saved bar 1 takes over the draft color and clears range strip",
+      "new requirement 2 saves through native bridge",
+      "saved bar 2 takes over the draft color and clears range strip",
+      "three user-created requirements receive distinct palette tones",
+      "offscreen requirements do not bias colors for the current calendar",
+      "changing dates keeps the assigned tone across visible week strips",
+      "unsaved-change confirmation preserves the assigned color",
+      "discarding clears the draft strip",
+      "editing blue matches the original bar without making a dirty draft",
+      "editing and saving preserves blue in stored data",
+      "editing green matches the original bar without making a dirty draft",
+      "editing and saving preserves green in stored data",
+      "reverse cross-week drag keeps one tone",
+      "drag-to-editor transition keeps color and normalized dates",
+      "drag-created requirement retains its color after save"
+    ],
+    "scope" : "actual resolved WebKit colors, isolated native persistence and synthetic pointer handlers; no trusted animation measurement"
+  }
+}

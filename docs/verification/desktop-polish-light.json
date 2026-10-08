@@ -1,0 +1,28 @@
+{
+  "ok" : true,
+  "result" : {
+    "checks" : [
+      "isolated fixture restored",
+      "release position determines the range even without a final pointermove",
+      "reverse release normalizes the requirement dates",
+      "a new drag begins before Escape cancellation",
+      "Escape immediately clears the pending range",
+      "Escape cancellation remains cancelled when the mouse is released later",
+      "a fresh gesture works immediately after cancellation",
+      "focus-loss cancellation rejects a trailing date click",
+      "isolated fixture restored",
+      "release over the sticky weekday header cannot select an obscured date",
+      "isolated fixture restored",
+      "every visible segment identifies the opened requirement",
+      "other requirement bars remain unselected",
+      "a month without the selected requirement has no stale highlight",
+      "returning to the month restores the selected segments",
+      "editor tabs remain visible when many resources are scrolled",
+      "switching tabs brings the phase content into view",
+      "editing keeps both the persistent range strip and selected requirement",
+      "closing the inspector clears selection and accessibility state",
+      "the polished editor does not create document overflow"
+    ],
+    "scope" : "isolated real WebKit rendering and application persistence; pointer events synthetic, capture bookkeeping stubbed"
+  }
+}
