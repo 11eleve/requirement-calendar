@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "result": {
+    "active": "<input type=\"text\" placeholder=\"可验收的具体事项\" aria-label=\"事项内容\" required=\"\" maxlength=\"200\" aria-describedby=\"rf-editor-1791483431324-error\">",
+    "checked": true,
+    "decoration": "line-through",
+    "focus": false,
+    "html": "<div class=\"rf-task-edit\"><input type=\"checkbox\" value=\"\" placeholder=\"\" aria-label=\"事项已完成\" aria-describedby=\"rf-editor-1791483431324-error\"><input type=\"text\" placeholder=\"可验收的具体事项\" aria-label=\"事项内容\" required=\"\" maxlength=\"200\" aria-describedby=\"rf-editor-1791483431324-error\"><button class=\"rf-remove cursor-interaction\" type=\"button\" title=\"移除事项：确认兼容边界\" aria-label=\"移除事项：确认兼容边界\"><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"m6 6 8 8M14 6l-8 8\"></path></svg></button></div>",
+    "style": 189
+  },
+  "base_commit": "314b1bc0635bff4b9030df89d30a6453ece244aa",
+  "scope": "Measurement of the local row refinement: activeElement is the task input while :focus does not match. This cannot verify the focused-CSS branch and does not establish screen-lock state."
+}

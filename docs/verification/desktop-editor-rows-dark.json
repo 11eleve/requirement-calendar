@@ -1,0 +1,33 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "isolated row fixture restored",
+      "every icon action has a named target and tooltip without repeated row text",
+      "visible row actions retain independently hittable targets",
+      "rendering icon actions does not dirty or change the requirement",
+      "removing a middle resource focuses the following collapsed row",
+      "row removal remains a draft until saved",
+      "renaming a row keeps its accessible removal target current",
+      "completed and pending tasks have distinct readable editing states",
+      "focusing completed task text preserves its completion",
+      "removing a middle task focuses the next task text",
+      "removing a middle phase focuses the following stage",
+      "the changed rows save through native persistence",
+      "saved resources retain the correct names and destination",
+      "removing a task preserves the completion associated with each remaining task",
+      "remaining phase names and dates stay associated",
+      "saved task completion agrees with the detail view",
+      "removing the final resource returns focus to adding a resource",
+      "removing the final task returns focus to adding a task",
+      "removing the final stage returns focus to adding a stage",
+      "cancelling removed rows still protects the unsaved draft",
+      "discarding row removals preserves the last saved requirement",
+      "small-window rows contain their action targets without page overflow",
+      "row refinements retain a clean editor and persistent calendar strip"
+    ],
+    "focusedTaskStyleVerified" : null,
+    "scope" : "actual WebKit geometry, activeElement, computed styles and isolated native persistence using synthetic activation; focused CSS is only checked if WebKit matches :focus; not trusted pointer or animation evidence"
+  }
+}
