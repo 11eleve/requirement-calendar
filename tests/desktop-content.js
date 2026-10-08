@@ -13,12 +13,25 @@ function checkLayout(){
  assert($('.rf-phase-period').getBoundingClientRect().top>=$('.rf-phase-name').getBoundingClientRect().bottom-1&&$('.rf-phase-period').getBoundingClientRect().height<20,'long date ranges move below the full-width phase name instead of squeezing it');
  assert($('.rf-phase-period').getBoundingClientRect().right<=$('.rf-section').getBoundingClientRect().right-10,'phase dates stay within the timeline section');
 }
+async function checkEditorLayout(){
+ const original=CalendarApp.exportSnapshot();CalendarApp.editRequirement('content');await settle();
+ const resourceMeta=$('[data-editor-panel=basic] .rf-summary-meta');
+ assert(resourceMeta.title===item.resources[0].type,'custom resource types retain a complete summary tooltip');
+ $$('.rf-editor-tab').find(node=>node.textContent==='阶段').click();await settle();
+ const summary=$('.rf-phase-summary'),name=summary.querySelector('.rf-summary-name'),period=summary.querySelector('.rf-summary-meta'),remove=summary.closest('.rf-editor-item').querySelector('.rf-remove');
+ assert(name.textContent===phase&&name.scrollWidth<=name.clientWidth+1&&name.scrollHeight<=name.clientHeight+1,'the collapsed editor wraps the complete long phase name without clipping');
+ assert(period.textContent==='2026.12.20—2027.2.10'&&period.scrollWidth<=period.clientWidth+1&&period.title===period.textContent,'cross-year editor dates remain completely visible and available on hover');
+ assert(period.getBoundingClientRect().top>=name.getBoundingClientRect().bottom-1&&Math.max(name.getBoundingClientRect().right,period.getBoundingClientRect().right)<=remove.getBoundingClientRect().left-3,'the full date sits beneath the phase name without entering the removal target');
+ assert(!CalendarApp.hasUnsavedChanges()&&!!$('.rf-range-preview.is-visible')&&CalendarApp.exportSnapshot()===original,'reading collapsed phase summaries retains a clean draft and its range strip');
+ $$('.rf-form-actions button').find(node=>node.textContent==='取消').click();await settle();
+}
 await restore();
 assert($('.rf-period').textContent==='2026.12.20 — 2027.2.10','cross-year requirement periods show both years');
 assert($('.rf-phase-period').textContent==='2026.12.20—2027.2.10','cross-year phase periods show both years');
 assert($$('.rf-bar').every(node=>node.title.includes('2026.12.20—2027.2.10')),'cross-week bars retain the complete period on hover');
 checkLayout();
-await webkit.messageHandlers.calendar.postMessage({action:'verifyWindow',save:true});await settle();checkLayout();
+await checkEditorLayout();
+await webkit.messageHandlers.calendar.postMessage({action:'verifyWindow',save:true});await settle();checkLayout();await checkEditorLayout();
 const multiYear={...item,start:'2025-12-01',end:'2027-02-10',phases:[{name:phase,start:'2026-12-01',end:'2026-12-31'}]};
 await CalendarApp.command('close');await restore(multiYear);
 assert($('.rf-phase-period').textContent==='2026.12.1—2026.12.31','phases outside the visible year retain their year context');

@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "result": {
+    "rows": [
+      {
+        "available": 273,
+        "content": 273,
+        "rowHeight": 44,
+        "text": "2026.12.28—2027.1.4"
+      },
+      {
+        "available": 273,
+        "content": 273,
+        "rowHeight": 44,
+        "text": "2027.1.8—2027.2.15"
+      }
+    ],
+    "scope": "actual isolated WebKit phase-summary geometry",
+    "viewport": [
+      1160,
+      780
+    ]
+  },
+  "base_commit": "a0c4cd65ebd63f567eb976231a33ab408d4749d8",
+  "scope": "Same fixture measured on the local phase-summary refinement after rebuild; actual isolated WebKit static geometry."
+}

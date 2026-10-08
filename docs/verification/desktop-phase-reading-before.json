@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "result": {
+    "rows": [
+      {
+        "available": 90,
+        "content": 103,
+        "rowHeight": 40,
+        "text": "2026.12.28—2027.1.4"
+      },
+      {
+        "available": 90,
+        "content": 95,
+        "rowHeight": 40,
+        "text": "2027.1.8—2027.2.15"
+      }
+    ],
+    "scope": "actual isolated WebKit phase-summary geometry",
+    "viewport": [
+      1160,
+      780
+    ]
+  },
+  "source_commit": "a0c4cd65ebd63f567eb976231a33ab408d4749d8"
+}

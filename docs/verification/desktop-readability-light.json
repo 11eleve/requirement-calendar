@@ -10,7 +10,8 @@
       "resource types, completed tasks and notes retain readable secondary text",
       "the other editor tab remains legible on the segmented background",
       "field placeholder text remains readable on its input surface",
-      "form labels preserve hierarchy with sufficient text contrast"
+      "form labels preserve hierarchy with sufficient text contrast",
+      "phase editing names and full dates retain readable primary and secondary text"
     ],
     "reference" : "https:\/\/www.w3.org\/WAI\/WCAG22\/Understanding\/contrast-minimum.html",
     "samples" : [
@@ -187,6 +188,34 @@
         "contrast" : 4.7398716801934704,
         "foreground" : "rgb(108, 110, 128)",
         "name" : "field label",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(248, 248, 251)",
+        "contrast" : 12.120233416807421,
+        "foreground" : "rgb(48, 49, 62)",
+        "name" : "phase editor rf-summary-name",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(248, 248, 251)",
+        "contrast" : 4.7398716801934704,
+        "foreground" : "rgb(108, 110, 128)",
+        "name" : "phase editor rf-summary-meta",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(248, 248, 251)",
+        "contrast" : 12.120233416807421,
+        "foreground" : "rgb(48, 49, 62)",
+        "name" : "phase editor rf-summary-name",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(248, 248, 251)",
+        "contrast" : 4.7398716801934704,
+        "foreground" : "rgb(108, 110, 128)",
+        "name" : "phase editor rf-summary-meta",
         "opacity" : 1
       }
     ],

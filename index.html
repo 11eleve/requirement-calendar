@@ -201,6 +201,10 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-item-summary .rf-resource-icon { width:22px; height:22px; border-radius:5px; font-size:10px; }
 #req-calendar-refined .rf-summary-name { flex:1; min-width:0; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 #req-calendar-refined .rf-summary-meta { flex:none; max-width:90px; font-size:10px; color:var(--rf-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#req-calendar-refined .rf-phase-summary { display:grid; grid-template-columns:7px minmax(0,1fr); gap:1px 7px; min-height:44px; }
+#req-calendar-refined .rf-phase-summary::before { grid-row:1 / span 2; }
+#req-calendar-refined .rf-phase-summary .rf-summary-name { grid-column:2; font-size:12px; line-height:16px; white-space:normal; overflow:visible; overflow-wrap:anywhere; }
+#req-calendar-refined .rf-phase-summary .rf-summary-meta { grid-column:2; max-width:none; font-size:11px; line-height:14px; font-variant-numeric:tabular-nums; overflow:visible; text-overflow:clip; }
 #req-calendar-refined .rf-item-fields { display:grid; gap:9px; padding:5px 0 12px; }
 #req-calendar-refined .rf-editor-item>.rf-remove { position:absolute; top:8px; right:0; }
 #req-calendar-refined .rf-remove { display:grid; place-items:center; flex:none; width:var(--rf-remove-size); height:var(--rf-remove-size); padding:0; border-radius:5px; color:var(--rf-muted); }
@@ -696,7 +700,7 @@ window.CalendarReady=(async()=>{
   head.append(el('h3','',kind==='phase'?'阶段安排':'相关资料'),button('rf-text-button',kind==='phase'?'添加阶段':'添加资料',null,()=>addItem({},true)));
   section.append(head,list);
   function addItem(value={},expand=false){
-   const item=el('div','rf-editor-item'),disclosure=el('details','rf-disclosure'),summary=el('summary','rf-item-summary cursor-interaction'),summaryName=el('span','rf-summary-name'),summaryMeta=el('span','rf-summary-meta'),fields=el('div','rf-item-fields'),name=input('text',value.name||'',kind==='phase'?'例如：评审、开发、联调':'资料名称');
+   const item=el('div','rf-editor-item'),disclosure=el('details','rf-disclosure'),summary=el('summary','rf-item-summary cursor-interaction'+(kind==='phase'?' rf-phase-summary':'')),summaryName=el('span','rf-summary-name'),summaryMeta=el('span','rf-summary-meta'),fields=el('div','rf-item-fields'),name=input('text',value.name||'',kind==='phase'?'例如：评审、开发、联调':'资料名称');
    name.maxLength=64;name.required=true;const row={item,disclosure,name};const summaryIcon=kind==='resource'?resourceIcon(value.icon||Model.iconFor(value.url||'',value.type||''),value.url||''):null;if(summaryIcon)summary.append(summaryIcon);summary.append(summaryName,summaryMeta);fields.append(field('名称',name));
    if(kind==='phase'){
     row.start=input('date',value.start||'');row.end=input('date',value.end||'');row.start.required=true;row.end.required=true;
@@ -705,7 +709,7 @@ window.CalendarReady=(async()=>{
     row.type=input('text',value.type||'','文档、设计、接口或自定义');row.type.maxLength=32;row.url=input('url',value.url||'','https://…');row.originalIcon=value.icon;row.originalType=(value.type||'').trim();row.originalURL=value.url||'';
     fields.append(field('类型（可自定义）',row.type),field('链接（可选）',row.url));
    }
-   const updateSummary=()=>{if(summaryIcon){const icon=symbolForResource(row);void siteIcons.apply(summaryIcon,row.url.value,icon,{fetch:false});}summaryName.title=name.value;summaryName.textContent=name.value.trim()||(kind==='phase'?'未命名阶段':'未命名资料');summaryMeta.textContent=kind==='phase'?(row.start.value&&row.end.value?rangeText(row.start.value,row.end.value):'设置日期'):row.type.value.trim()||'自定义资料';};
+   const updateSummary=()=>{if(summaryIcon){const icon=symbolForResource(row);void siteIcons.apply(summaryIcon,row.url.value,icon,{fetch:false});}summaryName.title=name.value;summaryName.textContent=name.value.trim()||(kind==='phase'?'未命名阶段':'未命名资料');summaryMeta.textContent=kind==='phase'?(row.start.value&&row.end.value?rangeText(row.start.value,row.end.value):'设置日期'):row.type.value.trim()||'自定义资料';summaryMeta.title=summaryMeta.textContent;};
    updateSummary();fields.addEventListener('input',updateSummary);if(summaryIcon)fields.addEventListener('change',()=>{const icon=symbolForResource(row);void siteIcons.apply(summaryIcon,row.url.value,icon);});fields.addEventListener('invalid',()=>{disclosure.open=true;},true);
    disclosure.addEventListener('toggle',()=>{if(disclosure.open)rows.forEach(other=>{if(other!==row)other.disclosure.open=false;});});
    disclosure.append(summary,fields);item.append(disclosure,removeButton(kind==='phase'?'阶段':'资料',name,()=>{const index=rows.indexOf(row);item.remove();rows.splice(index,1);(rows[index]?.disclosure.querySelector('summary')||rows[index-1]?.disclosure.querySelector('summary')||head.querySelector('button')).focus();}));rows.push(row);list.append(item);

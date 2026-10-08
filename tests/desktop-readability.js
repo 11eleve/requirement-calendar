@@ -26,4 +26,6 @@ const placeholder=$('.rf-form input[placeholder]');
 assert(measure('field placeholder',placeholder,getComputedStyle(placeholder).backgroundColor,'::placeholder')>=4.5,'field placeholder text remains readable on its input surface');
 const label=$('.rf-field>span');
 assert(measure('field label',label,getComputedStyle($('#rf-detail')).backgroundColor)>=4.5,'form labels preserve hierarchy with sufficient text contrast');
+tabs[1].click();await settle();
+assert($$('.rf-phase-summary .rf-summary-name,.rf-phase-summary .rf-summary-meta').every(node=>measure('phase editor '+node.className,node,getComputedStyle($('#rf-detail')).backgroundColor)>=4.5),'phase editing names and full dates retain readable primary and secondary text');
 return {checks,samples,appearance:matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light',reference:'https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html',scope:'resolved foreground/background colors for the listed text contexts in actual WebKit; does not assess the entire app, assistive technology, anti-aliasing or user aesthetic preference'};
