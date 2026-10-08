@@ -188,6 +188,14 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-tab-panel[data-editor-panel=basic]>.rf-field:first-child input[aria-invalid=true] { border-bottom-color:light-dark(#a34756,#ffb2be); }
 #req-calendar-refined .rf-field input[type=date] { padding:7px 5px; font-size:11px; font-variant-numeric:tabular-nums; }
 #req-calendar-refined .rf-field input[type=datetime-local] { font-size:11px; font-variant-numeric:tabular-nums; }
+#req-calendar-refined .rf-reminder-summary { display:grid; grid-template-columns:7px minmax(0,1fr) auto; align-items:center; gap:7px; min-height:34px; padding:6px 0; font-size:12px; font-weight:500; list-style:none; }
+#req-calendar-refined .rf-reminder-summary::-webkit-details-marker { display:none; }
+#req-calendar-refined .rf-reminder-summary::before { content:'›'; width:7px; color:var(--rf-muted); font-size:15px; line-height:1; }
+#req-calendar-refined .rf-reminder-summary[aria-expanded=true]::before { transform:rotate(90deg); }
+#req-calendar-refined .rf-reminder-summary:hover::before { color:var(--rf-purple); }
+#req-calendar-refined .rf-reminder-value { min-width:0; color:var(--rf-muted); font-size:11px; font-weight:400; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+#req-calendar-refined .rf-reminder-fields { display:grid; gap:6px; padding:5px 0 0 14px; }
+#req-calendar-refined .rf-reminder-fields>.rf-text-button { justify-self:end; }
 #req-calendar-refined .rf-field textarea { min-height:78px; resize:vertical; line-height:1.65; }
 #req-calendar-refined .rf-pair { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; }
 /* Dates share a surface; other fields keep their own controls. */
@@ -261,7 +269,7 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
  #req-calendar-refined .rf-content { transition:grid-template-columns 220ms var(--rf-ease),column-gap 220ms var(--rf-ease); }
  #req-calendar-refined .rf-detail { animation:rf-inspector-in 220ms var(--rf-ease); }
  #req-calendar-refined :is(.rf-button,.rf-arrow,.rf-close,.rf-bar,.rf-field input,.rf-field textarea) { transition:background-color 120ms ease,border-color 120ms ease,box-shadow 120ms ease; }
- #req-calendar-refined .rf-item-summary::before { transition:transform 180ms var(--rf-ease),background-color 120ms ease,border-color 120ms ease; }
+ #req-calendar-refined .rf-item-summary::before,#req-calendar-refined .rf-reminder-summary::before { transition:transform 180ms var(--rf-ease),background-color 120ms ease,border-color 120ms ease; }
  #req-calendar-refined .rf-range-preview { transition:opacity 140ms ease,transform 160ms var(--rf-ease); }
  #req-calendar-refined .rf-range-preview.is-visible { transition:left 90ms linear,width 90ms linear,opacity 140ms ease,transform 160ms var(--rf-ease); }
  @keyframes rf-inspector-in { from { opacity:0; transform:translateX(10px); } to { opacity:1; transform:none; } }

@@ -37,6 +37,6 @@
     const controller={setOpen,finish(){animation?.finish();},dispose(){summary.removeEventListener('click',click);disclosure.removeEventListener('toggle',toggle);if(animation){const old=animation;animation=null;old.cancel();}body.classList.remove('is-animating');controllers.delete(disclosure);}};
     controllers.set(disclosure,controller);return controller;
   }
-  motion.addEventListener('change',event=>{if(event.matches)document.querySelectorAll('.rf-disclosure').forEach(node=>controllers.get(node)?.finish());});
+  motion.addEventListener('change',event=>{if(event.matches)document.querySelectorAll('.rf-disclosure,.rf-reminder-editor').forEach(node=>controllers.get(node)?.finish());});
   window.CalendarDisclosure=Object.freeze({create,setOpen(node,open,options){const controller=controllers.get(node);if(controller)controller.setOpen(open,options);else node.open=open;},dispose(node){controllers.get(node)?.dispose();}});
 })();

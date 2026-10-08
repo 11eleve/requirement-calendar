@@ -11,6 +11,7 @@ window.CalendarReady=(async()=>{
  const removeButton=(kind,name,action)=>{const control=button('rf-remove','',null,action);control.append(get('rf-close').querySelector('svg').cloneNode(true));const label=()=>{control.title='移除'+kind+'：'+(name.value.trim()||'未命名'+kind);control.setAttribute('aria-label',control.title);};name.addEventListener('input',label);label();return control;};
  const field=(label,input)=>{const l=el('label','rf-field');l.append(el('span','',label),input);return l;};
  const input=(type,value='',placeholder='')=>{const n=el('input');n.type=type;n.value=value;n.placeholder=placeholder;if(type==='date'){n.min='0001-01-01';n.max='9999-12-31';}else if(type==='datetime-local'){n.min='0001-01-01T00:00';n.max='9999-12-31T23:59';}return n;};
+ const focusEditorControl=control=>{control.focus({preventScroll:true});control.scrollIntoView({block:'nearest'});};
  let storage=null;try{storage=window.localStorage;}catch{}
  const legacyKey='codex:visualization-widget-state-v2:'+JSON.stringify([window.location.pathname,window.location.search]);
  const browserStore=CalendarStorage.createStore(storage,{legacyKey}),nativeBridge=window.webkit?.messageHandlers?.calendar;
@@ -20,7 +21,7 @@ window.CalendarReady=(async()=>{
  function setReminderIssue(issue){const node=get('rf-reminder-status');node.hidden=!issue;node.textContent=issue||'';}
  const restored=await store.load();if(restored.data){requirements=restored.data.requirements;state.anchor=restored.data.anchor;}showStorageIssue(restored.issue);
  async function save(next=requirements,recovery=false){const result=await store.save({version:Model.VERSION,anchor:state.anchor,requirements:next},recovery);showStorageIssue(result.issue);setReminderIssue(result.reminderIssue);return result.ok;}
- function disposeDisclosures(){get('rf-panel').querySelectorAll('.rf-disclosure').forEach(CalendarDisclosure.dispose);}
+ function disposeDisclosures(){get('rf-panel').querySelectorAll('.rf-disclosure,.rf-reminder-editor').forEach(CalendarDisclosure.dispose);}
  function openPanel(label,trigger,tone=''){if(saving)return;cancelCalendarGesture();disposeDisclosures();if(!root.classList.contains('has-detail'))lastTrigger=trigger??document.activeElement;editor=null;root.classList.add('has-detail');get('rf-detail').dataset.tone=tone;get('rf-detail').hidden=false;get('rf-panel-label').textContent=label;get('rf-panel').replaceChildren();get('rf-panel').scrollTop=0;}
  function selectRequirement(id){state.selected=id;for(const bar of root.querySelectorAll('.rf-bar')){const selected=bar.dataset.requirementId===id;bar.classList.toggle('is-selected',selected);bar.setAttribute('aria-expanded',String(selected));bar.setAttribute('aria-controls','rf-detail');}}
  function closePanel(force=false){if(saving)return;if(!force&&!mayLeave(()=>closePanel(true)))return;cancelCalendarGesture();editor=null;disposeDisclosures();clearDraftPreview();root.classList.remove('has-detail');get('rf-detail').hidden=true;selectRequirement(null);const target=lastTrigger?.isConnected?lastTrigger:get('rf-new');target.focus({preventScroll:true});}
@@ -74,7 +75,7 @@ window.CalendarReady=(async()=>{
    updateSummary();fields.addEventListener('input',updateSummary);if(summaryIcon)fields.addEventListener('change',()=>{const icon=symbolForResource(row);void siteIcons.apply(summaryIcon,row.url.value,icon);});fields.addEventListener('invalid',()=>{CalendarDisclosure.setOpen(disclosure,true);},true);
    body.append(fields);disclosure.append(summary,body);CalendarDisclosure.create(disclosure,body,{onOpen:()=>rows.forEach(other=>{if(other!==row)CalendarDisclosure.setOpen(other.disclosure,false,{animate:true});})});
    item.append(disclosure,removeButton(kind==='phase'?'阶段':'资料',name,()=>{const index=rows.indexOf(row);CalendarDisclosure.dispose(disclosure);item.remove();rows.splice(index,1);(rows[index]?.disclosure.querySelector('summary')||rows[index-1]?.disclosure.querySelector('summary')||head.querySelector('button')).focus();}));rows.push(row);list.append(item);
-   if(expand){rows.forEach(other=>CalendarDisclosure.setOpen(other.disclosure,other===row));name.focus();}
+   if(expand){rows.forEach(other=>CalendarDisclosure.setOpen(other.disclosure,other===row));focusEditorControl(name);}
   }
   initial.forEach(value=>addItem(value));
   return {node:section,reveal(){const target=rows[0]?.disclosure.querySelector('summary')||head.querySelector('button');target.focus();target.scrollIntoView({block:'nearest'});},focus(index,key='name'){const row=rows[index];if(row){CalendarDisclosure.setOpen(row.disclosure,true);const control=row[key]||row.name;control.focus();control.setAttribute('aria-invalid','true');const error=control.closest('form')?.querySelector('.rf-error');if(error)control.setAttribute('aria-describedby',error.id);}},setDates(values){rows.forEach((row,index)=>{for(const key of ['start','end']){row[key].value=values[index][key];row[key].dispatchEvent(new Event('input',{bubbles:true}));}});},read:()=>rows.map(row=>kind==='phase'?{name:row.name.value.trim(),start:row.start.value,end:row.end.value}:{name:row.name.value.trim(),type:row.type.value.trim(),url:row.url.value.trim(),icon:symbolForResource(row)})};
@@ -82,6 +83,14 @@ window.CalendarReady=(async()=>{
  function resourceError(items){if(items.some(x=>!x.name))return '请填写资料名称。';try{items.forEach(x=>Model.safeURL(x.url));}catch(error){return error.message;}return '';}
  function validateForm(form){const invalid=Array.from(form.elements).find(control=>control.willValidate&&!control.validity.valid);if(!invalid)return true;const disclosure=invalid.closest('details');if(disclosure)CalendarDisclosure.setOpen(disclosure,true);invalid.reportValidity();return false;}
  function editResources(id){edit(id,undefined,undefined,'resources');}
+ function reminderField(control){
+  const node=el('details','rf-reminder-editor'),summary=el('summary','rf-reminder-summary cursor-interaction'),value=el('span','rf-reminder-value'),body=el('div','rf-disclosure-body'),fields=el('div','rf-reminder-fields');
+  summary.append(el('span','','提醒'),value);
+  const update=()=>{value.textContent=control.value?control.value.replaceAll('-','.').replace('T',' '):control.validity.badInput?'待完善':'未设置';value.title=control.value?'本机时间 '+control.value.replace('T',' '):value.textContent;};
+  const clear=button('rf-text-button','不提醒','清除提醒',()=>{control.value='';control.dispatchEvent(new Event('input',{bubbles:true}));CalendarDisclosure.setOpen(node,false,{animate:true});summary.focus({preventScroll:true});});
+  fields.append(field('本机日期与时间',control),clear);body.append(fields);node.append(summary,body);CalendarDisclosure.create(node,body);control.addEventListener('input',update);control.addEventListener('change',update);update();
+  return {node,reveal(){CalendarDisclosure.setOpen(node,true);focusEditorControl(control);}};
+ }
  function nextRequirementTone(){
   const tones=['','blue','green'],counts=new Map(tones.map(tone=>[tone,0])),grid=Model.monthGrid(state.anchor),end=boundedAdd(grid.start,grid.count*7-1)||'9999-12-31';
   for(const item of requirements)if(item.start<=end&&item.end>=grid.start)counts.set(item.tone,counts.get(item.tone)+1);
@@ -118,7 +127,7 @@ window.CalendarReady=(async()=>{
   function resizeNote(){const width=note.clientWidth;if(width&&width!==noteWidth){noteWidth=width;fitNote();}}
   note.addEventListener('input',fitNote);
   panels.basic.append(field('需求名称',name),pair);
-  const reminder=input('datetime-local',draft.reminder||'');if(nativeBridge)panels.basic.append(field('提醒（可选，本机时间）',reminder));
+  const reminder=input('datetime-local',draft.reminder||''),reminderUI=nativeBridge?reminderField(reminder):null;if(reminderUI)panels.basic.append(reminderUI.node);
   const phases=collection('phase',draft.phases),resources=collection('resource',draft.resources);panels.phases.append(phases.node);panels.basic.append(resources.node,taskEditor(draft),field('事项与备忘',note));
   const error=el('p','rf-error');error.id=prefix+'-error';error.setAttribute('role','alert');form.addEventListener('input',()=>{cancelBarSelection();error.textContent='';form.querySelectorAll('[aria-invalid]').forEach(control=>control.removeAttribute('aria-invalid'));});
   const actions=el('div','rf-form-actions'),submit=el('button','rf-button rf-primary cursor-interaction','保存需求');submit.type='submit';actions.append(button('rf-button','取消',null,()=>cancelEdit()),submit);
@@ -127,7 +136,7 @@ window.CalendarReady=(async()=>{
   async function submitDraft(){
    if(saving)return false;if(!validateForm(form))return false;
    if(!name.value.trim()){showTab('basic');error.textContent='请填写需求名称。';name.focus();name.setAttribute('aria-invalid','true');return false;}
-   if(nativeBridge&&reminder.value&&reminder.value!==(existing?.reminder??'')&&new Date(reminder.value).getTime()<=Date.now()){showTab('basic');error.textContent='提醒时间需要晚于当前时间。';reminder.focus();return false;}
+   if(nativeBridge&&reminder.value&&reminder.value!==(existing?.reminder??'')&&new Date(reminder.value).getTime()<=Date.now()){showTab('basic');error.textContent='提醒时间需要晚于当前时间。';reminder.setAttribute('aria-invalid','true');reminderUI.reveal();return false;}
    if(end.value<start.value){showTab('basic');error.textContent='结束日期不能早于开始日期。';end.focus();end.setAttribute('aria-invalid','true');return false;}
    const unsortedPhases=phases.read(),phaseItems=[...unsortedPhases].sort((a,b)=>a.start.localeCompare(b.start)),resourceItems=resources.read();
    const badPhase=phaseItems.find(p=>!p.name||p.start<start.value||p.end>end.value||p.end<p.start);if(badPhase){showTab('phases');error.textContent='阶段需要填写名称，且日期须落在需求周期内。';phases.focus(unsortedPhases.indexOf(badPhase),'start');return false;}
@@ -140,7 +149,7 @@ window.CalendarReady=(async()=>{
    editor=null;clearDraftPreview();render();detail(draft.id,undefined,true,returnContext);get('rf-feedback').textContent='已保存：'+draft.title+' · '+rangeText(draft.start,draft.end);if(pendingAction){const action=pendingAction;pendingAction=null;get('rf-discard').close();action();}return true;
   }
   form.addEventListener('submit',event=>{event.preventDefault();void submitDraft();});
-  get('rf-panel').append(form);syncDraftPreview();const fingerprint=()=>JSON.stringify(Array.from(form.querySelectorAll('input,textarea'),control=>[control.type,control.value,control.checked]));const original=fingerprint();editor={form,submit:submitDraft,resizeNote,isDirty:()=>fingerprint()!==original,cancel:()=>existing?detail(id,undefined,true,returnContext):closePanel(true)};resizeNote();if(initialTab==='resources')resources.reveal();else if(initialTab==='phases')tabButtons.phases.focus({preventScroll:true});else name.focus({preventScroll:true});
+  get('rf-panel').append(form);syncDraftPreview();const fingerprint=()=>JSON.stringify(Array.from(form.querySelectorAll('input,textarea'),control=>[control.type,control.value,control.checked,control.validity.badInput]));const original=fingerprint();editor={form,submit:submitDraft,resizeNote,isDirty:()=>fingerprint()!==original,cancel:()=>existing?detail(id,undefined,true,returnContext):closePanel(true)};resizeNote();if(initialTab==='resources')resources.reveal();else if(initialTab==='phases')tabButtons.phases.focus({preventScroll:true});else name.focus({preventScroll:true});
   // Capture the saved fingerprint before applying the moved dates. The moved
   // plan is a real unsaved draft, even before its first keystroke.
   if(shifted){start.value=shifted.start;end.value=shifted.end;phases.setDates(shifted.phases);syncDraftPreview();start.focus({preventScroll:true});}
@@ -154,7 +163,7 @@ window.CalendarReady=(async()=>{
  get('rf-discard-save').addEventListener('click',async()=>{get('rf-discard').close();const ok=await editor?.submit();if(!ok)pendingAction=null;});
  window.addEventListener('beforeunload',event=>{if(editor?.isDirty()){event.preventDefault();event.returnValue='';}});
  function taskEditor(draft){const section=el('section','rf-editor-section'),heading=el('div','rf-heading'),list=el('div');heading.append(el('h3','','工作事项'),button('rf-text-button','添加事项',null,()=>append('',false,true)));section.append(heading,list);
-  function append(text,done,focus=false){const row=el('div','rf-task-edit'),check=input('checkbox'),name=input('text',text,'可验收的具体事项');check.checked=done;check.setAttribute('aria-label','事项已完成');name.setAttribute('aria-label','事项内容');name.required=true;name.maxLength=200;row.append(check,name,removeButton('事项',name,()=>{const next=row.nextElementSibling?.querySelector('input[type=text]')||row.previousElementSibling?.querySelector('input[type=text]');row.remove();(next||heading.querySelector('button')).focus();}));list.append(row);if(focus)name.focus();}
+  function append(text,done,focus=false){const row=el('div','rf-task-edit'),check=input('checkbox'),name=input('text',text,'可验收的具体事项');check.checked=done;check.setAttribute('aria-label','事项已完成');name.setAttribute('aria-label','事项内容');name.required=true;name.maxLength=200;row.append(check,name,removeButton('事项',name,()=>{const next=row.nextElementSibling?.querySelector('input[type=text]')||row.previousElementSibling?.querySelector('input[type=text]');row.remove();(next||heading.querySelector('button')).focus();}));list.append(row);if(focus)focusEditorControl(name);}
   draft.tasks.forEach((text,i)=>append(text,draft.done[i]));return section;
  }
  async function deleteRequirement(id,force=false){if(saving)return false;if(!force&&editor?.isDirty()){mayLeave(()=>deleteRequirement(id,true));return false;}const item=req(id);if(!item)return;const next=requirements.filter(r=>r.id!==id);setSaving(true);const ok=await save(next);setSaving(false);if(!ok)return;requirements=next;deleted=structuredClone(item);closePanel(true);render();get('rf-toast-text').textContent='已删除“'+item.title+'”';get('rf-toast').hidden=false;}

@@ -42,52 +42,52 @@
     ],
     "measurements" : [
       {
-        "bottom" : 450.5,
+        "bottom" : 702.5,
         "footerTop" : 708,
         "kind" : "资料",
         "size" : "default",
         "tabsBottom" : 140.5,
-        "top" : 416.5
+        "top" : 668.5
       },
       {
-        "bottom" : 595.5,
-        "footerTop" : 692,
+        "bottom" : 702.5,
+        "footerTop" : 708,
         "kind" : "阶段",
         "size" : "default",
         "tabsBottom" : 140.5,
-        "top" : 561.5
+        "top" : 668.5
       },
       {
-        "bottom" : 562.5,
-        "footerTop" : 692,
+        "bottom" : 702.5,
+        "footerTop" : 708,
         "kind" : "事项",
         "size" : "default",
         "tabsBottom" : 140.5,
-        "top" : 530.5
+        "top" : 670.5
       },
       {
-        "bottom" : 394.5,
+        "bottom" : 590.5,
         "footerTop" : 596,
         "kind" : "资料",
         "size" : "small",
         "tabsBottom" : 140.5,
-        "top" : 360.5
+        "top" : 556.5
       },
       {
-        "bottom" : 483.5,
-        "footerTop" : 580,
+        "bottom" : 590.5,
+        "footerTop" : 596,
         "kind" : "阶段",
         "size" : "small",
         "tabsBottom" : 140.5,
-        "top" : 449.5
+        "top" : 556.5
       },
       {
-        "bottom" : 450.5,
-        "footerTop" : 580,
+        "bottom" : 590.5,
+        "footerTop" : 596,
         "kind" : "事项",
         "size" : "small",
         "tabsBottom" : 140.5,
-        "top" : 418.5
+        "top" : 558.5
       }
     ],
     "scope" : "actual isolated native WebKit geometry, activeElement and persistence using synthetic button\/input actions; no trusted pointer or motion evidence"

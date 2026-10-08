@@ -1,0 +1,8 @@
+{
+  "ok" : true,
+  "result" : {
+    "notificationAdapter" : "isolated denied permission",
+    "saved" : "通知拒绝仍可保存",
+    "status" : "需求已保存，提醒尚未启用。请在系统设置 → 通知 → 需求日历中允许通知。"
+  }
+}

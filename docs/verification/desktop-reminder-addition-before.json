@@ -1,0 +1,52 @@
+{
+  "ok": false,
+  "error": "new input focused outside the visible editor",
+  "measurements": {
+    "kind": "资料",
+    "size": "default",
+    "target": "<input type=\"text\" placeholder=\"资料名称\" maxlength=\"64\" required=\"\">",
+    "bounds": {
+      "x": 850,
+      "y": 1362.5,
+      "width": 275,
+      "height": 34,
+      "top": 1362.5,
+      "right": 1125,
+      "bottom": 1396.5,
+      "left": 850
+    },
+    "top": 156.5,
+    "bottom": 708,
+    "panel": {
+      "scrollTop": 0,
+      "height": 655,
+      "scrollHeight": 2402
+    },
+    "tabs": {
+      "x": 807,
+      "y": 122,
+      "width": 318,
+      "height": 34.5,
+      "top": 122,
+      "right": 1125,
+      "bottom": 156.5,
+      "left": 807
+    },
+    "footer": {
+      "x": 807,
+      "y": 708,
+      "width": 318,
+      "height": 53,
+      "top": 708,
+      "right": 1125,
+      "bottom": 761,
+      "left": 807
+    }
+  },
+  "source": {
+    "base_commit": "cb468649b8017bc8db1d45c6f9c57dce95aa0486",
+    "local_changes": "compact reminder disclosure before explicit scroll for newly added fields",
+    "unmodified_commit_run": false
+  },
+  "scope": "actual isolated native WebKit geometry with synthetic activation; inactive-host focus did not scroll the new input into view; does not prove trusted user focus behavior"
+}

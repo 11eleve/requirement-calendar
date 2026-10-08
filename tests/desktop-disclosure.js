@@ -56,7 +56,7 @@ assert(!input.isConnected&&!motion(second)&&JSON.parse(CalendarApp.exportSnapsho
 
 CalendarApp.editRequirement(item.id);await settle();rows=$$('[data-editor-panel=basic] .rf-disclosure');first=rows[0];summary(first).click();seek(first,90);
 const removedBody=body(first);first.closest('.rf-editor-item').querySelector('.rf-remove').click();await settle();
-assert(!removedBody.isConnected&&!removedBody.getAnimations().length&&document.activeElement===$('[data-editor-panel=basic] summary'),'removing an animating row cancels motion and focuses its neighbour');
+assert(!removedBody.isConnected&&!removedBody.getAnimations().length&&document.activeElement===$('[data-editor-panel=basic] .rf-disclosure summary'),'removing an animating row cancels motion and focuses its neighbour');
 await CalendarApp.command('close');$('#rf-discard-drop').click();await settle();
 CalendarApp.editRequirement(item.id);$$('.rf-editor-tab')[1].click();await settle();
 const phase=$('[data-editor-panel=phases] .rf-disclosure');summary(phase).click();const phaseStart=seek(phase,0),phaseMiddle=seek(phase,90);await settle();

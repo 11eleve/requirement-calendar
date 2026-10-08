@@ -1,0 +1,14 @@
+{
+  "ok" : true,
+  "result" : {
+    "checks" : [
+      "file save returns while notification permission is still pending",
+      "requirement controls unlock after file persistence",
+      "isolated permission request is pending and notification has not been scheduled",
+      "user can edit another draft during permission wait",
+      "permission completion schedules the persisted reminder",
+      "background reminder result clears status without replacing the active draft"
+    ],
+    "notificationAdapter" : "isolated delayed permission; no real OS permission granted"
+  }
+}

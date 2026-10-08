@@ -1,0 +1,32 @@
+{
+  "ok" : true,
+  "result" : {
+    "field" : {
+      "bottom" : 375.5,
+      "height" : 58,
+      "left" : 807,
+      "right" : 1125,
+      "top" : 317.5,
+      "width" : 318,
+      "x" : 807,
+      "y" : 317.5
+    },
+    "panel" : {
+      "height" : 655,
+      "scrollHeight" : 744
+    },
+    "reminderValue" : "",
+    "resources" : {
+      "bottom" : 524,
+      "height" : 136.5,
+      "left" : 807,
+      "right" : 1125,
+      "top" : 387.5,
+      "width" : 318,
+      "x" : 807,
+      "y" : 387.5
+    },
+    "scope" : "actual isolated native WebKit unconfigured reminder field geometry before compact reminder disclosure; not proof of trusted native picker use",
+    "source_commit" : "cb468649b8017bc8db1d45c6f9c57dce95aa0486"
+  }
+}
