@@ -1,0 +1,20 @@
+{
+  "ok" : true,
+  "result" : {
+    "resources" : [
+      {
+        "name" : "认证服务接口约定与兼容验证记录",
+        "type" : "接口约定"
+      },
+      {
+        "name" : "灰度发布方案与回滚条件",
+        "type" : "评审文档"
+      }
+    ],
+    "scope" : "actual isolated native WebKit resource-editor screenshot, synthetic summary activation and completed animation endpoints",
+    "viewport" : [
+      1160,
+      780
+    ]
+  }
+}

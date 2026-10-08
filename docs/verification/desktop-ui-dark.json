@@ -1,0 +1,33 @@
+{
+  "ok" : true,
+  "result" : {
+    "assertions" : [
+      "11: application booted in real WebKit",
+      "19: a normal month fits inside the native window",
+      "11: new requirement shows persistent range strip",
+      "11: close protects an unsaved requirement",
+      "11: continue editing retains all input",
+      "12: Command-S saves the requirement",
+      "13: arrow key changes tab and its roving tab stop",
+      "14: date arrow key moves focus without creating a requirement",
+      "14: focus navigation leaves data unchanged",
+      "15: editable task content and completion survive save",
+      "16: deleting persists and offers undo",
+      "16: undo restores the deleted requirement",
+      "17: edit stages opens the stage tab directly",
+      "18: an incomplete range retains the last valid editing strip",
+      "18: fixing the range keeps its strip visible",
+      "19: inspector scrolls within the desktop viewport",
+      "20: clean close restores a connected focus target without prompting",
+      "09: failed native-WebKit storage write preserves editor and shows the error",
+      "09: retry after storage recovery succeeds",
+      "20: save-and-leave completes the pending close after successful save",
+      "11: discard applies only the requested navigation and creates a fresh draft"
+    ],
+    "title" : "需求日历",
+    "viewport" : [
+      1160,
+      780
+    ]
+  }
+}

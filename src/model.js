@@ -119,7 +119,14 @@
     if (ids.size !== requirements.length) throw new ValidationError('需求标识重复，无法安全载入数据。');
     return { version: VERSION, anchor: source.anchor, requirements };
   }
-  const api = { VERSION, ValidationError, validDate, parse, iso, add, days, localDate, format, monthOffset, monthGrid, allocateLanes, validReminder, newId, safeURL, iconFor, requirement, snapshot };
+  // Move the whole plan in calendar days; reminders keep their explicit local time.
+  function shiftRequirement(value, offset) {
+    if (!Number.isInteger(offset)) throw new ValidationError('日期偏移需要是整数。');
+    const item = requirement(value);
+    return { ...item, start: add(item.start, offset), end: add(item.end, offset),
+      phases: item.phases.map(phase => ({ ...phase, start: add(phase.start, offset), end: add(phase.end, offset) })) };
+  }
+  const api = { VERSION, ValidationError, validDate, parse, iso, add, days, localDate, format, monthOffset, monthGrid, allocateLanes, validReminder, newId, safeURL, iconFor, requirement, shiftRequirement, snapshot };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else scope.CalendarModel = api;
 })(globalThis);

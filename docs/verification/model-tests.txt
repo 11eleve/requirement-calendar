@@ -1,22 +1,26 @@
-✔ 02: device-local date crosses midnight correctly and date arithmetic survives DST (5.319708ms)
-✔ 03: fast creation uses unique IDs and duplicate persisted identities are rejected (6.477958ms)
-✔ 04: phase rules reject impossible dates, outside phases, and inclusive overlaps (13.371167ms)
-✔ 05: resources accept complete web links and reject unsafe or malformed values (0.531583ms)
-✔ 06: task progress cannot be restored from mismatched or nonboolean completion values (0.538833ms)
-✔ 07: more than 16 requirements and over 14.5 KB survive a real serialize/reload cycle (3.088792ms)
-✔ 08: version 4 migration preserves requirements and the original legacy record (0.197833ms)
-✔ 09: a quota failure reports failure and leaves the committed primary record intact (0.185875ms)
-✔ 10: corrupted records recover from last-good data; unrecoverable data blocks overwrite (0.278917ms)
-✔ 29: v5 browser records migrate to a native file through the bridge without deleting originals (0.267834ms)
-✔ 32: optional local reminder validates real wall time, rejects DST gaps, and preserves schema migration (0.747833ms)
-✔ 37: month navigation and grids retain early years, leap days, six weeks, and supported boundaries (0.199459ms)
-✔ 38: invisible history cannot inflate visible lanes and overlapping requirements never share a lane (0.430083ms)
-✔ 44–45: programmer notes and long resource links survive an actual storage round trip without truncation (0.51ms)
-ℹ tests 14
+✔ 02: device-local date crosses midnight correctly and date arithmetic survives DST (6.188584ms)
+✔ 03: fast creation uses unique IDs and duplicate persisted identities are rejected (5.718ms)
+✔ 04: phase rules reject impossible dates, outside phases, and inclusive overlaps (12.796042ms)
+✔ 05: resources accept complete web links and reject unsafe or malformed values (0.429125ms)
+✔ 06: task progress cannot be restored from mismatched or nonboolean completion values (0.529708ms)
+✔ 07: more than 16 requirements and over 14.5 KB survive a real serialize/reload cycle (2.936791ms)
+✔ 08: version 4 migration preserves requirements and the original legacy record (0.170666ms)
+✔ 09: a quota failure reports failure and leaves the committed primary record intact (0.173542ms)
+✔ 10: corrupted records recover from last-good data; unrecoverable data blocks overwrite (0.2855ms)
+✔ 29: v5 browser records migrate to a native file through the bridge without deleting originals (0.275ms)
+✔ 32: optional local reminder validates real wall time, rejects DST gaps, and preserves schema migration (0.862ms)
+✔ 37: month navigation and grids retain early years, leap days, six weeks, and supported boundaries (0.38775ms)
+✔ 38: invisible history cannot inflate visible lanes and overlapping requirements never share a lane (0.224875ms)
+✔ 44–45: programmer notes and long resource links survive an actual storage round trip without truncation (0.4985ms)
+✔ weekly lanes compact ended work while retaining usable continuation positions (0.119958ms)
+✔ weekly lane allocation matches date overlap and is deterministic with arbitrary previous positions (16.492667ms)
+✔ moving a plan preserves duration, phase gaps, content and explicit reminder time (0.30575ms)
+✔ moving a plan uses whole calendar days across DST and rejects overflow atomically (0.836959ms)
+ℹ tests 18
 ℹ suites 0
-ℹ pass 14
+ℹ pass 18
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 88.571458
+ℹ duration_ms 104.359542

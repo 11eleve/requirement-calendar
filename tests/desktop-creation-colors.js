@@ -8,8 +8,8 @@ const snapshot=()=>JSON.parse(CalendarApp.exportSnapshot());
 const fixture=(id,tone,start='2026-10-01',end='2026-10-31')=>({id,title:id,tone,start,end,phases:[],resources:[],tasks:[],done:[],note:''});
 const restore=async items=>{if(!await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-01',requirements:items})))throw new Error('fixture restore failed');settle();};
 const strip=()=>$('.rf-range-preview.is-visible');
-const stripColor=()=>getComputedStyle(strip()).backgroundImage.match(/rgb\([^)]+\)/)?.[0];
-const matchesTone=tone=>{settle();const bar=$('.rf-bar'+(tone?'.'+tone:':not(.blue):not(.green)'));return getComputedStyle(strip()).backgroundImage.includes(getComputedStyle(bar).color);};
+const stripColor=()=>getComputedStyle(strip()).backgroundColor;
+const matchesTone=tone=>{settle();const bar=$('.rf-bar'+(tone?'.'+tone:':not(.blue):not(.green)'));return stripColor()===getComputedStyle(bar).color;};
 await restore([]);
 for(let i=0;i<3;i++){
  await CalendarApp.command('new');settle();

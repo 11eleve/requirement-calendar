@@ -174,3 +174,27 @@ test('weekly lane allocation matches date overlap and is deterministic with arbi
     assert.equal(new Set(Object.values(allocation.mapping)).size,peak);
   }
 });
+
+test('moving a plan preserves duration, phase gaps, content and explicit reminder time', () => {
+  const original=Model.requirement(requirement({start:'2028-02-27',end:'2028-03-08',phases:[{name:'评审',start:'2028-02-27',end:'2028-02-29'},{name:'开发',start:'2028-03-03',end:'2028-03-08'}],reminder:'2028-02-26T09:30',note:'\n    keep indentation\n\tand tabs  '}));
+  const copy=JSON.stringify(original),next=Model.shiftRequirement(original,3);
+  assert.equal(next.start,'2028-03-01');assert.equal(next.end,'2028-03-11');
+  assert.deepEqual(next.phases,[{name:'评审',start:'2028-03-01',end:'2028-03-03'},{name:'开发',start:'2028-03-06',end:'2028-03-11'}]);
+  for(const key of ['id','title','tone','resources','tasks','done','note','reminder'])assert.deepEqual(next[key],original[key]);
+  assert.equal(JSON.stringify(original),copy);assert.deepEqual(Model.shiftRequirement(next,-3),original);
+  assert.deepEqual(Model.shiftRequirement(original,0),original);
+  assert.notEqual(next.resources,original.resources);assert.notEqual(next.phases,original.phases);
+});
+
+test('moving a plan uses whole calendar days across DST and rejects overflow atomically', () => {
+  const previous=process.env.TZ;
+  try{
+    process.env.TZ='America/Los_Angeles';
+    const original=Model.requirement(requirement({start:'2026-03-07',end:'2026-03-09',phases:[]}));
+    assert.equal(Model.shiftRequirement(original,2).end,'2026-03-11');
+    for(const offset of [NaN,Infinity,1.5,'2'])assert.throws(()=>Model.shiftRequirement(original,offset),/整数/);
+    const lower=Model.requirement(requirement({start:'0001-01-01',end:'0001-01-03',phases:[]}));
+    const upper=Model.requirement(requirement({start:'9999-12-29',end:'9999-12-31',phases:[]}));
+    for(const [item,offset] of [[lower,-1],[upper,1]]){const copy=JSON.stringify(item);assert.throws(()=>Model.shiftRequirement(item,offset),/范围/);assert.equal(JSON.stringify(item),copy);}
+  }finally{if(previous===undefined)delete process.env.TZ;else process.env.TZ=previous;}
+});

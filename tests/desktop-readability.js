@@ -30,4 +30,15 @@ const label=$('.rf-field>span');
 assert(measure('field label',label,getComputedStyle($('#rf-detail')).backgroundColor)>=4.5,'form labels preserve hierarchy with sufficient text contrast');
 tabs[1].click();await settle();
 assert($$('.rf-phase-summary .rf-summary-name,.rf-phase-summary .rf-summary-meta').every(node=>measure('phase editor '+node.className,node,getComputedStyle($('#rf-detail')).backgroundColor)>=4.5),'phase editing names and full dates retain readable primary and secondary text');
+// Composite the thin range shape over the actual date-label surfaces.
+const rangeContrasts=[];
+for(let i=0;i<tones.length;i++){
+ CalendarApp.editRequirement('read-'+i);await settle();
+ const strip=$('.rf-range-preview.is-visible'),style=getComputedStyle(strip),alpha=Number(style.opacity),fill=rgb(style.backgroundColor);
+ for(const selector of ['.rf-date[data-date="2026-10-01"] .rf-date-label','.rf-date[data-date="2026-10-03"] .rf-date-label','.rf-date.outside .rf-date-label']){
+  const background=getComputedStyle($(selector)).backgroundColor,back=rgb(background),front=fill.map((c,j)=>c*alpha+back[j]*(1-alpha)),contrast=ratio(front,back);
+  rangeContrasts.push(contrast);samples.push({name:'range '+i+' '+selector,foreground:style.backgroundColor,opacity:alpha,background,contrast});
+ }
+}
+assert(rangeContrasts.every(value=>value>=3),'range strips remain distinct on weekday, weekend and adjacent-month date surfaces in all tones');
 return {checks,samples,appearance:matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light',reference:'https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html',scope:'resolved foreground/background colors for the listed text contexts in actual WebKit; does not assess the entire app, assistive technology, anti-aliasing or user aesthetic preference'};

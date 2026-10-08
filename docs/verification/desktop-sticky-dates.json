@@ -1,0 +1,34 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "light",
+    "checks" : [
+      "the fixture genuinely scrolls through a dense week",
+      "all seven dates remain aligned below the weekday header while their week is scrolled",
+      "the pinned date row retains the correct week numbers",
+      "the entire visible date heading still hits its own date button",
+      "date headings retain the calendar and weekend surfaces rather than a selected-cell fill",
+      "date-column boundaries cover underlying bands and remain inside the current date row",
+      "the pinned row prevents a covered requirement from receiving a date-heading click",
+      "weekday labels remain above the per-week date row",
+      "clicking a pinned date creates the correct one-day draft with its persistent strip",
+      "cancelling pinned-date creation clears its strip",
+      "dragging pinned dates uses their original calendar range",
+      "dragging from a pinned date into the next week preserves cross-week creation",
+      "focus-loss cancellation still rejects the trailing click on a pinned date",
+      "date rows stay within their own weeks and push off without overlapping the next row",
+      "the next week replaces the earlier pinned dates",
+      "all requirement bands and their embedded phases remain in the month",
+      "scrolling and cancelled date creation alter no stored requirements",
+      "explicit requirement positioning accounts for both pinned heading rows",
+      "weekly dates remain readable in the smaller native window",
+      "sticky dates create no application overflow"
+    ],
+    "scope" : "actual WebKit layout and hit testing with isolated native data; pointer events synthetic and capture bookkeeping stubbed, not trusted gesture or animation evidence",
+    "scroll" : 930,
+    "viewport" : [
+      980,
+      668
+    ]
+  }
+}

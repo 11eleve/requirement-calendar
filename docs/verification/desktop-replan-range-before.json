@@ -1,0 +1,64 @@
+{
+  "ok": true,
+  "result": {
+    "scroll": 66,
+    "strips": [
+      {
+        "bottom": 1375,
+        "height": 8,
+        "left": 22,
+        "right": 1138,
+        "top": 1367,
+        "width": 1116,
+        "x": 22,
+        "y": 1367
+      },
+      {
+        "bottom": 2045,
+        "height": 8,
+        "left": 22,
+        "right": 1138,
+        "top": 2037,
+        "width": 1116,
+        "x": 22,
+        "y": 2037
+      },
+      {
+        "bottom": 2715,
+        "height": 8,
+        "left": 22,
+        "right": 1138,
+        "top": 2707,
+        "width": 1116,
+        "x": 22,
+        "y": 2707
+      },
+      {
+        "bottom": 3386,
+        "height": 8,
+        "left": 22,
+        "right": 977.703125,
+        "top": 3378,
+        "width": 955.703125,
+        "x": 22,
+        "y": 3378
+      }
+    ],
+    "viewport": {
+      "bottom": 762,
+      "height": 692,
+      "left": 18,
+      "right": 1142,
+      "top": 70,
+      "width": 1124,
+      "x": 18,
+      "y": 70
+    }
+  },
+  "evidence_scope": {
+    "base_commit": "e70acd273c355b371918f87f6034be2472f209db",
+    "local_changes": "initial existing-bar drag prototype before sticky range anchor fix",
+    "unmodified_commit_run": false,
+    "purpose": "actual native WebKit geometry of the old week-bottom range strip in a dense week"
+  }
+}
