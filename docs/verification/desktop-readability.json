@@ -16,127 +16,127 @@
     "reference" : "https:\/\/www.w3.org\/WAI\/WCAG22\/Understanding\/contrast-minimum.html",
     "samples" : [
       {
-        "background" : "color(srgb 0.936 0.918902 0.977569)",
-        "contrast" : 5.5110607371105722,
+        "background" : "rgb(229, 222, 244)",
+        "contrast" : 4.9785174551753784,
         "foreground" : "rgb(99, 82, 158)",
         "name" : "phase read-0",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.910118 0.940392 0.974588)",
-        "contrast" : 5.3302365928595759,
+        "background" : "rgb(218, 231, 245)",
+        "contrast" : 4.882776707675391,
         "foreground" : "rgb(65, 100, 140)",
         "name" : "phase read-1",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.909176 0.952627 0.931137)",
-        "contrast" : 5.2109360428323139,
+        "background" : "rgb(216, 235, 226)",
+        "contrast" : 4.7672581371724192,
         "foreground" : "rgb(52, 110, 96)",
         "name" : "phase read-2",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.936 0.918902 0.977569)",
-        "contrast" : 5.5110607371105722,
+        "background" : "rgb(229, 222, 244)",
+        "contrast" : 4.9785174551753784,
         "foreground" : "rgb(99, 82, 158)",
         "name" : "phase read-0",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.938157 0.921647 0.978745)",
-        "contrast" : 5.5502786394907382,
+        "background" : "color(srgb 0.926078 0.906274 0.972157)",
+        "contrast" : 5.3703125956846973,
         "foreground" : "rgb(99, 82, 158)",
         "name" : "phase read-0 alternate",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.910118 0.940392 0.974588)",
-        "contrast" : 5.3302365928595759,
+        "background" : "rgb(218, 231, 245)",
+        "contrast" : 4.882776707675391,
         "foreground" : "rgb(65, 100, 140)",
         "name" : "phase read-1",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.913255 0.942353 0.975373)",
-        "contrast" : 5.3400332860594126,
+        "background" : "color(srgb 0.895686 0.931373 0.97098)",
+        "contrast" : 5.1857160417410135,
         "foreground" : "rgb(65, 100, 140)",
         "name" : "phase read-1 alternate",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.909176 0.952627 0.931137)",
-        "contrast" : 5.2109360428323139,
+        "background" : "rgb(216, 235, 226)",
+        "contrast" : 4.7672581371724192,
         "foreground" : "rgb(52, 110, 96)",
         "name" : "phase read-2",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.912706 0.954392 0.933686)",
-        "contrast" : 5.2237110195232432,
+        "background" : "color(srgb 0.892941 0.94451 0.919412)",
+        "contrast" : 5.0966251580424577,
         "foreground" : "rgb(52, 110, 96)",
         "name" : "phase read-2 alternate",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.938157 0.921647 0.978745)",
-        "contrast" : 5.5502786394907382,
+        "background" : "color(srgb 0.926078 0.906274 0.972157)",
+        "contrast" : 5.3703125956846973,
         "foreground" : "rgb(99, 82, 158)",
         "name" : "phase read-0 alternate",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.913255 0.942353 0.975373)",
-        "contrast" : 5.3400332860594126,
+        "background" : "color(srgb 0.895686 0.931373 0.97098)",
+        "contrast" : 5.1857160417410135,
         "foreground" : "rgb(65, 100, 140)",
         "name" : "phase read-1 alternate",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.912706 0.954392 0.933686)",
-        "contrast" : 5.2237110195232432,
+        "background" : "color(srgb 0.892941 0.94451 0.919412)",
+        "contrast" : 5.0966251580424577,
         "foreground" : "rgb(52, 110, 96)",
         "name" : "phase read-2 alternate",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.938157 0.921647 0.978745)",
-        "contrast" : 5.5502786394907382,
+        "background" : "color(srgb 0.926078 0.906274 0.972157)",
+        "contrast" : 5.3703125956846973,
         "foreground" : "rgb(99, 82, 158)",
         "name" : "phase read-0 alternate",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.913255 0.942353 0.975373)",
-        "contrast" : 5.3400332860594126,
+        "background" : "color(srgb 0.895686 0.931373 0.97098)",
+        "contrast" : 5.1857160417410135,
         "foreground" : "rgb(65, 100, 140)",
         "name" : "phase read-1 alternate",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.912706 0.954392 0.933686)",
-        "contrast" : 5.2237110195232432,
+        "background" : "color(srgb 0.892941 0.94451 0.919412)",
+        "contrast" : 5.0966251580424577,
         "foreground" : "rgb(52, 110, 96)",
         "name" : "phase read-2 alternate",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.938157 0.921647 0.978745)",
-        "contrast" : 5.5502786394907382,
+        "background" : "color(srgb 0.926078 0.906274 0.972157)",
+        "contrast" : 5.3703125956846973,
         "foreground" : "rgb(99, 82, 158)",
         "name" : "phase read-0 alternate",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.913255 0.942353 0.975373)",
-        "contrast" : 5.3400332860594126,
+        "background" : "color(srgb 0.895686 0.931373 0.97098)",
+        "contrast" : 5.1857160417410135,
         "foreground" : "rgb(65, 100, 140)",
         "name" : "phase read-1 alternate",
         "opacity" : 1
       },
       {
-        "background" : "color(srgb 0.912706 0.954392 0.933686)",
-        "contrast" : 5.2237110195232432,
+        "background" : "color(srgb 0.892941 0.94451 0.919412)",
+        "contrast" : 5.0966251580424577,
         "foreground" : "rgb(52, 110, 96)",
         "name" : "phase read-2 alternate",
         "opacity" : 1

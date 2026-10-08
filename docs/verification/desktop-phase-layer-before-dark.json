@@ -1,0 +1,225 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "isolated reading fixture restored",
+      "all three requirement tones include both phase fills",
+      "phase text exceeds 4.5 against normal and alternating fills",
+      "interactive dates outside the month remain readable",
+      "resource types, completed tasks and notes retain readable secondary text",
+      "the other editor tab remains legible on the segmented background",
+      "field placeholder text remains readable on its input surface",
+      "form labels preserve hierarchy with sufficient text contrast",
+      "phase editing names and full dates retain readable primary and secondary text"
+    ],
+    "reference" : "https:\/\/www.w3.org\/WAI\/WCAG22\/Understanding\/contrast-minimum.html",
+    "samples" : [
+      {
+        "background" : "color(srgb 0.21098 0.185098 0.295686)",
+        "contrast" : 6.7643404341568232,
+        "foreground" : "rgb(196, 181, 244)",
+        "name" : "phase read-0",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.16298 0.232471 0.310275)",
+        "contrast" : 6.9043205731269124,
+        "foreground" : "rgb(176, 204, 235)",
+        "name" : "phase read-1",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.167373 0.250039 0.216314)",
+        "contrast" : 6.8109939956834742,
+        "foreground" : "rgb(163, 213, 197)",
+        "name" : "phase read-2",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.21098 0.185098 0.295686)",
+        "contrast" : 6.7643404341568232,
+        "foreground" : "rgb(196, 181, 244)",
+        "name" : "phase read-0",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.208039 0.183137 0.291765)",
+        "contrast" : 6.7977960341118226,
+        "foreground" : "rgb(196, 181, 244)",
+        "name" : "phase read-0 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.16298 0.232471 0.310275)",
+        "contrast" : 6.9043205731269124,
+        "foreground" : "rgb(176, 204, 235)",
+        "name" : "phase read-1",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.160431 0.228745 0.305176)",
+        "contrast" : 7.0089399260962191,
+        "foreground" : "rgb(176, 204, 235)",
+        "name" : "phase read-1 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.167373 0.250039 0.216314)",
+        "contrast" : 6.8109939956834742,
+        "foreground" : "rgb(163, 213, 197)",
+        "name" : "phase read-2",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.164627 0.245529 0.212784)",
+        "contrast" : 6.9152932332700363,
+        "foreground" : "rgb(163, 213, 197)",
+        "name" : "phase read-2 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.208039 0.183137 0.291765)",
+        "contrast" : 6.7977960341118226,
+        "foreground" : "rgb(196, 181, 244)",
+        "name" : "phase read-0 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.160431 0.228745 0.305176)",
+        "contrast" : 7.0089399260962191,
+        "foreground" : "rgb(176, 204, 235)",
+        "name" : "phase read-1 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.164627 0.245529 0.212784)",
+        "contrast" : 6.9152932332700363,
+        "foreground" : "rgb(163, 213, 197)",
+        "name" : "phase read-2 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.208039 0.183137 0.291765)",
+        "contrast" : 6.7977960341118226,
+        "foreground" : "rgb(196, 181, 244)",
+        "name" : "phase read-0 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.160431 0.228745 0.305176)",
+        "contrast" : 7.0089399260962191,
+        "foreground" : "rgb(176, 204, 235)",
+        "name" : "phase read-1 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.164627 0.245529 0.212784)",
+        "contrast" : 6.9152932332700363,
+        "foreground" : "rgb(163, 213, 197)",
+        "name" : "phase read-2 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.208039 0.183137 0.291765)",
+        "contrast" : 6.7977960341118226,
+        "foreground" : "rgb(196, 181, 244)",
+        "name" : "phase read-0 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.160431 0.228745 0.305176)",
+        "contrast" : 7.0089399260962191,
+        "foreground" : "rgb(176, 204, 235)",
+        "name" : "phase read-1 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.164627 0.245529 0.212784)",
+        "contrast" : 6.9152932332700363,
+        "foreground" : "rgb(163, 213, 197)",
+        "name" : "phase read-2 alternate",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(32, 34, 41)",
+        "contrast" : 6.5890571622059628,
+        "foreground" : "rgb(163, 166, 185)",
+        "name" : "outside date",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(36, 38, 45)",
+        "contrast" : 6.2671958127105816,
+        "foreground" : "rgb(163, 166, 185)",
+        "name" : "detail ",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(36, 38, 45)",
+        "contrast" : 6.2671958127105816,
+        "foreground" : "rgb(163, 166, 185)",
+        "name" : "detail ",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(36, 38, 45)",
+        "contrast" : 6.2671958127105816,
+        "foreground" : "rgb(163, 166, 185)",
+        "name" : "detail rf-note",
+        "opacity" : 1
+      },
+      {
+        "background" : "color(srgb 0.168627 0.178627 0.212549)",
+        "contrast" : 5.6325551184072493,
+        "foreground" : "rgb(163, 166, 185)",
+        "name" : "inactive editor tab",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(32, 34, 41)",
+        "contrast" : 6.5890571622059628,
+        "foreground" : "rgb(163, 166, 185)",
+        "name" : "field placeholder",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(32, 34, 41)",
+        "contrast" : 6.5890571622059628,
+        "foreground" : "rgb(163, 166, 185)",
+        "name" : "field label",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(32, 34, 41)",
+        "contrast" : 13.726071703535167,
+        "foreground" : "rgb(237, 238, 245)",
+        "name" : "phase editor rf-summary-name",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(32, 34, 41)",
+        "contrast" : 6.5890571622059628,
+        "foreground" : "rgb(163, 166, 185)",
+        "name" : "phase editor rf-summary-meta",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(32, 34, 41)",
+        "contrast" : 13.726071703535167,
+        "foreground" : "rgb(237, 238, 245)",
+        "name" : "phase editor rf-summary-name",
+        "opacity" : 1
+      },
+      {
+        "background" : "rgb(32, 34, 41)",
+        "contrast" : 6.5890571622059628,
+        "foreground" : "rgb(163, 166, 185)",
+        "name" : "phase editor rf-summary-meta",
+        "opacity" : 1
+      }
+    ],
+    "scope" : "resolved foreground\/background colors for the listed text contexts in actual WebKit; does not assess the entire app, assistive technology, anti-aliasing or user aesthetic preference",
+    "sourceBefore" : "e5d8cc097b242cd871cac75a526bae1516782651"
+  }
+}
