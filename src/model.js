@@ -36,13 +36,25 @@
     const start=add(first,-((date.getUTCDay()+6)%7)),count=Math.ceil((days(start,last)+1)/7);
     return {first,last,start,count};
   }
-  function allocateLanes(items, start, end) {
-    const mapping=Object.create(null),ends=[];
-    for (const item of items.filter(item=>item.start<=end&&item.end>=start).sort((a,b)=>a.start.localeCompare(b.start)||a.end.localeCompare(b.end)||a.id.localeCompare(b.id))) {
-      let lane=ends.findIndex(value=>value<item.start);if(lane<0)lane=ends.length;
+  function allocateLanes(items, start, end, preferred = null) {
+    const visible=items.filter(item=>item.start<=end&&item.end>=start);
+    const clippedStart=item=>item.start<start?start:item.start;
+    const compare=(a,b)=>clippedStart(a).localeCompare(clippedStart(b))||a.start.localeCompare(b.start)||b.end.localeCompare(a.end)||a.id.localeCompare(b.id);
+    visible.sort(compare);
+    // Find this week's actual peak before carrying any previous row positions.
+    // Keeping a high old row must not reserve empty rows for the whole month.
+    const peakEnds=[];
+    for(const item of visible){let lane=peakEnds.findIndex(value=>value<clippedStart(item));if(lane<0)lane=peakEnds.length;peakEnds[lane]=item.end;}
+    const count=peakEnds.length,mapping=Object.create(null),ends=Array(count).fill(null);
+    const previousLane=item=>{const lane=preferred?.[item.id];return Number.isInteger(lane)&&lane>=0&&lane<count?lane:-1;};
+    // Reserve usable continuation positions before compacting displaced bands.
+    visible.sort((a,b)=>clippedStart(a).localeCompare(clippedStart(b))||Number(previousLane(b)>=0)-Number(previousLane(a)>=0)||compare(a,b));
+    for(const item of visible){
+      const previous=previousLane(item),free=lane=>ends[lane]===null||ends[lane]<clippedStart(item);
+      const lane=previous>=0&&free(previous)?previous:ends.findIndex((_,index)=>free(index));
       ends[lane]=item.end;mapping[item.id]=lane;
     }
-    return {mapping,count:ends.length};
+    return {mapping,count};
   }
   function validReminder(value) {
     if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value) || !validDate(value.slice(0,10))) return false;

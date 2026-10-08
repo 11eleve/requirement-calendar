@@ -1,0 +1,99 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "light",
+    "checks" : [
+      "first-week overlaps remain separate requirement bands",
+      "ended short work leaves no reserved empty lanes in later weeks",
+      "the reproduced four-requirement month now fits the default desktop calendar",
+      "week height follows its own content rather than a month-wide peak",
+      "all stages remain inside their original cross-week requirement bands",
+      "compacting rows does not change stored dates, stages or requirement order",
+      "opening a compacted continuation selects the same requirement across all weeks",
+      "editing preserves the continuous date strip and a clean draft",
+      "cancelling returns to the same selected requirement without a draft strip",
+      "usable continuation positions remain stable between adjacent weeks",
+      "a displaced long requirement compacts when its earlier neighbors finish",
+      "genuinely overlapping dense work remains visible without collision",
+      "dense first-week work does not inflate the rest of the month",
+      "a genuinely dense week scrolls independently of the editor",
+      "dense calendar scrolling retains the draft range across weeks",
+      "compacted rows are checked in a smaller native window",
+      "the smaller calendar also omits ended-work gaps",
+      "small-window density stays within the application viewport"
+    ],
+    "defaultWindow" : {
+      "calendarHeight" : 690,
+      "scrollHeight" : 690,
+      "weeks" : [
+        {
+          "height" : 236.65625,
+          "longLane" : 1,
+          "start" : "2026-09-28",
+          "visibleRequirements" : 4
+        },
+        {
+          "height" : 104.65625,
+          "longLane" : 1,
+          "start" : "2026-10-05",
+          "visibleRequirements" : 1
+        },
+        {
+          "height" : 104.65625,
+          "longLane" : 1,
+          "start" : "2026-10-12",
+          "visibleRequirements" : 1
+        },
+        {
+          "height" : 104.65625,
+          "longLane" : 1,
+          "start" : "2026-10-19",
+          "visibleRequirements" : 1
+        },
+        {
+          "height" : 104.65625,
+          "longLane" : 1,
+          "start" : "2026-10-26",
+          "visibleRequirements" : 1
+        }
+      ]
+    },
+    "scope" : "actual WebKit weekly geometry, phase containment, selection and edit\/save invariants with isolated data; static layout after completing animations",
+    "smallWindow" : {
+      "calendarHeight" : 578,
+      "scrollHeight" : 657,
+      "weeks" : [
+        {
+          "height" : 230,
+          "longLane" : 1,
+          "start" : "2026-09-28",
+          "visibleRequirements" : 4
+        },
+        {
+          "height" : 98,
+          "longLane" : 1,
+          "start" : "2026-10-05",
+          "visibleRequirements" : 1
+        },
+        {
+          "height" : 98,
+          "longLane" : 1,
+          "start" : "2026-10-12",
+          "visibleRequirements" : 1
+        },
+        {
+          "height" : 98,
+          "longLane" : 1,
+          "start" : "2026-10-19",
+          "visibleRequirements" : 1
+        },
+        {
+          "height" : 98,
+          "longLane" : 1,
+          "start" : "2026-10-26",
+          "visibleRequirements" : 1
+        }
+      ]
+    }
+  }
+}

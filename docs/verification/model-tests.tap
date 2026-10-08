@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: 02: device-local date crosses midnight correctly and date arithmetic survives DST
+ok 1 - 02: device-local date crosses midnight correctly and date arithmetic survives DST
+  ---
+  duration_ms: 5.663417
+  type: 'test'
+  ...
+# Subtest: 03: fast creation uses unique IDs and duplicate persisted identities are rejected
+ok 2 - 03: fast creation uses unique IDs and duplicate persisted identities are rejected
+  ---
+  duration_ms: 5.148917
+  type: 'test'
+  ...
+# Subtest: 04: phase rules reject impossible dates, outside phases, and inclusive overlaps
+ok 3 - 04: phase rules reject impossible dates, outside phases, and inclusive overlaps
+  ---
+  duration_ms: 12.287959
+  type: 'test'
+  ...
+# Subtest: 05: resources accept complete web links and reject unsafe or malformed values
+ok 4 - 05: resources accept complete web links and reject unsafe or malformed values
+  ---
+  duration_ms: 0.412667
+  type: 'test'
+  ...
+# Subtest: 06: task progress cannot be restored from mismatched or nonboolean completion values
+ok 5 - 06: task progress cannot be restored from mismatched or nonboolean completion values
+  ---
+  duration_ms: 0.490917
+  type: 'test'
+  ...
+# Subtest: 07: more than 16 requirements and over 14.5 KB survive a real serialize/reload cycle
+ok 6 - 07: more than 16 requirements and over 14.5 KB survive a real serialize/reload cycle
+  ---
+  duration_ms: 2.750708
+  type: 'test'
+  ...
+# Subtest: 08: version 4 migration preserves requirements and the original legacy record
+ok 7 - 08: version 4 migration preserves requirements and the original legacy record
+  ---
+  duration_ms: 0.173834
+  type: 'test'
+  ...
+# Subtest: 09: a quota failure reports failure and leaves the committed primary record intact
+ok 8 - 09: a quota failure reports failure and leaves the committed primary record intact
+  ---
+  duration_ms: 0.182625
+  type: 'test'
+  ...
+# Subtest: 10: corrupted records recover from last-good data; unrecoverable data blocks overwrite
+ok 9 - 10: corrupted records recover from last-good data; unrecoverable data blocks overwrite
+  ---
+  duration_ms: 0.287875
+  type: 'test'
+  ...
+# Subtest: 29: v5 browser records migrate to a native file through the bridge without deleting originals
+ok 10 - 29: v5 browser records migrate to a native file through the bridge without deleting originals
+  ---
+  duration_ms: 0.27025
+  type: 'test'
+  ...
+# Subtest: 32: optional local reminder validates real wall time, rejects DST gaps, and preserves schema migration
+ok 11 - 32: optional local reminder validates real wall time, rejects DST gaps, and preserves schema migration
+  ---
+  duration_ms: 0.633833
+  type: 'test'
+  ...
+# Subtest: 37: month navigation and grids retain early years, leap days, six weeks, and supported boundaries
+ok 12 - 37: month navigation and grids retain early years, leap days, six weeks, and supported boundaries
+  ---
+  duration_ms: 0.446458
+  type: 'test'
+  ...
+# Subtest: 38: invisible history cannot inflate visible lanes and overlapping requirements never share a lane
+ok 13 - 38: invisible history cannot inflate visible lanes and overlapping requirements never share a lane
+  ---
+  duration_ms: 0.226708
+  type: 'test'
+  ...
+# Subtest: 44–45: programmer notes and long resource links survive an actual storage round trip without truncation
+ok 14 - 44–45: programmer notes and long resource links survive an actual storage round trip without truncation
+  ---
+  duration_ms: 0.427584
+  type: 'test'
+  ...
+# Subtest: weekly lanes compact ended work while retaining usable continuation positions
+ok 15 - weekly lanes compact ended work while retaining usable continuation positions
+  ---
+  duration_ms: 0.112459
+  type: 'test'
+  ...
+# Subtest: weekly lane allocation matches date overlap and is deterministic with arbitrary previous positions
+ok 16 - weekly lane allocation matches date overlap and is deterministic with arbitrary previous positions
+  ---
+  duration_ms: 16.541333
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 99.447625

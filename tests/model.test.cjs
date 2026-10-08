@@ -145,3 +145,32 @@ test('44–45: programmer notes and long resource links survive an actual storag
   assert.equal(item.note,note);assert.equal(item.resources[0].url,url);
   assert.throws(()=>Model.requirement(requirement({note:123})),/备忘/);
 });
+
+test('weekly lanes compact ended work while retaining usable continuation positions', () => {
+  const items=[{id:'short-1',start:'2026-10-01',end:'2026-10-03'},{id:'short-2',start:'2026-10-01',end:'2026-10-03'},{id:'short-3',start:'2026-10-01',end:'2026-10-03'},{id:'long',start:'2026-10-01',end:'2026-10-31'}];
+  const first=Model.allocateLanes(items,'2026-09-28','2026-10-04');
+  assert.equal(first.count,4);assert.equal(first.mapping.long,0);
+  const next=Model.allocateLanes(items,'2026-10-05','2026-10-11',first.mapping);
+  assert.equal(next.count,1);assert.equal(next.mapping.long,0);
+  const compact=Model.allocateLanes(items,'2026-10-05','2026-10-11',{long:3});
+  assert.equal(compact.count,1);assert.equal(compact.mapping.long,0);
+  const continuing=[{id:'a',start:'2026-10-01',end:'2026-10-20'},{id:'b',start:'2026-10-02',end:'2026-10-25'},{id:'c',start:'2026-10-03',end:'2026-10-30'}];
+  const retained=Model.allocateLanes(continuing,'2026-10-05','2026-10-11',{a:1,b:2,c:3});
+  assert.equal(retained.count,3);assert.equal(retained.mapping.a,1);assert.equal(retained.mapping.b,2);assert.equal(retained.mapping.c,0);
+  assert.deepEqual(Model.allocateLanes([],'2026-10-05','2026-10-11'),{mapping:Object.create(null),count:0});
+});
+
+test('weekly lane allocation matches date overlap and is deterministic with arbitrary previous positions', () => {
+  let seed=41;const random=max=>{seed=(seed*1664525+1013904223)>>>0;return seed%max;};
+  for(let sample=0;sample<80;sample++){
+    const items=Array.from({length:24},(_,i)=>{const start=random(28),length=random(14);return {id:i===0?'__proto__':'r-'+i,start:Model.add('2026-09-20',start),end:Model.add('2026-09-20',start+length)};});
+    const previous=Object.fromEntries(items.map(item=>[item.id,random(30)])),start='2026-10-05',end='2026-10-11';
+    const allocation=Model.allocateLanes(items,start,end,previous),visible=items.filter(item=>item.start<=end&&item.end>=start);
+    const peak=Math.max(0,...Array.from({length:7},(_,day)=>{const date=Model.add(start,day);return visible.filter(item=>item.start<=date&&item.end>=date).length;}));
+    assert.equal(allocation.count,peak);assert.equal(Object.keys(allocation.mapping).length,visible.length);
+    assert.ok(Object.values(allocation.mapping).every(lane=>Number.isInteger(lane)&&lane>=0&&lane<peak));
+    for(const a of visible)for(const b of visible)if(a!==b&&a.start<=b.end&&a.end>=b.start)assert.notEqual(allocation.mapping[a.id],allocation.mapping[b.id]);
+    assert.deepEqual(Model.allocateLanes([...items].reverse(),start,end,previous),allocation);
+    assert.equal(new Set(Object.values(allocation.mapping)).size,peak);
+  }
+});
