@@ -8,7 +8,7 @@
 
 一个需求可能持续几周，中间经历评审、开发、联调和测试；临时修复又可能只占一两天。需求日历以月历为主视图，用一条连续的长条表示完整需求，把各个阶段标在条内。点击需求，即可查看对应的文档、设计稿、工作事项和备忘。
 
-**当前提供 macOS 桌面版源码，以及可离线打开的浏览器版。** 桌面版支持原生窗口与菜单、本机数据保存、JSON 备份恢复和可选系统提醒。目前需要从源码构建，尚未发布可直接下载的 DMG 或经过 Apple 公证的安装包。
+**提供 macOS 原生桌面版、Windows Electron 桌面版，以及可离线打开的浏览器版。** 桌面版支持独立窗口、系统菜单、本机数据文件、JSON 备份恢复和可选系统提醒。Windows 使用 `.exe` 安装包；macOS 目前从源码构建，尚未提供公证 DMG。下方实际截图来自 macOS，共用的日历界面和动画在 Windows 中保留。
 
 <p align="center">
   <a href="#安装">安装</a> · <a href="#功能介绍">功能介绍</a> · <a href="#第一次使用">第一次使用</a> · <a href="#数据与备份">数据与备份</a> · <a href="#常见问题">常见问题</a>
@@ -19,6 +19,40 @@
 *桌面版实际运行截图，展示示例排期。浅蓝白底色承托月历，需求以明亮的紫、蓝、薄荷绿区分，阶段保持在同一需求条内。*
 
 ## 安装
+
+### Windows 桌面版
+
+支持 **Windows 10 / 11 的 x64 设备**。安装后无需 Node.js、Python、本地服务器或浏览器。ARM64 和 32 位安装包暂未提供。
+
+#### 下载并安装
+
+1. 登录有仓库访问权限的 GitHub 账号，打开 [Windows desktop 构建记录](https://github.com/11eleve/requirement-calendar/actions/workflows/windows-desktop.yml)。
+2. 选择最新成功的构建，在 **Artifacts** 中下载 `RequirementCalendar-Windows-x64` 并解压。构建产物保留 30 天，过期后可重新运行工作流。
+3. 运行 `RequirementCalendar-0.2.0-x64-Setup.exe`，选择安装目录并完成安装。安装器为当前用户安装，创建开始菜单和桌面快捷方式。
+4. 从“需求日历”快捷方式打开应用。点击或拖动日期即可创建需求。
+
+安装包目前未购买 Windows 代码签名证书，SmartScreen 可能提示发行者未知。请先核对仓库和构建来源；ZIP 内提供 `.sha256` 文件，可用 PowerShell 的 `Get-FileHash .\RequirementCalendar-0.2.0-x64-Setup.exe -Algorithm SHA256` 核对。
+
+更新前导出备份并退出旧版，再运行新安装包。卸载默认保留本机数据；再次安装后可以继续使用原记录。Windows 和 macOS 之间可通过 **文件 → 导出备份 / 恢复 JSON 备份** 迁移，不会自动同步。
+
+#### 从源码开发或构建
+
+安装 Node.js **22.12 或更新版本**（推荐 24 LTS），获取源码后在 PowerShell 中进入项目目录：
+
+```powershell
+npm ci
+npm run desktop
+```
+
+首次启动会下载固定版本的 Electron 运行时，需要联网。打包安装器时在 Windows 上执行：
+
+```powershell
+npm test
+npm run test:desktop
+npm run dist:win
+```
+
+安装包输出到 `dist/windows/`。开发模式支持本机保存和备份；**系统定时提醒需使用安装后的 Windows 版本**，以便注册开始菜单标识与通知点击协议。直接运行 `win-unpacked` 或开发窗口不等同于完成安装。
 
 ### macOS 桌面版
 
@@ -99,14 +133,14 @@ python3 -m http.server 8080 --bind 127.0.0.1
 
 打开 [http://127.0.0.1:8080](http://127.0.0.1:8080)，在终端按 `Ctrl+C` 停止服务。建议固定使用同一种打开方式、同一浏览器和同一个地址，避免切换到不同的浏览器存储位置。
 
-| 能力 | macOS 桌面版 | 浏览器版 |
-| --- | --- | --- |
-| 月历排期、阶段、资料、事项与备忘 | 支持 | 支持 |
-| 数据保存 | 独立本机 JSON 文件 | 浏览器 `localStorage` |
-| 原生菜单与退出保存提示 | 支持 | 使用页面内编辑保护 |
-| JSON 备份导出与恢复 | 原生文件菜单 | 暂无对应入口 |
-| 按需求设置系统提醒 | 支持，需通知授权 | 不支持 |
-| 云端同步 | 暂不支持 | 暂不支持 |
+| 能力 | macOS 桌面版 | Windows 桌面版 | 浏览器版 |
+| --- | --- | --- | --- |
+| 月历排期、阶段、资料、事项与备忘 | 支持 | 支持 | 支持 |
+| 数据保存 | 独立本机 JSON 文件 | 独立本机 JSON 文件 | 浏览器 `localStorage` |
+| 系统菜单与退出保存提示 | 支持 | 支持 | 页面内编辑保护 |
+| JSON 备份导出与恢复 | 支持 | 支持，可与 Mac 迁移 | 暂无对应入口 |
+| 按需求设置系统提醒 | 需通知授权 | 安装后由 Windows 安排 | 不支持 |
+| 云端同步 | 暂不支持 | 暂不支持 | 暂不支持 |
 
 ## 功能介绍
 
@@ -242,9 +276,9 @@ python3 -m http.server 8080 --bind 127.0.0.1
 
 ### 桌面操作与未保存保护
 
-桌面版使用 AppKit 原生窗口和菜单，支持系统剪切、拷贝、粘贴、全选与文字撤销。
+macOS 版使用 AppKit 原生窗口，Windows 版使用 Electron 独立桌面窗口，两者均提供系统菜单，支持剪切、拷贝、粘贴、全选与文字撤销。
 
-右键点击需求条可打开原生菜单，查看、编辑或删除需求。应用会记住窗口尺寸，显示菜单提供全屏入口。
+右键点击需求条可打开系统菜单，查看、编辑或删除需求。视图菜单提供全屏入口；macOS 版会记住窗口尺寸。
 
 | 快捷键 | 操作 |
 | --- | --- |
@@ -258,6 +292,8 @@ python3 -m http.server 8080 --bind 127.0.0.1
 | 日期聚焦后按方向键 | 左右移动一天，上下移动一周 |
 | 页签聚焦后按左右方向键 | 切换基本信息与阶段 |
 
+Windows 中将 `⌘` 换成 `Ctrl`、`⌥` 换成 `Alt`。全屏使用 `F11`，退出窗口使用 `Alt+F4`。
+
 切换需求或关闭编辑器时，如果有未保存内容，会询问保存、不保存或继续编辑。桌面版关闭窗口、退出应用时也提供原生保存提示。保存失败会保留表单并显示原因，便于修复后重试。
 
 删除需求后可撤销最近一次删除；退出应用后不保留撤销记录。界面统一使用浅色外观，包括系统深色模式下的月历与日期输入控件。
@@ -267,6 +303,10 @@ python3 -m http.server 8080 --bind 127.0.0.1
 桌面版 **基本信息 → 提醒** 默认收成一行，明确显示“未设置”；已有提醒会直接显示实际的本机日期与时间。点击该行展开日期控件，选择时间后保存。仅展开不会自动设置时间或申请通知权限；首次保存带有未来提醒时间的需求时，才会请求 macOS 通知授权。
 
 允许后，提醒由 macOS 本地通知系统安排。修改时间会替换原提醒；展开后点击 **不提醒** 并保存，即可取消原提醒。清除时间先保留为草稿，未保存时原提醒继续有效。删除需求会取消提醒，撤销删除会恢复尚未到期的提醒。点击通知会打开对应月份与需求；遇到未保存内容时先保护草稿。
+
+Windows 安装版使用系统的 `ScheduledToastNotification` 安排未来提醒，正常退出应用后仍由系统管理。修改、取消和删除需求会同步更新系统中的安排；点击通知会启动或唤起应用，定位对应需求，并保护正在编辑的草稿。通知被禁用或系统安排失败时，会单独显示原因，已保存的需求不受影响。
+
+请在 **Windows 设置 → 系统 → 通知** 中允许“需求日历”。勿扰模式、睡眠及关机会影响展示；Windows 的定时通知只有约 5 分钟的投递窗口，关机超过该窗口可能丢弃提醒，应用不会把错过的提醒全部补发。改变系统时区后，请重新打开应用以重新核对本机提醒时间。参见 [Microsoft 定时通知说明](https://learn.microsoft.com/en-us/windows/apps/develop/notifications/app-notifications/app-notifications-scheduled)。
 
 <details>
 <summary>查看提醒设置界面</summary>
@@ -296,7 +336,7 @@ python3 -m http.server 8080 --bind 127.0.0.1
 
 ### 数据保存在哪里
 
-桌面版保存在本机独立目录：
+macOS 原生版保存在本机独立目录：
 
 ```text
 ~/Library/Application Support/RequirementCalendar/
@@ -305,6 +345,8 @@ python3 -m http.server 8080 --bind 127.0.0.1
 ```
 
 数据采用原子写入，并保留有效备份。发生损坏时会保留原始记录再进行恢复；多个应用进程之间也会检查过期写入，避免旧窗口直接覆盖新数据。首次启动新版桌面应用时，会迁移旧版 WebKit 记录并保留旧记录。
+
+Windows 版位于 `%APPDATA%\RequirementCalendar\data\`，同样保存 `calendar.json` 和 `calendar.last-good.json`。恢复或覆盖损坏记录前，原文件另存为 `calendar.preserved-*.json`。程序只允许一个桌面实例，并在写入前检查文件是否被其他程序修改；检测到冲突会保留编辑内容并拒绝覆盖。可通过 **文件 → 打开数据文件夹** 定位。Electron 开发预览在 Mac 上使用 `~/Library/Application Support/RequirementCalendar/data/`，与原生版文件分开。
 
 浏览器版使用该浏览器、该地址下的 `localStorage`。清理浏览器数据、隐私模式或切换访问地址可能影响记录。桌面版与浏览器版之间不会自动同步。
 
@@ -318,7 +360,7 @@ python3 -m http.server 8080 --bind 127.0.0.1
 
 导出或恢复前，先保存或取消当前编辑。恢复会替换全部需求，建议先导出当前版本；无效格式、重复标识、重叠阶段等内容会被校验拦截。
 
-恢复前的有效记录会额外保存为 `calendar.before-restore-*.json`，后续正常保存不会替换这份归档。
+恢复前的记录会额外归档：macOS 原生版使用 `calendar.before-restore-*.json`，Windows 版使用 `calendar.preserved-*.json`，后续正常保存不会替换这份归档。
 
 自动备份与主文件位于同一目录，建议定期导出到其他位置。需求不会自动上传到 GitHub，也没有云端同步服务。
 
@@ -326,11 +368,13 @@ python3 -m http.server 8080 --bind 127.0.0.1
 
 ### 能直接下载安装吗？
 
-目前需要按上方步骤从源码构建 macOS 应用。仓库尚未提供 DMG、公证安装包、Homebrew 安装或自动更新。仅体验核心功能时，可以直接打开浏览器版。
+Windows 可以从上方 GitHub Actions 构建产物下载 `.exe` 安装包。macOS 仍需从源码构建，尚未提供 DMG、公证安装包或 Homebrew 安装。两者目前都没有自动更新。
 
 ### 为什么没有收到提醒？
 
 确认使用桌面版、设置了未来的提醒时间并已保存，再检查 macOS 是否允许“需求日历”发送通知，以及专注模式是否限制展示。本机验收已确认实际进入通知中心；共享屏幕时可能静音且不显示横幅，点击通知仍待界面验证。
+
+Windows 请确认运行的是安装版，并检查系统通知、勿扰模式和电脑在提醒时是否开机。Windows 实际横幅、睡眠唤醒和通知点击仍需在真实 Windows 10/11 设备上验收；构建和自动测试不能代替这些系统行为检查。
 
 ### 支持钉钉或 Figma 自动同步吗？
 
@@ -347,6 +391,9 @@ requirement-calendar/
 ├── index.html       # 可直接打开的离线页面
 ├── src/             # 页面结构、样式、交互、数据模型与存储
 ├── native/          # AppKit 窗口、菜单、文件存储与系统提醒
+├── electron/        # Windows 桌面宿主、安全桥接、文件存储和定时提醒
+├── package.json     # Electron 启动与 NSIS 安装器配置
+├── .github/workflows/ # Windows 自动构建、测试和安装包产物
 ├── scripts/         # 页面与 macOS 应用构建脚本
 ├── tests/           # 模型、构建、原生与 WebKit 回归
 ├── docs/            # 优化记录与验证证据
@@ -366,6 +413,8 @@ scripts/build-macos.sh
 node --test tests/model.test.cjs tests/startup.test.cjs
 python3 tests/build.test.py
 ```
+
+Electron 桌面相关测试执行 `npm test` 与 `npm run test:desktop`。后者使用独立临时数据目录，不读取现有需求，不注册真实提醒；覆盖沙箱隔离、桥接校验、原子保存、重载、草稿保护及备份恢复。Windows 工作流还校验 PowerShell / WinRT 类型，并对打包后的 `.exe` 再跑一次同样的桌面测试。定时提醒由固定 PowerShell 脚本调用 WinRT，需求内容通过 JSON 标准输入传入，详情见 [Windows 实现与验收](docs/WINDOWS_DESKTOP.md)。
 
 网站图标还提供独立的联网检查命令，需先构建桌面版：
 

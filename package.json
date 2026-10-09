@@ -1,0 +1,45 @@
+{
+  "name": "requirement-calendar",
+  "version": "0.2.0",
+  "description": "面向程序员的需求排期日历",
+  "author": "11eleve",
+  "private": true,
+  "main": "electron/main.cjs",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "desktop": "electron .",
+    "test": "node --test tests/model.test.cjs tests/startup.test.cjs tests/electron.test.cjs",
+    "test:desktop": "electron . --calendar-smoke-test",
+    "dist:win": "electron-builder --win nsis --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "44.7.0",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "dev.11eleve.requirement-calendar",
+    "productName": "需求日历",
+    "asar": true,
+    "directories": { "output": "dist/windows" },
+    "files": ["electron/**", "src/**", "assets/app-icon.png", "package.json"],
+    "extraResources": [{ "from": "electron/windows-reminders.ps1", "to": "windows-reminders.ps1" }],
+    "protocols": [{ "name": "需求日历提醒", "schemes": ["requirement-calendar"] }],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/app-icon.png",
+      "executableName": "RequirementCalendar",
+      "artifactName": "RequirementCalendar-${version}-${arch}-Setup.${ext}",
+      "signAndEditExecutable": true
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "需求日历",
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}

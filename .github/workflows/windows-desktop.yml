@@ -1,0 +1,64 @@
+name: Windows desktop
+
+on:
+  push:
+    branches: [main]
+    paths: ['src/**', 'electron/**', 'tests/**', 'assets/app-icon.png', 'package*.json', '.github/workflows/windows-desktop.yml']
+  pull_request:
+    paths: ['src/**', 'electron/**', 'tests/**', 'assets/app-icon.png', 'package*.json', '.github/workflows/windows-desktop.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - name: Validate Windows reminder adapter
+        shell: powershell
+        run: |
+          $tokens = $null; $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile("$pwd/electron/windows-reminders.ps1", [ref]$tokens, [ref]$errors) | Out-Null
+          if ($errors.Count) { throw ($errors | Out-String) }
+          $null = [Windows.UI.Notifications.ScheduledToastNotification, Windows.UI.Notifications, ContentType = WindowsRuntime]
+      - name: Exercise Windows desktop bridge
+        run: npm run test:desktop
+        env:
+          CALENDAR_SMOKE_OUTPUT: desktop-smoke-windows.json
+      - name: Build Windows installer
+        run: npm run dist:win
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Exercise packaged application
+        shell: powershell
+        run: |
+          $env:CALENDAR_SMOKE_OUTPUT = "$pwd/packaged-smoke-windows.json"
+          $process = Start-Process -FilePath "$pwd/dist/windows/win-unpacked/RequirementCalendar.exe" -ArgumentList '--calendar-smoke-test' -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Packaged smoke test failed: $($process.ExitCode)" }
+          if (!(Test-Path $env:CALENDAR_SMOKE_OUTPUT)) { throw 'Missing smoke test report' }
+      - name: Installer checksum
+        shell: powershell
+        run: |
+          Get-ChildItem dist/windows/*Setup.exe | ForEach-Object {
+            $hash = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower()
+            "$hash  $($_.Name)" | Set-Content -Encoding ascii "$($_.FullName).sha256"
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RequirementCalendar-Windows-x64
+          path: |
+            dist/windows/*Setup.exe
+            dist/windows/*.sha256
+            desktop-smoke-windows.json
+            packaged-smoke-windows.json
+          if-no-files-found: error
+          retention-days: 30
