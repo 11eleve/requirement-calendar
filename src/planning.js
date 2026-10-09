@@ -12,6 +12,20 @@
  }
  function currentPhase(item,today){return item.phases.find(phase=>phase.start<=today&&phase.end>=today)?.name||'';}
  function nextNode(item,today){return item.milestones.filter(node=>!node.done).sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id))[0]||null;}
+ function firstFreePhaseDate({start,end},phases){
+  if(!Model.validDate(start)||!Model.validDate(end)||end<start||phases.some(phase=>!Model.validDate(phase.start)||!Model.validDate(phase.end)||phase.end<phase.start))return '';
+  let date=start;
+  for(const phase of [...phases].sort((a,b)=>a.start.localeCompare(b.start))){
+   if(phase.end<date)continue;if(phase.start>date)break;
+   try{date=Model.add(phase.end,1);}catch{return '';}
+   if(date>end)return '';
+  }
+  return date;
+ }
+ function defaultNodeDate({start,end},today){
+  if(!Model.validDate(start)||!Model.validDate(end)||!Model.validDate(today)||end<start)return '';
+  return today<start?start:today>end?end:today;
+ }
  function project(items,{anchor,today=Model.localDate(),scope='month',query='',tone='all',state='all',sort='start'}={}){
   const month=Model.monthGrid(anchor),terms=query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   const inScope=items.filter(item=>scope==='all'||item.start<=month.last&&item.end>=month.first);
@@ -33,6 +47,6 @@
   const nodes=rows.flatMap(({item})=>item.milestones.filter(node=>!node.done).map(node=>({item,node}))).sort((a,b)=>a.node.date.localeCompare(b.node.date)||a.item.title.localeCompare(b.item.title)||a.node.id.localeCompare(b.node.id));
   return {rows,nodes,counts,scopeCount:inScope.length};
  }
- const api={STATUS,progress,nodeProgress,status,currentPhase,nextNode,project};
+ const api={STATUS,progress,nodeProgress,status,currentPhase,nextNode,firstFreePhaseDate,defaultNodeDate,project};
  if(typeof module!=='undefined'&&module.exports)module.exports=api;else scope.CalendarPlanning=api;
 })(globalThis);

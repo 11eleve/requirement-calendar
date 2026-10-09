@@ -63,3 +63,22 @@ test('summary ordering: unknown task progress follows zero and complete progress
  assert.deepEqual(Planning.project([unknown,complete,zero],options).rows.map(row=>row.item.id),['zero','complete','unknown']);
  assert.equal(Planning.project([unknown],options).rows[0].progress.ratio,null);
 });
+test('planning defaults: first phase uses the earliest uncovered day and never guesses across invalid inputs',()=>{
+ const range={start:'2028-02-27',end:'2028-03-03'},phases=[{start:'2028-03-01',end:'2028-03-02'},{start:'2028-02-27',end:'2028-02-28'}],copy=JSON.stringify(phases);
+ assert.equal(Planning.firstFreePhaseDate(range,phases),'2028-02-29');assert.equal(JSON.stringify(phases),copy);
+ assert.equal(Planning.firstFreePhaseDate(range,[]),range.start);
+ assert.equal(Planning.firstFreePhaseDate(range,[{start:range.start,end:range.end}]),'');
+ assert.equal(Planning.firstFreePhaseDate(range,[{start:'',end:range.end}]),'');
+ assert.equal(Planning.firstFreePhaseDate({...range,end:'2028-02-01'},[]),'');
+ assert.equal(Planning.firstFreePhaseDate({start:'9999-12-31',end:'9999-12-31'},[{start:'9999-12-31',end:'9999-12-31'}]),'');
+});
+test('planning defaults: node dates clamp to the currently edited range without changing it',()=>{
+ const range={start:'2028-02-27',end:'2028-03-03'},copy=JSON.stringify(range);
+ assert.equal(Planning.defaultNodeDate(range,'2028-02-29'),'2028-02-29');assert.equal(Planning.defaultNodeDate(range,'2028-02-01'),range.start);assert.equal(Planning.defaultNodeDate(range,'2028-04-01'),range.end);
+ assert.equal(Planning.defaultNodeDate({...range,start:''},'2028-02-29'),'');assert.equal(Planning.defaultNodeDate({...range,end:'2028-02-01'},'2028-02-29'),'');assert.equal(JSON.stringify(range),copy);
+});
+test('calendar navigation: week edges and page keys respect leap months, year changes and supported limits',()=>{
+ assert.equal(Model.calendarMove('2028-01-31','PageDown'),'2028-02-29');assert.equal(Model.calendarMove('2027-01-31','PageDown'),'2027-02-28');assert.equal(Model.calendarMove('2028-03-31','PageUp'),'2028-02-29');
+ assert.equal(Model.calendarMove('2028-01-02','Home'),'2027-12-27');assert.equal(Model.calendarMove('2028-01-02','End'),'2028-01-02');assert.equal(Model.calendarMove('2028-12-31','PageDown'),'2029-01-31');
+ assert.equal(Model.calendarMove('0001-01-01','ArrowLeft'),null);assert.equal(Model.calendarMove('0001-01-01','PageUp'),null);assert.equal(Model.calendarMove('9999-12-31','PageDown'),null);assert.equal(Model.calendarMove('9999-12-31','ArrowRight'),null);assert.equal(Model.calendarMove('2028-01-01','Enter'),null);
+});

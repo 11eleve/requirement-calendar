@@ -50,6 +50,14 @@
     const start=add(first,-((date.getUTCDay()+6)%7)),count=Math.ceil((days(start,last)+1)/7);
     return {first,last,start,count};
   }
+  function calendarMove(date,key) {
+    const weekday=(parse(date).getUTCDay()+6)%7,deltas={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7,Home:-weekday,End:6-weekday};
+    if(Object.hasOwn(deltas,key)){try{return add(date,deltas[key]);}catch{return null;}}
+    if(key!=='PageUp'&&key!=='PageDown')return null;
+    const next=monthOffset(date,key==='PageUp'?-1:1);if(!next)return null;
+    const day=Math.min(Number(date.slice(8)),Number(monthGrid(next).last.slice(8)));
+    return next.slice(0,8)+String(day).padStart(2,'0');
+  }
   function allocateLanes(items, start, end, preferred = null) {
     const visible=items.filter(item=>item.start<=end&&item.end>=start);
     const clippedStart=item=>item.start<start?start:item.start;
@@ -153,7 +161,7 @@
       phases: item.phases.map(phase => ({ ...phase, start: add(phase.start, offset), end: add(phase.end, offset) })),
       milestones: item.milestones.map(node => ({...node, date: add(node.date, offset)})) };
   }
-  const api = { VERSION, TONES, NODE_KINDS, ValidationError, validDate, parse, iso, add, days, localDate, format, monthOffset, monthGrid, allocateLanes, validReminder, newId, safeURL, iconFor, requirement, shiftRequirement, snapshot };
+  const api = { VERSION, TONES, NODE_KINDS, ValidationError, validDate, parse, iso, add, days, localDate, format, monthOffset, monthGrid, calendarMove, allocateLanes, validReminder, newId, safeURL, iconFor, requirement, shiftRequirement, snapshot };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else scope.CalendarModel = api;
 })(globalThis);

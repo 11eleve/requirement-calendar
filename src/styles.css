@@ -49,6 +49,9 @@ html.native #req-calendar-refined .rf-chrome { display:none; }
 #req-calendar-refined #rf-title { display:flex; justify-content:center; align-items:baseline; gap:7px; min-width:0; white-space:nowrap; font-weight:500; line-height:1.2; letter-spacing:0; }
 #req-calendar-refined .rf-month-year { color:var(--rf-muted); font-size:12px; font-weight:450; letter-spacing:.3px; }
 #req-calendar-refined .rf-month-name { font-size:18px; font-weight:550; letter-spacing:-.3px; }
+#req-calendar-refined .rf-month-jump { padding:3px 6px; border-radius:7px; }
+#req-calendar-refined .rf-month-jump:hover { background:var(--rf-bg); }
+#req-calendar-refined .rf-month-jump:active { background:var(--rf-soft); }
 #req-calendar-refined :is(.rf-arrow,.rf-close) { display:grid; place-items:center; width:28px; height:28px; padding:0; border-radius:6px; }
 #req-calendar-refined svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; pointer-events:none; }
 #req-calendar-refined .rf-arrow { color:var(--rf-muted); justify-self:start; }
@@ -401,6 +404,8 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-node-detail { cursor:pointer; border-radius:6px; }
 #req-calendar-refined .rf-node-detail:hover { background:var(--rf-context-fill); }
 #req-calendar-refined .rf-node-detail input { margin-top:4px; }
+#req-calendar-refined .rf-node-detail.is-targeted,#req-calendar-refined .rf-node-detail:focus-within { background:var(--rf-context-fill); box-shadow:inset 2px 0 var(--rf-context-tone); }
+#req-calendar-refined .rf-node-actions { display:flex; align-items:center; gap:12px; }
 #req-calendar-refined .rf-summary-progress { width:94px; }
 #req-calendar-refined .rf-summary-node-progress { font-size:10px; }
 #req-calendar-refined .rf-summary-row.is-selected,#req-calendar-refined .rf-summary-node.is-selected { background:var(--rf-fill); }
@@ -415,3 +420,17 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined [data-node-group=past] .rf-node-group-heading>span:first-child { color:#984b58; }
 #req-calendar-refined [data-node-group=today] .rf-node-group-heading>span:first-child { color:var(--rf-purple); }
 #req-calendar-refined .rf-summary-empty .rf-button { margin-top:12px; }
+
+/* Month jumping is available on demand, without permanent toolbar controls. */
+#req-calendar-refined .rf-month-picker { width:292px; max-width:calc(100vw - 32px); margin:72px auto auto; padding:18px; color:var(--rf-text); background:var(--rf-bg); border:1px solid var(--rf-line); border-radius:12px; box-shadow:0 12px 40px #28334d20; }
+#req-calendar-refined .rf-month-picker::backdrop { background:#28334d12; }
+#req-calendar-refined .rf-month-picker .rf-heading { margin-bottom:14px; }
+#req-calendar-refined .rf-month-picker .rf-field { grid-template-rows:auto 34px; align-content:start; }
+#req-calendar-refined .rf-month-picker :is(input,select) { height:34px; }
+#req-calendar-refined .rf-month-picker select { appearance:none; width:100%; min-height:34px; padding:7px 28px 7px 9px; font-size:12px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='m3 4.5 3 3 3-3' fill='none' stroke='%23757f97' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-position:right 9px center; background-repeat:no-repeat; box-shadow:inset 0 1px 0 #ffffff80,0 1px 2px #00000002; }
+#req-calendar-refined .rf-month-picker .rf-error:not(:empty) { margin-top:12px; }
+#req-calendar-refined .rf-month-actions { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:18px; }
+@media(prefers-reduced-motion:no-preference) {
+ #req-calendar-refined .rf-month-picker[open] { animation:rf-month-in 150ms var(--rf-ease); }
+ @keyframes rf-month-in { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
+}

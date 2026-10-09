@@ -16,6 +16,9 @@ async function run({app,window,store,invoke,directory}) {
   check('creation shows all sections together without tabs',await js("!document.querySelector('[role=tablist]') && ['阶段安排','相关资料','工作事项'].every(text=>Array.from(document.querySelectorAll('.rf-form h3')).some(node=>node.textContent===text))"));
   check('editor fills calendar height with visible bottom actions',await js("(()=>{document.getAnimations().forEach(a=>a.finish());const a=document.querySelector('#rf-detail').getBoundingClientRect(),b=document.querySelector('#rf-calendar').getBoundingClientRect(),c=document.querySelector('.rf-form-actions').getBoundingClientRect();return Math.abs(a.height-b.height)<2 && Math.abs(c.bottom-(a.bottom-1))<2;})()"));
   await invoke('command','discard');
+  check('calendar has one date Tab stop',await js("document.querySelectorAll('.rf-date[tabindex=\"0\"]').length===1"));
+  await js("(async()=>{document.querySelector('#rf-title').click();document.querySelector('#rf-month-year').value='2024';document.querySelector('#rf-month-number').value='2';document.querySelector('#rf-month-form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));while(CalendarApp.isSaving())await new Promise(r=>setTimeout(r,20));})()");
+  check('month picker persists a selected month through Electron',JSON.parse(await fs.readFile(store.file,'utf8')).anchor==='2024-02-01'&&await js("!document.querySelector('#rf-month-picker').open&&document.activeElement===document.querySelector('#rf-title')"));
   check('unknown IPC rejected',await js("CalendarDesktop.postMessage({action:'execute',code:'1'}).then(()=>false,()=>true)"));
   check('invalid save rejected',await js("CalendarDesktop.postMessage({action:'save',raw:'{bad'}).then(()=>false,()=>true)"));
   const snapshot={version:7,anchor:'2026-10-07',requirements:[{id:'desktop-fixture',title:'Windows 桌面排期',start:'2026-10-07',end:'2026-10-25',tone:'rose',milestones:[{id:'review',name:'方案评审',date:'2026-10-09',kind:'review',done:false}],phases:[{name:'开发',start:'2026-10-09',end:'2026-10-16'}],resources:[],tasks:['验证桌面保存'],done:[false],note:'  缩进\n下一行'}]};
@@ -44,6 +47,13 @@ async function run({app,window,store,invoke,directory}) {
   check('summary renders saved requirements and remaining nodes',await js("!document.querySelector('#rf-summary').hidden&&document.querySelectorAll('.rf-summary-row').length===1&&document.querySelectorAll('.rf-summary-node').length===1"));
   check('pending nodes retain grouping and explicit cross-month scope',await js("!!document.querySelector('[data-node-group] .rf-summary-node')&&document.querySelector('.rf-node-scope').textContent.includes('跨月')"));
   check('next-node ordering exposes pending context',await js("(()=>{const sort=document.querySelector('[data-summary-control=sort]');sort.focus();sort.value='next';sort.dispatchEvent(new Event('change',{bubbles:true}));return document.activeElement===document.querySelector('[data-summary-control=sort]')&&document.querySelector('.rf-summary-next').textContent.includes('方案评审');})()"));
+  await js("document.querySelector('.rf-summary-node').click()");
+  check('summary node locates its own focused detail',await js("document.activeElement.closest('.rf-node-detail')?.dataset.nodeId==='review'&&document.querySelector('.rf-node-detail.is-targeted')?.dataset.nodeId==='review'"));
+  await js("document.querySelector('[data-edit-nodes]').click()");
+  check('node editing enters the continuous editor at its node section',await js("document.querySelector('.rf-milestone-editor').contains(document.activeElement)&&!document.querySelector('[aria-invalid=true]')"));
+  await js("Array.from(document.querySelectorAll('.rf-form button')).find(n=>n.textContent==='取消').click()");
+  await invoke('command','close');
+  await invoke('command','summary');
   const workbook=await invoke('exportWorkbook','summary');
   check('summary workbook includes requirement and node rows',workbook.counts[0].rows===1&&workbook.counts[1].rows===1);
   const exported=await js("CalendarDesktop.postMessage({action:'exportExcel',scope:'summary'})");
