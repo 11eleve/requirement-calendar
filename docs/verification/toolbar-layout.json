@@ -1,0 +1,428 @@
+{
+  "source_parent": "1ff16e0be9c9a64aa9b5505fe97f908cf67e2013",
+  "changes": [
+    "previous/next month at opposite toolbar edges, centered year/month",
+    "month text 28px to 18px, compact header",
+    "remove plus markup, styles and handlers; keep date click/drag and Command-N creation",
+    "restore closing focus to an available month control when the prior trigger is gone or inside the hidden inspector"
+  ],
+  "results": {
+    "final": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "36: a clean installation contains no sample requirements",
+          "36: clean startup does not request notifications",
+          "fixture restored through the real file bridge",
+          "37: first supported month renders without a year-1900 conversion",
+          "37: previous-month command respects the lower bound",
+          "fixture restored through the real file bridge",
+          "37: final month disables navigation beyond the supported dates",
+          "37: next-month command respects the upper bound",
+          "fixture restored through the real file bridge",
+          "38: historical overlap does not create empty lanes in the visible month",
+          "39: full requirement and phase names remain available to hover and accessibility",
+          "fixture restored through the real file bridge",
+          "40: collapsed resource rows show a disclosure chevron",
+          "44: editing preserves note indentation, trailing whitespace and long content",
+          "45: long signed document URLs have no artificial input truncation",
+          "43: unsupported resource link is rejected",
+          "43: validation expands and focuses the actual invalid resource field",
+          "43: editing clears stale invalid-field styling",
+          "44–45: long notes and links survive UI save and native file validation",
+          "39: full resource destination is available on hover",
+          "37: editable date fields share the model-supported limits",
+          "43: invalid requirement range focuses its end-date field",
+          "43: overlapping phases focus the conflicting stage instead of a hidden row",
+          "46: deleting outside text editing exposes requirement undo",
+          "46: Command-Z remains available to native text undo while editing",
+          "asynchronous save settled",
+          "46: Command-Z restores the latest deletion outside the editor",
+          "47: native requirement menu contains open, edit and delete actions",
+          "47: context deletion protects the active unsaved editor",
+          "47: cancelling context deletion keeps the draft",
+          "fixture restored through the real file bridge",
+          "49: day rollover refreshes the visible current phase",
+          "49: day rollover preserves editor, draft and keyboard focus",
+          "50: a stale notification produces visible feedback",
+          "fixture restored through the real file bridge",
+          "31 audit: month persistence also prevents competing edits",
+          "37: month navigation commits its new anchor",
+          "31 audit: failed month save restores the prior month without blocking the app",
+          "fixture restored through the real file bridge",
+          "50: notification race test has a real pending save",
+          "50: notification waits for save and then opens the correct requirement",
+          "fixture restored through the real file bridge",
+          "41: a dense month scrolls within the calendar",
+          "41: long requirement details scroll within the inspector",
+          "41: calendar and inspector have independent scroll positions without document overflow",
+          "49: day rollover preserves both scroll positions in a dense month",
+          "14 audit: keyboard navigation scrolls dense rows to keep the focused date visible",
+          "14 audit: upward focus navigation remains visible below the sticky weekday header",
+          "42: native window exposes full-screen and standard desktop menus"
+        ],
+        "manualDragOutside": "requires trusted mouse regression; not simulated here",
+        "viewport": [
+          1160,
+          780
+        ]
+      }
+    },
+    "design": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "isolated design fixture restored",
+          "six-week months retain their complete calendar structure",
+          "a normal six-week month fits the default desktop viewport",
+          "the toolbar keeps only the two month navigation controls",
+          "month navigation occupies opposite edges with the date centered",
+          "the opened inspector remains inside the desktop viewport",
+          "every phase remains inside its single requirement band",
+          "phase decoration creates no extra calendar requirements",
+          "long resources retain access to the editor tabs",
+          "invalid deep resource links remain rejected",
+          "validation focuses a deep field visibly between sticky tabs and actions",
+          "the product layout is also checked in a smaller native window",
+          "the small-window editor scrolls within its own surface",
+          "the small-window application has no page overflow",
+          "isolated design fixture restored",
+          "dense requirements scroll independently of the editor",
+          "the redesigned editing range remains present in a dense month"
+        ],
+        "scope": "real WebKit layout and file bridge; animations completed before geometry checks; does not assess trusted mouse feel",
+        "viewport": [
+          980,
+          668
+        ]
+      }
+    },
+    "calendar-navigation": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "calendarScroll": 2822,
+        "checks": [
+          "dense monthly work genuinely requires calendar scrolling",
+          "switching to a dense next month begins at its first week",
+          "previous-month navigation also starts at the first week",
+          "month navigation changes no requirement dates, order or content",
+          "failed month persistence restores both the prior month and its reading position",
+          "successful retry starts at the new month and clears the save error",
+          "an explicit open reveals a late-month requirement below dense earlier weeks",
+          "the revealed requirement retains its selected identity",
+          "explicit opening begins the corresponding detail at its heading",
+          "reopening resolves the same visible target without depending on old scroll",
+          "a neighboring requirement is visibly available in the dense final week",
+          "clicking an already visible band preserves the calendar reading position",
+          "month navigation preserves the edited fields and independent inspector position",
+          "returning to the edited month restores its persistent range feedback",
+          "an explicit open still protects a dirty draft",
+          "continuing the draft changes neither its input nor the calendar reading position",
+          "save-and-open commits the updated date and complete title through native persistence",
+          "pending open resolves the freshly saved requirement rather than its old date",
+          "the saved detail clears draft feedback and confirmation state",
+          "target visibility also holds in a smaller native window",
+          "reveal positioning stays within the application viewport"
+        ],
+        "scope": "actual WebKit geometry and isolated native persistence; commands/buttons are synthetic and animation endpoints are completed; not a real system-notification click",
+        "viewport": [
+          980,
+          668
+        ]
+      }
+    },
+    "data-reminders": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "28: invalid backup rejected before native save",
+          "28: rejected backup leaves the calendar untouched",
+          "28: valid backup restores all requirement fields through the native file bridge",
+          "32: explicit future reminder requests permission once in the isolated adapter",
+          "34: notification identity opens the correct requirement and month",
+          "31: in-flight file save disables competing edits and shows busy state",
+          "31: competing navigation and duplicate save do not replace the draft",
+          "31: one asynchronous save completes normally",
+          "31: delayed save publishes exactly the captured requirement",
+          "34: notification click protects an active unsaved editor",
+          "34: notification navigation can be cancelled without losing text",
+          "33: deleting a requirement cancels its pending notification",
+          "33: undo reschedules a future reminder without another authorization request",
+          "33: clearing the optional time cancels the reminder"
+        ],
+        "notificationAdapter": "isolated; no real notification sent",
+        "snapshot": {
+          "anchor": "2026-10-10",
+          "requirements": [
+            {
+              "done": [
+                false
+              ],
+              "end": "2026-10-12",
+              "id": "restore-1",
+              "note": "多行\n备忘",
+              "phases": [],
+              "reminder": null,
+              "resources": [
+                {
+                  "icon": "文",
+                  "name": "验收文档",
+                  "type": "自定义",
+                  "url": "https://example.com/spec"
+                }
+              ],
+              "short": "保存锁验证",
+              "start": "2026-10-10",
+              "tasks": [
+                "检查原子保存"
+              ],
+              "title": "保存锁验证",
+              "tone": "blue"
+            }
+          ],
+          "version": 6
+        }
+      }
+    },
+    "permission-pending": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "file save returns while notification permission is still pending",
+          "requirement controls unlock after file persistence",
+          "isolated permission request is pending and notification has not been scheduled",
+          "user can edit another draft during permission wait",
+          "permission completion schedules the persisted reminder",
+          "background reminder result clears status without replacing the active draft"
+        ],
+        "notificationAdapter": "isolated delayed permission; no real OS permission granted"
+      }
+    },
+    "pointer": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "48: pointer down produces the range strip",
+          "48: moving across weeks extends the range strip",
+          "48: release outside the calendar cancels creation without changing data",
+          "48: a ghost click following cancelled drag cannot create a requirement",
+          "48: a subsequent deliberate date click still creates a draft",
+          "48: losing window focus cancels a pending gesture"
+        ],
+        "scope": "synthetic WebKit events with pointer-capture bookkeeping stubbed; trusted mouse release remains a manual gate"
+      }
+    },
+    "ui": {
+      "ok": true,
+      "result": {
+        "assertions": [
+          "11: application booted in real WebKit",
+          "19: a normal month fits inside the native window",
+          "11: new requirement shows persistent range strip",
+          "11: close protects an unsaved requirement",
+          "11: continue editing retains all input",
+          "12: Command-S saves the requirement",
+          "13: arrow key changes tab and its roving tab stop",
+          "14: date arrow key moves focus without creating a requirement",
+          "14: focus navigation leaves data unchanged",
+          "15: editable task content and completion survive save",
+          "16: deleting persists and offers undo",
+          "16: undo restores the deleted requirement",
+          "17: edit stages opens the stage tab directly",
+          "18: an incomplete range retains the last valid editing strip",
+          "18: fixing the range keeps its strip visible",
+          "19: inspector scrolls within the desktop viewport",
+          "20: clean close restores a connected focus target without prompting",
+          "09: failed native-WebKit storage write preserves editor and shows the error",
+          "09: retry after storage recovery succeeds",
+          "20: save-and-leave completes the pending close after successful save",
+          "11: discard applies only the requested navigation and creates a fresh draft"
+        ],
+        "title": "需求日历",
+        "viewport": [
+          1160,
+          780
+        ]
+      }
+    },
+    "panel-continuity": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "isolated reading-context fixture restored",
+          "the fixture requires substantial detail scrolling",
+          "entering general editing begins with the visible name field",
+          "clean cancellation returns to the previous detail reading position",
+          "clean cancellation restores the general edit action focus",
+          "dirty cancellation still asks how to handle the draft",
+          "continue editing retains the draft, its reading position and date strip",
+          "discarding returns to the original detail without applying draft changes",
+          "resource management still targets the first resource summary",
+          "resource cancellation restores its section and management action",
+          "existing edits persist through the native bridge",
+          "saving preserves the resource section position when the title height changes",
+          "returning after save clears draft feedback and dirty state",
+          "a fresh opening begins at the heading without reusing old reading state",
+          "calendar-initiated editing keeps the heading context and returns focus to the now-visible edit action",
+          "stage cancellation returns to its original action",
+          "editing without a previous detail view uses the normal detail opening"
+        ],
+        "scope": "actual WebKit scroll, focus and isolated save bridge; synthetic button activation"
+      }
+    },
+    "band-feedback": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "fixture with three tones and cross-week requirements restored",
+          "purple fixture has continuation pieces",
+          "purple child hover identifies only this complete requirement",
+          "purple hover resolves to one shared border color across all pieces",
+          "purple moving within a band does not clear feedback",
+          "purple crossing to another continuation preserves the identity",
+          "purple press applies to the full requirement before the drag threshold",
+          "purple press remains distinct and title text exceeds 4.5 contrast",
+          "purple pointer cancellation clears temporary feedback",
+          "blue fixture has continuation pieces",
+          "blue child hover identifies only this complete requirement",
+          "blue hover resolves to one shared border color across all pieces",
+          "blue moving within a band does not clear feedback",
+          "blue crossing to another continuation preserves the identity",
+          "blue press applies to the full requirement before the drag threshold",
+          "blue press remains distinct and title text exceeds 4.5 contrast",
+          "blue pointer cancellation clears temporary feedback",
+          "green fixture has continuation pieces",
+          "green child hover identifies only this complete requirement",
+          "green hover resolves to one shared border color across all pieces",
+          "green moving within a band does not clear feedback",
+          "green crossing to another continuation preserves the identity",
+          "green press applies to the full requirement before the drag threshold",
+          "green press remains distinct and title text exceeds 4.5 contrast",
+          "green pointer cancellation clears temporary feedback",
+          "crossing requirements transfers hover without stale pieces",
+          "leaving a requirement for a date clears hover",
+          "touch input does not leave simulated hover feedback",
+          "focus identifies all and only the focused requirement continuations",
+          "visible blue keyboard outline uses its own tone",
+          "moving focus transfers the complete requirement identity",
+          "leaving calendar focus clears continuation feedback",
+          "replan threshold replaces hover and press with moving feedback",
+          "window focus loss clears held and hover feedback",
+          "opening details clears transient feedback while retaining selected identity",
+          "feedback preserves every bar position, size and calendar lane",
+          "feedback never changes dates, phases or saved data",
+          "month navigation leaves no stale transient state",
+          "returning to the month starts with quiet bands",
+          "feedback creates no page or calendar horizontal overflow"
+        ],
+        "focusVisible": true,
+        "geometry": [
+          [
+            "purple",
+            503.84375,
+            127,
+            633.140625,
+            40
+          ],
+          [
+            "purple",
+            23,
+            234.40625,
+            1113.984375,
+            40
+          ],
+          [
+            "blue",
+            23,
+            278.40625,
+            1113.984375,
+            40
+          ],
+          [
+            "purple",
+            23,
+            385.8125,
+            1113.984375,
+            40
+          ],
+          [
+            "blue",
+            23,
+            429.8125,
+            1113.984375,
+            40
+          ],
+          [
+            "purple",
+            23,
+            537.21875,
+            1113.984375,
+            40
+          ],
+          [
+            "green",
+            23,
+            581.21875,
+            1113.984375,
+            40
+          ],
+          [
+            "green",
+            23,
+            688.625,
+            793.421875,
+            40
+          ]
+        ],
+        "scope": "actual isolated native WebKit continuation styling, geometry and persistence; synthetic hover/focus/pointer events with capture bookkeeping stubbed; completed transition endpoints, not trusted pointer motion or aesthetic acceptance",
+        "styles": [
+          {
+            "hoverBorder": "color(srgb 0.407843 0.258824 0.72549 / 0.28)",
+            "id": "purple",
+            "idleBorder": "color(srgb 0.407843 0.258824 0.72549 / 0.16)",
+            "pressedBorder": "color(srgb 0.407843 0.258824 0.72549 / 0.58)",
+            "pressedFill": "color(srgb 0.927373 0.895059 0.98902)",
+            "titleContrast": 5.5629289378156095
+          },
+          {
+            "hoverBorder": "color(srgb 0.137255 0.403922 0.643137 / 0.28)",
+            "id": "blue",
+            "idleBorder": "color(srgb 0.137255 0.403922 0.643137 / 0.16)",
+            "pressedBorder": "color(srgb 0.137255 0.403922 0.643137 / 0.58)",
+            "pressedFill": "color(srgb 0.886431 0.93851 0.985725)",
+            "titleContrast": 5.066298128926392
+          },
+          {
+            "hoverBorder": "color(srgb 0.105882 0.45098 0.329412 / 0.28)",
+            "id": "green",
+            "idleBorder": "color(srgb 0.105882 0.45098 0.329412 / 0.16)",
+            "pressedBorder": "color(srgb 0.105882 0.45098 0.329412 / 0.58)",
+            "pressedFill": "color(srgb 0.877647 0.951686 0.912941)",
+            "titleContrast": 5.008757174732325
+          }
+        ]
+      }
+    }
+  },
+  "screenshots": {
+    "overview": "assets/desktop-overview.png",
+    "detail": "assets/desktop-detail.png",
+    "editor": "assets/desktop-editor.png",
+    "resource-editor": "assets/desktop-resource-editor.png",
+    "phase-editor": "assets/desktop-phase-editor.png",
+    "note-editor": "assets/desktop-note-editor.png",
+    "mixed-schedule": "assets/desktop-mixed-schedule.png",
+    "dense-schedule": "assets/desktop-dense-schedule.png",
+    "replan-editor": "assets/desktop-replan-editor.png",
+    "reminder-configured": "assets/desktop-reminder-configured-light.png"
+  },
+  "scope": "isolated native WebKit, synthetic commands/buttons/pointers, transitions completed to endpoints; no OS settings changed",
+  "initial_verification_findings": [
+    "Permission-pending fixture initially lacked its delayed scheduler configuration; corrected and rerun.",
+    "Initial date-based focus fallback became detached during rerender and left hidden input focus; replaced with a stable available navigation control and final undo regression passed."
+  ]
+}

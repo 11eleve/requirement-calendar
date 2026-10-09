@@ -44,16 +44,15 @@ html,body { margin:0; min-height:100%; background:#f5f7ff; }
 #req-calendar-refined .rf-chrome { flex:none; padding:12px 22px 0; color:var(--rf-muted); font-size:11px; }
 html.native #req-calendar-refined .rf-chrome { display:none; }
 
-/* A composed toolbar: the date has two weights, navigation one quiet enclosure. */
-#req-calendar-refined .rf-toolbar { flex:none; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:20px 24px 18px; }
-#req-calendar-refined .rf-controls { display:flex; align-items:center; gap:22px; min-width:0; }
-#req-calendar-refined #rf-title { display:flex; align-items:baseline; gap:8px; white-space:nowrap; font-weight:600; line-height:1.2; letter-spacing:-.5px; }
+/* A small centered date, with month navigation at opposite edges. */
+#req-calendar-refined .rf-toolbar { flex:none; display:grid; grid-template-columns:40px minmax(0,1fr) 40px; align-items:center; gap:12px; padding:14px 22px; }
+#req-calendar-refined #rf-title { display:flex; justify-content:center; align-items:baseline; gap:7px; min-width:0; white-space:nowrap; font-weight:500; line-height:1.2; letter-spacing:0; }
 #req-calendar-refined .rf-month-year { color:var(--rf-muted); font-size:12px; font-weight:450; letter-spacing:.3px; }
-#req-calendar-refined .rf-month-name { font-size:28px; font-weight:580; letter-spacing:-1px; }
-#req-calendar-refined .rf-month-navigation { display:flex; padding:2px; gap:4px; background:transparent; border:1px solid transparent; border-radius:8px; box-shadow:none; }
-#req-calendar-refined :is(.rf-arrow,.rf-close,.rf-add) { display:grid; place-items:center; width:28px; height:28px; padding:0; border-radius:6px; }
+#req-calendar-refined .rf-month-name { font-size:18px; font-weight:550; letter-spacing:-.3px; }
+#req-calendar-refined :is(.rf-arrow,.rf-close) { display:grid; place-items:center; width:28px; height:28px; padding:0; border-radius:6px; }
 #req-calendar-refined svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; pointer-events:none; }
-#req-calendar-refined .rf-arrow { color:var(--rf-muted); }
+#req-calendar-refined .rf-arrow { color:var(--rf-muted); justify-self:start; }
+#req-calendar-refined #rf-next { justify-self:end; }
 #req-calendar-refined :is(.rf-arrow,.rf-close):hover { color:var(--rf-text); background:var(--rf-soft); }
 #req-calendar-refined :is(.rf-arrow,.rf-close):active { background:var(--rf-line); }
 #req-calendar-refined .rf-button { min-height:30px; padding:5px 12px; font-size:12px; font-weight:500; border:1px solid var(--rf-line); border-radius:8px; background:var(--rf-bg); box-shadow:0 1px 2px #00000004; }
@@ -61,8 +60,6 @@ html.native #req-calendar-refined .rf-chrome { display:none; }
 #req-calendar-refined .rf-primary { color:var(--rf-on-action); background:var(--rf-action); border-color:var(--rf-action); box-shadow:inset 0 1px 0 #ffffff24,0 2px 4px #23302612; }
 #req-calendar-refined .rf-primary:hover { background:var(--rf-action-hover); border-color:var(--rf-action-hover); }
 #req-calendar-refined .rf-primary:active { box-shadow:inset 0 1px 3px #00000018; }
-#req-calendar-refined .rf-add { width:32px; height:32px; padding:0; border-radius:10px; }
-#req-calendar-refined .rf-add svg { width:19px; height:19px; }
 #req-calendar-refined .rf-content { flex:1; min-height:0; display:grid; grid-template-columns:minmax(0,1fr) 0px; column-gap:0; align-items:start; margin:0 18px 18px; overflow:hidden; }
 #req-calendar-refined.has-detail .rf-content { grid-template-columns:minmax(0,1fr) var(--rf-inspector-width); column-gap:14px; }
 
@@ -300,9 +297,8 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
  #req-calendar-refined .rf-detail-columns { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:0 12px; }
 }
 @media(max-width:580px) {
- #req-calendar-refined .rf-toolbar { padding:16px; }
- #req-calendar-refined .rf-controls { gap:12px; }
- #req-calendar-refined .rf-month-name { font-size:22px; }
+ #req-calendar-refined .rf-toolbar { padding:12px 14px; }
+ #req-calendar-refined .rf-month-name { font-size:18px; }
  #req-calendar-refined .rf-month-year { font-size:12px; }
  #req-calendar-refined .rf-content { margin:0 8px 8px; }
  #req-calendar-refined .rf-weekdays span { padding:8px 4px; }
@@ -314,7 +310,7 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 }
 @media(pointer:coarse) {
  #req-calendar-refined { --rf-remove-size:40px; }
- #req-calendar-refined :is(.rf-arrow,.rf-close,.rf-add,.rf-button,.rf-text-button,.rf-remove,.rf-editor-tab) { min-width:40px; min-height:40px; }
+ #req-calendar-refined :is(.rf-arrow,.rf-close,.rf-button,.rf-text-button,.rf-remove,.rf-editor-tab) { min-width:40px; min-height:40px; }
  #req-calendar-refined .rf-editor-item>.rf-remove { top:0; }
  #req-calendar-refined .rf-item-summary { min-height:44px; padding-right:42px; }
  #req-calendar-refined .rf-field :is(input,textarea) { font-size:16px; }

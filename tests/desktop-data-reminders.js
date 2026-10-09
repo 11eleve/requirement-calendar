@@ -18,7 +18,7 @@ button('编辑需求').click();set($('.rf-form input[type=text]'),'保存锁验�
 let release;
 bridge.postMessage=message=>message.action==='save'?new Promise((resolve,reject)=>{release=()=>originalPost.call(bridge,message).then(resolve,reject);}):originalPost.call(bridge,message);
 const pending=CalendarApp.command('save');
-assert(CalendarApp.isSaving()&&$('#rf-panel').inert&&$('#rf-new').disabled,'31: in-flight file save disables competing edits and shows busy state');
+assert(CalendarApp.isSaving()&&$('#rf-panel').inert&&$('#rf-next').disabled,'31: in-flight file save disables competing edits and shows busy state');
 assert(await CalendarApp.command('new')===false&&await CalendarApp.command('save')===false,'31: competing navigation and duplicate save do not replace the draft');
 release();assert(await pending===true,'31: one asynchronous save completes normally');bridge.postMessage=originalPost;
 assert(snapshot().requirements.length===1&&snapshot().requirements[0].title==='保存锁验证','31: delayed save publishes exactly the captured requirement');

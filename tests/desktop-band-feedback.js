@@ -55,7 +55,7 @@ try{
  if(focusVisible)assert(rgb(focusStyle.outlineColor).join(',')===rgb(focusStyle.color).join(','),'visible blue keyboard outline uses its own tone');
  green[0].focus({preventScroll:true});
  assert(green.every(n=>n.classList.contains('is-focused'))&&!blue.some(n=>n.classList.contains('is-focused')),'moving focus transfers the complete requirement identity');
- $('#rf-new').focus({preventScroll:true});assert(!$('.rf-bar.is-focused'),'leaving calendar focus clears continuation feedback');
+ $('#rf-next').focus({preventScroll:true});assert(!$('.rf-bar.is-focused'),'leaving calendar focus clears continuation feedback');
  send(blue[0],'pointerover');send(blue[0],'pointerdown');send(blue[0],'pointermove',{clientX:point(blue[0]).x+12});
  assert(root.classList.contains('is-replanning')&&!$('.rf-bar.is-hovered')&&!$('.rf-bar.is-pressed')&&blue.every(n=>n.classList.contains('is-moving')),'replan threshold replaces hover and press with moving feedback');
  window.dispatchEvent(new Event('blur'));assert(!$('.rf-bar.is-moving')&&!$('.rf-bar.is-pressed')&&!$('.rf-bar.is-hovered'),'window focus loss clears held and hover feedback');
