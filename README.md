@@ -6,7 +6,7 @@
 
 > 本分支为 `explore/planning-workflow`，当前源码版本为 **0.4.0-alpha.3**。稳定版 0.3.0 保留在 [main](https://github.com/11eleve/requirement-calendar/tree/main)，下方稳定版安装链接继续指向 0.3.0。
 
-前一探索版 **alpha.2** 的 Windows x64 安装包可从[本次构建产物](https://github.com/11eleve/requirement-calendar/actions/runs/37967005246/artifacts/11633213968)下载，运行 `RequirementCalendar-0.4.0-alpha.2-x64-Setup.exe`。已通过开发、打包与实际安装检查。试用前可用文件菜单导出 JSON 备份；产物于 2026-11-08 到期。
+探索版 **alpha.3** 的 Windows x64 安装包可从[本次构建产物](https://github.com/11eleve/requirement-calendar/actions/runs/37970264714/artifacts/11635107667)下载，运行 `RequirementCalendar-0.4.0-alpha.3-x64-Setup.exe`。已通过开发、打包与实际安装检查。试用前可用文件菜单导出 JSON 备份；产物于 2026-11-08 到期。
 
 <p align="center">面向程序员的需求排期工具，把周期、阶段、资料和事项放在一起。</p>
 
@@ -392,7 +392,7 @@ Windows 安装版使用系统的 `ScheduledToastNotification` 安排未来提醒
 5. 如需提醒，在桌面版中设置提醒时间，然后保存。
 6. 日常从月历点击需求，勾选完成事项，补充进展和阻塞信息。
 
-点击日期后可用方向键按天或按周移动，Home / End 到本周周一或周日，Page Up / Page Down 到上月或下月的同一天；遇到短月份自动落到月末。日期移动本身不会创建需求，Enter 或空格才打开新建表单。
+用 Tab 聚焦日历日期后，可用方向键按天或按周移动，Home / End 到本周周一或周日，Page Up / Page Down 到上月或下月的同一天；遇到短月份自动落到月末。日期移动本身不会创建需求，Enter 或空格才打开新建表单。
 
 ![月份选择：按需展开小窗口，输入年份并选择月份](assets/month-jump.png)
 

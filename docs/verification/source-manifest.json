@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–86",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-09T17:59:45.738Z",
+  "checked_at_utc": "2026-10-09T18:05:37.895Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Not revalidated by the current reminder-editor batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -54,7 +54,7 @@
     "tests/desktop-readability.js": "d247c1ef80337028168c9340a70b0353d5008e16406bc25cabd548dcd2ce1b86",
     "tests/desktop-panel-continuity.js": "3a640ff2db7c9a63cd739d4a63e91f9901484353836c0bc4a2a6fc75c13ead64",
     "tests/desktop-creation-colors.js": "6526cc89b675a66b50e84f6d774055c2f7cce1580cff05f4aee6470a7dafab2a",
-    "README.md": "4cc24b924332ded44c0e4272719cf8a93ad5ac0e88d2b0ede1a6093c5d32bb7a",
+    "README.md": "eeb4296f4804051e362546ed151242d08ff3c99b6be140657fae73db6e6f312d",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "63d455cb9c2c5a88b330aeb4e3835250f11b0b47ef26790d4c046afebcc0bd7c",
     "tests/resource-icons.swift": "68cb12f0d68addc06ef734123f72affa7fb33c299dee86107db642b2a5b3795a",
@@ -78,8 +78,8 @@
     "tests/desktop-disclosure.js": "236f480ef125186d0a0e5dae09ff29a5b1dc05622932af98c8d5d68034b04b1f",
     "tests/desktop-replan.js": "05601a673b89f9a5c6f19563ab61208525cf74a1a20d8848f3281c5d79a85927",
     "tests/desktop-replan-editor.js": "4a1c703a1ec94e6c01e234aa65e7fc4f39b17fea4e05d223b449c68b9123cc7b",
-    "docs/OPTIMIZATION_LOG.md": "62b512f279e5c3d197433bf5c2afae4e1dc44bc3a09c195401f1474ce3ddce14",
-    "docs/COMPLETION_AUDIT.md": "016cb630dfd9af7989c1816bf51cf0d8082d601c14856ca6bb9ab51872946f3e",
+    "docs/OPTIMIZATION_LOG.md": "3eeecb8824c23ea4f326c086b0e72f727e027769091d01b7ef2322af3ea0cd06",
+    "docs/COMPLETION_AUDIT.md": "a83a8a5af15d1f399d214ebc8fcedb417e20fc3da5347103343b2ada97440256",
     "tests/desktop-band-feedback.js": "c254eb00cb958835c066dc2ca027a44dc85a06e8d366454766b04658217cc299",
     "tests/desktop-reminder-editor.js": "13dd1445ba6e18060a30451e24fb72a089cbdfbc159fbfe767c6793f981e16b8",
     "tests/desktop-reminder-configured.js": "006705c50fd6383f263635f7181ddf6b25e829db1ef5f04bcb6d4f2979567dcb",
@@ -118,7 +118,7 @@
     "docs/verification/summary-planning.json": "8a5624036c2f2e262b60d869c555a78cc943dcdc834ec9f71f323fb5b3f008df",
     "docs/verification/workflow-exploration.json": "6f4964d3d7a88b83c1af324485e49ff0a204a6e1deeeb856ae95237dd4aa443a",
     "tests/desktop-navigation-workflow.js": "de1d929173f383f1405acdf21d99860dd68fe61d13b72c1b6086c588478f40e8",
-    "docs/verification/navigation-workflow.json": "ab5b99242635eb79444d8e8039efbacb6bd0d85f2f9fb1830c001ed246471725",
+    "docs/verification/navigation-workflow.json": "5636ccd9714abc705e5f62ae86cf7cd538d9d2d37255df308db1f480c61f68a7",
     "assets/editor-continuous.png": "8801882b8fb675d911497422f2aee02a215fa1191459dddf1997e5193401e561",
     "assets/node-focus.png": "e7b70248056a036f14d8dcddb645bed9008454531a532c666e83320adec12780",
     "assets/month-jump.png": "47a7ee9216294b4ab6f259196387fec3e8c2d2e2b66b5d65d9d5484d79cf0ca0"
@@ -1782,6 +1782,11 @@
     "node_tests": 51,
     "native_navigation_checks": 37,
     "electron_macos_checks": 43,
-    "windows": "pending"
+    "windows": "success",
+    "windows_run": 37970264714,
+    "windows_development_checks": 45,
+    "windows_packaged_smoke": "passed",
+    "windows_installed_smoke": "passed",
+    "windows_artifact_id": 11635107667
   }
 }
