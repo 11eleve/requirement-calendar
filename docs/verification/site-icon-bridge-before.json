@@ -1,0 +1,28 @@
+{
+  "ok" : true,
+  "result" : {
+    "measurements" : [
+      {
+        "elapsed" : 275,
+        "length" : 3666,
+        "prefix" : "data:image\/png;base64,",
+        "type" : "string",
+        "url" : "https:\/\/alidocs.dingtalk.com"
+      },
+      {
+        "elapsed" : 6385,
+        "length" : 1882,
+        "prefix" : "data:image\/png;base64,",
+        "type" : "string",
+        "url" : "https:\/\/github.com"
+      },
+      {
+        "elapsed" : 9394,
+        "length" : 3486,
+        "prefix" : "data:image\/png;base64,",
+        "type" : "string",
+        "url" : "https:\/\/www.figma.com"
+      }
+    ]
+  }
+}

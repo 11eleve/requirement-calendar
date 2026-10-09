@@ -1,4 +1,6 @@
-// Explicit live smoke test: public favicon endpoints only, no private document paths.
+// Run with scripts/verify-site-icons.sh. The native verification host requires
+// CALENDAR_VERIFY_SITE_ICONS=live; other verification launches return local fallbacks.
+// Public favicon endpoints only, no private document paths.
 const checks=[], $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 const assert=(value,message)=>{if(!value)throw new Error(message);checks.push(message);};
 const snapshot=JSON.parse(CalendarApp.exportSnapshot()),item=snapshot.requirements.find(r=>r.id==='checkout');

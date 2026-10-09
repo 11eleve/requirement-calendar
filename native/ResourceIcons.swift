@@ -111,17 +111,32 @@ final class ResourceIconStore {
     }
     nonisolated static func fetchIcon(_ endpoint: URL, session: URLSession) async throws -> Data {
         let homepage = endpoint.deletingLastPathComponent()
-        var candidates: [URL] = []
-        if let html = try? await download(homepage, session: session, html: true) {
-            candidates = ResourceIconPolicy.candidates(in: html, homepage: homepage)
+        // Give a responsive declared icon a short head start. A slow homepage or
+        // CDN must not make the usable default favicon wait through every timeout.
+        let result = await withTaskGroup(of: Data?.self, returning: Data?.self) { group in
+            group.addTask {
+                guard let html = try? await download(homepage, session: session, html: true) else { return nil }
+                for url in ResourceIconPolicy.candidates(in: html, homepage: homepage) where url != endpoint {
+                    guard !Task.isCancelled else { return nil }
+                    if let data = try? await download(url, session: session), ResourceIconPolicy.png(data) != nil { return data }
+                }
+                return nil
+            }
+            group.addTask {
+                do { try await Task.sleep(for: .milliseconds(250)) } catch { return nil }
+                guard !Task.isCancelled, let data = try? await download(endpoint, session: session), ResourceIconPolicy.png(data) != nil else { return nil }
+                return data
+            }
+            for await data in group {
+                if let data { group.cancelAll(); return data }
+            }
+            return nil
         }
-        if !candidates.contains(endpoint) { candidates.append(endpoint) }
-        for url in candidates {
-            if let data = try? await download(url, session: session), ResourceIconPolicy.png(data) != nil { return data }
-        }
-        throw URLError(.cannotDecodeContentData)
+        guard let result else { throw URLError(.cannotDecodeContentData) }
+        return result
     }
     nonisolated static func download(_ url: URL, session: URLSession, html: Bool = false) async throws -> Data {
+        try Task.checkCancellation()
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
         request.setValue(html ? "text/html" : "image/*", forHTTPHeaderField: "Accept")
         let (bytes, response) = try await session.bytes(for: request, delegate: ResourceIconRequestDelegate())
@@ -131,12 +146,18 @@ final class ResourceIconStore {
               html || response.expectedContentLength <= ResourceIconPolicy.byteLimit else { throw URLError(.badServerResponse) }
         let mime = response.mimeType?.lowercased() ?? ""
         guard html ? mime == "text/html" : (mime.hasPrefix("image/") || mime == "application/octet-stream") else { throw URLError(.cannotDecodeContentData) }
-        var data = Data()
-        for try await byte in bytes {
-            if html && data.count >= 131_072 { break }
-            guard data.count < ResourceIconPolicy.byteLimit else { throw URLError(.dataLengthExceedsMaximum) }
-            data.append(byte)
+        let task = bytes.task
+        return try await withTaskCancellationHandler {
+            var data = Data()
+            for try await byte in bytes {
+                try Task.checkCancellation()
+                if html && data.count >= 131_072 { break }
+                guard data.count < ResourceIconPolicy.byteLimit else { throw URLError(.dataLengthExceedsMaximum) }
+                data.append(byte)
+            }
+            return data
+        } onCancel: {
+            task.cancel()
         }
-        return data
     }
 }

@@ -1,0 +1,27 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "native PNG replacement decodes in the actual WebKit badge",
+      "only the website origin is sent to the native bridge",
+      "late replacement preserves resource row and badge geometry",
+      "website icon remains decorative and does not alter the destination",
+      "same-origin documents reuse the icon with custom types",
+      "ineligible links keep the local symbol without requesting an icon",
+      "an older response cannot overwrite the icon for an edited URL",
+      "input updates can reuse a cached icon without another request",
+      "typing a fresh origin shows a local fallback until change is committed",
+      "missing, external, active or undecodable images retain the fallback",
+      "missing, external, active or undecodable images retain the fallback",
+      "missing, external, active or undecodable images retain the fallback",
+      "missing, external, active or undecodable images retain the fallback",
+      "offline origins are cached briefly without blocking or throwing",
+      "a response arriving after its row is removed is ignored",
+      "large resource sets queue website requests with at most four active origins",
+      "completed origins are evicted when the in-memory cache exceeds its bound",
+      "asynchronous icons never change the saved requirement or draft state"
+    ],
+    "scope" : "real WebKit PNG decoding and layout with injected bridge replies; no website requests in this deterministic suite"
+  }
+}

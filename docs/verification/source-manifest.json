@@ -1,7 +1,7 @@
 {
-  "rounds_implemented": "01–56",
+  "rounds_implemented": "01–57",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-09T01:57:25.844223+00:00",
+  "checked_at_utc": "2026-10-09T02:43:19.861144+00:00",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Not revalidated by the current reminder-editor batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -52,12 +52,12 @@
     "tests/desktop-readability.js": "57c785525a5b58f96092fab51a4a499ab0d7588aced729528fc3201519dd7c14",
     "tests/desktop-panel-continuity.js": "88ae4ed97783af517c0d476a66a660ef0c95ec4e272020677b901a51aae15560",
     "tests/desktop-creation-colors.js": "6526cc89b675a66b50e84f6d774055c2f7cce1580cff05f4aee6470a7dafab2a",
-    "README.md": "622727341f264fe57147dcbea85f42699e28179d1882f4035702a04bde1099ad",
+    "README.md": "37e5d8298e281be14c6e6492405caae7729b9ab603ff92643c7664047efc27fd",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
-    "native/ResourceIcons.swift": "2f280e5ce9f36a7a9fd0c04f3dcbadc2f7c499efbad572c16ef91c149185ab65",
-    "tests/resource-icons.swift": "62528e8913c67b0496c859b0ce22782c94b41e83fc5f9a7cd70df37183c263ca",
+    "native/ResourceIcons.swift": "63d455cb9c2c5a88b330aeb4e3835250f11b0b47ef26790d4c046afebcc0bd7c",
+    "tests/resource-icons.swift": "68cb12f0d68addc06ef734123f72affa7fb33c299dee86107db642b2a5b3795a",
     "tests/desktop-site-icons.js": "fe759498e513bd249de2eb9c60be82f3d7ad5362da060b45d136a8f437a500b2",
-    "tests/desktop-site-icons-live.js": "ef2ffb32330c0b6166032dbe98f473ef7e2f57d9c2412c275a517acf5c57abae",
+    "tests/desktop-site-icons-live.js": "c9acf527a0f08d4b343f3f2abb1841cbb8bde30fba9b5b4a89f1fe9b92ef4cab",
     "tests/desktop-week-density.js": "240769e1c3ad62f07731ea0b747518dca13e0fbb39d9f2e8381a519edd581b29",
     "tests/desktop-mixed-schedule.js": "92681d6c9d6ffce57d2fcb7914cc644264321aa3b2fab14cc1bee8f24c42dda6",
     "tests/desktop-resource-types.js": "7d78014dca19cb78f42bda22e8c81b7d1a9902369ba392942567a375702917d0",
@@ -76,11 +76,12 @@
     "tests/desktop-disclosure.js": "afd925f37a70e25131c6109e9075a2f787d6988b5a3754633e550ab6a25d67ee",
     "tests/desktop-replan.js": "05601a673b89f9a5c6f19563ab61208525cf74a1a20d8848f3281c5d79a85927",
     "tests/desktop-replan-editor.js": "4a1c703a1ec94e6c01e234aa65e7fc4f39b17fea4e05d223b449c68b9123cc7b",
-    "docs/OPTIMIZATION_LOG.md": "e90dc789da35536c5140c82535396595071391225cea240d08e39c77da963e97",
-    "docs/COMPLETION_AUDIT.md": "55ac74375eb8abb7fef558fe04ae9f9127c5b15fb6e6758dc939aab6c3339796",
+    "docs/OPTIMIZATION_LOG.md": "7140a3188bd1f6cc55c32a3ccaa732925af84f5117ff2e53f7cf56d333a421e9",
+    "docs/COMPLETION_AUDIT.md": "5d393565a9ab135e0c310dec4c199b6563c79c7a889bee81882c663a9b84119e",
     "tests/desktop-band-feedback.js": "52ac7a08e0d98e4ec802b20534dcc221cdbb6005adfe1f6c8cd64cf8caccde1f",
     "tests/desktop-reminder-editor.js": "906dd7c45eac694608e2aeda5cf837e8975397a738f2a13234c2c210d6f8adca",
-    "tests/desktop-reminder-configured.js": "006705c50fd6383f263635f7181ddf6b25e829db1ef5f04bcb6d4f2979567dcb"
+    "tests/desktop-reminder-configured.js": "006705c50fd6383f263635f7181ddf6b25e829db1ef5f04bcb6d4f2979567dcb",
+    "scripts/verify-site-icons.sh": "8617ac7ac76d6738135715e300502c4cccce6485d817c115f2ab6e9a40ab292c"
   },
   "results": {
     "docs/verification/browser-storage.json": "70dca1f59a7f7fdde9af7f4eaf6c378e1e9b0347e51c3701d891166ea68807fb",
@@ -300,14 +301,22 @@
     "docs/verification/composition-overview-dark.json": "aa1861bdfc398e62f48b86d8613b24c9c957cb30bfb2cf7f80f5707af7bb4ed2",
     "docs/verification/composition-design-dark.json": "22d4c48bd2c0f4c782f2e5a2d142c6dbb047d5ccd8afdd380178daa07d3bc02b",
     "docs/verification/composition-overview-light.json": "aa1861bdfc398e62f48b86d8613b24c9c957cb30bfb2cf7f80f5707af7bb4ed2",
-    "docs/verification/trusted-editor-keyboard.json": "1948fb6b1fd59c2950e6c0ef35b27cfc1a997662908a21e81dc022490e27f8c6"
+    "docs/verification/trusted-editor-keyboard.json": "1948fb6b1fd59c2950e6c0ef35b27cfc1a997662908a21e81dc022490e27f8c6",
+    "docs/verification/site-icon-fallback-native.json": "9d568cd01d3e4a3b82a44a51759f529db04260ca983b8d75a48e71ddb57d576b",
+    "docs/verification/site-icon-bridge-before.json": "be534636d2b111cac55d9b535e703682ab17ef10e6cb6a1cc00273dc3a7ab88a",
+    "docs/verification/site-icon-fallback-ui-light.json": "d56f6409d7424664d091d88e68933c28419e021b596dcb538b9010b68b06c95e",
+    "docs/verification/site-icon-fallback-ui-dark.json": "dda5bd00021b12f42dd4c033c208c3fa5d169780cbdbbd5f220c0bda4bb4fcee",
+    "docs/verification/site-icon-fallback-final-light.json": "b15ca301464c138fef12a41af56e80106f64c6d81566c72f9e052212d6c62c8a",
+    "docs/verification/site-icon-fallback-final-dark.json": "64d7d19f481207fdce7a5005e62ecccde9c1cbcada0bffb9f79880b0e46b16b7",
+    "docs/verification/site-icon-fallback-live-light.json": "391e6aa083c1cc18f6a914bbae7d451a84b690158c17c3da345f044523441efa",
+    "docs/verification/site-icon-fallback-live-dark.json": "0ebb655c81ab6fdd13682a4743c105a3c4cacd95e9286d1fde67988e8eec7e2f"
   },
   "screenshots": {
     "assets/desktop-editor-dark.png": "457ba7176da5908ed649873d264d7c607bcaa39903bf49f40f80e7a041e4e7fc",
     "assets/desktop-editor.png": "d89b0ab5fd79c04606623e016d51c9e5d368d8f8554b39af4fa70ccdd966f398",
     "assets/desktop-overview.png": "bd093df4511c0c31409b543d5dab2d3c915f019c3c906a1cf29ee80220d0e9d7",
-    "assets/desktop-detail.png": "43140e6b9ccdcd7880223a38532fc27aa9b199e5c04b96a83c5ffcc379e9cadb",
-    "assets/desktop-detail-dark.png": "29614e311bb7d7bd7ed5cc6b646f4be5e1b78e8c665e5a621253963986837a3b",
+    "assets/desktop-detail.png": "07b616812808ef0a0c002b93d5577d51c78eaf1ede78ef202811587c8546184a",
+    "assets/desktop-detail-dark.png": "6058afb4bbfc0f31979c3e8d963bbcfb59a33dca1dee099106db602ab029c636",
     "assets/desktop-mixed-schedule.png": "31c790630ae7d07b6242fa4a0b548e612241d0d59912a81d721f1e19718763c7",
     "assets/desktop-dense-schedule.png": "d581800b9362080c6d5a90a07b33bf022eedd7f8612980bcc9b1a8f011d59281",
     "assets/desktop-dense-schedule-dark.png": "cc820ff2c9716f8a0b021cbaad56dac3c995fa03ff525d280cec22266c4e5b62",
@@ -325,7 +334,7 @@
     "assets/desktop-reminder-configured-dark.png": "ad64bfe32face069cb59456fc6e3aaa4243919dbdfaec17b39068f9d97f0bed8"
   },
   "local_app": {
-    "binary_sha256": "b762c812899518d0733969585bd8883511951825753b342cfad92b01aba065e9",
+    "binary_sha256": "ba1809cbfc44875a86c5793f9ee0df32783fd27f7ceca2eb7b0b94b16ff15822",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -1535,6 +1544,43 @@
     ],
     "passing_scope": "Native isolated WebKit layout, contrast, long content, dense schedule, addition focus/scroll, disclosure, replan, draft range and panel continuity, final regression; build/signature/bundled-page consistency. Synthetic input and completed transition endpoints. Existing manual keyboard report targets the previous source commit.",
     "failed_scope": "site-icons-live light and dark: not all three icons arrived; cause undetermined. No claim of current online icon verification.",
-    "pending": "Trusted replan, intermediate motion, notification click, deferred temporary permission cleanup and user aesthetic acceptance remain open; other manifest results historical."
+    "pending": "Trusted replan, intermediate motion, notification click, deferred temporary permission cleanup and user aesthetic acceptance remain open; other manifest results historical.",
+    "failed_scope_clarification": "Both round56 site-icons-live results ran without CALENDAR_VERIFY_SITE_ICONS=live, so the verification host returned null by policy. They do not prove a real network failure. Current correctly configured live checks are recorded under site_icon_fallback_refinement."
+  },
+  "site_icon_fallback_refinement": {
+    "source_before": "7449d3eae31bdf49723ae635bd414adfc923ac2a",
+    "changes": [
+      "responsive homepage icon has 250ms head start; default favicon races as fallback",
+      "first valid image cancels the other request chain",
+      "stream body cancellation explicitly cancels URLSessionTask",
+      "failed fallback does not discard a later valid declared icon",
+      "checked-in live smoke runner enables the required network flag and isolated data"
+    ],
+    "checks": [
+      "native policy/cache/URLProtocol 43",
+      "real public site to WebKit light/dark 8 each",
+      "injected frontend icon light/dark 18 each",
+      "final desktop light/dark 49 each",
+      "portable build 1; signature and bundled page/notices consistency"
+    ],
+    "current_build_result_paths": [
+      "docs/verification/site-icon-fallback-native.json",
+      "docs/verification/site-icon-bridge-before.json",
+      "docs/verification/site-icon-fallback-ui-light.json",
+      "docs/verification/site-icon-fallback-ui-dark.json",
+      "docs/verification/site-icon-fallback-final-light.json",
+      "docs/verification/site-icon-fallback-final-dark.json",
+      "docs/verification/site-icon-fallback-live-light.json",
+      "docs/verification/site-icon-fallback-live-dark.json"
+    ],
+    "screenshots_refreshed": [
+      "assets/desktop-detail.png",
+      "assets/desktop-detail-dark.png"
+    ],
+    "visually_inspected": [
+      "detail-light",
+      "detail-dark"
+    ],
+    "scope": "Native test protocols simulate blocked headers, CDN, and streamed response bodies. Real network checks use only three public site origins with live flag; synthetic WebKit fixture navigation, completed animation endpoints. Bridge-before timings are an observation of a separate request run, not a controlled latency comparison. Other manifest results historical; deferred manual and aesthetic gates remain open."
   }
 }

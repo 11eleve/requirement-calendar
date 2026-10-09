@@ -12,25 +12,59 @@ func fixturePNG(width: Int = 4, height: Int = 4) -> Data {
     return data as Data
 }
 
+final class IconRequestLog: @unchecked Sendable {
+    private let lock = NSLock()
+    private var stopped: Set<String> = []
+    func stop(_ path: String) { lock.lock(); defer { lock.unlock() }; stopped.insert(path) }
+    func didStop(_ path: String) -> Bool { lock.lock(); defer { lock.unlock() }; return stopped.contains(path) }
+}
+
 final class IconStubProtocol: URLProtocol, @unchecked Sendable {
+    static let log = IconRequestLog()
+    private let lock = NSLock()
+    private var cancelled = false
     override class func canInit(with request: URLRequest) -> Bool { true }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
     override func startLoading() {
         let url = request.url!, path = url.path
-        let status = path == "/missing.ico" ? 404 : 200
+        let status = ["/missing.ico", "/fallback-fails/favicon.ico"].contains(path) ? 404 : 200
         let mime = path == "/html.ico" ? "text/html" : "image/png"
         var data = fixturePNG()
         var responseMIME = mime
         if path == "/" { responseMIME = "text/html"; data = Data("<link rel='icon' href='/brand.png?size=64&amp;v=2'>".utf8) }
-        if path == "/brand.png" { data = fixturePNG(width: 8, height: 8) }
+        if path == "/brand.png" || path == "/late-brand.png" { data = fixturePNG(width: 8, height: 8) }
         if path == "/large-html" { responseMIME = "text/html"; data = Data(repeating: 32, count: 200_000) }
         if path == "/large.ico" { data = Data(repeating: 0, count: ResourceIconPolicy.byteLimit + 1) }
+        if ["/slow-home", "/slow-home/", "/slow-cdn", "/slow-cdn/"].contains(path) {
+            responseMIME = "text/html"; data = Data("<link rel='icon' href='/blocked-brand.png'>".utf8)
+        }
+        let slowBody = ["/slow-body", "/slow-body/"].contains(path)
+        if slowBody { responseMIME = "text/html"; data = Data("<link rel='icon' href='/brand.png'>".utf8) }
+        if ["/fallback-fails", "/fallback-fails/"].contains(path) { responseMIME = "text/html"; data = Data("<link rel='icon' href='/late-brand.png'>".utf8) }
         let response = HTTPURLResponse(url: url, statusCode: status, httpVersion: "HTTP/1.1", headerFields: ["Content-Type": responseMIME])!
+        if ["/slow-home", "/slow-home/", "/blocked-brand.png", "/late-brand.png"].contains(path) || slowBody {
+            let payload = slowBody ? Data(data.dropFirst()) : data
+            if slowBody {
+                client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+                client?.urlProtocol(self, didLoad: Data(data.prefix(1)))
+            }
+            DispatchQueue.global().asyncAfter(deadline: .now() + (path == "/late-brand.png" ? 0.5 : 2)) { [self] in
+                lock.lock(); let stopped = cancelled; lock.unlock()
+                guard !stopped else { return }
+                if !slowBody { client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed) }
+                client?.urlProtocol(self, didLoad: payload)
+                client?.urlProtocolDidFinishLoading(self)
+            }
+            return
+        }
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         client?.urlProtocol(self, didLoad: data)
         client?.urlProtocolDidFinishLoading(self)
     }
-    override func stopLoading() {}
+    override func stopLoading() {
+        lock.lock(); cancelled = true; lock.unlock()
+        Self.log.stop(request.url!.path)
+    }
 }
 
 @main
@@ -94,7 +128,21 @@ struct ResourceIconTests {
             check(rejected, "real URLSession reader rejects " + path + " response")
         }
         let discovered = try await ResourceIconStore.fetchIcon(origin, session: session)
-        check(discovered == fixturePNG(width: 8, height: 8), "homepage-declared icon is preferred over the generic favicon endpoint")
+        check(discovered == fixturePNG(width: 8, height: 8), "a responsive homepage-declared icon wins before the fallback starts")
+        for path in ["slow-home", "slow-cdn", "slow-body"] {
+            let began = Date()
+            let fallback = try await ResourceIconStore.fetchIcon(URL(string: "https://example.com/\(path)/favicon.ico")!, session: session)
+            check(fallback == png && Date().timeIntervalSince(began) < 1.5, "usable default icon does not wait for the stalled \(path) timeout")
+        }
+        // URLProtocol cancellation is delivered on its session queue.
+        for _ in 0..<50 {
+            if (IconStubProtocol.log.didStop("/slow-home") || IconStubProtocol.log.didStop("/slow-home/")) && IconStubProtocol.log.didStop("/blocked-brand.png") { break }
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        check((IconStubProtocol.log.didStop("/slow-home") || IconStubProtocol.log.didStop("/slow-home/")) && IconStubProtocol.log.didStop("/blocked-brand.png"), "winning fallback cancels the losing homepage and CDN requests")
+        check(IconStubProtocol.log.didStop("/slow-body") || IconStubProtocol.log.didStop("/slow-body/"), "winning fallback cancels a stalled response body after headers arrive")
+        let lateDeclared = try await ResourceIconStore.fetchIcon(URL(string: "https://example.com/fallback-fails/favicon.ico")!, session: session)
+        check(lateDeclared == fixturePNG(width: 8, height: 8), "a failed fallback does not discard a later valid declared icon")
         let htmlPrefix = try await ResourceIconStore.download(URL(string: "https://example.com/large-html")!, session: session, html: true)
         check(htmlPrefix.count == 131072, "homepage inspection stops after a bounded prefix without buffering the entire page")
         session.invalidateAndCancel()
