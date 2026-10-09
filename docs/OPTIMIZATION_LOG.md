@@ -566,4 +566,4 @@ README 统一浅色说明，移除旧深色图展示并刷新十张实际截图�
 
 版本为 0.4.0-alpha.2，仍位于 explore/planning-workflow。48 项 Node 测试、原生新增汇总 23、既有汇总 17、节点工作流 30、连续编辑 22、长列表新增 36、备忘检查以及 Electron macOS 39 项通过。当前原生实际导出的五表 XLSX 经 openpyxl 独立读取，中文名称和真实日期类型正确。构建一致性与签名通过。详细报告见 verification/summary-planning.json 和 verification/editor-refresh.json。
 
-Windows 工作流已支持探索分支自动构建，本批结果另行记录；不把本地 macOS 检查当作 Windows 验收。版本、CI 配置、文档、测试和截图更新不另计优化轮次。100 轮目标尚余 21 轮。
+Windows 工作流支持探索分支自动构建。本批运行 37967005246 在提交 c939bd70f36cbd84eea29abdb0f92934ea070a4f 通过：48 项 Node、开发版 41 项桌面检查、打包版和实际安装版检查、协议及开始菜单核对，已生成 alpha.2 安装包。版本、CI 配置、文档、测试和截图更新不另计优化轮次。100 轮目标尚余 21 轮。
