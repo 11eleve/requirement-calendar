@@ -1,0 +1,180 @@
+{
+  "checked_at_utc": "2026-10-09T13:26:50.831Z",
+  "source_commit": "dbbcee3d1944c63e4eb15c82b922a211a66a1e47",
+  "status": "passed",
+  "method": "Trusted native CUA drag/click/keyboard in a separate full-screen macOS app, followed by AX observations and direct isolated JSON readback; no synthetic DOM input.",
+  "isolation": {
+    "bundle_id": "dev.11eleve.requirement-calendar.trusted-motion",
+    "CALENDAR_EPHEMERAL": "1",
+    "data_directory": ".build/trusted-motion/data",
+    "notifications": "isolated scheduler, no OS permission changes",
+    "production_app": "not modified or quit",
+    "source_binary_sha256": "ba1809cbfc44875a86c5793f9ee0df32783fd27f7ceca2eb7b0b94b16ff15822",
+    "resigning": "Copy ad-hoc signature changed for unique identity; final executable hash is not claimed identical.",
+    "bundled_frontend": "byte-for-byte identical to distribution"
+  },
+  "checks": [
+    "Drag Oct3 to Oct7 opens dirty Oct7–Nov7 draft; persisted original JSON unchanged.",
+    "Review shifts to Oct7–10 and development to Oct14–Nov1.",
+    "Escape opens save/discard/continue; Return on Continue preserves shifted phase draft.",
+    "Second Escape and Discard closes draft; original JSON remains unchanged.",
+    "Repeat forward drag and Save commits range and phases.",
+    "Grab middle continuation at Oct21 and drop Oct13 shifts minus 8 days to Sep29–Oct30.",
+    "Reverse review Sep29–Oct2 and development Oct6–24 retain durations and gap.",
+    "Reverse draft leaves prior saved data unchanged until Command-S.",
+    "Command-S persists reverse dates and phases, confirmed in details.",
+    "Title, identity, tone, task contents/completion, note whitespace and null reminder preserved.",
+    "Resource name/type/empty URL preserved; existing editor normalization adds fallback icon 文 to legacy fixture on first save.",
+    "Source hashes match manifest and bundled frontend equals distribution.",
+    "Isolated copy exited with native App quit response after saved details closed."
+  ],
+  "snapshots": {
+    "original": {
+      "version": 6,
+      "anchor": "2026-10-01",
+      "requirements": [
+        {
+          "id": "trusted-move",
+          "title": "交互验收 · 认证链路迁移",
+          "tone": "blue",
+          "start": "2026-10-03",
+          "end": "2026-11-03",
+          "phases": [
+            {
+              "name": "评审",
+              "start": "2026-10-03",
+              "end": "2026-10-06"
+            },
+            {
+              "name": "开发",
+              "start": "2026-10-10",
+              "end": "2026-10-28"
+            }
+          ],
+          "resources": [
+            {
+              "name": "接口约定",
+              "type": "自定义资料",
+              "url": ""
+            }
+          ],
+          "tasks": [
+            "确认兼容范围",
+            "验证回滚"
+          ],
+          "done": [
+            true,
+            false
+          ],
+          "note": "\n    keep indentation\n\tand tabs  ",
+          "reminder": null
+        }
+      ]
+    },
+    "forward_saved": {
+      "version": 6,
+      "anchor": "2026-10-01",
+      "requirements": [
+        {
+          "id": "trusted-move",
+          "title": "交互验收 · 认证链路迁移",
+          "reminder": null,
+          "short": "交互验收 · 认证链路迁移",
+          "tone": "blue",
+          "start": "2026-10-07",
+          "end": "2026-11-07",
+          "phases": [
+            {
+              "name": "评审",
+              "start": "2026-10-07",
+              "end": "2026-10-10"
+            },
+            {
+              "name": "开发",
+              "start": "2026-10-14",
+              "end": "2026-11-01"
+            }
+          ],
+          "resources": [
+            {
+              "name": "接口约定",
+              "type": "自定义资料",
+              "url": "",
+              "icon": "文"
+            }
+          ],
+          "tasks": [
+            "确认兼容范围",
+            "验证回滚"
+          ],
+          "done": [
+            true,
+            false
+          ],
+          "note": "\n    keep indentation\n\tand tabs  "
+        }
+      ]
+    },
+    "reverse_saved": {
+      "version": 6,
+      "anchor": "2026-10-01",
+      "requirements": [
+        {
+          "id": "trusted-move",
+          "title": "交互验收 · 认证链路迁移",
+          "reminder": null,
+          "short": "交互验收 · 认证链路迁移",
+          "tone": "blue",
+          "start": "2026-09-29",
+          "end": "2026-10-30",
+          "phases": [
+            {
+              "name": "评审",
+              "start": "2026-09-29",
+              "end": "2026-10-02"
+            },
+            {
+              "name": "开发",
+              "start": "2026-10-06",
+              "end": "2026-10-24"
+            }
+          ],
+          "resources": [
+            {
+              "name": "接口约定",
+              "type": "自定义资料",
+              "url": "",
+              "icon": "文"
+            }
+          ],
+          "tasks": [
+            "确认兼容范围",
+            "验证回滚"
+          ],
+          "done": [
+            true,
+            false
+          ],
+          "note": "\n    keep indentation\n\tand tabs  "
+        }
+      ]
+    }
+  },
+  "ax_observations": {
+    "forward-phases": "Window: \"需求日历\", App: 需求日历交互验收.\n0 standard window 需求日历, Secondary Actions: Raise\n\t1 scroll area\n\t\t2 HTML content Description: 需求日历, URL: file:///Users/lu/Documents/Codex/2026-10-07/mac/outputs/requirement-calendar/.build/trusted-motion/%E9%9C%80%E6%B1%82%E6%97%A5%E5%8E%86%E4%BA%A4%E4%BA%92%E9%AA%8C%E6%94%B6.app/Contents/Resources/index.html\n\t\t\t3 container 需求长条与条内阶段日历\n\t\t\t\t4 heading 2026 年 10 月, Value: 2\n\t\t\t\t\t5 text 2026 年 10 月\n\t\t\t\t6 button 上个月\n\t\t\t\t7 button 下个月\n\t\t\t\t8 button 新建需求\n\t\t\t\t9 container 需求与阶段日历\n\t\t\t\t\t10 text 周一 周二 周三 周四 周五 周六 周日\n\t\t\t\t\t11 button 2026-09-28 新建需求\n\t\t\t\t\t12 button 2026-09-29 新建需求\n\t\t\t\t\t13 button 2026-09-30 新建需求\n\t\t\t\t\t14 button 2026-10-01 新建需求\n\t\t\t\t\t15 button 2026-10-02 新建需求\n\t\t\t\t\t16 button 2026-10-03 新建需求\n\t\t\t\t\t17 button 2026-10-04 新建需求\n\t\t\t\t\t18 button (expanded) 交互验收 · 认证链路迁移，2026-10-03 至 2026-11-03；评审 2026-10-03 至 2026-10-06；开发 2026-10-10 至 2026-10-28, Help: 交互验收 · 认证链路迁移 · 10.3—11.3 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t19 button 2026-10-05 新建需求\n\t\t\t\t\t20 button 2026-10-06 新建需求\n\t\t\t\t\t21 button 2026-10-07 新建需求\n\t\t\t\t\t22 button 2026-10-08 新建需求\n\t\t\t\t\t23 button 2026-10-09 新建需求\n\t\t\t\t\t24 button 2026-10-10 新建需求\n\t\t\t\t\t25 button 2026-10-11 新建需求\n\t\t\t\t\t26 button (expanded) 交互验收 · 认证链路迁移，2026-10-03 至 2026-11-03；评审 2026-10-03 至 2026-10-06；开发 2026-10-10 至 2026-10-28, Help: 交互验收 · 认证链路迁移 · 10.3—11.3 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t27 button 2026-10-12 新建需求\n\t\t\t\t\t28 button 2026-10-13 新建需求\n\t\t\t\t\t29 button 2026-10-14 新建需求\n\t\t\t\t\t30 button 2026-10-15 新建需求\n\t\t\t\t\t31 button 2026-10-16 新建需求\n\t\t\t\t\t32 button 2026-10-17 新建需求\n\t\t\t\t\t33 button 2026-10-18 新建需求\n\t\t\t\t\t34 button (expanded) 交互验收 · 认证链路迁移，2026-10-03 至 2026-11-03；评审 2026-10-03 至 2026-10-06；开发 2026-10-10 至 2026-10-28, Help: 交互验收 · 认证链路迁移 · 10.3—11.3 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t35 button 2026-10-19 新建需求\n\t\t\t\t\t36 button 2026-10-20 新建需求\n\t\t\t\t\t37 button 2026-10-21 新建需求\n\t\t\t\t\t38 button 2026-10-22 新建需求\n\t\t\t\t\t39 button 2026-10-23 新建需求\n\t\t\t\t\t40 button 2026-10-24 新建需求\n\t\t\t\t\t41 button 2026-10-25 新建需求\n\t\t\t\t\t42 button (expanded) 交互验收 · 认证链路迁移，2026-10-03 至 2026-11-03；评审 2026-10-03 至 2026-10-06；开发 2026-10-10 至 2026-10-28, Help: 交互验收 · 认证链路迁移 · 10.3—11.3 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t43 button 2026-10-26 新建需求\n\t\t\t\t\t44 button 2026-10-27 新建需求\n\t\t\t\t\t45 button 2026-10-28 新建需求\n\t\t\t\t\t46 button 2026-10-29 新建需求\n\t\t\t\t\t47 button 2026-10-30 新建需求\n\t\t\t\t\t48 button 2026-10-31 新建需求\n\t\t\t\t\t49 button 2026-11-01 新建需求\n\t\t\t\t\t50 button (expanded) 交互验收 · 认证链路迁移，2026-10-03 至 2026-11-03；评审 2026-10-03 至 2026-10-06；开发 2026-10-10 至 2026-10-28, Help: 交互验收 · 认证链路迁移 · 10.3—11.3 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t51 container 需求详情\n\t\t\t\t\t52 text 编辑需求\n\t\t\t\t\t53 button 关闭详情\n\t\t\t\t\t54 container\n\t\t\t\t\t\t55 tab group (selectable) 需求编辑内容\n\t\t\t\t\t\t\t56 tab (selectable) 基本信息\n\t\t\t\t\t\t\t57 tab (selected) 阶段, Value: on\n\t\t\t\t\t\t58 container 阶段\n\t\t\t\t\t\t\t59 heading 阶段安排, Value: 3\n\t\t\t\t\t\t\t\t60 text 阶段安排\n\t\t\t\t\t\t\t61 button 添加阶段\n\t\t\t\t\t\t\t62 summary › 评审 10.7—10.10, Value: off\n\t\t\t\t\t\t\t\t63 text 评审\n\t\t\t\t\t\t\t\t64 text 10.7—10.10\n\t\t\t\t\t\t\t65 button 移除阶段：评审\n\t\t\t\t\t\t\t66 summary › 开发 10.14—11.1, Value: off\n\t\t\t\t\t\t\t\t67 text 开发\n\t\t\t\t\t\t\t\t68 text 10.14—11.1\n\t\t\t\t\t\t\t69 button 移除阶段：开发\n\t\t\t\t\t\t70 button 取消\n\t\t\t\t\t\t71 button 保存需求\n\t\t\t\t72 text 已调整排期，保存后生效：10.7—11.7\n\t73 text 需求日历\n74 menu bar\n\t75 需求日历交互验收\n\t76 文件\n\t77 编辑\n\t78 显示\n\t79 窗口\n\nThe focused UI element is 57 tab (selected) 阶段, Value: on",
+    "continued-draft": "Window: \"需求日历\", App: 需求日历交互验收.\n0 standard window 需求日历, Secondary Actions: Raise\n\t1 scroll area\n\t\t2 HTML content Description: 需求日历, URL: file:///Users/lu/Documents/Codex/2026-10-07/mac/outputs/requirement-calendar/.build/trusted-motion/%E9%9C%80%E6%B1%82%E6%97%A5%E5%8E%86%E4%BA%A4%E4%BA%92%E9%AA%8C%E6%94%B6.app/Contents/Resources/index.html\n\t\t\t3 container 需求长条与条内阶段日历\n\t\t\t\t4 heading 2026 年 10 月, Value: 2\n\t\t\t\t\t5 text 2026 年 10 月\n\t\t\t\t6 button 上个月\n\t\t\t\t7 button 下个月\n\t\t\t\t8 button 新建需求\n\t\t\t\t9 container 需求与阶段日历\n\t\t\t\t\t10 text 周一 周二 周三 周四 周五 周六 周日\n\t\t\t\t\t11 button 2026-09-28 新建需求\n\t\t\t\t\t12 button 2026-09-29 新建需求\n\t\t\t\t\t13 button 2026-09-30 新建需求\n\t\t\t\t\t14 button 2026-10-01 新建需求\n\t\t\t\t\t15 button 2026-10-02 新建需求\n\t\t\t\t\t16 button 2026-10-03 新建需求\n\t\t\t\t\t17 button 2026-10-04 新建需求\n\t\t\t\t\t18 button (expanded) 交互验收 · 认证链路迁移，2026-10-03 至 2026-11-03；评审 2026-10-03 至 2026-10-06；开发 2026-10-10 至 2026-10-28, Help: 交互验收 · 认证链路迁移 · 10.3—11.3 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t19 button 2026-10-05 新建需求\n\t\t\t\t\t20 button 2026-10-06 新建需求\n\t\t\t\t\t21 button 2026-10-07 新建需求\n\t\t\t\t\t22 button 2026-10-08 新建需求\n\t\t\t\t\t23 button 2026-10-09 新建需求\n\t\t\t\t\t24 button 2026-10-10 新建需求\n\t\t\t\t\t25 button 2026-10-11 新建需求\n\t\t\t\t\t26 button (expanded) 交互验收 · 认证链路迁移，2026-10-03 至 2026-11-03；评审 2026-10-03 至 2026-10-06；开发 2026-10-10 至 2026-10-28, Help: 交互验收 · 认证链路迁移 · 10.3—11.3 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t27 button 2026-10-12 新建需求\n\t\t\t\t\t28 button 2026-10-13 新建需求\n\t\t\t\t\t29 button 2026-10-14 新建需求\n\t\t\t\t\t30 button 2026-10-15 新建需求\n\t\t\t\t\t31 button 2026-10-16 新建需求\n\t\t\t\t\t32 button 2026-10-17 新建需求\n\t\t\t\t\t33 button 2026-10-18 新建需求\n\t\t\t\t\t34 button (expanded) 交互验收 · 认证链路迁移，2026-10-03 至 2026-11-03；评审 2026-10-03 至 2026-10-06；开发 2026-10-10 至 2026-10-28, Help: 交互验收 · 认证链路迁移 · 10.3—11.3 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t35 button 2026-10-19 新建需求\n\t\t\t\t\t36 button 2026-10-20 新建需求\n\t\t\t\t\t37 button 2026-10-21 新建需求\n\t\t\t\t\t38 button 2026-10-22 新建需求\n\t\t\t\t\t39 button 2026-10-23 新建需求\n\t\t\t\t\t40 button 2026-10-24 新建需求\n\t\t\t\t\t41 button 2026-10-25 新建需求\n\t\t\t\t\t42 button (expanded) 交互验收 · 认证链路迁移，2026-10-03 至 2026-11-03；评审 2026-10-03 至 2026-10-06；开发 2026-10-10 至 2026-10-28, Help: 交互验收 · 认证链路迁移 · 10.3—11.3 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t43 button 2026-10-26 新建需求\n\t\t\t\t\t44 button 2026-10-27 新建需求\n\t\t\t\t\t45 button 2026-10-28 新建需求\n\t\t\t\t\t46 button 2026-10-29 新建需求\n\t\t\t\t\t47 button 2026-10-30 新建需求\n\t\t\t\t\t48 button 2026-10-31 新建需求\n\t\t\t\t\t49 button 2026-11-01 新建需求\n\t\t\t\t\t50 button (expanded) 交互验收 · 认证链路迁移，2026-10-03 至 2026-11-03；评审 2026-10-03 至 2026-10-06；开发 2026-10-10 至 2026-10-28, Help: 交互验收 · 认证链路迁移 · 10.3—11.3 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t51 container 需求详情\n\t\t\t\t\t52 text 编辑需求\n\t\t\t\t\t53 button 关闭详情\n\t\t\t\t\t54 container\n\t\t\t\t\t\t55 tab group (selectable) 需求编辑内容\n\t\t\t\t\t\t\t56 tab (selectable) 基本信息\n\t\t\t\t\t\t\t57 tab (selected) 阶段, Value: on\n\t\t\t\t\t\t58 container 阶段\n\t\t\t\t\t\t\t59 heading 阶段安排, Value: 3\n\t\t\t\t\t\t\t\t60 text 阶段安排\n\t\t\t\t\t\t\t61 button 添加阶段\n\t\t\t\t\t\t\t62 summary › 评审 10.7—10.10, Value: off\n\t\t\t\t\t\t\t\t63 text 评审\n\t\t\t\t\t\t\t\t64 text 10.7—10.10\n\t\t\t\t\t\t\t65 button 移除阶段：评审\n\t\t\t\t\t\t\t66 summary › 开发 10.14—11.1, Value: off\n\t\t\t\t\t\t\t\t67 text 开发\n\t\t\t\t\t\t\t\t68 text 10.14—11.1\n\t\t\t\t\t\t\t69 button 移除阶段：开发\n\t\t\t\t\t\t70 button 取消\n\t\t\t\t\t\t71 button 保存需求\n\t\t\t\t72 text 已调整排期，保存后生效：10.7—11.7\n\t73 text 需求日历\n74 menu bar\n\t75 需求日历交互验收\n\t76 文件\n\t77 编辑\n\t78 显示\n\t79 窗口\n\nThe focused UI element is 57 tab (selected) 阶段, Value: on",
+    "reverse-phases": "Window: \"需求日历\", App: 需求日历交互验收.\n0 standard window 需求日历, Secondary Actions: Raise\n\t1 scroll area\n\t\t2 HTML content Description: 需求日历, URL: file:///Users/lu/Documents/Codex/2026-10-07/mac/outputs/requirement-calendar/.build/trusted-motion/%E9%9C%80%E6%B1%82%E6%97%A5%E5%8E%86%E4%BA%A4%E4%BA%92%E9%AA%8C%E6%94%B6.app/Contents/Resources/index.html\n\t\t\t3 container 需求长条与条内阶段日历\n\t\t\t\t4 heading 2026 年 10 月, Value: 2\n\t\t\t\t\t5 text 2026 年 10 月\n\t\t\t\t6 button 上个月\n\t\t\t\t7 button 下个月\n\t\t\t\t8 button 新建需求\n\t\t\t\t9 container 需求与阶段日历\n\t\t\t\t\t10 text 周一 周二 周三 周四 周五 周六 周日\n\t\t\t\t\t11 button 2026-09-28 新建需求\n\t\t\t\t\t12 button 2026-09-29 新建需求\n\t\t\t\t\t13 button 2026-09-30 新建需求\n\t\t\t\t\t14 button 2026-10-01 新建需求\n\t\t\t\t\t15 button 2026-10-02 新建需求\n\t\t\t\t\t16 button 2026-10-03 新建需求\n\t\t\t\t\t17 button 2026-10-04 新建需求\n\t\t\t\t\t18 button 2026-10-05 新建需求\n\t\t\t\t\t19 button 2026-10-06 新建需求\n\t\t\t\t\t20 button 2026-10-07 新建需求\n\t\t\t\t\t21 button 2026-10-08 新建需求\n\t\t\t\t\t22 button 2026-10-09 新建需求\n\t\t\t\t\t23 button 2026-10-10 新建需求\n\t\t\t\t\t24 button 2026-10-11 新建需求\n\t\t\t\t\t25 button (expanded) 交互验收 · 认证链路迁移，2026-10-07 至 2026-11-07；评审 2026-10-07 至 2026-10-10；开发 2026-10-14 至 2026-11-01, Help: 交互验收 · 认证链路迁移 · 10.7—11.7 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t26 button 2026-10-12 新建需求\n\t\t\t\t\t27 button 2026-10-13 新建需求\n\t\t\t\t\t28 button 2026-10-14 新建需求\n\t\t\t\t\t29 button 2026-10-15 新建需求\n\t\t\t\t\t30 button 2026-10-16 新建需求\n\t\t\t\t\t31 button 2026-10-17 新建需求\n\t\t\t\t\t32 button 2026-10-18 新建需求\n\t\t\t\t\t33 button (expanded) 交互验收 · 认证链路迁移，2026-10-07 至 2026-11-07；评审 2026-10-07 至 2026-10-10；开发 2026-10-14 至 2026-11-01, Help: 交互验收 · 认证链路迁移 · 10.7—11.7 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t34 button 2026-10-19 新建需求\n\t\t\t\t\t35 button 2026-10-20 新建需求\n\t\t\t\t\t36 button 2026-10-21 新建需求\n\t\t\t\t\t37 button 2026-10-22 新建需求\n\t\t\t\t\t38 button 2026-10-23 新建需求\n\t\t\t\t\t39 button 2026-10-24 新建需求\n\t\t\t\t\t40 button 2026-10-25 新建需求\n\t\t\t\t\t41 button (expanded) 交互验收 · 认证链路迁移，2026-10-07 至 2026-11-07；评审 2026-10-07 至 2026-10-10；开发 2026-10-14 至 2026-11-01, Help: 交互验收 · 认证链路迁移 · 10.7—11.7 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t42 button 2026-10-26 新建需求\n\t\t\t\t\t43 button 2026-10-27 新建需求\n\t\t\t\t\t44 button 2026-10-28 新建需求\n\t\t\t\t\t45 button 2026-10-29 新建需求\n\t\t\t\t\t46 button 2026-10-30 新建需求\n\t\t\t\t\t47 button 2026-10-31 新建需求\n\t\t\t\t\t48 button 2026-11-01 新建需求\n\t\t\t\t\t49 button (expanded) 交互验收 · 认证链路迁移，2026-10-07 至 2026-11-07；评审 2026-10-07 至 2026-10-10；开发 2026-10-14 至 2026-11-01, Help: 交互验收 · 认证链路迁移 · 10.7—11.7 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t50 container 需求详情\n\t\t\t\t\t51 text 编辑需求\n\t\t\t\t\t52 button 关闭详情\n\t\t\t\t\t53 container\n\t\t\t\t\t\t54 tab group (selectable) 需求编辑内容\n\t\t\t\t\t\t\t55 tab (selectable) 基本信息\n\t\t\t\t\t\t\t56 tab (selected) 阶段, Value: on\n\t\t\t\t\t\t57 container 阶段\n\t\t\t\t\t\t\t58 heading 阶段安排, Value: 3\n\t\t\t\t\t\t\t\t59 text 阶段安排\n\t\t\t\t\t\t\t60 button 添加阶段\n\t\t\t\t\t\t\t61 summary › 评审 9.29—10.2, Value: off\n\t\t\t\t\t\t\t\t62 text 评审\n\t\t\t\t\t\t\t\t63 text 9.29—10.2\n\t\t\t\t\t\t\t64 button 移除阶段：评审\n\t\t\t\t\t\t\t65 summary › 开发 10.6—10.24, Value: off\n\t\t\t\t\t\t\t\t66 text 开发\n\t\t\t\t\t\t\t\t67 text 10.6—10.24\n\t\t\t\t\t\t\t68 button 移除阶段：开发\n\t\t\t\t\t\t69 button 取消\n\t\t\t\t\t\t70 button 保存需求\n\t\t\t\t71 text 已调整排期，保存后生效：9.29—10.30\n\t72 text 需求日历\n73 menu bar\n\t74 需求日历交互验收\n\t75 文件\n\t76 编辑\n\t77 显示\n\t78 窗口\n\nThe focused UI element is 56 tab (selected) 阶段, Value: on",
+    "reverse-saved": "Window: \"需求日历\", App: 需求日历交互验收.\n0 standard window 需求日历, Secondary Actions: Raise\n\t1 scroll area\n\t\t2 HTML content Description: 需求日历, URL: file:///Users/lu/Documents/Codex/2026-10-07/mac/outputs/requirement-calendar/.build/trusted-motion/%E9%9C%80%E6%B1%82%E6%97%A5%E5%8E%86%E4%BA%A4%E4%BA%92%E9%AA%8C%E6%94%B6.app/Contents/Resources/index.html\n\t\t\t3 container 需求长条与条内阶段日历\n\t\t\t\t4 heading 2026 年 10 月, Value: 2\n\t\t\t\t\t5 text 2026 年 10 月\n\t\t\t\t6 button 上个月\n\t\t\t\t7 button 下个月\n\t\t\t\t8 button 新建需求\n\t\t\t\t9 container 需求与阶段日历\n\t\t\t\t\t10 text 周一 周二 周三 周四 周五 周六 周日\n\t\t\t\t\t11 button 2026-09-28 新建需求\n\t\t\t\t\t12 button 2026-09-29 新建需求\n\t\t\t\t\t13 button 2026-09-30 新建需求\n\t\t\t\t\t14 button 2026-10-01 新建需求\n\t\t\t\t\t15 button 2026-10-02 新建需求\n\t\t\t\t\t16 button 2026-10-03 新建需求\n\t\t\t\t\t17 button 2026-10-04 新建需求\n\t\t\t\t\t18 button (expanded) 交互验收 · 认证链路迁移，2026-09-29 至 2026-10-30；评审 2026-09-29 至 2026-10-02；开发 2026-10-06 至 2026-10-24, Help: 交互验收 · 认证链路迁移 · 9.29—10.30 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t19 button 2026-10-05 新建需求\n\t\t\t\t\t20 button 2026-10-06 新建需求\n\t\t\t\t\t21 button 2026-10-07 新建需求\n\t\t\t\t\t22 button 2026-10-08 新建需求\n\t\t\t\t\t23 button 2026-10-09 新建需求\n\t\t\t\t\t24 button 2026-10-10 新建需求\n\t\t\t\t\t25 button 2026-10-11 新建需求\n\t\t\t\t\t26 button (expanded) 交互验收 · 认证链路迁移，2026-09-29 至 2026-10-30；评审 2026-09-29 至 2026-10-02；开发 2026-10-06 至 2026-10-24, Help: 交互验收 · 认证链路迁移 · 9.29—10.30 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t27 button 2026-10-12 新建需求\n\t\t\t\t\t28 button 2026-10-13 新建需求\n\t\t\t\t\t29 button 2026-10-14 新建需求\n\t\t\t\t\t30 button 2026-10-15 新建需求\n\t\t\t\t\t31 button 2026-10-16 新建需求\n\t\t\t\t\t32 button 2026-10-17 新建需求\n\t\t\t\t\t33 button 2026-10-18 新建需求\n\t\t\t\t\t34 button (expanded) 交互验收 · 认证链路迁移，2026-09-29 至 2026-10-30；评审 2026-09-29 至 2026-10-02；开发 2026-10-06 至 2026-10-24, Help: 交互验收 · 认证链路迁移 · 9.29—10.30 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t35 button 2026-10-19 新建需求\n\t\t\t\t\t36 button 2026-10-20 新建需求\n\t\t\t\t\t37 button 2026-10-21 新建需求\n\t\t\t\t\t38 button 2026-10-22 新建需求\n\t\t\t\t\t39 button 2026-10-23 新建需求\n\t\t\t\t\t40 button 2026-10-24 新建需求\n\t\t\t\t\t41 button 2026-10-25 新建需求\n\t\t\t\t\t42 button (expanded) 交互验收 · 认证链路迁移，2026-09-29 至 2026-10-30；评审 2026-09-29 至 2026-10-02；开发 2026-10-06 至 2026-10-24, Help: 交互验收 · 认证链路迁移 · 9.29—10.30 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t\t43 button 2026-10-26 新建需求\n\t\t\t\t\t44 button 2026-10-27 新建需求\n\t\t\t\t\t45 button 2026-10-28 新建需求\n\t\t\t\t\t46 button 2026-10-29 新建需求\n\t\t\t\t\t47 button 2026-10-30 新建需求\n\t\t\t\t\t48 button 2026-10-31 新建需求\n\t\t\t\t\t49 button 2026-11-01 新建需求\n\t\t\t\t\t50 button (expanded) 交互验收 · 认证链路迁移，2026-09-29 至 2026-10-30；评审 2026-09-29 至 2026-10-02；开发 2026-10-06 至 2026-10-24, Help: 交互验收 · 认证链路迁移 · 9.29—10.30 · 拖动调整排期, Secondary Actions: Collapse\n\t\t\t\t51 container 需求详情\n\t\t\t\t\t52 text 需求详情\n\t\t\t\t\t53 button 关闭详情\n\t\t\t\t\t54 heading 交互验收 · 认证链路迁移, Value: 2\n\t\t\t\t\t\t55 text 交互验收 · 认证链路迁移\n\t\t\t\t\t56 text 9.29 — 10.30 开发\n\t\t\t\t\t57 heading 阶段安排, Value: 3\n\t\t\t\t\t\t58 text 阶段安排\n\t\t\t\t\t59 button 编辑\n\t\t\t\t\t60 text 评审 9.29—10.2 开发 10.6—10.24\n\t\t\t\t\t61 heading 相关资料, Value: 3\n\t\t\t\t\t\t62 text 相关资料\n\t\t\t\t\t63 button 管理\n\t\t\t\t\t64 text 接口约定\n\t\t\t\t\t65 text 自定义资料\n\t\t\t\t\t66 heading 工作事项, Value: 3\n\t\t\t\t\t\t67 text 工作事项\n\t\t\t\t\t68 text 1 / 2\n\t\t\t\t\t69 container\n\t\t\t\t\t\t70 checkbox 确认兼容范围, Value: 1\n\t\t\t\t\t\t71 text 确认兼容范围\n\t\t\t\t\t72 container\n\t\t\t\t\t\t73 checkbox 验证回滚, Value: 0\n\t\t\t\t\t\t74 text 验证回滚\n\t\t\t\t\t75 heading 事项与备忘, Value: 3\n\t\t\t\t\t\t76 text 事项与备忘\n\t\t\t\t\t77 text \n    keep indentation\n\tand tabs  \n\t\t\t\t\t78 button 编辑需求\n\t\t\t\t\t79 button 删除需求\n\t\t\t\t80 text 已保存：交互验收 · 认证链路迁移 · 9.29—10.30\n\t81 text 需求日历\n82 menu bar\n\t83 需求日历交互验收\n\t84 文件\n\t85 编辑\n\t86 显示\n\t87 窗口\n\nThe focused UI element is 53 button 关闭详情"
+  },
+  "local_screenshots": [
+    ".build/trusted-motion/forward-draft.png",
+    ".build/trusted-motion/reverse-draft.png"
+  ],
+  "visual_inspection": "Reverse phase draft endpoint inspected: saved band retains saved position; own-tone thin range previews moved dates, editor shows shifted phases.",
+  "limitations": [
+    "Held-drag focus loss unobserved",
+    "Intermediate animation frames and frame rate unobserved",
+    "Real OS notification click and permission cleanup deferred",
+    "User aesthetic acceptance pending"
+  ]
+}

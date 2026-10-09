@@ -1,14 +1,15 @@
 {
   "rounds_implemented": "01–57",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-09T02:43:19.861144+00:00",
+  "checked_at_utc": "2026-10-09T13:26:50.831Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Not revalidated by the current reminder-editor batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
     "pointer_events": "Trusted single click, forward/reverse/cross-week drag and outside calendar release passed; held-gesture focus loss and intermediate animation remain unobserved",
     "screenshots": "actual WebKit rendering; animations advanced to endpoints",
     "band_feedback": "Current round: actual native WebKit styling/geometry/persistence with synthetic hover/focus/pointers and stubbed capture; transition endpoints only. Inactive host focus-visible=false in both appearances, so visible keyboard ring was not exercised.",
-    "reminder_editor": "Current round: native details/summary with real datetime-local control, actual native WebKit geometry and file bridge, isolated scheduler. Synthetic activation/input and injected badInput; completed transition endpoints. No real OS permission/notification or trusted picker operation."
+    "reminder_editor": "Current round: native details/summary with real datetime-local control, actual native WebKit geometry and file bridge, isolated scheduler. Synthetic activation/input and injected badInput; completed transition endpoints. No real OS permission/notification or trusted picker operation.",
+    "existing_bar_replan": "Trusted native CUA forward/reverse cross-week drag, middle-continuation grab, dirty-draft continue/discard, Save and Command-S verified at dbbcee3. Isolated JSON confirms dates/phases and content preservation. Intermediate motion and held-drag focus loss remain unobserved."
   },
   "sources": {
     "index.html": "f1da846a23999fdd2ab31d1b4ec106040d3085af0107bfaa93cc755ec05a72bd",
@@ -343,7 +344,6 @@
     "trusted held-drag focus loss and intermediate animation",
     "real notification click with dirty draft protection",
     "restore temporary notification permission after unlock",
-    "trusted existing-bar replan capture/release and intermediate motion",
     "user aesthetic acceptance"
   ],
   "followup_optimization": {
@@ -1582,5 +1582,11 @@
       "detail-dark"
     ],
     "scope": "Native test protocols simulate blocked headers, CDN, and streamed response bodies. Real network checks use only three public site origins with live flag; synthetic WebKit fixture navigation, completed animation endpoints. Bridge-before timings are an observation of a separate request run, not a controlled latency comparison. Other manifest results historical; deferred manual and aesthetic gates remain open."
+  },
+  "trusted_replan_acceptance": {
+    "record": "docs/verification/trusted-replan.json",
+    "source_commit": "dbbcee3d1944c63e4eb15c82b922a211a66a1e47",
+    "scope": "trusted gesture endpoints, AX and isolated persistence; no held-drag focus loss or intermediate frame verification",
+    "code_changed": false
   }
 }
