@@ -17,7 +17,7 @@ class BuildTests(unittest.TestCase):
         self.assertNotIn('<script src=', first)
         self.assertNotIn('<link rel="stylesheet"', first)
         self.assertNotIn('window.openai', first)
-        for source in ['model.js', 'storage.js', 'icons.js', 'site-icons.js', 'disclosure.js', 'app.js']:
+        for source in ['model.js', 'storage.js', 'icons.js', 'site-icons.js', 'disclosure.js', 'startup.js', 'app.js']:
             self.assertIn((ROOT / 'src' / source).read_text().strip(), first)
         ids = re.findall(r'\bid="([^"]+)"', first)
         self.assertEqual(len(ids), len(set(ids)))

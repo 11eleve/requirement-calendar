@@ -60,6 +60,7 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
         let frameName = isolated ? (verifyScript != nil ? ProcessInfo.processInfo.environment["CALENDAR_VERIFY_FRAME_NAME"] : nil) : "RequirementCalendarWindow"
         if let frameName { window.setFrameAutosaveName(frameName); if !window.setFrameUsingName(frameName) { window.center() } }
         else { window.center() }
+        window.appearance = NSAppearance(named: .aqua)
         if let appearance = ProcessInfo.processInfo.environment["CALENDAR_VERIFY_APPEARANCE"], verifyScript != nil { window.appearance = NSAppearance(named: appearance == "dark" ? .darkAqua : .aqua) }
         window.collectionBehavior.insert(.fullScreenPrimary)
         window.makeKeyAndOrderFront(nil)

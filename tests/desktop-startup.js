@@ -1,0 +1,25 @@
+const checks=[],assert=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
+const root=document.getElementById('req-calendar-refined'),initialCover=document.querySelector('.rf-startup');
+const initialLaunchObserved=!!initialCover;
+document.getAnimations().forEach(a=>a.finish());await new Promise(resolve=>setTimeout(resolve,30));
+const snapshot=CalendarApp.exportSnapshot(),focus=document.activeElement;
+const host=document.createElement('div');root.append(host);
+const run=CalendarStartup.play(host),reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(reduced){assert(run===null,'reduced motion opens directly');host.remove();return {checks,reduced,initialLaunchObserved};}
+assert(!!run,'launch animation starts through the actual animation module');
+const cover=host.querySelector('.rf-startup'),page=host.querySelector('.is-front');
+assert(cover.getAttribute('aria-hidden')==='true'&&getComputedStyle(cover).pointerEvents==='none','decorative cover is inaccessible and lets input through');
+assert(document.activeElement===focus,'launch does not move focus');
+assert(CalendarStartup.play(host)===null,'a document root only plays once');
+const started=performance.now();await new Promise(resolve=>setTimeout(resolve,300));
+const mid={transform:getComputedStyle(page).transform,opacity:getComputedStyle(page).opacity,animations:cover.getAnimations({subtree:true}).map(a=>({time:a.currentTime,state:a.playState}))};
+assert(mid.transform!=='none'&&mid.animations.some(a=>a.time>0),'actual WebKit animation advances to a transformed page');
+await run.finished;
+assert(!host.querySelector('.rf-startup'),'completion removes the cover');
+assert(performance.now()-started<1300,'launch completes within its fallback deadline');
+assert(CalendarApp.exportSnapshot()===snapshot&&!CalendarApp.hasUnsavedChanges(),'opening motion leaves stored data and drafts unchanged');
+host.remove();
+const second=document.createElement('div');root.append(second);const interrupted=CalendarStartup.play(second);
+const event=new KeyboardEvent('keydown',{key:'Shift',bubbles:true,cancelable:true});window.dispatchEvent(event);await interrupted.finished;
+assert(!second.querySelector('.rf-startup')&&!event.defaultPrevented,'keyboard interaction skips without consuming input');second.remove();
+return {checks,initialLaunchObserved,mid,elapsed:performance.now()-started,reduced,scope:'Actual native WebKit animation progress and lifecycle; synthetic interruption. Not a user aesthetic judgement.'};

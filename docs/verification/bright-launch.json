@@ -1,0 +1,2016 @@
+{
+  "batch": 59,
+  "source_parent": "6649c8a4da71b00567eb45265500d9709dfd9e7c",
+  "changes": [
+    "bright light-only palette and native window appearance",
+    "consistent component borders, radii and subtle shadows; square continued band ends retained",
+    "short state transitions and 70ms own-tone drag-range tracking",
+    "single 740ms decorative calendar-page launch; input skips, reduced motion/hidden/no-API bypass, cleanup and 1s fallback"
+  ],
+  "results": {
+    "readability": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "isolated reading fixture restored",
+          "all three requirement tones include both phase fills",
+          "phase text exceeds 4.5 against normal and alternating fills",
+          "interactive dates outside the month remain readable",
+          "resource types, completed tasks and notes retain readable secondary text",
+          "the other editor tab remains legible on the segmented background",
+          "field placeholder text remains readable on its input surface",
+          "form labels preserve hierarchy with sufficient text contrast",
+          "phase editing names and full dates retain readable primary and secondary text",
+          "range strips remain distinct on weekday, weekend and adjacent-month date surfaces in all tones"
+        ],
+        "reference": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+        "samples": [
+          {
+            "background": "rgb(229, 214, 252)",
+            "contrast": 5.0044375877163585,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(211, 234, 255)",
+            "contrast": 4.787110798948054,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(204, 238, 221)",
+            "contrast": 4.64344548471516,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(229, 214, 252)",
+            "contrast": 5.0044375877163585,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.926078 0.88451 0.994706)",
+            "contrast": 5.464580013231707,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(211, 234, 255)",
+            "contrast": 4.787110798948054,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.877059 0.941373 1)",
+            "contrast": 5.0956518146718075,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(204, 238, 221)",
+            "contrast": 4.64344548471516,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.860392 0.954902 0.90549)",
+            "contrast": 4.992174933332911,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.926078 0.88451 0.994706)",
+            "contrast": 5.464580013231707,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.877059 0.941373 1)",
+            "contrast": 5.0956518146718075,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.860392 0.954902 0.90549)",
+            "contrast": 4.992174933332911,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.926078 0.88451 0.994706)",
+            "contrast": 5.464580013231707,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.877059 0.941373 1)",
+            "contrast": 5.0956518146718075,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.860392 0.954902 0.90549)",
+            "contrast": 4.992174933332911,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.926078 0.88451 0.994706)",
+            "contrast": 5.464580013231707,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.877059 0.941373 1)",
+            "contrast": 5.0956518146718075,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.860392 0.954902 0.90549)",
+            "contrast": 4.992174933332911,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(244, 247, 252)",
+            "contrast": 4.566747655580877,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "outside date",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "detail ",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "detail ",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "detail rf-note",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "inactive editor tab",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "field placeholder",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "field label",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 12.567940145711095,
+            "foreground": "rgb(40, 51, 77)",
+            "name": "phase editor rf-summary-name",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "phase editor rf-summary-meta",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 12.567940145711095,
+            "foreground": "rgb(40, 51, 77)",
+            "name": "phase editor rf-summary-name",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "phase editor rf-summary-meta",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.905842565401702,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "range 0 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(250, 251, 255)",
+            "contrast": 3.824338150471507,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "range 0 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(244, 247, 252)",
+            "contrast": 3.737176114537204,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "range 0 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.5234226615938287,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "range 1 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(250, 251, 255)",
+            "contrast": 3.4484280711996145,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "range 1 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(244, 247, 252)",
+            "contrast": 3.3661713153731054,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "range 1 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.4741401994681502,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "range 2 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(250, 251, 255)",
+            "contrast": 3.4018096421283226,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "range 2 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(244, 247, 252)",
+            "contrast": 3.3206896982376017,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "range 2 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          }
+        ],
+        "scope": "resolved foreground/background colors for the listed text contexts in actual WebKit; does not assess the entire app, assistive technology, anti-aliasing or user aesthetic preference"
+      }
+    },
+    "design": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "isolated design fixture restored",
+          "six-week months retain their complete calendar structure",
+          "a normal six-week month fits the default desktop viewport",
+          "the toolbar keeps only month navigation and the new requirement control",
+          "the opened inspector remains inside the desktop viewport",
+          "every phase remains inside its single requirement band",
+          "phase decoration creates no extra calendar requirements",
+          "long resources retain access to the editor tabs",
+          "invalid deep resource links remain rejected",
+          "validation focuses a deep field visibly between sticky tabs and actions",
+          "the product layout is also checked in a smaller native window",
+          "the small-window editor scrolls within its own surface",
+          "the small-window application has no page overflow",
+          "isolated design fixture restored",
+          "dense requirements scroll independently of the editor",
+          "the redesigned editing range remains present in a dense month"
+        ],
+        "scope": "real WebKit layout and file bridge; animations completed before geometry checks; does not assess trusted mouse feel",
+        "viewport": [
+          980,
+          668
+        ]
+      }
+    },
+    "panel-continuity": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "isolated reading-context fixture restored",
+          "the fixture requires substantial detail scrolling",
+          "entering general editing begins with the visible name field",
+          "clean cancellation returns to the previous detail reading position",
+          "clean cancellation restores the general edit action focus",
+          "dirty cancellation still asks how to handle the draft",
+          "continue editing retains the draft, its reading position and date strip",
+          "discarding returns to the original detail without applying draft changes",
+          "resource management still targets the first resource summary",
+          "resource cancellation restores its section and management action",
+          "existing edits persist through the native bridge",
+          "saving preserves the resource section position when the title height changes",
+          "returning after save clears draft feedback and dirty state",
+          "a fresh opening begins at the heading without reusing old reading state",
+          "calendar-initiated editing keeps the heading context and returns focus to the now-visible edit action",
+          "stage cancellation returns to its original action",
+          "editing without a previous detail view uses the normal detail opening"
+        ],
+        "scope": "actual WebKit scroll, focus and isolated save bridge; synthetic button activation"
+      }
+    },
+    "draft-range-continuity": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "isolated range fixture restored",
+          "editing begins with the complete original green period",
+          "clearing a date retains the same visible strip elements and geometry",
+          "incomplete entry changes only the draft",
+          "empty dates remain unsavable without removing visual feedback",
+          "temporarily reversed dates keep the last valid range",
+          "range validation remains explicit while the previous valid strip stays visible",
+          "a new valid range updates its length without changing the requirement tone",
+          "a second incomplete edit retains the most recent valid period rather than the original",
+          "native change events also update a newly valid period",
+          "a failed save preserves the edited range, input and original saved data",
+          "the valid range saves successfully on retry",
+          "saved formal bars take over the final dates and clear temporary feedback",
+          "fresh creation starts with its own period and palette rather than a previous draft",
+          "new drafts also retain their initial strip through required-date validation",
+          "a new draft follows completed valid dates",
+          "a valid offscreen period is not painted on unrelated calendar dates",
+          "visiting the edited month displays the same draft across its three weeks",
+          "an incomplete cross-month range preserves the latest valid visible period",
+          "month rerenders preserve the last valid range even while a field is empty",
+          "unsaved confirmation keeps the persistent preview",
+          "continuing editing retains incomplete inputs and the preview",
+          "discarding the draft clears feedback without creating a requirement",
+          "reopening another edit does not inherit the discarded cross-month range"
+        ],
+        "scope": "actual isolated native WebKit date input/change events, range geometry, validation and persistence with injected save failure; synthetic activation and completed animation endpoints, not trusted motion evidence"
+      }
+    },
+    "replan": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "isolated replan fixture restored",
+          "a slight click movement does not start a replan",
+          "ordinary band clicks still open the original detail",
+          "ordinary clicks change no saved dates",
+          "all continuation pieces identify the moving requirement",
+          "dragging shows the requirement tone as date strips",
+          "dragging neither fills selected cells nor changes saved data",
+          "drop opens an immediately dirty draft with the moved period",
+          "all phases shift equally while retaining the gap and cross-month dates",
+          "the original schedule remains saved and the moved strip stays visible while editing",
+          "drop releases temporary moving state and scroll frames",
+          "a trailing click cannot replace the moved draft with details",
+          "closing protects a moved draft before any text input",
+          "continue editing retains the moved range and complete draft",
+          "a new drag cannot overwrite an already dirty draft or its persistent strip",
+          "discard restores the original committed plan and removes draft feedback",
+          "failed native persistence retains moved input and the prior saved plan",
+          "retry saves the moved plan through the native bridge",
+          "saved period and phases contain the exact calendar-day shift",
+          "identity, custom resources, completion, whitespace and explicit reminder time are preserved",
+          "save replaces the moved strip with selected committed continuation bands",
+          "dragging a middle continuation moves relative to the grabbed day, including reverse cross-month movement",
+          "release position is honored even when an intermediate move event was coalesced",
+          "an unrelated pointer does not cancel the active replan",
+          "outside cancels the replan and releases all temporary state",
+          "outside suppresses its trailing click without closing the current detail",
+          "an unrelated pointer does not cancel the active replan",
+          "escape cancels the replan and releases all temporary state",
+          "escape suppresses its trailing click without closing the current detail",
+          "an unrelated pointer does not cancel the active replan",
+          "blur cancels the replan and releases all temporary state",
+          "blur suppresses its trailing click without closing the current detail",
+          "an unrelated pointer does not cancel the active replan",
+          "pointercancel cancels the replan and releases all temporary state",
+          "pointercancel suppresses its trailing click without closing the current detail",
+          "an unrelated pointer does not cancel the active replan",
+          "lostpointercapture cancels the replan and releases all temporary state",
+          "lostpointercapture suppresses its trailing click without closing the current detail",
+          "moving within the same date does not create a redundant draft",
+          "isolated replan fixture restored",
+          "month navigation safely cancels a held gesture before rerendering",
+          "isolated replan fixture restored",
+          "external detail navigation cancels a held replan",
+          "isolated replan fixture restored",
+          "starting native persistence cancels the held replan before busy state",
+          "busy persistence rejects a new replan",
+          "isolated replan fixture restored",
+          "a clean existing editor can be replaced by an accurately dirty moved draft",
+          "isolated replan fixture restored",
+          "typing into a clean editor cancels its held replan immediately",
+          "release after concurrent typing cannot replace the newly dirty draft",
+          "isolated replan fixture restored",
+          "an overflowing calendar-day shift is visibly rejected",
+          "overflow cannot publish an invalid date or partial phase shift",
+          "isolated replan fixture restored",
+          "injected edge-scroll frames move the actual dense calendar and retain feedback",
+          "the moved range is actually visible in the dense scrolled viewport",
+          "edge scrolling re-hit-tests the date under the held pointer and stops after drop",
+          "editing keeps a real range strip pinned beneath dates within a dense week",
+          "the pinned strip leaves its underlying date hit target accessible",
+          "isolated replan fixture restored",
+          "replanning also works inside the smaller native viewport",
+          "the moved editor remains within the smaller native window"
+        ],
+        "measurements": {
+          "denseDuringDrag": {
+            "scroll": 66,
+            "strip": {
+              "bottom": 748,
+              "height": 3,
+              "left": 22,
+              "right": 1138,
+              "top": 745,
+              "width": 1116,
+              "x": 22,
+              "y": 745
+            },
+            "viewport": {
+              "bottom": 762,
+              "height": 690,
+              "left": 18,
+              "right": 1142,
+              "top": 72,
+              "width": 1124,
+              "x": 18,
+              "y": 72
+            }
+          },
+          "denseWhileEditing": {
+            "scroll": 850,
+            "strip": {
+              "bottom": 142,
+              "height": 3,
+              "left": 346,
+              "right": 772,
+              "top": 139,
+              "width": 426,
+              "x": 346,
+              "y": 139
+            }
+          }
+        },
+        "scope": "actual isolated native WebKit hit testing, geometry, inputs and native persistence with synthetic pointer/keyboard events. Pointer-capture bookkeeping and edge-scroll frame delivery are injected; trusted drag capture, release and frame pacing remain unverified. Explicit reminder time is preserved, not moved"
+      }
+    },
+    "final": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "36: a clean installation contains no sample requirements",
+          "36: clean startup does not request notifications",
+          "fixture restored through the real file bridge",
+          "37: first supported month renders without a year-1900 conversion",
+          "37: previous-month command respects the lower bound",
+          "fixture restored through the real file bridge",
+          "37: final month disables navigation beyond the supported dates",
+          "37: next-month command respects the upper bound",
+          "fixture restored through the real file bridge",
+          "38: historical overlap does not create empty lanes in the visible month",
+          "39: full requirement and phase names remain available to hover and accessibility",
+          "fixture restored through the real file bridge",
+          "40: collapsed resource rows show a disclosure chevron",
+          "44: editing preserves note indentation, trailing whitespace and long content",
+          "45: long signed document URLs have no artificial input truncation",
+          "43: unsupported resource link is rejected",
+          "43: validation expands and focuses the actual invalid resource field",
+          "43: editing clears stale invalid-field styling",
+          "44–45: long notes and links survive UI save and native file validation",
+          "39: full resource destination is available on hover",
+          "37: editable date fields share the model-supported limits",
+          "43: invalid requirement range focuses its end-date field",
+          "43: overlapping phases focus the conflicting stage instead of a hidden row",
+          "46: deleting outside text editing exposes requirement undo",
+          "46: Command-Z remains available to native text undo while editing",
+          "asynchronous save settled",
+          "46: Command-Z restores the latest deletion outside the editor",
+          "47: native requirement menu contains open, edit and delete actions",
+          "47: context deletion protects the active unsaved editor",
+          "47: cancelling context deletion keeps the draft",
+          "fixture restored through the real file bridge",
+          "49: day rollover refreshes the visible current phase",
+          "49: day rollover preserves editor, draft and keyboard focus",
+          "50: a stale notification produces visible feedback",
+          "fixture restored through the real file bridge",
+          "31 audit: month persistence also prevents competing edits",
+          "37: month navigation commits its new anchor",
+          "31 audit: failed month save restores the prior month without blocking the app",
+          "fixture restored through the real file bridge",
+          "50: notification race test has a real pending save",
+          "50: notification waits for save and then opens the correct requirement",
+          "fixture restored through the real file bridge",
+          "41: a dense month scrolls within the calendar",
+          "41: long requirement details scroll within the inspector",
+          "41: calendar and inspector have independent scroll positions without document overflow",
+          "49: day rollover preserves both scroll positions in a dense month",
+          "14 audit: keyboard navigation scrolls dense rows to keep the focused date visible",
+          "14 audit: upward focus navigation remains visible below the sticky weekday header",
+          "42: native window exposes full-screen and standard desktop menus"
+        ],
+        "manualDragOutside": "requires trusted mouse regression; not simulated here",
+        "viewport": [
+          1160,
+          780
+        ]
+      }
+    },
+    "startup": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "launch animation starts through the actual animation module",
+          "decorative cover is inaccessible and lets input through",
+          "launch does not move focus",
+          "a document root only plays once",
+          "actual WebKit animation advances to a transformed page",
+          "completion removes the cover",
+          "launch completes within its fallback deadline",
+          "opening motion leaves stored data and drafts unchanged",
+          "keyboard interaction skips without consuming input"
+        ],
+        "elapsed": 755,
+        "initialLaunchObserved": true,
+        "mid": {
+          "animations": [
+            {
+              "state": "finished",
+              "time": 150
+            },
+            {
+              "state": "running",
+              "time": 303
+            },
+            {
+              "state": "running",
+              "time": 303
+            }
+          ],
+          "opacity": "0.328031",
+          "transform": "matrix3d(1, 0, 0, 0, 0, 0.332873, -0.942972, 0, 0, 0.942972, 0.332873, 0, 0, 0, 0, 1)"
+        },
+        "reduced": false,
+        "scope": "Actual native WebKit animation progress and lifecycle; synthetic interruption. Not a user aesthetic judgement."
+      }
+    },
+    "design-motion": {
+      "ok": true,
+      "result": {
+        "closed": 1124,
+        "closing": [
+          {
+            "ms": 14,
+            "opacity": 0.677806,
+            "width": 844.171875
+          },
+          {
+            "ms": 29,
+            "opacity": 0.445988,
+            "width": 925.1875
+          },
+          {
+            "ms": 46,
+            "opacity": 0.269112,
+            "width": 991.765625
+          },
+          {
+            "ms": 61,
+            "opacity": 0.172907,
+            "width": 1032.1875
+          },
+          {
+            "ms": 79,
+            "opacity": 0.09795,
+            "width": 1064.515625
+          },
+          {
+            "ms": 96,
+            "opacity": 0.058772,
+            "width": 1084.71875
+          },
+          {
+            "ms": 112,
+            "opacity": 0.031863,
+            "width": 1097.90625
+          },
+          {
+            "ms": 129,
+            "opacity": 0.015863,
+            "width": 1107.703125
+          },
+          {
+            "ms": 148,
+            "opacity": 0.005005,
+            "width": 1115.09375
+          },
+          {
+            "ms": 161,
+            "opacity": 0.001335,
+            "width": 1118.546875
+          },
+          {
+            "ms": 179,
+            "opacity": 0,
+            "width": 1121.71875
+          },
+          {
+            "ms": 196,
+            "opacity": 0,
+            "width": 1123.375
+          },
+          {
+            "ms": 213,
+            "opacity": 0,
+            "width": 1123.984375
+          },
+          {
+            "ms": 229,
+            "opacity": 0,
+            "width": 1124
+          },
+          {
+            "ms": 248,
+            "opacity": 0,
+            "width": 1124
+          },
+          {
+            "ms": 262,
+            "opacity": 0,
+            "width": 1124
+          },
+          {
+            "ms": 279,
+            "opacity": 0,
+            "width": 1124
+          },
+          {
+            "ms": 296,
+            "opacity": 0,
+            "width": 1124
+          },
+          {
+            "ms": 312,
+            "opacity": 0,
+            "width": 1124
+          },
+          {
+            "ms": 329,
+            "opacity": 0,
+            "width": 1124
+          },
+          {
+            "ms": 347,
+            "opacity": 0,
+            "width": 1124
+          }
+        ],
+        "discreteDisplayTransitionSupported": true,
+        "initial": 1124,
+        "opened": 758,
+        "opening": [
+          {
+            "ms": 42,
+            "opacity": 0.753749,
+            "width": 883.984375
+          },
+          {
+            "ms": 71,
+            "opacity": 0.892659,
+            "width": 820.453125
+          },
+          {
+            "ms": 85,
+            "opacity": 0.932927,
+            "width": 802.453125
+          },
+          {
+            "ms": 98,
+            "opacity": 0.955417,
+            "width": 790.96875
+          },
+          {
+            "ms": 111,
+            "opacity": 0.972856,
+            "width": 780.859375
+          },
+          {
+            "ms": 129,
+            "opacity": 0.988387,
+            "width": 771.65625
+          },
+          {
+            "ms": 147,
+            "opacity": 0.996719,
+            "width": 765.484375
+          },
+          {
+            "ms": 162,
+            "opacity": 0.999634,
+            "width": 762.046875
+          },
+          {
+            "ms": 179,
+            "opacity": 1,
+            "width": 759.59375
+          },
+          {
+            "ms": 197,
+            "opacity": 1,
+            "width": 758.296875
+          },
+          {
+            "ms": 212,
+            "opacity": 1,
+            "width": 758
+          },
+          {
+            "ms": 229,
+            "opacity": 1,
+            "width": 758
+          },
+          {
+            "ms": 246,
+            "opacity": 1,
+            "width": 758
+          },
+          {
+            "ms": 262,
+            "opacity": 1,
+            "width": 758
+          },
+          {
+            "ms": 279,
+            "opacity": 1,
+            "width": 758
+          },
+          {
+            "ms": 296,
+            "opacity": 1,
+            "width": 758
+          },
+          {
+            "ms": 312,
+            "opacity": 1,
+            "width": 758
+          },
+          {
+            "ms": 329,
+            "opacity": 1,
+            "width": 758
+          },
+          {
+            "ms": 347,
+            "opacity": 1,
+            "width": 758
+          }
+        ],
+        "reducedMotion": false,
+        "scope": "real WebKit frame geometry for opening and closing; does not prove trusted pointer feel or aesthetic preference"
+      }
+    },
+    "accent-dark-system": {
+      "ok": true,
+      "result": {
+        "appearance": "dark",
+        "checks": [
+          "checkout primary button readable",
+          "checkout secondary actions readable",
+          "checkout save text readable",
+          "checkout focusing controls leaves clean draft",
+          "checkout stored requirements unchanged",
+          "checkout title focus matches tab tone",
+          "checkout checkbox matches requirement tone",
+          "checkout editing actions match requirement tone",
+          "checkout visible save outline matches requirement tone",
+          "login primary button readable",
+          "login secondary actions readable",
+          "login save text readable",
+          "login focusing controls leaves clean draft",
+          "login stored requirements unchanged",
+          "login title focus matches tab tone",
+          "login checkbox matches requirement tone",
+          "login editing actions match requirement tone",
+          "login visible save outline matches requirement tone",
+          "login save fill matches requirement tone",
+          "export primary button readable",
+          "export secondary actions readable",
+          "export save text readable",
+          "export focusing controls leaves clean draft",
+          "export stored requirements unchanged",
+          "export title focus matches tab tone",
+          "export checkbox matches requirement tone",
+          "export editing actions match requirement tone",
+          "export visible save outline matches requirement tone",
+          "export save fill matches requirement tone"
+        ],
+        "layouts": [
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                211.5
+              ],
+              [
+                807,
+                430.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                598.390625,
+                318,
+                170
+              ],
+              [
+                807,
+                788.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                729.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                199.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          }
+        ],
+        "samples": [
+          {
+            "action": "rgb(119, 82, 216)",
+            "brandIcons": [
+              {
+                "background": "rgb(234, 245, 255)",
+                "color": "rgb(35, 103, 164)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(248, 238, 233)",
+                "color": "rgb(174, 106, 76)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(104, 66, 185)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(119, 82, 216)",
+            "id": "checkout",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 5.272568441359738,
+            "textActions": [
+              "rgb(104, 66, 185)",
+              "rgb(104, 66, 185)"
+            ]
+          },
+          {
+            "checkbox": "rgb(104, 66, 185)",
+            "focusedSaveOutline": "rgb(104, 66, 185)",
+            "focusVisible": true,
+            "globalAdd": "rgb(119, 82, 216)",
+            "id": "checkout",
+            "mode": "edit",
+            "nameFocus": "rgb(104, 66, 185)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(119, 82, 216)",
+            "saveContrast": 5.272568441359738,
+            "tabTone": "rgb(104, 66, 185)",
+            "textActions": [
+              "rgb(104, 66, 185)",
+              "rgb(104, 66, 185)",
+              "rgb(104, 66, 185)"
+            ]
+          },
+          {
+            "action": "rgb(35, 103, 164)",
+            "brandIcons": [
+              {
+                "background": "rgb(234, 245, 255)",
+                "color": "rgb(35, 103, 164)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(244, 247, 252)",
+                "color": "rgb(40, 51, 77)",
+                "kind": "G"
+              }
+            ],
+            "checkbox": "rgb(35, 103, 164)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(119, 82, 216)",
+            "id": "login",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 5.919442610460235,
+            "textActions": [
+              "rgb(35, 103, 164)",
+              "rgb(35, 103, 164)"
+            ]
+          },
+          {
+            "checkbox": "rgb(35, 103, 164)",
+            "focusedSaveOutline": "rgb(35, 103, 164)",
+            "focusVisible": true,
+            "globalAdd": "rgb(119, 82, 216)",
+            "id": "login",
+            "mode": "edit",
+            "nameFocus": "rgb(35, 103, 164)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(35, 103, 164)",
+            "saveContrast": 5.919442610460235,
+            "tabTone": "rgb(35, 103, 164)",
+            "textActions": [
+              "rgb(35, 103, 164)",
+              "rgb(35, 103, 164)",
+              "rgb(35, 103, 164)"
+            ]
+          },
+          {
+            "action": "rgb(27, 115, 84)",
+            "brandIcons": [
+              {
+                "background": "rgb(234, 245, 255)",
+                "color": "rgb(35, 103, 164)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(248, 238, 233)",
+                "color": "rgb(174, 106, 76)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(27, 115, 84)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(119, 82, 216)",
+            "id": "export",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 5.790045519679062,
+            "textActions": [
+              "rgb(27, 115, 84)",
+              "rgb(27, 115, 84)"
+            ]
+          },
+          {
+            "checkbox": "rgb(27, 115, 84)",
+            "focusedSaveOutline": "rgb(27, 115, 84)",
+            "focusVisible": true,
+            "globalAdd": "rgb(119, 82, 216)",
+            "id": "export",
+            "mode": "edit",
+            "nameFocus": "rgb(27, 115, 84)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(27, 115, 84)",
+            "saveContrast": 5.790045519679062,
+            "tabTone": "rgb(27, 115, 84)",
+            "textActions": [
+              "rgb(27, 115, 84)",
+              "rgb(27, 115, 84)",
+              "rgb(27, 115, 84)"
+            ]
+          }
+        ],
+        "scope": "Actual isolated native WebKit computed colors, contrast, layout, persistence; synthetic focus/activation, transition endpoints only. Resolved outline does not prove trusted keyboard-visible branch.",
+        "storedSnapshot": "{\"version\":6,\"anchor\":\"2026-10-09\",\"requirements\":[{\"id\":\"checkout\",\"title\":\"结算流程改版\",\"reminder\":null,\"short\":\"结算流程改版\",\"tone\":\"\",\"start\":\"2026-10-09\",\"end\":\"2026-11-08\",\"phases\":[{\"name\":\"评审\",\"start\":\"2026-10-09\",\"end\":\"2026-10-10\"},{\"name\":\"开发\",\"start\":\"2026-10-11\",\"end\":\"2026-10-18\"},{\"name\":\"联调\",\"start\":\"2026-10-19\",\"end\":\"2026-10-25\"},{\"name\":\"测试\",\"start\":\"2026-10-26\",\"end\":\"2026-11-01\"},{\"name\":\"上线\",\"start\":\"2026-11-02\",\"end\":\"2026-11-08\"}],\"resources\":[{\"name\":\"结算改版 PRD\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"Checkout 交互与视觉\",\"type\":\"设计稿\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认需求边界与验收标准\",\"实现优惠券选择与金额计算\",\"补齐支付失败恢复逻辑\",\"联调与回归验证\"],\"done\":[true,false,false,false],\"note\":\"待产品确认：优惠券与余额的扣减顺序。\"},{\"id\":\"login\",\"title\":\"登录态异常修复\",\"reminder\":null,\"short\":\"登录态异常修复\",\"tone\":\"blue\",\"start\":\"2026-10-11\",\"end\":\"2026-10-15\",\"phases\":[{\"name\":\"排查\",\"start\":\"2026-10-11\",\"end\":\"2026-10-12\"},{\"name\":\"修复\",\"start\":\"2026-10-13\",\"end\":\"2026-10-14\"},{\"name\":\"验证\",\"start\":\"2026-10-15\",\"end\":\"2026-10-15\"}],\"resources\":[{\"name\":\"登录失效场景整理\",\"type\":\"问题记录\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"认证模块设计\",\"type\":\"接口约定\",\"url\":\"\",\"icon\":\"G\"}],\"tasks\":[\"定位状态不同步\",\"修复与回归验证\",\"发布与观察\"],\"done\":[false,false,false],\"note\":\"确认自动续期失败后是否强制退出。\"},{\"id\":\"export\",\"title\":\"报表导出优化\",\"reminder\":null,\"short\":\"报表导出优化\",\"tone\":\"green\",\"start\":\"2026-10-21\",\"end\":\"2026-11-01\",\"phases\":[{\"name\":\"方案\",\"start\":\"2026-10-21\",\"end\":\"2026-10-22\"},{\"name\":\"开发\",\"start\":\"2026-10-23\",\"end\":\"2026-10-28\"},{\"name\":\"验收\",\"start\":\"2026-10-29\",\"end\":\"2026-11-01\"}],\"resources\":[{\"name\":\"异步导出说明\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"导出任务面板\",\"type\":\"交互设计\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认导出规模与边界\",\"实现任务状态展示\",\"联调与验收\"],\"done\":[false,false,false],\"note\":\"等待后端确认导出任务状态与重试接口。\"}]}"
+      }
+    },
+    "light-appearance-dark-system": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "document explicitly stays light",
+          "canvas remains a bright surface under the forced OS preference",
+          "native date controls inherit light appearance"
+        ],
+        "dateControlScheme": "light",
+        "surface": "rgb(245, 247, 255)",
+        "systemPrefersDark": true
+      }
+    },
+    "readability-dark-system": {
+      "ok": true,
+      "result": {
+        "appearance": "dark",
+        "checks": [
+          "isolated reading fixture restored",
+          "all three requirement tones include both phase fills",
+          "phase text exceeds 4.5 against normal and alternating fills",
+          "interactive dates outside the month remain readable",
+          "resource types, completed tasks and notes retain readable secondary text",
+          "the other editor tab remains legible on the segmented background",
+          "field placeholder text remains readable on its input surface",
+          "form labels preserve hierarchy with sufficient text contrast",
+          "phase editing names and full dates retain readable primary and secondary text",
+          "range strips remain distinct on weekday, weekend and adjacent-month date surfaces in all tones"
+        ],
+        "reference": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+        "samples": [
+          {
+            "background": "rgb(229, 214, 252)",
+            "contrast": 5.0044375877163585,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(211, 234, 255)",
+            "contrast": 4.787110798948054,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(204, 238, 221)",
+            "contrast": 4.64344548471516,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(229, 214, 252)",
+            "contrast": 5.0044375877163585,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.926078 0.88451 0.994706)",
+            "contrast": 5.464580013231707,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(211, 234, 255)",
+            "contrast": 4.787110798948054,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.877059 0.941373 1)",
+            "contrast": 5.0956518146718075,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(204, 238, 221)",
+            "contrast": 4.64344548471516,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.860392 0.954902 0.90549)",
+            "contrast": 4.992174933332911,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.926078 0.88451 0.994706)",
+            "contrast": 5.464580013231707,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.877059 0.941373 1)",
+            "contrast": 5.0956518146718075,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.860392 0.954902 0.90549)",
+            "contrast": 4.992174933332911,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.926078 0.88451 0.994706)",
+            "contrast": 5.464580013231707,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.877059 0.941373 1)",
+            "contrast": 5.0956518146718075,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.860392 0.954902 0.90549)",
+            "contrast": 4.992174933332911,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.926078 0.88451 0.994706)",
+            "contrast": 5.464580013231707,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.877059 0.941373 1)",
+            "contrast": 5.0956518146718075,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.860392 0.954902 0.90549)",
+            "contrast": 4.992174933332911,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(244, 247, 252)",
+            "contrast": 4.566747655580877,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "outside date",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "detail ",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "detail ",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "detail rf-note",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "inactive editor tab",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "field placeholder",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "field label",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 12.567940145711095,
+            "foreground": "rgb(40, 51, 77)",
+            "name": "phase editor rf-summary-name",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "phase editor rf-summary-meta",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 12.567940145711095,
+            "foreground": "rgb(40, 51, 77)",
+            "name": "phase editor rf-summary-name",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 4.90380734335668,
+            "foreground": "rgb(101, 113, 138)",
+            "name": "phase editor rf-summary-meta",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.905842565401702,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "range 0 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(250, 251, 255)",
+            "contrast": 3.824338150471507,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "range 0 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(244, 247, 252)",
+            "contrast": 3.737176114537204,
+            "foreground": "rgb(104, 66, 185)",
+            "name": "range 0 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.5234226615938287,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "range 1 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(250, 251, 255)",
+            "contrast": 3.4484280711996145,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "range 1 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(244, 247, 252)",
+            "contrast": 3.3661713153731054,
+            "foreground": "rgb(35, 103, 164)",
+            "name": "range 1 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.4741401994681502,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "range 2 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(250, 251, 255)",
+            "contrast": 3.4018096421283226,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "range 2 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(244, 247, 252)",
+            "contrast": 3.3206896982376017,
+            "foreground": "rgb(27, 115, 84)",
+            "name": "range 2 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          }
+        ],
+        "scope": "resolved foreground/background colors for the listed text contexts in actual WebKit; does not assess the entire app, assistive technology, anti-aliasing or user aesthetic preference"
+      }
+    }
+  },
+  "screenshots": {
+    "overview": "assets/desktop-overview.png",
+    "detail": "assets/desktop-detail.png",
+    "editor": "assets/desktop-editor.png",
+    "resource-editor": "assets/desktop-resource-editor.png",
+    "phase-editor": "assets/desktop-phase-editor.png",
+    "note-editor": "assets/desktop-note-editor.png",
+    "mixed-schedule": "assets/desktop-mixed-schedule.png",
+    "dense-schedule": "assets/desktop-dense-schedule.png",
+    "replan-editor": "assets/desktop-replan-editor.png",
+    "reminder-configured": "assets/desktop-reminder-configured-light.png"
+  },
+  "startup_frames": {
+    "front": {
+      "ok": true,
+      "result": {
+        "coverOpacity": "1",
+        "pageTransform": "matrix3d(1, 0, 0, 0, 0, 0.998987, -0.045005, 0, 0, 0.045005, 0.998987, 0, 0, 0, 0, 1)",
+        "sampledTime": 160,
+        "scope": "Actual WebKit rendering of the launch module, frozen at this animation time for screenshot inspection"
+      }
+    },
+    "fold": {
+      "ok": true,
+      "result": {
+        "coverOpacity": "1",
+        "pageTransform": "matrix3d(1, 0, 0, 0, 0, 0.170599, -0.985341, 0, 0, 0.985341, 0.170599, 0, 0, 0, 0, 1)",
+        "sampledTime": 330,
+        "scope": "Actual WebKit rendering of the launch module, frozen at this animation time for screenshot inspection"
+      }
+    },
+    "reveal": {
+      "ok": true,
+      "result": {
+        "coverOpacity": "0.399517",
+        "pageTransform": "matrix3d(1, 0, 0, 0, 0, -0.258819, -0.965926, 0, 0, 0.965926, -0.258819, 0, 0, 0, 0, 1)",
+        "sampledTime": 625,
+        "scope": "Actual WebKit rendering of the launch module, frozen at this animation time for screenshot inspection"
+      }
+    }
+  },
+  "scope": "Actual native WebKit rendering, lifecycle, computed contrast and layout. Startup frame pictures are deliberately paused animation samples. Unit harness covers reduced-motion/live preference/fallback cancellation; no system preference modified. Existing trusted drag acceptance is historical; this batch does not verify held gestures or OS notifications.",
+  "minimum_primary_text_contrast": 5.272568441359738,
+  "portable_tests": {
+    "model": 18,
+    "startup_lifecycle": 5,
+    "build": 1
+  },
+  "motion_frames": {
+    "opening": 19,
+    "closing": 21
+  }
+}

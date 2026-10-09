@@ -18,6 +18,6 @@ for APPEARANCE in light dark; do
     CALENDAR_VERIFY_SITE_ICONS=live \
     CALENDAR_VERIFY_FRAME_NAME="site-icons-$(uuidgen)" \
     "$APP"
-  print "网站图标检查通过：$APPEARANCE"
+  print "网站图标检查通过（系统外观偏好）：$APPEARANCE"
 done
 print "结果和截图：$OUTPUT"
