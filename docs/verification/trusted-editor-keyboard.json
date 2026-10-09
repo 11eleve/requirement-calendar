@@ -1,0 +1,32 @@
+{
+  "source_commit": "302f135b004dc24e5ffc14c8fe421641faa74629",
+  "scope": "Trusted native CUA AX clicks and keyboard in uniquely identified ephemeral app copy; no production app actions",
+  "isolation": {
+    "bundle_id": "dev.11eleve.requirement-calendar.gesture-validation",
+    "data_dir": "/Users/lu/Documents/Codex/2026-10-07/mac/outputs/requirement-calendar/.build/trusted-interaction/data",
+    "frontend_identical_to_current_index": true,
+    "saved_fixture_unchanged_after_discard": true,
+    "app_quit_after_checks": true
+  },
+  "passed": [
+    "Requirement AX click opens detail and selects every continuation",
+    "Edit opens name input with focus",
+    "Trusted keyboard replacement plus Escape opens unsaved-change protection",
+    "Return on Continue editing retains exact title and restores name focus",
+    "Discard leaves original persisted fixture unchanged",
+    "October 1 AX click creates editor with both dates October 1",
+    "Screenshot shows a thin purple range strip and no selected date-cell fill",
+    "Escape cancels clean new draft"
+  ],
+  "not_verified": [
+    "Both coordinate drag attempts produced no observable change; trusted replan and pointer capture remain unverified",
+    "Intermediate animation and held-gesture focus loss",
+    "Visible keyboard focus ring on continuation bands",
+    "Real notification click and deferred temporary permission cleanup",
+    "User aesthetic acceptance"
+  ],
+  "artifacts": {
+    "editor.png": "c265a46c786eafc21db3863be42e402a4e2437a8b351dccb3e052d11996d0d05",
+    "date-created.png": "aa214b215ac0e15b3178185bcba3aa72bbeef3e95fc2355eb1fa6855dd1f9a54"
+  }
+}

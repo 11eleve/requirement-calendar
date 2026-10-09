@@ -1,0 +1,36 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "isolated note fixture restored",
+      "a saved long note opens at a bounded readable height with its original whitespace",
+      "initial note sizing leaves the draft clean and its period visible",
+      "shortening a long note restores the compact input height",
+      "eight lines fit without an inner scrollbar or excess fixed-height space",
+      "note edits remain draft changes until an explicit save",
+      "fitting does not replace the field or disturb its text selection",
+      "a narrower native window refits visible wrapped text without another input event",
+      "hidden basic information retains the note draft",
+      "returning after a hidden-panel width change refits the retained text",
+      "subsequent visible inspector width changes also refit the text",
+      "a growing focused note stays visible between the tabs and save actions in a smaller window",
+      "note fitting does not move the dense calendar or remove draft feedback",
+      "editing a capped long note preserves its internal reading position",
+      "an explicitly resized field keeps its chosen height during further input",
+      "tab changes retain the explicit height and the complete draft",
+      "inspector width changes preserve an explicitly chosen height",
+      "the unsaved confirmation preserves the note editor",
+      "continuing editing retains text and sizing",
+      "a failed native save retains the text, chosen height and previous stored data",
+      "the note saves successfully on retry",
+      "successful save preserves indentation and trailing spaces and returns to clean details",
+      "a new edit sizes saved content afresh without storing a previous presentation preference",
+      "discarding note edits restores saved content and clears the temporary editor",
+      "note fitting causes no document overflow"
+    ],
+    "eightLineHeight" : 174,
+    "scope" : "actual isolated WebKit geometry, activeElement\/selection, synthetic input and native save with injected failure; explicit resize represented by inline height, not a trusted resize gesture or caret-motion observation",
+    "wrappedHeightBeforeResize" : 95
+  }
+}

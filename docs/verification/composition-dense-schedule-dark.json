@@ -1,0 +1,23 @@
+{
+  "ok" : true,
+  "result" : {
+    "dateHeaderTop" : 108,
+    "dates" : [
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11"
+    ],
+    "requirements" : 14,
+    "scope" : "actual isolated native WebKit dense-schedule screenshot; completed animation endpoints",
+    "viewport" : [
+      1160,
+      780
+    ],
+    "visibleWeekStart" : "2026-10-05",
+    "weekdayBottom" : 108
+  }
+}

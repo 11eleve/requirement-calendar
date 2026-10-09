@@ -1,0 +1,33 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "light",
+    "checks" : [
+      "isolated range fixture restored",
+      "editing begins with the complete original green period",
+      "clearing a date retains the same visible strip elements and geometry",
+      "incomplete entry changes only the draft",
+      "empty dates remain unsavable without removing visual feedback",
+      "temporarily reversed dates keep the last valid range",
+      "range validation remains explicit while the previous valid strip stays visible",
+      "a new valid range updates its length without changing the requirement tone",
+      "a second incomplete edit retains the most recent valid period rather than the original",
+      "native change events also update a newly valid period",
+      "a failed save preserves the edited range, input and original saved data",
+      "the valid range saves successfully on retry",
+      "saved formal bars take over the final dates and clear temporary feedback",
+      "fresh creation starts with its own period and palette rather than a previous draft",
+      "new drafts also retain their initial strip through required-date validation",
+      "a new draft follows completed valid dates",
+      "a valid offscreen period is not painted on unrelated calendar dates",
+      "visiting the edited month displays the same draft across its three weeks",
+      "an incomplete cross-month range preserves the latest valid visible period",
+      "month rerenders preserve the last valid range even while a field is empty",
+      "unsaved confirmation keeps the persistent preview",
+      "continuing editing retains incomplete inputs and the preview",
+      "discarding the draft clears feedback without creating a requirement",
+      "reopening another edit does not inherit the discarded cross-month range"
+    ],
+    "scope" : "actual isolated native WebKit date input\/change events, range geometry, validation and persistence with injected save failure; synthetic activation and completed animation endpoints, not trusted motion evidence"
+  }
+}

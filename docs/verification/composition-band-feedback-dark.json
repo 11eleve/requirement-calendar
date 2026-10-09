@@ -1,0 +1,133 @@
+{
+  "ok" : true,
+  "result" : {
+    "checks" : [
+      "fixture with three tones and cross-week requirements restored",
+      "purple fixture has continuation pieces",
+      "purple child hover identifies only this complete requirement",
+      "purple hover resolves to one shared border color across all pieces",
+      "purple moving within a band does not clear feedback",
+      "purple crossing to another continuation preserves the identity",
+      "purple press applies to the full requirement before the drag threshold",
+      "purple press remains distinct and title text exceeds 4.5 contrast",
+      "purple pointer cancellation clears temporary feedback",
+      "blue fixture has continuation pieces",
+      "blue child hover identifies only this complete requirement",
+      "blue hover resolves to one shared border color across all pieces",
+      "blue moving within a band does not clear feedback",
+      "blue crossing to another continuation preserves the identity",
+      "blue press applies to the full requirement before the drag threshold",
+      "blue press remains distinct and title text exceeds 4.5 contrast",
+      "blue pointer cancellation clears temporary feedback",
+      "green fixture has continuation pieces",
+      "green child hover identifies only this complete requirement",
+      "green hover resolves to one shared border color across all pieces",
+      "green moving within a band does not clear feedback",
+      "green crossing to another continuation preserves the identity",
+      "green press applies to the full requirement before the drag threshold",
+      "green press remains distinct and title text exceeds 4.5 contrast",
+      "green pointer cancellation clears temporary feedback",
+      "crossing requirements transfers hover without stale pieces",
+      "leaving a requirement for a date clears hover",
+      "touch input does not leave simulated hover feedback",
+      "focus identifies all and only the focused requirement continuations",
+      "visible blue keyboard outline uses its own tone",
+      "moving focus transfers the complete requirement identity",
+      "leaving calendar focus clears continuation feedback",
+      "replan threshold replaces hover and press with moving feedback",
+      "window focus loss clears held and hover feedback",
+      "opening details clears transient feedback while retaining selected identity",
+      "feedback preserves every bar position, size and calendar lane",
+      "feedback never changes dates, phases or saved data",
+      "month navigation leaves no stale transient state",
+      "returning to the month starts with quiet bands",
+      "feedback creates no page or calendar horizontal overflow"
+    ],
+    "focusVisible" : true,
+    "geometry" : [
+      [
+        "purple",
+        503.84375,
+        143,
+        633.140625,
+        40
+      ],
+      [
+        "purple",
+        23,
+        247.203125,
+        1113.984375,
+        40
+      ],
+      [
+        "blue",
+        23,
+        291.203125,
+        1113.984375,
+        40
+      ],
+      [
+        "purple",
+        23,
+        395.40625,
+        1113.984375,
+        40
+      ],
+      [
+        "blue",
+        23,
+        439.40625,
+        1113.984375,
+        40
+      ],
+      [
+        "purple",
+        23,
+        543.609375,
+        1113.984375,
+        40
+      ],
+      [
+        "green",
+        23,
+        587.609375,
+        1113.984375,
+        40
+      ],
+      [
+        "green",
+        23,
+        691.8125,
+        793.421875,
+        40
+      ]
+    ],
+    "scope" : "actual isolated native WebKit continuation styling, geometry and persistence; synthetic hover\/focus\/pointer events with capture bookkeeping stubbed; completed transition endpoints, not trusted pointer motion or aesthetic acceptance",
+    "styles" : [
+      {
+        "hoverBorder" : "color(srgb 0.780392 0.72549 0.937255 \/ 0.28)",
+        "id" : "purple",
+        "idleBorder" : "color(srgb 0.780392 0.72549 0.937255 \/ 0.11)",
+        "pressedBorder" : "color(srgb 0.780392 0.72549 0.937255 \/ 0.58)",
+        "pressedFill" : "color(srgb 0.230745 0.209725 0.297255)",
+        "titleContrast" : 6.4540145899662242
+      },
+      {
+        "hoverBorder" : "color(srgb 0.701961 0.807843 0.909804 \/ 0.28)",
+        "id" : "blue",
+        "idleBorder" : "color(srgb 0.701961 0.807843 0.909804 \/ 0.11)",
+        "pressedBorder" : "color(srgb 0.701961 0.807843 0.909804 \/ 0.58)",
+        "pressedFill" : "color(srgb 0.189961 0.254431 0.311216)",
+        "titleContrast" : 6.472413067475121
+      },
+      {
+        "hoverBorder" : "color(srgb 0.678431 0.831373 0.74902 \/ 0.28)",
+        "id" : "green",
+        "idleBorder" : "color(srgb 0.678431 0.831373 0.74902 \/ 0.11)",
+        "pressedBorder" : "color(srgb 0.678431 0.831373 0.74902 \/ 0.58)",
+        "pressedFill" : "color(srgb 0.192784 0.266667 0.225725)",
+        "titleContrast" : 6.4138226587755636
+      }
+    ]
+  }
+}

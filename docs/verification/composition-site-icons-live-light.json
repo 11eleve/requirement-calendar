@@ -1,0 +1,5 @@
+{
+  "details" : "[\"WKJavaScriptExceptionMessage\": Error: DingTalk, Figma and GitHub icons arrive through the production URLSession bridge, \"WKJavaScriptExceptionColumnNumber\": 0, \"WKJavaScriptExceptionLineNumber\": 0, \"NSLocalizedDescription\": A JavaScript exception occurred]",
+  "error" : "A JavaScript exception occurred",
+  "ok" : false
+}

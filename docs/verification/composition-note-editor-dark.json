@@ -1,0 +1,12 @@
+{
+  "ok" : true,
+  "result" : {
+    "bottom" : 703,
+    "clientHeight" : 172,
+    "footerTop" : 708,
+    "height" : 174,
+    "noteUnchanged" : true,
+    "scope" : "actual isolated native WebKit multiline-note screenshot; synthetic focus\/input and completed animation endpoints",
+    "scrollHeight" : 172
+  }
+}

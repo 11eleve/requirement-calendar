@@ -1,0 +1,24 @@
+{
+  "ok" : true,
+  "result" : {
+    "phases" : [
+      {
+        "name" : "方案评审",
+        "period" : "2026.12.28—2027.1.4"
+      },
+      {
+        "name" : "开发与灰度兼容验证",
+        "period" : "1.8—2.3"
+      },
+      {
+        "name" : "回归与验收",
+        "period" : "2.8—2.15"
+      }
+    ],
+    "scope" : "actual isolated native WebKit phase-editor screenshot; completed animation endpoints",
+    "viewport" : [
+      1160,
+      780
+    ]
+  }
+}

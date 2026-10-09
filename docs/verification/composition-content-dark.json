@@ -1,0 +1,42 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "isolated long-content fixture restored",
+      "cross-year requirement periods show both years",
+      "cross-year phase periods show both years",
+      "cross-week bars retain the complete period on hover",
+      "long titles, phases, resource types and tasks fit their own widths",
+      "complete phase and task text stays present rather than truncated",
+      "long date ranges move below the full-width phase name instead of squeezing it",
+      "phase dates stay within the timeline section",
+      "custom resource types retain a complete summary tooltip",
+      "the collapsed editor wraps the complete long phase name without clipping",
+      "cross-year editor dates remain completely visible and available on hover",
+      "the full date sits beneath the phase name without entering the removal target",
+      "reading collapsed phase summaries retains a clean draft and its range strip",
+      "long titles, phases, resource types and tasks fit their own widths",
+      "complete phase and task text stays present rather than truncated",
+      "long date ranges move below the full-width phase name instead of squeezing it",
+      "phase dates stay within the timeline section",
+      "custom resource types retain a complete summary tooltip",
+      "the collapsed editor wraps the complete long phase name without clipping",
+      "cross-year editor dates remain completely visible and available on hover",
+      "the full date sits beneath the phase name without entering the removal target",
+      "reading collapsed phase summaries retains a clean draft and its range strip",
+      "isolated long-content fixture restored",
+      "phases outside the visible year retain their year context",
+      "isolated long-content fixture restored",
+      "same-year content retains compact date labels",
+      "isolated long-content fixture restored",
+      "long current-stage status wraps within the metadata area",
+      "isolated long-content fixture restored"
+    ],
+    "scope" : "actual WebKit geometry at default and smaller native window; synthetic actions with isolated data",
+    "viewport" : [
+      980,
+      668
+    ]
+  }
+}

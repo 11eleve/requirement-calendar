@@ -1,0 +1,57 @@
+{
+  "ok" : true,
+  "result" : {
+    "browserStorageChecks" : [
+
+    ],
+    "dates" : [
+      "2026-10-11",
+      "2026-10-25"
+    ],
+    "phases" : [
+      "2026-10-11",
+      "2026-10-13",
+      "2026-10-15",
+      "2026-10-22",
+      "2026-10-23",
+      "2026-10-25"
+    ],
+    "savedPeriod" : [
+      "2026-10-08",
+      "2026-10-22"
+    ],
+    "scope" : "actual isolated native WebKit screenshot of the unsaved dropped-plan draft; synthetic pointer events with capture bookkeeping stubbed and animations completed; not a trusted drag recording",
+    "strips" : [
+      {
+        "bottom" : 246.203125,
+        "height" : 3,
+        "left" : 670,
+        "right" : 772,
+        "top" : 243.203125,
+        "width" : 102,
+        "x" : 670,
+        "y" : 243.203125
+      },
+      {
+        "bottom" : 394.40625,
+        "height" : 3,
+        "left" : 22,
+        "right" : 772,
+        "top" : 391.40625,
+        "width" : 750,
+        "x" : 22,
+        "y" : 391.40625
+      },
+      {
+        "bottom" : 542.609375,
+        "height" : 3,
+        "left" : 22,
+        "right" : 772,
+        "top" : 539.609375,
+        "width" : 750,
+        "x" : 22,
+        "y" : 539.609375
+      }
+    ]
+  }
+}

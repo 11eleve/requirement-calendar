@@ -1,0 +1,12 @@
+{
+  "ok" : true,
+  "result" : {
+    "resources" : 2,
+    "tasks" : 4,
+    "title" : "结算流程改版",
+    "viewport" : [
+      1160,
+      780
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "ok" : true,
+  "result" : {
+    "appearance" : "dark",
+    "checks" : [
+      "isolated requirement without a reminder restored",
+      "unset reminder is explicit and its picker is collapsed and inactive",
+      "unset reminder occupies only a 34px summary row",
+      "opening the editor neither schedules a reminder nor requests permission",
+      "explicit expansion exposes the labelled native date-time control",
+      "expansion alone neither invents a time nor marks the draft dirty",
+      "choosing a time updates the summary and dirty state while retaining the range strip",
+      "unsaved reminder changes remain outside the scheduler",
+      "folding preserves the chosen time without scheduling it",
+      "a native save failure is reported",
+      "save failure retains the chosen time and untouched saved snapshot",
+      "retry saves the explicitly chosen reminder",
+      "successful save schedules the exact chosen time and requests isolated permission once",
+      "successful save disposes the old reminder disclosure",
+      "a saved reminder reopens as a clean compact row showing its actual local time",
+      "clear removes the draft time, collapses the control and returns focus to its summary",
+      "clearing a draft keeps the saved reminder scheduled until save",
+      "closing after clearing protects the unsaved reminder change",
+      "saving a cleared reminder succeeds",
+      "saving clear cancels the pending reminder without another permission request",
+      "a newly chosen past reminder is rejected",
+      "past-time validation reveals and visibly focuses the picker between sticky controls",
+      "clearing an invalid time restores the original clean unset state",
+      "an injected incomplete native value is visibly pending and protected despite an empty value",
+      "incomplete empty-valued input cannot silently leave the editor",
+      "restoring valid empty input restores the clean unset state",
+      "expanded reminder and summary fit the smaller native window without horizontal overflow",
+      "validation and expansion preserve scheduler state and unrelated content"
+    ],
+    "compact" : {
+      "bottom" : 357.5,
+      "height" : 34,
+      "left" : 807,
+      "right" : 1125,
+      "top" : 323.5,
+      "width" : 318,
+      "x" : 807,
+      "y" : 323.5
+    },
+    "resources" : {
+      "bottom" : 506,
+      "height" : 136.5,
+      "left" : 807,
+      "right" : 1125,
+      "top" : 369.5,
+      "width" : 318,
+      "x" : 807,
+      "y" : 369.5
+    },
+    "scope" : "actual isolated native WebKit summary\/picker geometry, synthetic clicks\/inputs, native file bridge and isolated notification scheduler. Transitions completed to endpoints. Partial native badInput flag is injected, not trusted picker typing. No real permission, notification, trusted picker\/keyboard operation or frame pacing claim"
+  }
+}

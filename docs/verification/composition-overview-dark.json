@@ -1,0 +1,11 @@
+{
+  "ok" : true,
+  "result" : {
+    "calendarHeight" : 690,
+    "month" : "2026 年 10 月",
+    "viewport" : [
+      1160,
+      780
+    ]
+  }
+}
