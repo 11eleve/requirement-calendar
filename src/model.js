@@ -1,7 +1,21 @@
 /* Shared domain rules for the browser and desktop host. No UI or storage side effects. */
 (function (scope) {
   'use strict';
-  const VERSION = 6;
+  const VERSION = 7;
+  const TONES = Object.freeze([
+    {id:'',name:'鸢尾紫',color:'#6842b9',fill:'#f2ebff',stage:'#e5d6fc'},
+    {id:'blue',name:'晴空蓝',color:'#2367a4',fill:'#eaf5ff',stage:'#d3eaff'},
+    {id:'green',name:'薄荷绿',color:'#1b7354',fill:'#e8f8ef',stage:'#cceedd'},
+    {id:'amber',name:'琥珀黄',color:'#8a590b',fill:'#fff7dc',stage:'#f9e7ae'},
+    {id:'rose',name:'蔷薇粉',color:'#a13b65',fill:'#fff0f5',stage:'#f7d7e5'},
+    {id:'teal',name:'湖水青',color:'#167579',fill:'#e8f8f8',stage:'#c9eceb'},
+    {id:'orange',name:'杏子橙',color:'#a64e22',fill:'#fff2e8',stage:'#faddc8'},
+    {id:'slate',name:'雾霭灰',color:'#53627b',fill:'#f0f3f8',stage:'#dce3ef'}
+  ].map(Object.freeze));
+  const NODE_KINDS = Object.freeze([
+    {id:'review',name:'评审',symbol:'◇'}, {id:'release',name:'发布',symbol:'⚑'},
+    {id:'deadline',name:'截止',symbol:'◎'}, {id:'checkpoint',name:'检查点',symbol:'●'}
+  ].map(Object.freeze));
   class ValidationError extends Error {
     constructor(message, path = '') { super(message); this.name = 'ValidationError'; this.path = path; }
   }
@@ -106,14 +120,26 @@
       return { name, type, url, icon: url ? iconFor(url, type) : (typeof resource.icon === 'string' ? resource.icon : iconFor('', type)) };
     });
     if (!Array.isArray(value.tasks) || !value.tasks.every(task => typeof task === 'string' && task.trim()) || !Array.isArray(value.done) || value.done.length !== value.tasks.length || !value.done.every(done => typeof done === 'boolean')) throw new ValidationError('事项与完成状态不一致。', '事项');
+    const sourceNodes = value.milestones ?? [];
+    if (!Array.isArray(sourceNodes)) throw new ValidationError('时间节点数据无效。', '时间节点');
+    const nodeIds = new Set();
+    const milestones = sourceNodes.map(node => {
+      if (!node || typeof node !== 'object') throw new ValidationError('时间节点数据无效。', '时间节点');
+      const id = text(node.id, '节点标识', true), name = text(node.name, '节点名称', true);
+      if (nodeIds.has(id)) throw new ValidationError('时间节点标识重复。', '时间节点');
+      nodeIds.add(id);
+      if (!validDate(node.date) || node.date < value.start || node.date > value.end) throw new ValidationError('时间节点须落在需求周期内。', '时间节点');
+      if (!NODE_KINDS.some(kind => kind.id === node.kind) || (node.done !== undefined && typeof node.done !== 'boolean')) throw new ValidationError('时间节点类型或完成状态无效。', '时间节点');
+      return {id, name, date: node.date, kind: node.kind, done: node.done ?? false};
+    }).sort((a,b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
     const reminder = value.reminder ?? null;
     if (reminder !== null && !validReminder(reminder)) throw new ValidationError('提醒时间无效。', '提醒');
-    return { id, title, reminder, short: title, tone: ['', 'blue', 'green'].includes(value.tone) ? value.tone : '', start: value.start, end: value.end, phases, resources, tasks: value.tasks.map(task => task.trim()), done: [...value.done], note: typeof value.note === 'string' ? value.note : value.note == null ? '' : text(value.note, '备忘') };
+    return { id, title, reminder, short: title, tone: TONES.some(tone => tone.id === value.tone) ? value.tone : '', start: value.start, end: value.end, phases, milestones, resources, tasks: value.tasks.map(task => task.trim()), done: [...value.done], note: typeof value.note === 'string' ? value.note : value.note == null ? '' : text(value.note, '备忘') };
   }
   function snapshot(value) {
     if (!value || typeof value !== 'object' || Array.isArray(value)) throw new ValidationError('保存的数据格式无效。');
     const source = value.privateContent ?? value;
-    if (![4, 5, VERSION].includes(source.version)) throw new ValidationError('数据版本不受支持，原始数据已保留。');
+    if (![4, 5, 6, VERSION].includes(source.version)) throw new ValidationError('数据版本不受支持，原始数据已保留。');
     if (!validDate(source.anchor) || !Array.isArray(source.requirements)) throw new ValidationError('保存的数据不完整，原始数据已保留。');
     const requirements = source.requirements.map(requirement), ids = new Set(requirements.map(item => item.id));
     if (ids.size !== requirements.length) throw new ValidationError('需求标识重复，无法安全载入数据。');
@@ -124,9 +150,10 @@
     if (!Number.isInteger(offset)) throw new ValidationError('日期偏移需要是整数。');
     const item = requirement(value);
     return { ...item, start: add(item.start, offset), end: add(item.end, offset),
-      phases: item.phases.map(phase => ({ ...phase, start: add(phase.start, offset), end: add(phase.end, offset) })) };
+      phases: item.phases.map(phase => ({ ...phase, start: add(phase.start, offset), end: add(phase.end, offset) })),
+      milestones: item.milestones.map(node => ({...node, date: add(node.date, offset)})) };
   }
-  const api = { VERSION, ValidationError, validDate, parse, iso, add, days, localDate, format, monthOffset, monthGrid, allocateLanes, validReminder, newId, safeURL, iconFor, requirement, shiftRequirement, snapshot };
+  const api = { VERSION, TONES, NODE_KINDS, ValidationError, validDate, parse, iso, add, days, localDate, format, monthOffset, monthGrid, allocateLanes, validReminder, newId, safeURL, iconFor, requirement, shiftRequirement, snapshot };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else scope.CalendarModel = api;
 })(globalThis);

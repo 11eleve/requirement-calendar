@@ -10,7 +10,7 @@ const inside=(inner,outer)=>inner.left>=outer.left-1&&inner.right<=outer.right+1
 await restore([item('design',{resources:Array.from({length:18},(_,i)=>({name:'接口约定与评审资料 '+i,type:'自定义资料',url:'https://example.com/reference/'+i})),tasks:['确认接口契约与错误处理','验证新旧版本兼容'],done:[true,false]})]);
 assert($$('.rf-week').length===6,'six-week months retain their complete calendar structure');
 assert($('.rf-week:last-child').getBoundingClientRect().bottom<=$('#rf-calendar').getBoundingClientRect().bottom+1,'a normal six-week month fits the default desktop viewport');
-assert($$('.rf-toolbar button').length===2,'the toolbar keeps only the two month navigation controls');
+assert($$('.rf-toolbar .rf-arrow').length===2&&!$('#rf-add'),'the toolbar keeps opposite month controls and no new-requirement plus');
 const titleBounds=$('#rf-title').getBoundingClientRect(),toolbarBounds=$('.rf-toolbar').getBoundingClientRect();
 assert($('#rf-prev').getBoundingClientRect().left<=toolbarBounds.left+24&&$('#rf-next').getBoundingClientRect().right>=toolbarBounds.right-24&&Math.abs((titleBounds.left+titleBounds.right-toolbarBounds.left-toolbarBounds.right)/2)<1,'month navigation occupies opposite edges with the date centered');
 CalendarApp.openRequirement('design');await settle();

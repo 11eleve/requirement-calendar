@@ -1,6 +1,6 @@
 const checks=[], $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 const assert=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
-const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(r=>setTimeout(r,30));document.getAnimations().forEach(a=>a.finish());};
+const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(r=>setTimeout(r,80));document.getAnimations().forEach(a=>a.finish());};
 const click=text=>$$('button').find(n=>n.textContent===text).click();
 const set=(node,value)=>{node.value=value;node.dispatchEvent(new Event('input',{bubbles:true}));};
 assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-08',requirements:[]})),'empty fixture restored');

@@ -55,6 +55,23 @@ struct DataStoreTests {
         check(try restoreArchives.contains{try Data(contentsOf:$0)==second},"28: pre-restore records remain archived after subsequent saves")
         var invalid=try JSONSerialization.jsonObject(with:first) as! [String:Any];var items=invalid["requirements"] as! [[String:Any]];items[0]["done"]=[1];invalid["requirements"]=items
         do{_=try CalendarDataStore.validate(JSONSerialization.data(withJSONObject:invalid));fatalError("numeric completion must fail")}catch{check(true,"28: invalid imported task state rejected before any write")}
+        var planning = try JSONSerialization.jsonObject(with:first) as! [String:Any]
+        planning["version"] = 7
+        var planItems = planning["requirements"] as! [[String:Any]]
+        let node: [String:Any] = ["id":"review", "name":"技术评审", "date":"2026-10-08", "kind":"review", "done":true]
+        planItems[0]["milestones"] = [node];planning["requirements"] = planItems
+        _ = try CalendarDataStore.validate(JSONSerialization.data(withJSONObject:planning))
+        check(true,"v7: time nodes validate with native file store")
+        for changes in [["date":"2026-10-10"], ["kind":"unknown"], ["done":1], ["name":" "]] as [[String:Any]] {
+            var badNode = node
+            for (key,value) in changes { badNode[key] = value }
+            planItems[0]["milestones"] = [badNode];planning["requirements"] = planItems
+            do { _ = try CalendarDataStore.validate(JSONSerialization.data(withJSONObject:planning));fatalError("invalid time node should fail") }
+            catch { check(true,"v7: invalid node data rejected before writing") }
+        }
+        planItems[0]["milestones"] = [node,node];planning["requirements"] = planItems
+        do { _ = try CalendarDataStore.validate(JSONSerialization.data(withJSONObject:planning));fatalError("duplicate node should fail") }
+        catch { check(true,"v7: duplicate node identities rejected") }
         print("\(passed) file-store assertions passed")
     }
 }

@@ -7,6 +7,7 @@ const {DataStore,decode,LIMIT}=require('./data-store.cjs');
 const {ENTRY,externalURL,requirementID,trustedSender}=require('./policy.cjs');
 const {APP_ID,TOAST_CLSID,Reminders}=require('./reminders.cjs');
 const {fetchIcon}=require('./site-icons.cjs');
+const {workbookBytes,writeWorkbook}=require('./workbook.cjs');
 const smoke=process.argv.includes('--calendar-smoke-test');
 const root=path.resolve(__dirname,'..');
 let window,store,reminders,ready=false,closing=false,closePrompt=false,notificationID=null,reminderIssue=null;
@@ -27,7 +28,7 @@ else {
 }
 async function invoke(method,...args) {
   if(!window||window.isDestroyed()||!ready)return false;
-  if(!['command','openRequirement','editRequirement','deleteRequirement','hasUnsavedChanges','isSaving','exportSnapshot','restoreSnapshot','refreshDate','setReminderIssue'].includes(method))throw new Error('Invalid UI method');
+  if(!['command','openRequirement','editRequirement','deleteRequirement','hasUnsavedChanges','isSaving','exportSnapshot','exportWorkbook','restoreSnapshot','refreshDate','setReminderIssue'].includes(method))throw new Error('Invalid UI method');
   return window.webContents.executeJavaScript(`window.CalendarReady.then(()=>window.CalendarApp[${JSON.stringify(method)}](...${JSON.stringify(args)}))`);
 }
 function report(error) { if(window&&!window.isDestroyed())dialog.showMessageBox(window,{type:'error',title:'需求日历',message:error.message||String(error)}); }
@@ -50,6 +51,13 @@ async function exportBackup() {
   if(canceled||!filePath)return;
   const raw=await invoke('exportSnapshot');decode(raw);await fs.writeFile(filePath,raw,'utf8');
 }
+async function exportExcel(scope='all') {
+  if(!['all','summary'].includes(scope))throw new Error('导出范围无效。');
+  const workbook=await invoke('exportWorkbook',scope),bytes=workbookBytes(workbook);
+  const selected=smoke?{canceled:false,filePath:path.join(smokeDirectory,workbook.name)}:await dialog.showSaveDialog(window,{title:'导出 Excel 排期',defaultPath:workbook.name,filters:[{name:'Excel 工作簿',extensions:['xlsx']}]});
+  if(selected.canceled||!selected.filePath)return {saved:false};
+  await writeWorkbook(selected.filePath,bytes);return {saved:true,bytes:bytes.length};
+}
 async function restoreBackup() {
   if(!await confirmSaved())return;
   const {canceled,filePaths}=await dialog.showOpenDialog(window,{title:'恢复需求备份',properties:['openFile'],filters:[{name:'JSON 备份',extensions:['json']}]});
@@ -68,7 +76,8 @@ function menu() {
       {label:'新建需求',accelerator:'CmdOrCtrl+N',click:()=>act('command','new')},
       {label:'保存需求',accelerator:'CmdOrCtrl+S',click:()=>act('command','save')},
       {label:'关闭详情',accelerator:'CmdOrCtrl+W',click:()=>act('command','close')},{type:'separator'},
-      {label:'导出已保存的需求…',click:safe(exportBackup)},
+      {label:'导出 Excel 排期…',click:safe(()=>exportExcel())},
+      {label:'导出 JSON 备份…',click:safe(exportBackup)},
       {label:'恢复 JSON 备份…',click:safe(restoreBackup)},
       {label:'打开数据文件夹',click:safe(async()=>{const issue=await shell.openPath(store.directory);if(issue)throw new Error(issue);})},
       {type:'separator'},{label:'退出',accelerator:'Alt+F4',click:()=>window.close()}
@@ -78,6 +87,7 @@ function menu() {
       {role:'redo',label:'重做'},{type:'separator'},{role:'cut',label:'剪切'},{role:'copy',label:'复制'},{role:'paste',label:'粘贴'},{role:'selectAll',label:'全选'}
     ]},
     {label:'视图',submenu:[
+      {label:'月历 / 需求汇总',click:()=>act('command','summary')},
       {label:'上个月',accelerator:'CmdOrCtrl+Alt+Left',click:()=>act('command','previous')},
       {label:'下个月',accelerator:'CmdOrCtrl+Alt+Right',click:()=>act('command','next')},{role:'togglefullscreen',label:'全屏'}
     ]}
@@ -97,7 +107,7 @@ async function start() {
       reminderIssue=issue;
       if(ready)void window.webContents.executeJavaScript(`(async()=>{await window.CalendarReady;while(window.CalendarApp.isSaving())await new Promise(resolve=>setTimeout(resolve,20));window.CalendarApp.setReminderIssue(${JSON.stringify(issue)});})()`).catch(()=>{});
     }});
-  const assets=new Set(['index.html','styles.css','model.js','storage.js','icons.js','site-icons.js','disclosure.js','startup.js','app.js']);
+  const assets=new Set(['index.html','styles.css','model.js','planning.js','workbook.js','storage.js','icons.js','site-icons.js','disclosure.js','startup.js','app.js']);
   protocol.handle('calendar-app',async request=>{
     const url=new URL(request.url),file=url.pathname.slice(1);
     if(url.protocol!=='calendar-app:'||url.hostname!=='local'||url.port||url.username||url.password||!assets.has(file)||url.search||request.method!=='GET')return new Response('',{status:404});
@@ -143,6 +153,7 @@ async function start() {
         void reminders.reconcile(data);
         return {reminderIssue:'需求已保存，正在确认系统提醒状态…'};
       }
+      case 'exportExcel':return await exportExcel(message.scope??'all');
       case 'resourceIcon':return typeof message.url==='string'?await fetchIcon(message.url,nativeImage):null;
       case 'contextMenu': {
         if(typeof message.id!=='string'||message.id.length>256)throw new Error('无效的需求标识。');

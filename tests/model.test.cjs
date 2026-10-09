@@ -59,7 +59,7 @@ test('07: more than 16 requirements and over 14.5 KB survive a real serialize/re
 test('08: version 4 migration preserves requirements and the original legacy record', () => {
   const legacy = JSON.stringify({ privateContent: { ...snapshot(), version: 4 } });
   const database = memory({ legacy }), store = Storage.createStore(database, { legacyKey: 'legacy' });
-  const loaded = store.load(); assert.equal(loaded.migrated, true); assert.equal(loaded.data.version, 6); assert.equal(loaded.data.requirements[0].title, '支付改版');
+  const loaded = store.load(); assert.equal(loaded.migrated, true); assert.equal(loaded.data.version, Model.VERSION); assert.equal(loaded.data.requirements[0].title, '支付改版');
   assert.equal(store.save(loaded.data).ok, true); assert.equal(database.getItem('legacy'), legacy);
   assert.equal(Storage.createStore(database).load().data.requirements.length, 1);
 });
@@ -96,7 +96,7 @@ test('29: v5 browser records migrate to a native file through the bridge without
   let written=null;
   const bridge={async postMessage(message){if(message.action==='load')return {raw:null,issue:null};written=JSON.parse(message.raw);return {ok:true};}};
   const store=Storage.createNativeStore(bridge,legacy),loaded=await store.load();
-  assert.equal(loaded.migrated,true);assert.equal(written.version,6);assert.equal(written.requirements[0].title,'支付改版');assert.equal(written.requirements[0].reminder,null);
+  assert.equal(loaded.migrated,true);assert.equal(written.version,Model.VERSION);assert.equal(written.requirements[0].title,'支付改版');assert.equal(written.requirements[0].reminder,null);
   assert.equal(database.getItem('requirement-calendar:state:v5'),raw);
   bridge.postMessage=async()=>{throw new Error('another window changed the file');};
   const failed=await store.save(loaded.data);assert.equal(failed.ok,false);assert.match(failed.issue,/another window/);
@@ -110,7 +110,7 @@ test('32: optional local reminder validates real wall time, rejects DST gaps, an
     assert.equal(Model.validReminder('2026-02-30T09:00'),false);
     assert.equal(Model.validReminder('2026-10-20T25:00'),false);
     assert.equal(Model.requirement(requirement({reminder:'2026-10-20T09:00'})).reminder,'2026-10-20T09:00');
-    assert.equal(Model.snapshot(snapshot()).version,6);
+    assert.equal(Model.snapshot(snapshot()).version,Model.VERSION);
   } finally {if(before===undefined)delete process.env.TZ;else process.env.TZ=before;}
 });
 

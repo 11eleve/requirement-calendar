@@ -18,10 +18,11 @@ async function run({app,window,store,invoke,directory}) {
   await invoke('command','discard');
   check('unknown IPC rejected',await js("CalendarDesktop.postMessage({action:'execute',code:'1'}).then(()=>false,()=>true)"));
   check('invalid save rejected',await js("CalendarDesktop.postMessage({action:'save',raw:'{bad'}).then(()=>false,()=>true)"));
-  const snapshot={version:6,anchor:'2026-10-07',requirements:[{id:'desktop-fixture',title:'Windows 桌面排期',start:'2026-10-07',end:'2026-10-25',tone:'green',phases:[{name:'开发',start:'2026-10-09',end:'2026-10-16'}],resources:[],tasks:['验证桌面保存'],done:[false],note:'  缩进\n下一行'}]};
+  const snapshot={version:7,anchor:'2026-10-07',requirements:[{id:'desktop-fixture',title:'Windows 桌面排期',start:'2026-10-07',end:'2026-10-25',tone:'rose',milestones:[{id:'review',name:'方案评审',date:'2026-10-09',kind:'review',done:false}],phases:[{name:'开发',start:'2026-10-09',end:'2026-10-16'}],resources:[],tasks:['验证桌面保存'],done:[false],note:'  缩进\n下一行'}]};
   check('restore through real native bridge succeeds',await invoke('restoreSnapshot',JSON.stringify(snapshot)));
   const stored=JSON.parse(await fs.readFile(store.file,'utf8'));
   check('saved requirements preserve notes and phases',stored.requirements[0].note===snapshot.requirements[0].note&&stored.requirements[0].phases.length===1);
+  check('v7 palette and nodes persist through the desktop bridge',stored.version===7&&stored.requirements[0].tone==='rose'&&stored.requirements[0].milestones[0].kind==='review');
   await window.webContents.reload();
   await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('reload timeout')),15000);window.webContents.once('did-finish-load',()=>{clearTimeout(timer);resolve();});});
   await js('window.CalendarReady');
@@ -31,6 +32,7 @@ async function run({app,window,store,invoke,directory}) {
   check('native reminder editor is available',await js("!!document.querySelector('input[type=\"datetime-local\"]')"));
   await js("(()=>{const input=document.querySelector('#rf-panel input[type=text]');input.value='未保存草稿';input.dispatchEvent(new Event('input',{bubbles:true}));})()");
   check('dirty drafts detected',await invoke('hasUnsavedChanges'));
+  check('Excel export refuses an unsaved draft',await js("CalendarDesktop.postMessage({action:'exportExcel',scope:'all'}).then(()=>false,()=>true)"));
   check('restore refuses dirty draft',!await invoke('restoreSnapshot',JSON.stringify(snapshot)));
   await invoke('command','save');check('save clears dirty state',!await invoke('hasUnsavedChanges'));
   check('save actually commits editor changes',JSON.parse(await fs.readFile(store.file,'utf8')).requirements[0].title==='未保存草稿');
@@ -38,6 +40,16 @@ async function run({app,window,store,invoke,directory}) {
   await js("(()=>{const input=document.querySelector('#rf-panel input[type=text]');input.value='放弃修改';input.dispatchEvent(new Event('input',{bubbles:true}));})()");
   await invoke('command','discard');check('explicit discard closes dirty editor',!await invoke('hasUnsavedChanges'));
   check('discard preserves committed record',JSON.parse(await invoke('exportSnapshot')).requirements[0].title==='未保存草稿');
+  await invoke('command','summary');
+  check('summary renders saved requirements and remaining nodes',await js("!document.querySelector('#rf-summary').hidden&&document.querySelectorAll('.rf-summary-row').length===1&&document.querySelectorAll('.rf-summary-node').length===1"));
+  const workbook=await invoke('exportWorkbook','summary');
+  check('summary workbook includes requirement and node rows',workbook.counts[0].rows===1&&workbook.counts[1].rows===1);
+  const exported=await js("CalendarDesktop.postMessage({action:'exportExcel',scope:'summary'})");
+  const bytes=await fs.readFile(path.join(directory,workbook.name));
+  check('desktop Excel export writes a real XLSX atomically',exported.saved&&bytes.subarray(0,4).equals(Buffer.from([0x50,0x4b,3,4]))&&bytes.includes(Buffer.from('方案评审')));
+  check('invalid Excel export scopes are rejected',await js("CalendarDesktop.postMessage({action:'exportExcel',scope:'anything'}).then(()=>false,()=>true)"));
+  await invoke('command','summary');
+  check('returning from summary restores the calendar',await js("!document.querySelector('#rf-calendar').hidden&&document.querySelector('#rf-summary').hidden"));
   check('bad import preserves persisted data',!await invoke('restoreSnapshot','{bad'));
   check('CSP blocks renderer remote networking',await js("fetch('https://example.com').then(()=>false,()=>true)"));
   check('private favicon requests are rejected',await js("CalendarDesktop.postMessage({action:'resourceIcon',url:'https://127.0.0.1'}).then(value=>value===null)"));

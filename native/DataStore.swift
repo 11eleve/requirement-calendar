@@ -17,7 +17,7 @@ final class CalendarDataStore {
     init(directory: URL) { self.directory = directory }
 
     static func validate(_ data: Data) throws -> [String: Any] {
-        guard let value = try JSONSerialization.jsonObject(with: data) as? [String: Any], let version = value["version"] as? Int, [4,5,6].contains(version) else { throw CalendarDataError(message: "数据版本或格式不受支持，原始数据已保留。") }
+        guard let value = try JSONSerialization.jsonObject(with: data) as? [String: Any], let version = value["version"] as? Int, [4,5,6,7].contains(version) else { throw CalendarDataError(message: "数据版本或格式不受支持，原始数据已保留。") }
         func date(_ value: Any?) -> String? {
             guard let value = value as? String, value.range(of: #"^\d{4}-\d{2}-\d{2}$"#, options: .regularExpression) != nil, value >= "0001-01-01" else { return nil }
             let formatter = DateFormatter(); formatter.locale = Locale(identifier: "en_US_POSIX"); formatter.timeZone = TimeZone(secondsFromGMT: 0); formatter.dateFormat = "yyyy-MM-dd"; formatter.isLenient = false
@@ -34,6 +34,15 @@ final class CalendarDataStore {
             for phase in phases.sorted(by: { ($0["start"] as? String ?? "") < ($1["start"] as? String ?? "") }) {
                 guard nonempty(phase["name"]), let a = date(phase["start"]), let b = date(phase["end"]), a <= b, a >= start, b <= end, previous == nil || a > previous! else { throw CalendarDataError(message: "阶段日期越界或重叠。") }
                 previous = b
+            }
+            if let rawNodes = item["milestones"] {
+                guard let nodes = rawNodes as? [[String: Any]] else { throw CalendarDataError(message: "时间节点数据无效。") }
+                var nodeIds = Set<String>()
+                for node in nodes {
+                    guard let id = node["id"] as? String, nonempty(id), nodeIds.insert(id).inserted, nonempty(node["name"]), let when = date(node["date"]), when >= start, when <= end,
+                          let kind = node["kind"] as? String, ["review","release","deadline","checkpoint"].contains(kind) else { throw CalendarDataError(message: "时间节点名称、类型或日期无效。") }
+                    if let done = node["done"] { guard let flag = done as? NSNumber, CFGetTypeID(flag) == CFBooleanGetTypeID() else { throw CalendarDataError(message: "时间节点完成状态无效。") } }
+                }
             }
             for resource in resources {
                 guard nonempty(resource["name"]), resource["type"] is String, let link = resource["url"] as? String, link.isEmpty || (LinkPolicy.permits(URL(string: link)) && link.rangeOfCharacter(from: .controlCharacters) == nil) else { throw CalendarDataError(message: "资料链接或名称无效。") }
@@ -65,7 +74,7 @@ final class CalendarDataStore {
                 guard let data = observed else { blocked = false; return ["raw": NSNull(), "issue": NSNull()] }
                 do { _ = try Self.validate(data); blocked = false; return ["raw": String(decoding: data, as: UTF8.self), "issue": NSNull()] }
                 catch {
-                    if let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any], let version = object["version"] as? Int, version > 6 { blocked = true; throw CalendarDataError(message: "数据来自更高版本，已阻止旧版覆盖。请升级应用。") }
+                    if let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any], let version = object["version"] as? Int, version > 7 { blocked = true; throw CalendarDataError(message: "数据来自更高版本，已阻止旧版覆盖。请升级应用。") }
                     if let good = try read(backup), (try? Self.validate(good)) != nil {
                         blocked = false
                         return ["raw": String(decoding: good, as: UTF8.self), "issue": "已载入上一份有效备份；损坏的原始文件将在下次保存时独立保留。"]
