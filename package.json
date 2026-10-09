@@ -21,7 +21,7 @@
     "productName": "需求日历",
     "asar": true,
     "directories": { "output": "dist/windows" },
-    "files": ["electron/**", "src/**", "assets/app-icon.png", "package.json"],
+    "files": ["electron/**", "src/**", "assets/app-icon.png", "package.json", "THIRD_PARTY_NOTICES.md"],
     "extraResources": [{ "from": "electron/windows-reminders.ps1", "to": "windows-reminders.ps1" }],
     "protocols": [{ "name": "需求日历提醒", "schemes": ["requirement-calendar"] }],
     "win": {
@@ -39,6 +39,8 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "需求日历",
+      "runAfterFinish": false,
+      "include": "electron/installer.nsh",
       "deleteAppDataOnUninstall": false
     }
   }

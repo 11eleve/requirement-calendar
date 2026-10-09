@@ -2,6 +2,7 @@
 const assert=require('node:assert/strict');
 const fs=require('node:fs/promises');
 const path=require('node:path');
+const {APP_ID,TOAST_CLSID}=require('./reminders.cjs');
 async function run({app,window,store,invoke,directory}) {
   const checks=[];
   const check=(name,value)=>{assert.ok(value,name);checks.push(name);};
@@ -36,6 +37,12 @@ async function run({app,window,store,invoke,directory}) {
   check('bad import preserves persisted data',!await invoke('restoreSnapshot','{bad'));
   check('CSP blocks renderer remote networking',await js("fetch('https://example.com').then(()=>false,()=>true)"));
   check('private favicon requests are rejected',await js("CalendarDesktop.postMessage({action:'resourceIcon',url:'https://127.0.0.1'}).then(value=>value===null)"));
+  if(process.platform==='win32') {
+    const {shell}=require('electron'),shortcut=path.join(directory,'notification-identity.lnk');
+    check('Windows shortcut accepts notification identity',shell.writeShortcutLink(shortcut,'create',{target:process.execPath,appUserModelId:APP_ID,toastActivatorClsid:TOAST_CLSID}));
+    const identity=shell.readShortcutLink(shortcut),guid=value=>value?.replace(/[{}]/g,'').toLowerCase();
+    check('Windows shortcut retains AUMID and toast CLSID',identity.appUserModelId===APP_ID&&guid(identity.toastActivatorClsid)===guid(TOAST_CLSID));
+  }
   const result={platform:process.platform,arch:process.arch,electron:process.versions.electron,packaged:app.isPackaged,checks};
   console.log(JSON.stringify(result,null,2));
   if(process.env.CALENDAR_SMOKE_OUTPUT)await fs.writeFile(path.resolve(process.env.CALENDAR_SMOKE_OUTPUT),JSON.stringify(result,null,2)+'\n');

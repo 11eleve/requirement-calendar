@@ -45,6 +45,20 @@ jobs:
           $process = Start-Process -FilePath "$pwd/dist/windows/win-unpacked/RequirementCalendar.exe" -ArgumentList '--calendar-smoke-test' -Wait -PassThru
           if ($process.ExitCode -ne 0) { throw "Packaged smoke test failed: $($process.ExitCode)" }
           if (!(Test-Path $env:CALENDAR_SMOKE_OUTPUT)) { throw 'Missing smoke test report' }
+      - name: Install and exercise application
+        shell: powershell
+        run: |
+          $installDir = Join-Path $env:RUNNER_TEMP 'RequirementCalendar'
+          $installer = (Get-ChildItem dist/windows/*Setup.exe).FullName
+          $process = Start-Process -FilePath $installer -ArgumentList @('/S', "/D=$installDir") -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Installer failed: $($process.ExitCode)" }
+          $command = (Get-Item 'HKCU:\Software\Classes\requirement-calendar\shell\open\command').GetValue('')
+          $expected = '"' + $installDir + '\RequirementCalendar.exe" "%1"'
+          if ($command -ne $expected) { throw "Protocol registration mismatch: $command" }
+          if (!(Test-Path "$env:APPDATA/Microsoft/Windows/Start Menu/Programs/需求日历.lnk")) { throw 'Missing Start menu shortcut' }
+          $env:CALENDAR_SMOKE_OUTPUT = "$pwd/installed-smoke-windows.json"
+          $process = Start-Process -FilePath "$installDir/RequirementCalendar.exe" -ArgumentList '--calendar-smoke-test' -Wait -PassThru
+          if ($process.ExitCode -ne 0 -or !(Test-Path $env:CALENDAR_SMOKE_OUTPUT)) { throw 'Installed app smoke test failed' }
       - name: Installer checksum
         shell: powershell
         run: |
@@ -60,5 +74,6 @@ jobs:
             dist/windows/*.sha256
             desktop-smoke-windows.json
             packaged-smoke-windows.json
+            installed-smoke-windows.json
           if-no-files-found: error
           retention-days: 30

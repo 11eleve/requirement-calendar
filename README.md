@@ -414,7 +414,7 @@ node --test tests/model.test.cjs tests/startup.test.cjs
 python3 tests/build.test.py
 ```
 
-Electron 桌面相关测试执行 `npm test` 与 `npm run test:desktop`。后者使用独立临时数据目录，不读取现有需求，不注册真实提醒；覆盖沙箱隔离、桥接校验、原子保存、重载、草稿保护及备份恢复。Windows 工作流还校验 PowerShell / WinRT 类型，并对打包后的 `.exe` 再跑一次同样的桌面测试。定时提醒由固定 PowerShell 脚本调用 WinRT，需求内容通过 JSON 标准输入传入，详情见 [Windows 实现与验收](docs/WINDOWS_DESKTOP.md)。
+Electron 桌面相关测试执行 `npm test` 与 `npm run test:desktop`。后者使用独立临时数据目录，不读取现有需求，不注册真实提醒；覆盖沙箱隔离、桥接校验、原子保存、重载、草稿保护及备份恢复。Windows 工作流还校验 PowerShell / WinRT 类型和快捷方式通知标识，对打包后的 `.exe`、经 NSIS 实际安装后的应用分别执行桌面测试，并核对开始菜单与通知点击协议。定时提醒由固定 PowerShell 脚本调用 WinRT，需求内容通过 JSON 标准输入传入，详情见 [Windows 实现与验收](docs/WINDOWS_DESKTOP.md)。
 
 网站图标还提供独立的联网检查命令，需先构建桌面版：
 
