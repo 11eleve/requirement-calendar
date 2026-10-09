@@ -46,7 +46,7 @@ jobs:
           if ($process.ExitCode -ne 0) { throw "Packaged smoke test failed: $($process.ExitCode)" }
           if (!(Test-Path $env:CALENDAR_SMOKE_OUTPUT)) { throw 'Missing smoke test report' }
       - name: Install and exercise application
-        shell: powershell
+        shell: pwsh
         run: |
           $installDir = Join-Path $env:RUNNER_TEMP 'RequirementCalendar'
           $installer = (Get-ChildItem dist/windows/*Setup.exe).FullName
