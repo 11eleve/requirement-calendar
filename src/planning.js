@@ -26,6 +26,20 @@
   if(!Model.validDate(start)||!Model.validDate(end)||!Model.validDate(today)||end<start)return '';
   return today<start?start:today>end?end:today;
  }
+ function nodeStatus(node,today){return node.done?'completed':node.date<today?'overdue':node.date===today?'today':'upcoming';}
+ function projectNodes(items,{anchor,today=Model.localDate(),kind='all',period='all',completion='pending'}={}){
+  const source=items.flatMap(item=>item.milestones.map(node=>({item,node}))),month=Model.monthGrid(anchor);
+  let end=today;if(period==='7'||period==='30'){try{end=Model.add(today,Number(period)-1);}catch{end='9999-12-31';}}
+  const nodes=source.filter(({node})=>{
+   if(kind!=='all'&&node.kind!==kind)return false;
+   if(completion==='pending'&&node.done||completion==='completed'&&!node.done)return false;
+   if(period==='overdue')return !node.done&&node.date<today;
+   if(period==='7'||period==='30')return node.date>=today&&node.date<=end;
+   if(period==='month')return node.date>=month.first&&node.date<=month.last;
+   return true;
+  }).sort((a,b)=>a.node.date.localeCompare(b.node.date)||a.item.title.localeCompare(b.item.title)||a.node.id.localeCompare(b.node.id));
+  return {nodes,total:source.length};
+ }
  function project(items,{anchor,today=Model.localDate(),scope='month',query='',tone='all',state='all',sort='start'}={}){
   const month=Model.monthGrid(anchor),terms=query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   const inScope=items.filter(item=>scope==='all'||item.start<=month.last&&item.end>=month.first);
@@ -47,6 +61,6 @@
   const nodes=rows.flatMap(({item})=>item.milestones.filter(node=>!node.done).map(node=>({item,node}))).sort((a,b)=>a.node.date.localeCompare(b.node.date)||a.item.title.localeCompare(b.item.title)||a.node.id.localeCompare(b.node.id));
   return {rows,nodes,counts,scopeCount:inScope.length};
  }
- const api={STATUS,progress,nodeProgress,status,currentPhase,nextNode,firstFreePhaseDate,defaultNodeDate,project};
+ const api={STATUS,progress,nodeProgress,status,currentPhase,nextNode,firstFreePhaseDate,defaultNodeDate,nodeStatus,projectNodes,project};
  if(typeof module!=='undefined'&&module.exports)module.exports=api;else scope.CalendarPlanning=api;
 })(globalThis);

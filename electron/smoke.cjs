@@ -43,6 +43,11 @@ async function run({app,window,store,invoke,directory}) {
   await js("(()=>{const input=document.querySelector('#rf-panel input[type=text]');input.value='放弃修改';input.dispatchEvent(new Event('input',{bubbles:true}));})()");
   await invoke('command','discard');check('explicit discard closes dirty editor',!await invoke('hasUnsavedChanges'));
   check('discard preserves committed record',JSON.parse(await invoke('exportSnapshot')).requirements[0].title==='未保存草稿');
+  await invoke('openRequirement','desktop-fixture');
+  await js("Array.from(document.querySelectorAll('.rf-detail-actions button')).find(n=>n.textContent==='复制为新需求').click()");
+  check('copy opens a protected independent draft without persisting',await invoke('hasUnsavedChanges')&&JSON.parse(await fs.readFile(store.file,'utf8')).requirements.length===1&&await js("document.querySelector('.rf-title-field input').value.endsWith('（副本）')&&Array.from(document.querySelectorAll('.rf-milestone-edit input[type=checkbox],.rf-task-edit input[type=checkbox]')).every(n=>!n.checked)&&document.querySelector('input[type=datetime-local]').value===''"));
+  await invoke('command','discard');
+  check('discarding a copy preserves the original record',JSON.parse(await invoke('exportSnapshot')).requirements.length===1&&JSON.parse(await invoke('exportSnapshot')).requirements[0].title==='未保存草稿');
   await invoke('command','summary');
   check('summary renders saved requirements and remaining nodes',await js("!document.querySelector('#rf-summary').hidden&&document.querySelectorAll('.rf-summary-row').length===1&&document.querySelectorAll('.rf-summary-node').length===1"));
   check('pending nodes retain grouping and explicit cross-month scope',await js("!!document.querySelector('[data-node-group] .rf-summary-node')&&document.querySelector('.rf-node-scope').textContent.includes('跨月')"));
@@ -54,6 +59,11 @@ async function run({app,window,store,invoke,directory}) {
   await js("Array.from(document.querySelectorAll('.rf-form button')).find(n=>n.textContent==='取消').click()");
   await invoke('command','close');
   await invoke('command','summary');
+  await js("(()=>{const c=document.querySelector('[data-summary-control=nodeKind]');c.value='release';c.dispatchEvent(new Event('change',{bubbles:true}));})()");
+  check('node-only filter leaves requirement rows available',await js("!document.querySelector('.rf-summary-node')&&document.querySelectorAll('.rf-summary-row').length===1&&Array.from(document.querySelectorAll('button')).some(n=>n.textContent==='重置节点筛选')"));
+  check('node-only filtering retains the full workbook source',(await invoke('exportWorkbook','summary')).counts[1].rows===1);
+  await js("Array.from(document.querySelectorAll('button')).find(n=>n.textContent==='重置节点筛选').click()");
+  check('node reset restores pending nodes and selector focus',await js("document.querySelectorAll('.rf-summary-node').length===1&&document.activeElement===document.querySelector('[data-summary-control=nodeKind]')"));
   const workbook=await invoke('exportWorkbook','summary');
   check('summary workbook includes requirement and node rows',workbook.counts[0].rows===1&&workbook.counts[1].rows===1);
   const exported=await js("CalendarDesktop.postMessage({action:'exportExcel',scope:'summary'})");

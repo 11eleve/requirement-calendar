@@ -82,3 +82,31 @@ test('calendar navigation: week edges and page keys respect leap months, year ch
  assert.equal(Model.calendarMove('2028-01-02','Home'),'2027-12-27');assert.equal(Model.calendarMove('2028-01-02','End'),'2028-01-02');assert.equal(Model.calendarMove('2028-12-31','PageDown'),'2029-01-31');
  assert.equal(Model.calendarMove('0001-01-01','ArrowLeft'),null);assert.equal(Model.calendarMove('0001-01-01','PageUp'),null);assert.equal(Model.calendarMove('9999-12-31','PageDown'),null);assert.equal(Model.calendarMove('9999-12-31','ArrowRight'),null);assert.equal(Model.calendarMove('2028-01-01','Enter'),null);
 });
+test('node overview: kind, calendar windows and completion combine without altering requirement rows or export source',()=>{
+ const item=Model.requirement(fixture({start:'2028-02-20',end:'2028-03-20',milestones:[
+  {id:'past',name:'待确认评审',date:'2028-02-28',kind:'review',done:false},
+  {id:'today',name:'今日评审',date:'2028-02-29',kind:'review',done:false},
+  {id:'day7',name:'第七天发布',date:'2028-03-06',kind:'release',done:false},
+  {id:'day8',name:'第八天发布',date:'2028-03-07',kind:'release',done:false},
+  {id:'done',name:'已完成评审',date:'2028-02-27',kind:'review',done:true}]})),before=JSON.stringify(item),options={anchor:'2028-02-01',today:'2028-02-29'};
+ const ids=extra=>Planning.projectNodes([item],{...options,...extra}).nodes.map(({node})=>node.id);
+ assert.deepEqual(ids({period:'7'}),['today','day7']);assert.deepEqual(ids({period:'7',kind:'release'}),['day7']);
+ assert.deepEqual(ids({period:'month'}),['past','today']);assert.deepEqual(ids({period:'overdue'}),['past']);
+ assert.deepEqual(ids({completion:'completed'}),['done']);assert.deepEqual(ids({completion:'completed',period:'overdue'}),[]);
+ assert.deepEqual(ids({kind:'review',completion:'all'}),['done','past','today']);assert.equal(Planning.projectNodes([item],options).total,5);
+ assert.equal(Planning.project([item],options).rows.length,1);assert.equal(JSON.stringify(item),before);
+});
+test('node overview: rolling windows include today and clamp safely at the supported year boundary',()=>{
+ const item=Model.requirement(fixture({start:'9999-12-01',end:'9999-12-31',milestones:[{id:'last',name:'最后节点',date:'9999-12-31',kind:'deadline',done:false}]}));
+ assert.equal(Planning.projectNodes([item],{anchor:item.start,today:'9999-12-29',period:'30'}).nodes.length,1);
+ assert.equal(Planning.nodeStatus(item.milestones[0],'9999-12-30'),'upcoming');assert.equal(Planning.nodeStatus(item.milestones[0],'9999-12-31'),'today');
+ assert.equal(Planning.nodeStatus({...item.milestones[0],date:'9999-12-01'},'9999-12-31'),'overdue');assert.equal(Planning.nodeStatus({...item.milestones[0],done:true},'9999-12-31'),'completed');
+});
+test('reuse: copying a requirement moves its complete plan, resets work and reminders, and creates fresh identities',()=>{
+ const item=Model.requirement(fixture({title:'😀'.repeat(32),reminder:'2028-03-01T10:00',tasks:['验收','回滚'],done:[true,true],phases:[{name:'评审',start:'2028-02-27',end:'2028-02-29'},{name:'开发',start:'2028-03-02',end:'2028-03-06'}],resources:[{name:'接口',type:'契约',url:'https://example.com/spec'}]})),before=JSON.stringify(item),copy=Model.duplicateRequirement(item,'2028-03-01');
+ assert.notEqual(copy.id,item.id);assert.equal(copy.start,'2028-03-01');assert.equal(copy.end,'2028-03-13');assert.equal(copy.phases[0].end,'2028-03-03');assert.equal(copy.phases[1].start,'2028-03-05');
+ assert.deepEqual(copy.done,[false,false]);assert.equal(copy.reminder,null);assert(copy.milestones.every(node=>!node.done&&!item.milestones.some(old=>old.id===node.id)));
+ assert.equal(copy.milestones[0].date,'2028-03-03');assert.deepEqual(copy.resources,item.resources);assert.equal(copy.note,item.note);assert.equal(copy.tone,item.tone);
+ assert(copy.title.endsWith('（副本）')&&copy.title.length<=64);assert(!/[\uD800-\uDBFF]$/.test(copy.title.slice(0,-4)));assert.equal(JSON.stringify(item),before);
+ assert.throws(()=>Model.duplicateRequirement(item,'9999-12-31'),/范围/);assert.equal(JSON.stringify(item),before);
+});

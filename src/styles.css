@@ -406,6 +406,15 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-node-detail input { margin-top:4px; }
 #req-calendar-refined .rf-node-detail.is-targeted,#req-calendar-refined .rf-node-detail:focus-within { background:var(--rf-context-fill); box-shadow:inset 2px 0 var(--rf-context-tone); }
 #req-calendar-refined .rf-node-actions { display:flex; align-items:center; gap:12px; }
+#req-calendar-refined .rf-detail-edit-actions { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+#req-calendar-refined .rf-editor-title { display:flex; align-items:center; gap:8px; min-width:0; }
+#req-calendar-refined .rf-editor-count { font-size:10px; font-weight:400; font-variant-numeric:tabular-nums; }
+#req-calendar-refined .rf-node-controls { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+#req-calendar-refined .rf-node-controls select { appearance:none; width:auto; height:30px; min-height:30px; padding:4px 25px 4px 8px; font-size:11px; flex:1 1 auto; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='m3 4.5 3 3 3-3' fill='none' stroke='%23757f97' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-position:right 8px center; background-repeat:no-repeat; }
+#req-calendar-refined .rf-node-filter-help { margin:0 0 14px; font-size:10px; line-height:1.5; }
+#req-calendar-refined .rf-summary-node.is-done .rf-summary-info strong { text-decoration:line-through; color:var(--rf-muted); }
+#req-calendar-refined .rf-node-marker.is-overdue { border-style:dashed; border-color:var(--rf-tone); }
+#req-calendar-refined .rf-node-detail.is-overdue .rf-muted { color:#984b58; }
 #req-calendar-refined .rf-summary-progress { width:94px; }
 #req-calendar-refined .rf-summary-node-progress { font-size:10px; }
 #req-calendar-refined .rf-summary-row.is-selected,#req-calendar-refined .rf-summary-node.is-selected { background:var(--rf-fill); }

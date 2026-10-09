@@ -161,7 +161,12 @@
       phases: item.phases.map(phase => ({ ...phase, start: add(phase.start, offset), end: add(phase.end, offset) })),
       milestones: item.milestones.map(node => ({...node, date: add(node.date, offset)})) };
   }
-  const api = { VERSION, TONES, NODE_KINDS, ValidationError, validDate, parse, iso, add, days, localDate, format, monthOffset, monthGrid, calendarMove, allocateLanes, validReminder, newId, safeURL, iconFor, requirement, shiftRequirement, snapshot };
+  function duplicateRequirement(value,start) {
+    const item=shiftRequirement(value,days(value.start,start));
+    let title=item.title;while((title+'（副本）').length>64)title=Array.from(title).slice(0,-1).join('');
+    return requirement({...item,id:newId(),title:title+'（副本）',reminder:null,done:item.done.map(()=>false),milestones:item.milestones.map(node=>({...node,id:newId(),done:false}))});
+  }
+  const api = { VERSION, TONES, NODE_KINDS, ValidationError, validDate, parse, iso, add, days, localDate, format, monthOffset, monthGrid, calendarMove, allocateLanes, validReminder, newId, safeURL, iconFor, requirement, shiftRequirement, duplicateRequirement, snapshot };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else scope.CalendarModel = api;
 })(globalThis);
