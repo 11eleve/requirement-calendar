@@ -16,11 +16,11 @@ function checkLayout(){
 async function checkEditorLayout(){
  const original=CalendarApp.exportSnapshot();CalendarApp.editRequirement('content');await settle();
  const resourceMeta=$('[data-editor-panel=resources] .rf-summary-meta');
- assert(resourceMeta.title===item.resources[0].type,'custom resource types retain a complete summary tooltip');
+ assert(resourceMeta.title===item.resources[0].type+' · example.com','custom resource types and source retain a complete summary tooltip');
  await settle();
  const summary=$('.rf-phase-summary'),name=summary.querySelector('.rf-summary-name'),period=summary.querySelector('.rf-summary-meta'),remove=summary.closest('.rf-editor-item').querySelector('.rf-remove');
  assert(name.textContent===phase&&name.scrollWidth<=name.clientWidth+1&&name.scrollHeight<=name.clientHeight+1,'the collapsed editor wraps the complete long phase name without clipping');
- assert(period.textContent==='2026.12.20—2027.2.10'&&period.scrollWidth<=period.clientWidth+1&&period.title===period.textContent,'cross-year editor dates remain completely visible and available on hover');
+ assert(period.textContent==='2026.12.20—2027.2.10 · 共 53 天'&&period.scrollWidth<=period.clientWidth+1&&period.title===period.textContent,'cross-year editor dates remain completely visible and available on hover');
  assert(period.getBoundingClientRect().top>=name.getBoundingClientRect().bottom-1&&Math.max(name.getBoundingClientRect().right,period.getBoundingClientRect().right)<=remove.getBoundingClientRect().left-3,'the full date sits beneath the phase name without entering the removal target');
  assert(!CalendarApp.hasUnsavedChanges()&&!!$('.rf-range-preview.is-visible')&&CalendarApp.exportSnapshot()===original,'reading collapsed phase summaries retains a clean draft and its range strip');
  $$('.rf-form-actions button').find(node=>node.textContent==='取消').click();await settle();

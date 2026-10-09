@@ -33,6 +33,13 @@ async function run({app,window,store,invoke,directory}) {
   await invoke('openRequirement','desktop-fixture');check('notification activation reveals corresponding requirement',await js("!document.querySelector('#rf-detail').hidden && document.querySelector('.rf-bar.is-selected')?.dataset.requirementId==='desktop-fixture'"));
   await invoke('editRequirement','desktop-fixture');
   check('native reminder editor is available',await js("!!document.querySelector('input[type=\"datetime-local\"]')"));
+  check('editor duration includes both boundary dates',await js("document.querySelector('.rf-duration').textContent==='共 19 天'"));
+  check('node and phase pickers inherit the requirement range',await js("Array.from(document.querySelectorAll('[data-editor-panel=phases] input[type=date],.rf-milestone-edit input[type=date]')).every(n=>n.min==='2026-10-07'&&n.max==='2026-10-25')"));
+  check('task composition Enter does not insert another row',await js("(()=>{const n=document.querySelector('.rf-task-edit input[type=text]');n.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',isComposing:true,bubbles:true,cancelable:true}));return document.querySelectorAll('.rf-task-edit').length===1;})()"));
+  check('task Enter inserts a focused pending row without saving',await js("(()=>{const n=document.querySelector('.rf-task-edit input[type=text]'),e=new KeyboardEvent('keydown',{key:'Enter',bubbles:true,cancelable:true});n.dispatchEvent(e);const rows=document.querySelectorAll('.rf-task-edit');return e.defaultPrevented&&rows.length===2&&document.activeElement===rows[1].querySelector('input[type=text]')&&!rows[1].querySelector('input[type=checkbox]').checked&&CalendarApp.hasUnsavedChanges();})()"));
+  await invoke('command','discard');
+  check('discarding quick task insertion preserves committed tasks',JSON.parse(await invoke('exportSnapshot')).requirements[0].tasks.length===1);
+  await invoke('editRequirement','desktop-fixture');
   await js("(()=>{const input=document.querySelector('#rf-panel input[type=text]');input.value='未保存草稿';input.dispatchEvent(new Event('input',{bubbles:true}));})()");
   check('dirty drafts detected',await invoke('hasUnsavedChanges'));
   check('Excel export refuses an unsaved draft',await js("CalendarDesktop.postMessage({action:'exportExcel',scope:'all'}).then(()=>false,()=>true)"));

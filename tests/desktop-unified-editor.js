@@ -17,7 +17,7 @@ set(name,'结算流程改版');set(dates[1],'2026-11-06');
 click('添加阶段');let phase=$('[data-editor-panel=phases]');let controls=phase.querySelectorAll('input');
 set(controls[0],'开发');set(controls[1],'2026-10-09');set(controls[2],'2026-11-07');
 assert(await CalendarApp.command('save')===false,'out-of-range stage prevents saving in the unified form');
-assert(document.activeElement===controls[1]&&phase.querySelector('details').open,'stage error reveals and focuses its own control without hiding other sections');
+assert(document.activeElement===controls[2]&&controls[2].getAttribute('aria-invalid')==='true'&&phase.querySelector('details').open,'stage error reveals and focuses its exact invalid end date without hiding other sections');
 set(controls[2],'2026-10-22');
 click('添加资料');const resource=$('[data-editor-panel=resources]'),fields=resource.querySelectorAll('input');
 set(fields[0],'结算流程 PRD');set(fields[1],'需求文档');set(fields[2],'https://alidocs.com');

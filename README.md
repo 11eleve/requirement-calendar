@@ -4,9 +4,9 @@
 
 <h1 align="center">需求日历</h1>
 
-> 本分支为 `explore/planning-workflow`，当前源码版本为 **0.4.0-alpha.4**。稳定版 0.3.0 保留在 [main](https://github.com/11eleve/requirement-calendar/tree/main)，下方稳定版安装链接继续指向 0.3.0。
+> 本分支为 `explore/planning-workflow`，当前源码版本为 **0.4.0-alpha.5**。稳定版 0.3.0 保留在 [main](https://github.com/11eleve/requirement-calendar/tree/main)，下方稳定版安装链接继续指向 0.3.0。
 
-当前探索版 **alpha.4** 的 Windows x64 安装包可从[本次构建产物](https://github.com/11eleve/requirement-calendar/actions/runs/37973077974/artifacts/11638136727)下载，运行 `RequirementCalendar-0.4.0-alpha.4-x64-Setup.exe`。已通过开发、打包与实际安装检查。试用前可用文件菜单导出 JSON 备份；产物于 2026-11-08 到期。
+前一探索版 **alpha.4** 的 Windows x64 安装包可从[本次构建产物](https://github.com/11eleve/requirement-calendar/actions/runs/37973077974/artifacts/11638136727)下载，运行 `RequirementCalendar-0.4.0-alpha.4-x64-Setup.exe`。已通过开发、打包与实际安装检查。试用前可用文件菜单导出 JSON 备份；产物于 2026-11-08 到期。
 
 <p align="center">面向程序员的需求排期工具，把周期、阶段、资料和事项放在一起。</p>
 
@@ -321,9 +321,20 @@ Excel 用于查看、筛选和分享排期，暂不支持导入；迁移或恢�
 
 空栏目采用紧凑的行高和细分隔线，名称与日期保留清晰的层级。底部操作区固定在面板边缘，滚动长资料列表时也能直接保存或取消。
 
-![新建需求：阶段、资料、事项和备忘合并在等高的连续表单中，底部操作区固定](assets/editor-continuous.png)
+![新建需求：一张全高连续表单，空栏目紧凑排列，底部固定保存操作](assets/editor-fullheight.png)
 
 *桌面版实际运行截图：新建表单占满可用高度，各部分使用轻分隔线依次展示；保存按钮、勾选框、添加操作与输入焦点沿用当前需求配色，月历上的范围条持续可见。*
+
+周期和阶段摘要显示包含起止当天的总天数。阶段与节点的日期选择器跟随正在编辑的需求周期；改动周期不会自动改写原有阶段或节点，超出范围时会定位到具体日期供确认。资料摘要在自定义类型旁显示网站来源，不展示链接中的路径和查询参数。已完成节点使用勾选与划线文字，未完成且已过计划日期的节点会在编辑时提示。
+
+工作事项中按回车可在当前行后继续添加下一项，并直接开始输入；空行不反复增加，输入法组合和带修饰键的回车保留原行为。保存前所有内容都属于同一草稿。
+
+<details>
+<summary>查看填写中的完整排期</summary>
+
+![填写中的新需求：周期天数、阶段、节点与资料仍在同一表单内](assets/editor-planning.png)
+
+</details>
 
 备忘保留缩进、换行与首尾空白，便于记录代码片段和接口约定。输入区利用表单剩余空间，并随内容适度增高；较长内容在输入区内滚动；也可以手动调整高度，当前编辑会保留你的设置。窗口变窄时，会按新的宽度重新排版。较长的签名文档链接也会完整保存。校验失败时，会展开并定位需要修正的具体字段。
 
