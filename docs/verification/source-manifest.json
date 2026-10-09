@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–65",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-09T16:41:58.541793+00:00",
+  "checked_at_utc": "2026-10-09T16:47:58.849908+00:00",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Not revalidated by the current reminder-editor batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -54,7 +54,7 @@
     "tests/desktop-readability.js": "d247c1ef80337028168c9340a70b0353d5008e16406bc25cabd548dcd2ce1b86",
     "tests/desktop-panel-continuity.js": "3a640ff2db7c9a63cd739d4a63e91f9901484353836c0bc4a2a6fc75c13ead64",
     "tests/desktop-creation-colors.js": "6526cc89b675a66b50e84f6d774055c2f7cce1580cff05f4aee6470a7dafab2a",
-    "README.md": "213bb92c7367b5b3f1b536f712db3f344d80127effae0fa11b59afe94cd34469",
+    "README.md": "6a9ce746475e9a2e1876e32fa96c512066fa31d8d7a0081456597c9254b1c1b9",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "63d455cb9c2c5a88b330aeb4e3835250f11b0b47ef26790d4c046afebcc0bd7c",
     "tests/resource-icons.swift": "68cb12f0d68addc06ef734123f72affa7fb33c299dee86107db642b2a5b3795a",
@@ -78,8 +78,8 @@
     "tests/desktop-disclosure.js": "236f480ef125186d0a0e5dae09ff29a5b1dc05622932af98c8d5d68034b04b1f",
     "tests/desktop-replan.js": "05601a673b89f9a5c6f19563ab61208525cf74a1a20d8848f3281c5d79a85927",
     "tests/desktop-replan-editor.js": "4a1c703a1ec94e6c01e234aa65e7fc4f39b17fea4e05d223b449c68b9123cc7b",
-    "docs/OPTIMIZATION_LOG.md": "d0310faee53524c143669290858e8c8e140013a5a147538063c874ca0d1ef378",
-    "docs/COMPLETION_AUDIT.md": "84031233803310871eccaf247fceb1553145b50259a9b6db05544573a69466c6",
+    "docs/OPTIMIZATION_LOG.md": "06e0133cd93d2bd4a34697b30f3e6fa665d0b3a03ad9a0c76427ca70fcab71e6",
+    "docs/COMPLETION_AUDIT.md": "c1646baecab5d6b74464add886ef81bcd654931010dbf5547119d9024c3852a7",
     "tests/desktop-band-feedback.js": "c254eb00cb958835c066dc2ca027a44dc85a06e8d366454766b04658217cc299",
     "tests/desktop-reminder-editor.js": "13dd1445ba6e18060a30451e24fb72a089cbdfbc159fbfe767c6793f981e16b8",
     "tests/desktop-reminder-configured.js": "006705c50fd6383f263635f7181ddf6b25e829db1ef5f04bcb6d4f2979567dcb",
@@ -1726,8 +1726,13 @@
     "node_tests": 44,
     "native_file_store_assertions": 21,
     "electron_macos_checks": 29,
-    "windows_build": "pending_new_ci",
+    "windows_build": "success",
     "rounds": "60–65",
-    "data_schema": 7
+    "data_schema": 7,
+    "windows_build_run": 37961130646,
+    "windows_development_checks": 31,
+    "windows_packaged_smoke": "passed",
+    "windows_installed_smoke": "passed",
+    "windows_artifact_id": 11631388599
   }
 }

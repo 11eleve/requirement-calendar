@@ -352,8 +352,82 @@
     ]
   },
   "windows": {
-    "status": "pending_new_ci",
-    "previous_successful_run": 37955782602
+    "implementation_commit": "4e13db6133711c1dd82adac30d9db00fb26c5986",
+    "run_id": 37961130646,
+    "job_id": 113923937720,
+    "conclusion": "success",
+    "node_tests": 44,
+    "development_smoke": {
+      "platform": "win32",
+      "arch": "x64",
+      "electron": "44.7.0",
+      "packaged": false,
+      "checks": [
+        "renderer uses sandbox and context isolation",
+        "renderer has no Node APIs",
+        "desktop bridge is available",
+        "native layout and calendar rendered",
+        "creation shows all sections together without tabs",
+        "editor fills calendar height with visible bottom actions",
+        "unknown IPC rejected",
+        "invalid save rejected",
+        "restore through real native bridge succeeds",
+        "saved requirements preserve notes and phases",
+        "v7 palette and nodes persist through the desktop bridge",
+        "file reload restores requirements",
+        "notification activation reveals corresponding requirement",
+        "native reminder editor is available",
+        "dirty drafts detected",
+        "Excel export refuses an unsaved draft",
+        "restore refuses dirty draft",
+        "save clears dirty state",
+        "save actually commits editor changes",
+        "explicit discard closes dirty editor",
+        "discard preserves committed record",
+        "summary renders saved requirements and remaining nodes",
+        "summary workbook includes requirement and node rows",
+        "desktop Excel export writes a real XLSX atomically",
+        "invalid Excel export scopes are rejected",
+        "returning from summary restores the calendar",
+        "bad import preserves persisted data",
+        "CSP blocks renderer remote networking",
+        "private favicon requests are rejected",
+        "Windows shortcut accepts notification identity",
+        "Windows shortcut retains AUMID and toast CLSID"
+      ]
+    },
+    "packaged_smoke": {
+      "status": "passed",
+      "evidence": "Workflow process exited 0 and smoke report exists; full report included in artifact."
+    },
+    "installed_smoke": {
+      "status": "passed",
+      "protocol_registration": "passed",
+      "start_menu_shortcut": "passed",
+      "evidence": "Workflow NSIS installation exited 0, exact protocol command and Chinese shortcut verified; installed smoke exited 0 with report."
+    },
+    "artifact": {
+      "id": 11631388599,
+      "name": "RequirementCalendar-Windows-x64",
+      "size_in_bytes": 111541083,
+      "url": "https://api.github.com/repos/11eleve/requirement-calendar/actions/artifacts/11631388599",
+      "archive_download_url": "https://api.github.com/repos/11eleve/requirement-calendar/actions/artifacts/11631388599/zip",
+      "expired": false,
+      "created_at": "2026-10-09T16:45:58Z",
+      "expires_at": "2026-11-08T16:45:52Z",
+      "updated_at": "2026-10-09T16:45:58Z",
+      "digest": "sha256:e529fb9b75c7e418e0801caf9b922bb31b23fd758721a2c75de1136a22d978ff",
+      "workflow_run": {
+        "id": 37961130646,
+        "repository_id": 1409048301,
+        "head_repository_id": 1409048301,
+        "head_branch": "main",
+        "head_sha": "4e13db6133711c1dd82adac30d9db00fb26c5986"
+      }
+    },
+    "url": "https://github.com/11eleve/requirement-calendar/actions/runs/37961130646",
+    "download": "https://github.com/11eleve/requirement-calendar/actions/runs/37961130646/artifacts/11631388599",
+    "manual_notification_display_and_click": "not verified"
   },
   "scope": "Native suites use isolated data, synthetic form controls and an isolated Excel destination. Actual native Save-panel gestures and Windows OS notification display/click are not claimed."
 }

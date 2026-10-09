@@ -530,3 +530,5 @@ README 统一浅色说明，移除旧深色图展示并刷新十张实际截图�
 数据格式升级至 v7，保留 v4–v6 读取路径，旧版拒绝覆盖高版本。Windows 与 macOS 共用页面；Windows 新安装器构建结果另记 verification/planning-export.json，不以 macOS 测试冒充 Windows。Excel 的独立解析确认中文、完整日期、比例和备忘内容；LibreOffice PDF 缺少当前运行环境的中文字体，不能作为中文视觉验收证据。
 
 本批轮次按独立问题与产品改动记录，测试次数、截图次数及文档更新不另计轮次。100 轮目标尚未完成，真实系统通知展示与点击的历史验收边界继续保留。当前静态截图只证明结束状态排版，不代表动画手感或用户审美认可。
+
+本批 Windows 构建 [37961130646](https://github.com/11eleve/requirement-calendar/actions/runs/37961130646) 在提交 `4e13db6133711c1dd82adac30d9db00fb26c5986` 通过：44 项 Node 测试、开发版 31 项桌面检查，打包版与实际安装版冒烟检查，以及协议和开始菜单快捷方式核对。已产出 `RequirementCalendar-0.3.0-x64-Setup.exe` 和 SHA256；实际通知展示、声音与系统点击不由这些检查代替。
