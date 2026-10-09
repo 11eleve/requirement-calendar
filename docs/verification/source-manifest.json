@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–58",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-09T13:36:29.107Z",
+  "checked_at_utc": "2026-10-09T13:42:56.022Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Not revalidated by the current reminder-editor batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -53,7 +53,7 @@
     "tests/desktop-readability.js": "57c785525a5b58f96092fab51a4a499ab0d7588aced729528fc3201519dd7c14",
     "tests/desktop-panel-continuity.js": "88ae4ed97783af517c0d476a66a660ef0c95ec4e272020677b901a51aae15560",
     "tests/desktop-creation-colors.js": "6526cc89b675a66b50e84f6d774055c2f7cce1580cff05f4aee6470a7dafab2a",
-    "README.md": "d7644fa1bb847f9e6f2f24df76edc56f7a71043864fbf90afb6938800532d171",
+    "README.md": "efb96d227a0adcdb4b2bcfe2e505111fd68ea5817957342f0db6c8384a3f57bb",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "63d455cb9c2c5a88b330aeb4e3835250f11b0b47ef26790d4c046afebcc0bd7c",
     "tests/resource-icons.swift": "68cb12f0d68addc06ef734123f72affa7fb33c299dee86107db642b2a5b3795a",
@@ -82,7 +82,8 @@
     "tests/desktop-band-feedback.js": "52ac7a08e0d98e4ec802b20534dcc221cdbb6005adfe1f6c8cd64cf8caccde1f",
     "tests/desktop-reminder-editor.js": "906dd7c45eac694608e2aeda5cf837e8975397a738f2a13234c2c210d6f8adca",
     "tests/desktop-reminder-configured.js": "006705c50fd6383f263635f7181ddf6b25e829db1ef5f04bcb6d4f2979567dcb",
-    "scripts/verify-site-icons.sh": "8617ac7ac76d6738135715e300502c4cccce6485d817c115f2ab6e9a40ab292c"
+    "scripts/verify-site-icons.sh": "8617ac7ac76d6738135715e300502c4cccce6485d817c115f2ab6e9a40ab292c",
+    "assets/app-icon.png": "3528282a97a3342986af8ded31cbfede749aeb037d3757d3461607c5a85a4039"
   },
   "results": {
     "docs/verification/browser-storage.json": "70dca1f59a7f7fdde9af7f4eaf6c378e1e9b0347e51c3701d891166ea68807fb",
@@ -1621,5 +1622,22 @@
       "green-dark"
     ],
     "scope": "Isolated native WebKit actual computed colors, geometry, file bridge and existing regressions. Focus/activation synthetic and transitions completed to endpoints. Inactive verification host did not exercise :focus-visible; no claim of trusted keyboard-ring or intermediate motion acceptance."
+  },
+  "delivery_consistency_audit": {
+    "checked_at_utc": "2026-10-09T13:42:56.022Z",
+    "source_product_commit": "91a060808ed9a73935f1f8e037ad13221a2df383",
+    "readme_icon": "assets/app-icon.png",
+    "build_icon": "assets/app-icon.png",
+    "bundle_icon_name": "AppIcon",
+    "bundled_1024_icon_visually_inspected": true,
+    "signature_verified": true,
+    "product_source_changed": false,
+    "audit_front_page": "current requirement matrix; historical checks separately labelled",
+    "remaining": [
+      "trusted held-drag focus loss and intermediate animation",
+      "real notification click with dirty draft protection",
+      "restore temporary notification permission after unlock",
+      "user aesthetic acceptance"
+    ]
   }
 }

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/app-icon-v2.png" width="128" height="128" alt="需求日历：由马赛克拼块组成的日历与跨日排期条">
+  <img src="assets/app-icon.png" width="128" height="128" alt="需求日历：由马赛克拼块组成的日历与跨日排期条">
 </p>
 
 <h1 align="center">需求日历</h1>
