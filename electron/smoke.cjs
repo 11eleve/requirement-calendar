@@ -12,6 +12,10 @@ async function run({app,window,store,invoke,directory}) {
   check('renderer has no Node APIs',await js("typeof require==='undefined' && typeof process==='undefined'"));
   check('desktop bridge is available',await js("typeof CalendarDesktop.postMessage==='function'"));
   check('native layout and calendar rendered',await js("document.documentElement.classList.contains('native') && document.querySelectorAll('.rf-date[data-date]').length>=28"));
+  await invoke('command','new');
+  check('creation shows all sections together without tabs',await js("!document.querySelector('[role=tablist]') && ['阶段安排','相关资料','工作事项'].every(text=>Array.from(document.querySelectorAll('.rf-form h3')).some(node=>node.textContent===text))"));
+  check('editor fills calendar height with visible bottom actions',await js("(()=>{document.getAnimations().forEach(a=>a.finish());const a=document.querySelector('#rf-detail').getBoundingClientRect(),b=document.querySelector('#rf-calendar').getBoundingClientRect(),c=document.querySelector('.rf-form-actions').getBoundingClientRect();return Math.abs(a.height-b.height)<2 && Math.abs(c.bottom-(a.bottom-1))<2;})()"));
+  await invoke('command','discard');
   check('unknown IPC rejected',await js("CalendarDesktop.postMessage({action:'execute',code:'1'}).then(()=>false,()=>true)"));
   check('invalid save rejected',await js("CalendarDesktop.postMessage({action:'save',raw:'{bad'}).then(()=>false,()=>true)"));
   const snapshot={version:6,anchor:'2026-10-07',requirements:[{id:'desktop-fixture',title:'Windows 桌面排期',start:'2026-10-07',end:'2026-10-25',tone:'green',phases:[{name:'开发',start:'2026-10-09',end:'2026-10-16'}],resources:[],tasks:['验证桌面保存'],done:[false],note:'  缩进\n下一行'}]};

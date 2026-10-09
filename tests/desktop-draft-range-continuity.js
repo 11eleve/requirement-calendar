@@ -5,7 +5,7 @@ const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new
 const set=(node,value,type='input')=>{node.value=value;node.dispatchEvent(new Event(type,{bubbles:true}));};
 const snapshot=()=>JSON.parse(CalendarApp.exportSnapshot()),strips=()=>$$('.rf-range-preview.is-visible');
 const geometry=()=>JSON.stringify(strips().map(node=>({left:node.style.left,width:node.style.width,tone:node.className})));
-const dates=()=>$$('.rf-form>.rf-tab-panel[data-editor-panel=basic]>.rf-pair input');
+const dates=()=>$$('.rf-form>[data-editor-panel=basic]>.rf-pair input');
 const click=text=>$$('button').find(node=>node.textContent===text).click();
 const item={id:'range',title:'持续范围检查',tone:'green',start:'2026-10-01',end:'2026-10-31',phases:[],resources:[],tasks:[],done:[],note:''};
 assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-01',requirements:[item]})),'isolated range fixture restored');CalendarApp.editRequirement(item.id);await settle();

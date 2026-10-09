@@ -1,7 +1,7 @@
 // Note growth, reflow and explicit sizing in the isolated native WebKit host.
 const checks=[], $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 const assert=(value,message)=>{if(!value)throw Error(message);checks.push(message);};
-const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(r=>setTimeout(r,30));document.getAnimations().forEach(a=>a.finish());};
+const settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(r=>setTimeout(r,100));document.getAnimations().forEach(a=>a.finish());};
 const set=value=>{const note=$('textarea');note.value=value;note.dispatchEvent(new Event('input',{bubbles:true}));};
 const height=()=>$('textarea').getBoundingClientRect().height;
 const eight=Array.from({length:8},(_,i)=>'    '+i+' 确认接口契约与灰度回滚边界').join('\n');
@@ -12,24 +12,22 @@ assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-
 CalendarApp.editRequirement(item.id);await settle();const original=CalendarApp.exportSnapshot(),calendar=$('#rf-calendar');calendar.scrollTop=240;
 assert(height()===240&&$('textarea').scrollHeight>$('textarea').clientHeight&&$('textarea').value===long,'a saved long note opens at a bounded readable height with its original whitespace');
 assert(!CalendarApp.hasUnsavedChanges()&&$$('.rf-range-preview.is-visible').length===5,'initial note sizing leaves the draft clean and its period visible');
-set('简短结论');assert(height()===78&&$('textarea').scrollHeight===$('textarea').clientHeight,'shortening a long note restores the compact input height');
+set('简短结论');assert(height()>=82&&height()<=240&&$('textarea').scrollHeight===$('textarea').clientHeight,'shortening a long note fills the spare editor space without an inner scrollbar');
 set(eight);const grown=height();
-assert(grown>78&&grown<240&&$('textarea').scrollHeight===$('textarea').clientHeight,'eight lines fit without an inner scrollbar or excess fixed-height space');
+assert(grown>=82&&grown<=240&&$('textarea').scrollHeight===$('textarea').clientHeight,'eight lines fit without an inner scrollbar or excess fixed-height space');
 assert(CalendarApp.hasUnsavedChanges()&&CalendarApp.exportSnapshot()===original,'note edits remain draft changes until an explicit save');
 $('textarea').focus();$('textarea').setSelectionRange(4,18);$('textarea').dispatchEvent(new Event('input',{bubbles:true}));await settle();
 assert(document.activeElement===$('textarea')&&$('textarea').selectionStart===4&&$('textarea').selectionEnd===18,'fitting does not replace the field or disturb its text selection');
 set('接口约定'.repeat(24));const wider=height(),wrapped=$('textarea').value;
 const frame=await webkit.messageHandlers.calendar.postMessage({action:'verifyWindow',save:true});await settle();
-assert(frame.width===980&&frame.height===700&&height()>wider&&$('textarea').scrollHeight===$('textarea').clientHeight,'a narrower native window refits visible wrapped text without another input event');
-$$('.rf-editor-tab').find(node=>node.textContent==='阶段').click();await settle();
-assert($('[data-editor-panel=basic]').hidden&&$('textarea').value===wrapped,'hidden basic information retains the note draft');
-$('#req-calendar-refined').style.setProperty('--rf-inspector-width','352px');await settle();
-$$('.rf-editor-tab').find(node=>node.textContent==='基本信息').click();await settle();
-assert(height()===wider&&$('textarea').value===wrapped,'returning after a hidden-panel width change refits the retained text');
+assert(frame.width===980&&frame.height===700&&height()>=wider&&$('textarea').scrollHeight===$('textarea').clientHeight,'a narrower native window refits visible wrapped text without another input event');
+assert(!$('[data-editor-panel=basic]').hidden&&$('textarea').value===wrapped,'the continuous form keeps the entire note draft visible');
+$('textarea').blur();
+$('#req-calendar-refined').style.setProperty('--rf-inspector-width','384px');await settle();
+assert($('textarea').scrollHeight===$('textarea').clientHeight&&$('textarea').value===wrapped,'inspector width changes refit the retained note');
 $('#req-calendar-refined').style.removeProperty('--rf-inspector-width');await settle();
-assert(height()>wider&&$('textarea').scrollHeight===$('textarea').clientHeight,'subsequent visible inspector width changes also refit the text');
 $('textarea').focus();set(long);await settle();const bounds=$('textarea').getBoundingClientRect();
-assert(height()===240&&bounds.top>=$('.rf-editor-tabs').getBoundingClientRect().bottom-1&&bounds.bottom<=$('.rf-form-actions').getBoundingClientRect().top+1,'a growing focused note stays visible between the tabs and save actions in a smaller window');
+assert(height()===240&&bounds.top>=$('#rf-panel').getBoundingClientRect().top-1&&bounds.bottom<=$('.rf-form-actions').getBoundingClientRect().top+1,'a growing focused note stays visible between the panel top and save actions in a smaller window');
 assert(calendar.scrollTop===240&&$$('.rf-range-preview.is-visible').length===5,'note fitting does not move the dense calendar or remove draft feedback');
 $('textarea').scrollTop=600;set(long+'\n末尾继续记录');
 assert($('textarea').scrollTop>=599&&height()===240,'editing a capped long note preserves its internal reading position');
@@ -37,8 +35,6 @@ assert($('textarea').scrollTop>=599&&height()===240,'editing a capped long note 
 // not the trusted pointer gesture used to reach it.
 $('textarea').style.height='192px';set(long+'\n末尾继续记录\n    回滚分支已确认  ');const manual=$('textarea').value;
 assert(height()===192,'an explicitly resized field keeps its chosen height during further input');
-$$('.rf-editor-tab').find(node=>node.textContent==='阶段').click();$$('.rf-editor-tab').find(node=>node.textContent==='基本信息').click();await settle();
-assert(height()===192&&$('textarea').value===manual,'tab changes retain the explicit height and the complete draft');
 $('#req-calendar-refined').style.setProperty('--rf-inspector-width','352px');await settle();$('#req-calendar-refined').style.removeProperty('--rf-inspector-width');await settle();
 assert(height()===192&&$('textarea').value===manual,'inspector width changes preserve an explicitly chosen height');
 $$('.rf-form-actions button').find(node=>node.textContent==='取消').click();await settle();

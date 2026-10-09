@@ -4,8 +4,7 @@ if(!await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-
 CalendarApp.editRequirement(item.id);
 document.querySelector('.rf-resource-summary').click();
 document.getAnimations().forEach(a=>a.finish());await new Promise(resolve=>setTimeout(resolve,30));document.getAnimations().forEach(a=>a.finish());
-const panel=document.querySelector('#rf-panel'),section=document.querySelector('.rf-resource-summary').closest('.rf-editor-section'),tabs=document.querySelector('.rf-editor-tabs');
-panel.scrollTop+=section.previousElementSibling.getBoundingClientRect().bottom-tabs.getBoundingClientRect().bottom+8;
+document.querySelector('[data-editor-panel=resources]').scrollIntoView({block:'start'});
 document.activeElement?.blur();
 const rows=Array.from(document.querySelectorAll('.rf-resource-summary'));
 if(rows.some(row=>Array.from(row.querySelectorAll('.rf-summary-name,.rf-summary-meta')).some(node=>node.scrollWidth>node.clientWidth+1||node.scrollHeight>node.clientHeight+1)))throw Error('resource summary clipped');

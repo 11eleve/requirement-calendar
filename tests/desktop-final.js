@@ -48,10 +48,10 @@ const start=$$('.rf-form input[type=date]')[0],end=$$('.rf-form input[type=date]
 assert(start.min==='0001-01-01'&&end.max==='9999-12-31','37: editable date fields share the model-supported limits');
 set(end,'2026-09-30');await CalendarApp.command('save');
 assert(document.activeElement===end&&end.getAttribute('aria-invalid')==='true','43: invalid requirement range focuses its end-date field');
-set(end,'2026-10-31');button('阶段').click();button('添加阶段').click();
-let fields=$$('.rf-tab-panel[data-editor-panel=phases] input');
+set(end,'2026-10-31');button('添加阶段').click();
+let fields=$$('[data-editor-panel=phases] input');
 set(fields[0],'阶段一');set(fields[1],'2026-10-02');set(fields[2],'2026-10-12');
-button('添加阶段').click();fields=$$('.rf-tab-panel[data-editor-panel=phases] input');
+button('添加阶段').click();fields=$$('[data-editor-panel=phases] input');
 set(fields[3],'阶段二');set(fields[4],'2026-10-12');set(fields[5],'2026-10-20');
 await CalendarApp.command('save');assert(document.activeElement===fields[4]&&fields[4].closest('details').open,'43: overlapping phases focus the conflicting stage instead of a hidden row');
 await CalendarApp.command('close');$('#rf-discard-drop').click();

@@ -35,7 +35,7 @@ assert(await CalendarApp.command('save'),'saving a cleared reminder succeeds');a
 assert(snapshot().requirements[0].reminder===null&&info.ids.length===0&&info.permissionRequests===1,'saving clear cancels the pending reminder without another permission request');
 CalendarApp.editRequirement(item.id);await settle();r=ui();set(r.control,'2000-01-01T09:00');
 assert(!await CalendarApp.command('save'),'a newly chosen past reminder is rejected');await settle();
-const field=r.control.getBoundingClientRect(),tabs=$('.rf-editor-tabs').getBoundingClientRect(),footer=$('.rf-form-actions').getBoundingClientRect();
+const field=r.control.getBoundingClientRect(),tabs={bottom:$('#rf-panel').getBoundingClientRect().top},footer=$('.rf-form-actions').getBoundingClientRect();
 assert(r.row.open&&!r.body.inert&&document.activeElement===r.control&&r.control.getAttribute('aria-invalid')==='true'&&field.top>=tabs.bottom-1&&field.bottom<=footer.top+1,'past-time validation reveals and visibly focuses the picker between sticky controls');
 r.clear.click();await settle();assert(!CalendarApp.hasUnsavedChanges()&&r.value.textContent==='未设置'&&!r.control.hasAttribute('aria-invalid'),'clearing an invalid time restores the original clean unset state');
 // Inject the native badInput flag to exercise empty-valued partial-edit protection.

@@ -18,13 +18,13 @@ assert(inside($('#rf-detail').getBoundingClientRect(),$('#req-calendar-refined')
 assert($$('.rf-phase').every(phase=>inside(phase.getBoundingClientRect(),phase.closest('.rf-bar').getBoundingClientRect())),'every phase remains inside its single requirement band');
 assert($$('.rf-bar').every(bar=>bar.dataset.requirementId==='design'),'phase decoration creates no extra calendar requirements');
 CalendarApp.editRequirement('design');await settle();
-const panel=$('#rf-panel'),tabs=$('.rf-editor-tabs');panel.scrollTop=panel.scrollHeight;await settle();
-assert(inside(tabs.getBoundingClientRect(),panel.getBoundingClientRect()),'long resources retain access to the editor tabs');
-const last=$$('[data-editor-panel="basic"] .rf-disclosure').at(-1);last.open=true;
+const panel=$('#rf-panel'),actions=$('.rf-form-actions');panel.scrollTop=panel.scrollHeight;await settle();
+assert(inside(actions.getBoundingClientRect(),panel.getBoundingClientRect()),'long resources retain access to save actions');
+const last=$$('[data-editor-panel="resources"] .rf-disclosure').at(-1);last.open=true;
 const link=last.querySelector('input[type=url]'),original=link.value;set(link,'javascript:alert(1)');
 assert(await CalendarApp.command('save')===false,'invalid deep resource links remain rejected');await settle();
 const linkBounds=link.getBoundingClientRect();
-assert(document.activeElement===link&&linkBounds.top>=tabs.getBoundingClientRect().bottom-1&&linkBounds.bottom<=$('.rf-form-actions').getBoundingClientRect().top+1,'validation focuses a deep field visibly between sticky tabs and actions');
+assert(document.activeElement===link&&linkBounds.top>=panel.getBoundingClientRect().top-1&&linkBounds.bottom<=$('.rf-form-actions').getBoundingClientRect().top+1,'validation focuses a deep field visibly between the panel top and actions');
 set(link,original);await CalendarApp.command('close');await settle();
 
 const frame=await webkit.messageHandlers.calendar.postMessage({action:'verifyWindow',save:true});await settle();

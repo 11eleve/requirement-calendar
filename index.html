@@ -31,7 +31,7 @@ html,body { margin:0; min-height:100%; background:#f5f7ff; }
  --rf-action-hover:#6841c6;
  --rf-on-action:#fff;
  --rf-shadow:inset 0 1px 0 #ffffffcc,0 2px 5px #334c8505,0 12px 32px #334c8506;
- --rf-inspector-width:352px;
+ --rf-inspector-width:384px;
  --rf-row-height:136px;
  --rf-weekday-height:35px;
  --rf-remove-size:24px;
@@ -128,14 +128,14 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-range-preview.continues-right { border-top-right-radius:2px; border-bottom-right-radius:2px; }
 
 /* An inspector with a readable opening and purposeful grouping. */
-#req-calendar-refined .rf-detail { --rf-context-tone:var(--rf-purple); --rf-context-fill:var(--rf-purple-bg); --rf-accent:var(--rf-context-tone); --rf-panel-surface:var(--rf-bg); display:flex; flex-direction:column; align-self:start; min-width:0; min-height:0; max-height:100%; background:var(--rf-panel-surface); border:1px solid var(--rf-line); border-radius:12px; box-shadow:var(--rf-shadow); overflow:hidden; }
+#req-calendar-refined .rf-detail { --rf-context-tone:var(--rf-purple); --rf-context-fill:var(--rf-purple-bg); --rf-accent:var(--rf-context-tone); --rf-panel-surface:var(--rf-bg); display:flex; flex-direction:column; align-self:stretch; height:100%; min-width:0; min-height:0; max-height:100%; background:var(--rf-panel-surface); border:1px solid var(--rf-line); border-radius:12px; box-shadow:var(--rf-shadow); overflow:hidden; }
 #req-calendar-refined .rf-detail[data-tone=blue] { --rf-context-tone:var(--rf-blue); --rf-context-fill:var(--rf-blue-bg); --rf-action:var(--rf-blue); --rf-action-hover:#195b96; --rf-on-action:#fff; }
 #req-calendar-refined .rf-detail[data-tone=green] { --rf-context-tone:var(--rf-green); --rf-context-fill:var(--rf-green-bg); --rf-action:var(--rf-green); --rf-action-hover:#116548; --rf-on-action:#fff; }
 #req-calendar-refined .rf-detail:has(.rf-form) { --rf-panel-surface:var(--rf-bg); }
-#req-calendar-refined .rf-detail-head { flex:none; display:flex; align-items:center; justify-content:space-between; padding:10px 13px 0 17px; }
-#req-calendar-refined #rf-panel-label { color:var(--rf-muted); font-size:11px; font-weight:500; letter-spacing:.3px; }
+#req-calendar-refined .rf-detail-head { flex:none; display:flex; align-items:center; justify-content:space-between; min-height:49px; padding:10px 15px 10px 20px; border-bottom:1px solid var(--rf-grid); }
+#req-calendar-refined #rf-panel-label { color:var(--rf-text); font-size:13px; font-weight:600; letter-spacing:0; }
 #req-calendar-refined .rf-close { color:var(--rf-muted); width:25px; height:25px; }
-#req-calendar-refined #rf-panel { min-height:0; overflow-y:auto; overflow-x:hidden; padding:16px; scrollbar-width:thin; scrollbar-gutter:stable; overscroll-behavior:contain; }
+#req-calendar-refined #rf-panel { flex:1; min-height:0; overflow-y:auto; overflow-x:hidden; padding:18px 20px 0; scrollbar-width:thin; scrollbar-gutter:stable; overscroll-behavior:contain; }
 #req-calendar-refined .rf-detail-title { font-size:24px; font-weight:580; line-height:1.35; letter-spacing:-.6px; overflow-wrap:anywhere; }
 #req-calendar-refined .rf-meta { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin:12px 0 10px; font-size:11px; font-variant-numeric:tabular-nums; }
 #req-calendar-refined .rf-pill { color:var(--rf-muted); font-size:10px; }
@@ -150,7 +150,7 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-text-button { padding:3px 0; color:var(--rf-accent); font-size:11px; font-weight:500; }
 #req-calendar-refined .rf-text-button:hover { text-decoration:underline; text-underline-offset:3px; }
 #req-calendar-refined .rf-phase-row { position:relative; display:flex; flex-wrap:wrap; align-items:flex-start; gap:2px 8px; padding:8px 0 8px 26px; font-size:12px; font-variant-numeric:tabular-nums; }
-#req-calendar-refined .rf-phase-name { flex:1 1 180px; min-width:0; overflow-wrap:anywhere; }
+#req-calendar-refined .rf-phase-name { flex:1 1 220px; min-width:0; overflow-wrap:anywhere; }
 #req-calendar-refined .rf-phase-period { flex:none; white-space:nowrap; }
 #req-calendar-refined .rf-phase-row::before { content:''; position:absolute; top:14px; left:6px; width:7px; height:7px; border-radius:50%; background:var(--rf-line); }
 #req-calendar-refined .rf-phase-row:not(:last-child)::after { content:''; position:absolute; top:24px; bottom:-10px; left:9px; width:1px; background:var(--rf-line); }
@@ -182,20 +182,17 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-section :is(a,button,input) { scroll-margin-top:8px; scroll-margin-bottom:58px; }
 #req-calendar-refined .rf-destructive { color:#a55662; font-weight:400; }
 
-/* Compact editing with a typographic title, small surfaces and a stable footer. */
-#req-calendar-refined .rf-form { display:flex; flex-direction:column; gap:14px; min-height:0; }
-#req-calendar-refined .rf-editor-tabs { position:sticky; top:-16px; z-index:3; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); flex:none; gap:14px; padding:3px 0; background:var(--rf-panel-surface); border-bottom:1px solid var(--rf-line); border-radius:0; box-shadow:0 -16px 0 var(--rf-panel-surface),0 7px 0 var(--rf-panel-surface); }
-#req-calendar-refined .rf-editor-tab { position:relative; min-width:0; padding:6px 5px; border-radius:3px; font-size:11px; font-weight:500; color:var(--rf-muted); }
-#req-calendar-refined .rf-editor-tab[aria-selected=true] { color:var(--rf-text); background:transparent; box-shadow:none; }
-#req-calendar-refined .rf-editor-tab[aria-selected=true]::after { content:''; position:absolute; right:5px; bottom:-4px; left:5px; height:2px; background:var(--rf-context-tone); border-radius:2px; }
-#req-calendar-refined .rf-tab-panel { display:flex; flex-direction:column; gap:12px; min-height:0; min-width:0; }
+/* One continuous editor fills the available height; only its body scrolls. */
+#req-calendar-refined .rf-form { display:flex; flex-direction:column; gap:18px; min-height:100%; }
+#req-calendar-refined .rf-form>section { flex:none; min-width:0; }
+#req-calendar-refined .rf-editor-basics { display:grid; gap:14px; }
 #req-calendar-refined .rf-field { display:grid; gap:5px; min-width:0; color:var(--rf-muted); font-size:11px; font-weight:500; }
 #req-calendar-refined .rf-field :is(input,textarea) { width:100%; min-width:0; min-height:34px; padding:7px 9px; color:var(--rf-text); background:var(--rf-soft); border:1px solid var(--rf-line); border-radius:8px; box-shadow:inset 0 1px 0 #ffffff80,0 1px 2px #00000002; font-size:12px; font-weight:400; }
 #req-calendar-refined .rf-field :is(input,textarea):focus { outline:none; border-color:color-mix(in srgb,var(--rf-accent) 55%,var(--rf-line)); box-shadow:0 0 0 3px color-mix(in srgb,var(--rf-accent) 11%,transparent); }
 #req-calendar-refined .rf-field input::placeholder,#req-calendar-refined textarea::placeholder { color:var(--rf-muted); opacity:1; }
-#req-calendar-refined .rf-tab-panel[data-editor-panel=basic]>.rf-field:first-child input { min-height:41px; padding:5px 0 8px; background:transparent; border:0; border-bottom:1px solid var(--rf-line); border-radius:0; box-shadow:none; font-size:22px; font-weight:580; letter-spacing:-.5px; }
-#req-calendar-refined .rf-tab-panel[data-editor-panel=basic]>.rf-field:first-child input:focus { border-bottom-color:var(--rf-accent); box-shadow:0 1px 0 var(--rf-accent); }
-#req-calendar-refined .rf-tab-panel[data-editor-panel=basic]>.rf-field:first-child input[aria-invalid=true] { border-bottom-color:#a34756; }
+#req-calendar-refined .rf-title-field input { min-height:40px; padding:5px 0 9px; background:transparent; border:0; border-bottom:1px solid var(--rf-line); border-radius:0; box-shadow:none; font-size:20px; font-weight:580; letter-spacing:-.5px; }
+#req-calendar-refined .rf-title-field input:focus { border-bottom-color:var(--rf-accent); box-shadow:0 1px 0 var(--rf-accent); }
+#req-calendar-refined .rf-title-field input[aria-invalid=true] { border-bottom-color:#a34756; }
 #req-calendar-refined .rf-field input[type=date] { padding:7px 5px; font-size:11px; font-variant-numeric:tabular-nums; }
 #req-calendar-refined .rf-field input[type=datetime-local] { font-size:11px; font-variant-numeric:tabular-nums; }
 #req-calendar-refined .rf-reminder-summary { display:grid; grid-template-columns:7px minmax(0,1fr) auto; align-items:center; gap:7px; min-height:34px; padding:6px 0; font-size:12px; font-weight:500; list-style:none; }
@@ -215,9 +212,9 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-pair:has(input[type=date]) input { min-height:24px; padding:0; background:transparent; border:0; border-radius:0; box-shadow:none; font-size:12px; }
 #req-calendar-refined .rf-pair:has(input[type=date]):focus-within { border-color:color-mix(in srgb,var(--rf-accent) 55%,var(--rf-line)); box-shadow:0 0 0 3px color-mix(in srgb,var(--rf-accent) 11%,transparent); }
 #req-calendar-refined .rf-pair:has(input[type=date]):has([aria-invalid=true]) { border-color:#a34756; }
-#req-calendar-refined .rf-editor-section { padding:12px 0 0; border-top:1px solid var(--rf-grid); }
-#req-calendar-refined [data-editor-panel=phases]>.rf-editor-section { padding-top:0; border-top:0; }
-#req-calendar-refined .rf-editor-section .rf-heading { margin-bottom:4px; }
+#req-calendar-refined .rf-editor-section { padding:16px 0 0; border-top:1px solid var(--rf-grid); }
+#req-calendar-refined .rf-editor-section .rf-heading { margin-bottom:0; min-height:24px; }
+#req-calendar-refined .rf-editor-section h3 { font-size:12px; font-weight:600; }
 #req-calendar-refined .rf-editor-item { position:relative; min-width:0; border-bottom:1px solid var(--rf-grid); }
 #req-calendar-refined .rf-editor-item:last-child { border-bottom:0; }
 #req-calendar-refined .rf-item-summary { display:flex; align-items:center; gap:7px; min-height:40px; padding:6px 31px 6px 0; font-size:11px; list-style:none; }
@@ -253,8 +250,10 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 #req-calendar-refined .rf-task-edit input[type=text] { width:100%; min-width:0; padding:6px 7px; background:transparent; border:1px solid transparent; border-radius:5px; font-size:12px; }
 #req-calendar-refined .rf-task-edit:has(input:checked) input[type=text]:not(:focus) { color:var(--rf-muted); text-decoration:line-through; }
 #req-calendar-refined .rf-task-edit input[type=text]:focus { outline:1px solid var(--rf-accent); background:var(--rf-bg); }
-#req-calendar-refined .rf-form-actions { position:sticky; bottom:-16px; z-index:2; flex:none; display:flex; justify-content:flex-end; gap:8px; margin-top:0; padding:12px 0 10px; border-top:1px solid var(--rf-line); background:var(--rf-panel-surface); box-shadow:0 16px 0 var(--rf-panel-surface); }
-#req-calendar-refined .rf-form :is(input,textarea,summary) { scroll-margin-top:58px; scroll-margin-bottom:58px; }
+#req-calendar-refined .rf-editor-note { flex:1 0 auto; min-height:100px; display:flex; flex-direction:column; gap:7px; }
+#req-calendar-refined .rf-editor-note textarea { flex:1 0 auto; min-height:82px; max-height:240px; }
+#req-calendar-refined .rf-form-actions { position:sticky; bottom:0; z-index:2; flex:none; display:flex; justify-content:flex-end; gap:8px; margin-top:auto; padding:14px 0 16px; border-top:1px solid var(--rf-line); background:var(--rf-panel-surface); box-shadow:0 16px 0 var(--rf-panel-surface); }
+#req-calendar-refined .rf-form :is(input,textarea,summary) { scroll-margin-top:12px; scroll-margin-bottom:58px; }
 #req-calendar-refined .rf-error { font-size:11px; line-height:1.6; color:#a34756; }
 #req-calendar-refined .rf-error:empty { display:none; }
 #req-calendar-refined [aria-invalid=true] { border-color:#a34756; }
@@ -278,7 +277,7 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 @media(prefers-reduced-motion:no-preference) {
  #req-calendar-refined .rf-content { transition:grid-template-columns 220ms var(--rf-ease),column-gap 220ms var(--rf-ease); }
  #req-calendar-refined .rf-detail { animation:rf-inspector-in 220ms var(--rf-ease); }
- #req-calendar-refined :is(.rf-button,.rf-arrow,.rf-close,.rf-bar,.rf-field input,.rf-field textarea,.rf-text-button,.rf-remove,.rf-editor-tab) { transition:background-color 120ms ease,border-color 120ms ease,box-shadow 120ms ease; }
+ #req-calendar-refined :is(.rf-button,.rf-arrow,.rf-close,.rf-bar,.rf-field input,.rf-field textarea,.rf-text-button,.rf-remove) { transition:background-color 120ms ease,border-color 120ms ease,box-shadow 120ms ease; }
  #req-calendar-refined .rf-item-summary::before,#req-calendar-refined .rf-reminder-summary::before { transition:transform 180ms var(--rf-ease),background-color 120ms ease,border-color 120ms ease; }
  #req-calendar-refined .rf-range-preview { transition:opacity 140ms ease,transform 160ms var(--rf-ease); }
  #req-calendar-refined .rf-range-preview.is-visible { transition:left 70ms var(--rf-ease),width 70ms var(--rf-ease),opacity 140ms ease,transform 160ms var(--rf-ease); }
@@ -301,7 +300,7 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
  #req-calendar-refined { height:auto; min-height:100vh; }
  #req-calendar-refined .rf-content,#req-calendar-refined.has-detail .rf-content { display:flex; flex-direction:column; gap:12px; overflow:visible; }
  #req-calendar-refined .rf-calendar { flex:none; width:100%; height:620px; }
- #req-calendar-refined .rf-detail { flex:none; width:100%; max-height:70vh; }
+ #req-calendar-refined .rf-detail { flex:none; width:100%; height:calc(100svh - 24px); max-height:none; }
  #req-calendar-refined .rf-detail-columns { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:0 12px; }
 }
 @media(max-width:580px) {
@@ -318,7 +317,7 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 }
 @media(pointer:coarse) {
  #req-calendar-refined { --rf-remove-size:40px; }
- #req-calendar-refined :is(.rf-arrow,.rf-close,.rf-button,.rf-text-button,.rf-remove,.rf-editor-tab) { min-width:40px; min-height:40px; }
+ #req-calendar-refined :is(.rf-arrow,.rf-close,.rf-button,.rf-text-button,.rf-remove) { min-width:40px; min-height:40px; }
  #req-calendar-refined .rf-editor-item>.rf-remove { top:0; }
  #req-calendar-refined .rf-item-summary { min-height:44px; padding-right:42px; }
  #req-calendar-refined .rf-field :is(input,textarea) { font-size:16px; }
@@ -791,7 +790,7 @@ window.CalendarReady=(async()=>{
  const Model=CalendarModel;
  const root=document.getElementById('req-calendar-refined'),get=id=>root.querySelector('#'+id);let today=Model.localDate();
  const baseline=[{id:'checkout',title:'结算流程改版',short:'结算改版',tone:'',start:'2026-10-07',end:'2026-11-06',phases:[{name:'评审',start:'2026-10-07',end:'2026-10-08'},{name:'开发',start:'2026-10-09',end:'2026-10-16'},{name:'联调',start:'2026-10-17',end:'2026-10-23'},{name:'测试',start:'2026-10-24',end:'2026-10-30'},{name:'上线',start:'2026-10-31',end:'2026-11-06'}],resources:[{icon:'钉',name:'结算改版 PRD',type:'需求文档',url:''},{icon:'F',name:'Checkout 交互与视觉',type:'设计稿',url:''}],tasks:['确认需求边界与验收标准','实现优惠券选择与金额计算','补齐支付失败恢复逻辑','联调与回归验证'],done:[true,false,false,false],note:'待产品确认：优惠券与余额的扣减顺序。'},{id:'login',title:'登录态异常修复',short:'登录修复',tone:'blue',start:'2026-10-09',end:'2026-10-13',phases:[{name:'排查',start:'2026-10-09',end:'2026-10-10'},{name:'修复',start:'2026-10-11',end:'2026-10-12'},{name:'验证',start:'2026-10-13',end:'2026-10-13'}],resources:[{icon:'钉',name:'登录失效场景整理',type:'问题记录',url:''},{icon:'G',name:'认证模块设计',type:'接口约定',url:''}],tasks:['定位状态不同步','修复与回归验证','发布与观察'],done:[false,false,false],note:'确认自动续期失败后是否强制退出。'},{id:'export',title:'报表导出优化',short:'报表优化',tone:'green',start:'2026-10-19',end:'2026-10-30',phases:[{name:'方案',start:'2026-10-19',end:'2026-10-20'},{name:'开发',start:'2026-10-21',end:'2026-10-26'},{name:'验收',start:'2026-10-27',end:'2026-10-30'}],resources:[{icon:'钉',name:'异步导出说明',type:'需求文档',url:''},{icon:'F',name:'导出任务面板',type:'交互设计',url:''}],tasks:['确认导出规模与边界','实现任务状态展示','联调与验收'],done:[false,false,false],note:'等待后端确认导出任务状态与重试接口。'}];
- let requirements=window.__calendarDemo?structuredClone(baseline).map(item=>{const shift=date=>Model.add(today,Model.days('2026-10-07',date));return {...item,start:shift(item.start),end:shift(item.end),phases:item.phases.map(phase=>({...phase,start:shift(phase.start),end:shift(phase.end)}))};}):[],state={view:'month',anchor:today,selected:null,rowHeight:136},lastTrigger=null,draftPreview=null,editor=null,pendingAction=null,deleted=null,saving=false,queuedNotification=null;
+ let requirements=window.__calendarDemo?structuredClone(baseline).map(item=>{const shift=date=>Model.add(today,Model.days('2026-10-07',date));return {...item,start:shift(item.start),end:shift(item.end),phases:item.phases.map(phase=>({...phase,start:shift(phase.start),end:shift(phase.end)}))};}):[],state={view:'month',anchor:today,selected:null,rowHeight:136},lastTrigger=null,draftPreview=null,editor=null,pendingAction=null,deleted=null,saving=false,queuedNotification=null,discardPosition=null;
  const {parse,iso,add,days,format,validDate}=Model,req=id=>requirements.find(r=>r.id===id);
  let dateSelection=null,barSelection=null,cancelledDatePointer=null,suppressDateClickUntil=0,replanFrame=0;
  const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
@@ -799,7 +798,13 @@ window.CalendarReady=(async()=>{
  const removeButton=(kind,name,action)=>{const control=button('rf-remove','',null,action);control.append(get('rf-close').querySelector('svg').cloneNode(true));const label=()=>{control.title='移除'+kind+'：'+(name.value.trim()||'未命名'+kind);control.setAttribute('aria-label',control.title);};name.addEventListener('input',label);label();return control;};
  const field=(label,input)=>{const l=el('label','rf-field');l.append(el('span','',label),input);return l;};
  const input=(type,value='',placeholder='')=>{const n=el('input');n.type=type;n.value=value;n.placeholder=placeholder;if(type==='date'){n.min='0001-01-01';n.max='9999-12-31';}else if(type==='datetime-local'){n.min='0001-01-01T00:00';n.max='9999-12-31T23:59';}return n;};
- const focusEditorControl=control=>{control.focus({preventScroll:true});control.scrollIntoView({block:'nearest'});};
+ const revealEditorControl=control=>{
+  control.scrollIntoView({block:'nearest'});
+  const panel=get('rf-panel'),bounds=control.getBoundingClientRect(),top=panel.getBoundingClientRect().top+12,bottom=panel.querySelector('.rf-form-actions')?.getBoundingClientRect().top-12;
+  if(bounds.top<top)panel.scrollTop-=top-bounds.top;
+  else if(bottom&&bounds.bottom>bottom)panel.scrollTop+=bounds.bottom-bottom;
+ };
+ const focusEditorControl=control=>{control.focus({preventScroll:true});revealEditorControl(control);};
  let storage=null;try{storage=window.localStorage;}catch{}
  const legacyKey='codex:visualization-widget-state-v2:'+JSON.stringify([window.location.pathname,window.location.search]);
  const browserStore=CalendarStorage.createStore(storage,{legacyKey}),nativeBridge=window.CalendarDesktop||window.webkit?.messageHandlers?.calendar;
@@ -866,10 +871,10 @@ window.CalendarReady=(async()=>{
    if(expand){rows.forEach(other=>CalendarDisclosure.setOpen(other.disclosure,other===row));focusEditorControl(name);}
   }
   initial.forEach(value=>addItem(value));
-  return {node:section,reveal(){const target=rows[0]?.disclosure.querySelector('summary')||head.querySelector('button');target.focus();target.scrollIntoView({block:'nearest'});},focus(index,key='name'){const row=rows[index];if(row){CalendarDisclosure.setOpen(row.disclosure,true);const control=row[key]||row.name;control.focus();control.setAttribute('aria-invalid','true');const error=control.closest('form')?.querySelector('.rf-error');if(error)control.setAttribute('aria-describedby',error.id);}},setDates(values){rows.forEach((row,index)=>{for(const key of ['start','end']){row[key].value=values[index][key];row[key].dispatchEvent(new Event('input',{bubbles:true}));}});},read:()=>rows.map(row=>kind==='phase'?{name:row.name.value.trim(),start:row.start.value,end:row.end.value}:{name:row.name.value.trim(),type:row.type.value.trim(),url:row.url.value.trim(),icon:symbolForResource(row)})};
+  return {node:section,reveal(){const target=rows[0]?.disclosure.querySelector('summary')||head.querySelector('button');focusEditorControl(target);},focus(index,key='name'){const row=rows[index];if(row){CalendarDisclosure.setOpen(row.disclosure,true);const control=row[key]||row.name;focusEditorControl(control);control.setAttribute('aria-invalid','true');const error=control.closest('form')?.querySelector('.rf-error');if(error)control.setAttribute('aria-describedby',error.id);}},setDates(values){rows.forEach((row,index)=>{for(const key of ['start','end']){row[key].value=values[index][key];row[key].dispatchEvent(new Event('input',{bubbles:true}));}});},read:()=>rows.map(row=>kind==='phase'?{name:row.name.value.trim(),start:row.start.value,end:row.end.value}:{name:row.name.value.trim(),type:row.type.value.trim(),url:row.url.value.trim(),icon:symbolForResource(row)})};
  }
  function resourceError(items){if(items.some(x=>!x.name))return '请填写资料名称。';try{items.forEach(x=>Model.safeURL(x.url));}catch(error){return error.message;}return '';}
- function validateForm(form){const invalid=Array.from(form.elements).find(control=>control.willValidate&&!control.validity.valid);if(!invalid)return true;const disclosure=invalid.closest('details');if(disclosure)CalendarDisclosure.setOpen(disclosure,true);invalid.reportValidity();return false;}
+ function validateForm(form){const invalid=Array.from(form.elements).find(control=>control.willValidate&&!control.validity.valid);if(!invalid)return true;const disclosure=invalid.closest('details');if(disclosure)CalendarDisclosure.setOpen(disclosure,true);invalid.reportValidity();focusEditorControl(invalid);return false;}
  function editResources(id){edit(id,undefined,undefined,'resources');}
  function reminderField(control){
   const node=el('details','rf-reminder-editor'),summary=el('summary','rf-reminder-summary cursor-interaction'),value=el('span','rf-reminder-value'),body=el('div','rf-disclosure-body'),fields=el('div','rf-reminder-fields');
@@ -891,14 +896,9 @@ window.CalendarReady=(async()=>{
   const shifted=existing&&shiftDays?Model.shiftRequirement(existing,shiftDays):null;
   const returnContext=existing?captureDetailPosition(id,initialTab):null;
   selectRequirement(existing?id:null);openPanel(existing?'编辑需求':'新建需求',undefined,draft.tone);
-  const form=el('form','rf-form rf-tabbed-form');form.noValidate=true;
-  const tabs=el('div','rf-editor-tabs'),tabButtons={},panels={},prefix='rf-editor-'+Date.now();tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','需求编辑内容');
-  let activeTab=null;
-  function showTab(key){if(key===activeTab)return;activeTab=key;for(const name of Object.keys(panels)){panels[name].hidden=name!==key;tabButtons[name].setAttribute('aria-selected',String(name===key));tabButtons[name].tabIndex=name===key?0:-1;}get('rf-panel').scrollTop=0;if(key==='basic')resizeNote();}
-  for(const [key,label] of [['basic','基本信息'],['phases','阶段']]){
-   const tab=button('rf-editor-tab',label,null,()=>showTab(key)),panel=el('div','rf-tab-panel');tab.id=prefix+'-'+key;tab.setAttribute('role','tab');tab.setAttribute('aria-controls',prefix+'-'+key+'-panel');tab.setAttribute('aria-selected',String(key==='basic'));panel.id=prefix+'-'+key+'-panel';panel.dataset.editorPanel=key;panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby',tab.id);tabButtons[key]=tab;panels[key]=panel;tabs.append(tab);
-  }
-  tabs.addEventListener('keydown',event=>{const keys=Object.keys(panels),index=keys.findIndex(key=>tabButtons[key]===event.target);if(index<0)return;let next;if(event.key==='ArrowRight')next=(index+1)%keys.length;else if(event.key==='ArrowLeft')next=(index+keys.length-1)%keys.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=keys.length-1;else return;event.preventDefault();showTab(keys[next]);tabButtons[keys[next]].focus();});
+  const form=el('form','rf-form');form.noValidate=true;
+  const basic=el('section','rf-editor-basics'),prefix='rf-editor-'+Date.now();basic.dataset.editorPanel='basic';basic.setAttribute('aria-label','名称与排期');
+  function revealSection(key){const target=key==='phases'?phases.node:key==='resources'?resources.node:basic;target.scrollIntoView({block:'nearest'});}
   const name=input('text',draft.title,'例如：支付结果页改版');name.required=true;name.maxLength=64;
   const start=input('date',draft.start),end=input('date',draft.end);start.required=true;end.required=true;
   const syncDraftPreview=()=>updateDraftPreview(start.value,end.value,draft.tone);for(const control of [start,end]){control.addEventListener('input',syncDraftPreview);control.addEventListener('change',syncDraftPreview);}
@@ -906,30 +906,31 @@ window.CalendarReady=(async()=>{
   const note=el('textarea');note.value=draft.note;note.placeholder='评审结论、阻塞事项、接口约定…';
   let noteAutoHeight=null,noteWidth=0;
   function fitNote(){
-   if(!note.clientWidth||(noteAutoHeight!==null&&note.style.height!==noteAutoHeight))return;
+   if(!note.clientWidth)return;
+   if(noteAutoHeight!==null&&note.style.height!==noteAutoHeight){note.style.flex='none';noteField.style.flex='0 0 auto';return;}
    const scroll=note.scrollTop;note.style.height='auto';const style=getComputedStyle(note);
    note.style.height=Math.min(240,note.scrollHeight+parseFloat(style.borderTopWidth)+parseFloat(style.borderBottomWidth))+'px';
    noteAutoHeight=note.style.height;note.scrollTop=scroll;
-   if(document.activeElement===note)note.scrollIntoView({block:'nearest'});
+   if(document.activeElement===note)revealEditorControl(note);
   }
   function resizeNote(){const width=note.clientWidth;if(width&&width!==noteWidth){noteWidth=width;fitNote();}}
   note.addEventListener('input',fitNote);
-  panels.basic.append(field('需求名称',name),pair);
-  const reminder=input('datetime-local',draft.reminder||''),reminderUI=nativeBridge?reminderField(reminder):null;if(reminderUI)panels.basic.append(reminderUI.node);
-  const phases=collection('phase',draft.phases),resources=collection('resource',draft.resources);panels.phases.append(phases.node);panels.basic.append(resources.node,taskEditor(draft),field('事项与备忘',note));
+  const titleField=field('需求名称',name);titleField.classList.add('rf-title-field');basic.append(titleField,pair);
+  const reminder=input('datetime-local',draft.reminder||''),reminderUI=nativeBridge?reminderField(reminder):null;if(reminderUI)basic.append(reminderUI.node);
+  const phases=collection('phase',draft.phases),resources=collection('resource',draft.resources);phases.node.dataset.editorPanel='phases';resources.node.dataset.editorPanel='resources';const noteField=field('事项与备忘',note);noteField.classList.add('rf-editor-note');
   const error=el('p','rf-error');error.id=prefix+'-error';error.setAttribute('role','alert');form.addEventListener('input',()=>{cancelBarSelection();error.textContent='';form.querySelectorAll('[aria-invalid]').forEach(control=>control.removeAttribute('aria-invalid'));});
   const actions=el('div','rf-form-actions'),submit=el('button','rf-button rf-primary cursor-interaction','保存需求');submit.type='submit';actions.append(button('rf-button','取消',null,()=>cancelEdit()),submit);
-  form.append(tabs,panels.basic,panels.phases,error,actions);form.querySelectorAll('input,textarea').forEach(control=>control.setAttribute('aria-describedby',error.id));showTab(initialTab==='resources'?'basic':initialTab);
-  form.addEventListener('invalid',event=>{const panel=event.target.closest('[data-editor-panel]');if(panel)showTab(panel.dataset.editorPanel);const disclosure=event.target.closest('details');if(disclosure)CalendarDisclosure.setOpen(disclosure,true);},true);
+  form.append(basic,phases.node,resources.node,taskEditor(draft),noteField,error,actions);form.querySelectorAll('input,textarea').forEach(control=>control.setAttribute('aria-describedby',error.id));
+  form.addEventListener('invalid',event=>{const panel=event.target.closest('[data-editor-panel]');if(panel)revealSection(panel.dataset.editorPanel);const disclosure=event.target.closest('details');if(disclosure)CalendarDisclosure.setOpen(disclosure,true);},true);
   async function submitDraft(){
    if(saving)return false;if(!validateForm(form))return false;
-   if(!name.value.trim()){showTab('basic');error.textContent='请填写需求名称。';name.focus();name.setAttribute('aria-invalid','true');return false;}
-   if(nativeBridge&&reminder.value&&reminder.value!==(existing?.reminder??'')&&new Date(reminder.value).getTime()<=Date.now()){showTab('basic');error.textContent='提醒时间需要晚于当前时间。';reminder.setAttribute('aria-invalid','true');reminderUI.reveal();return false;}
-   if(end.value<start.value){showTab('basic');error.textContent='结束日期不能早于开始日期。';end.focus();end.setAttribute('aria-invalid','true');return false;}
+   if(!name.value.trim()){revealSection('basic');error.textContent='请填写需求名称。';name.focus();name.setAttribute('aria-invalid','true');return false;}
+   if(nativeBridge&&reminder.value&&reminder.value!==(existing?.reminder??'')&&new Date(reminder.value).getTime()<=Date.now()){revealSection('basic');error.textContent='提醒时间需要晚于当前时间。';reminder.setAttribute('aria-invalid','true');reminderUI.reveal();return false;}
+   if(end.value<start.value){revealSection('basic');error.textContent='结束日期不能早于开始日期。';end.focus();end.setAttribute('aria-invalid','true');return false;}
    const unsortedPhases=phases.read(),phaseItems=[...unsortedPhases].sort((a,b)=>a.start.localeCompare(b.start)),resourceItems=resources.read();
-   const badPhase=phaseItems.find(p=>!p.name||p.start<start.value||p.end>end.value||p.end<p.start);if(badPhase){showTab('phases');error.textContent='阶段需要填写名称，且日期须落在需求周期内。';phases.focus(unsortedPhases.indexOf(badPhase),'start');return false;}
-   const overlap=phaseItems.find((p,i)=>i>0&&p.start<=phaseItems[i-1].end);if(overlap){showTab('phases');error.textContent='阶段日期存在重叠，请调整后保存。';phases.focus(unsortedPhases.indexOf(overlap),'start');return false;}
-   const message=resourceError(resourceItems);if(message){showTab('basic');error.textContent=message;const index=resourceItems.findIndex(x=>{try{Model.safeURL(x.url);return false;}catch{return true;}});resources.focus(Math.max(0,index),'url');return false;}
+   const badPhase=phaseItems.find(p=>!p.name||p.start<start.value||p.end>end.value||p.end<p.start);if(badPhase){revealSection('phases');error.textContent='阶段需要填写名称，且日期须落在需求周期内。';phases.focus(unsortedPhases.indexOf(badPhase),'start');return false;}
+   const overlap=phaseItems.find((p,i)=>i>0&&p.start<=phaseItems[i-1].end);if(overlap){revealSection('phases');error.textContent='阶段日期存在重叠，请调整后保存。';phases.focus(unsortedPhases.indexOf(overlap),'start');return false;}
+   const message=resourceError(resourceItems);if(message){revealSection('resources');error.textContent=message;const index=resourceItems.findIndex(x=>{try{Model.safeURL(x.url);return false;}catch{return true;}});resources.focus(Math.max(0,index),'url');return false;}
    Object.assign(draft,{title:name.value.trim(),short:name.value.trim(),start:start.value,end:end.value,phases:phaseItems,resources:resourceItems,reminder:nativeBridge?(reminder.value||null):draft.reminder??null,tasks:Array.from(form.querySelectorAll('.rf-task-edit input[type=text]'),x=>x.value.trim()),done:Array.from(form.querySelectorAll('.rf-task-edit input[type=checkbox]'),x=>x.checked),note:note.value});
    try{Object.assign(draft,Model.requirement(draft));}catch(issue){error.textContent=issue.message;return false;}
    const next=existing?requirements.map(r=>r.id===id?draft:r):[...requirements,draft],previousAnchor=state.anchor;if(!existing)state.anchor=draft.start;
@@ -937,16 +938,17 @@ window.CalendarReady=(async()=>{
    editor=null;clearDraftPreview();render();detail(draft.id,undefined,true,returnContext);get('rf-feedback').textContent='已保存：'+draft.title+' · '+rangeText(draft.start,draft.end);if(pendingAction){const action=pendingAction;pendingAction=null;get('rf-discard').close();action();}return true;
   }
   form.addEventListener('submit',event=>{event.preventDefault();void submitDraft();});
-  get('rf-panel').append(form);syncDraftPreview();const fingerprint=()=>JSON.stringify(Array.from(form.querySelectorAll('input,textarea'),control=>[control.type,control.value,control.checked,control.validity.badInput]));const original=fingerprint();editor={form,submit:submitDraft,resizeNote,isDirty:()=>fingerprint()!==original,cancel:()=>existing?detail(id,undefined,true,returnContext):closePanel(true)};resizeNote();if(initialTab==='resources')resources.reveal();else if(initialTab==='phases')tabButtons.phases.focus({preventScroll:true});else name.focus({preventScroll:true});
+  get('rf-panel').append(form);syncDraftPreview();const fingerprint=()=>JSON.stringify(Array.from(form.querySelectorAll('input,textarea'),control=>[control.type,control.value,control.checked,control.validity.badInput]));const original=fingerprint();editor={form,submit:submitDraft,resizeNote,isDirty:()=>fingerprint()!==original,cancel:()=>existing?detail(id,undefined,true,returnContext):closePanel(true)};resizeNote();if(initialTab==='resources')resources.reveal();else if(initialTab==='phases')phases.reveal();else name.focus({preventScroll:true});
   // Capture the saved fingerprint before applying the moved dates. The moved
   // plan is a real unsaved draft, even before its first keystroke.
   if(shifted){start.value=shifted.start;end.value=shifted.end;phases.setDates(shifted.phases);syncDraftPreview();start.focus({preventScroll:true});}
  }
  function setSaving(value){if(value)cancelCalendarGesture();saving=value;root.setAttribute('aria-busy',String(value));get('rf-panel').inert=value;for(const id of ['rf-prev','rf-next','rf-close','rf-undo'])get(id).disabled=value;const submit=editor?.form.querySelector('[type=submit]');if(submit){submit.disabled=value;submit.textContent=value?'正在保存…':'保存需求';}updateNavigation();if(!value&&queuedNotification){const id=queuedNotification;queuedNotification=null;queueMicrotask(()=>CalendarApp.openRequirement(id));}}
- function mayLeave(action){if(saving)return false;if(!editor?.isDirty())return true;pendingAction=action;const dialog=get('rf-discard');if(!dialog.open)dialog.showModal();return false;}
+ function mayLeave(action){if(saving)return false;if(!editor?.isDirty())return true;pendingAction=action;const dialog=get('rf-discard');if(!dialog.open){discardPosition={panel:get('rf-panel').scrollTop,calendar:get('rf-calendar').scrollTop};dialog.showModal();}return false;}
  function cancelEdit(){const action=editor?.cancel;if(action&&mayLeave(action))action();}
- get('rf-discard-keep').addEventListener('click',()=>{pendingAction=null;get('rf-discard').close();});
- get('rf-discard').addEventListener('cancel',()=>{pendingAction=null;});
+ function resumeDraft(){pendingAction=null;const position=discardPosition,form=editor?.form;discardPosition=null;get('rf-discard').close();const restore=()=>{if(position&&editor?.form===form){get('rf-panel').scrollTop=position.panel;get('rf-calendar').scrollTop=position.calendar;}};restore();requestAnimationFrame(restore);}
+ get('rf-discard-keep').addEventListener('click',resumeDraft);
+ get('rf-discard').addEventListener('cancel',event=>{event.preventDefault();resumeDraft();});
  get('rf-discard-drop').addEventListener('click',()=>{const action=pendingAction;pendingAction=null;editor=null;get('rf-discard').close();action?.();});
  get('rf-discard-save').addEventListener('click',async()=>{get('rf-discard').close();const ok=await editor?.submit();if(!ok)pendingAction=null;});
  window.addEventListener('beforeunload',event=>{if(editor?.isDirty()){event.preventDefault();event.returnValue='';}});

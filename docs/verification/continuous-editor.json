@@ -1,0 +1,906 @@
+{
+  "checked_at_utc": "2026-10-09T15:58:29.356920+00:00",
+  "source_parent": "977db525835e85c05bd9e77383fdacc6d35a2f88",
+  "changes": [
+    "Single continuous creation and editing form with stages, resources, tasks and notes",
+    "Inspector fills available calendar height; sticky save/cancel with internal overflow",
+    "Wider desktop form, compact headings, consistent section edges and spacing",
+    "Automatic focus reveals fields above sticky footer; cancellation retains draft scroll",
+    "Short notes fill spare space; long notes capped; explicit note resize retained"
+  ],
+  "native_webkit": {
+    "unified-editor": {
+      "checks": [
+        "empty fixture restored",
+        "creation has one form without editor tabs",
+        "stages, resources and tasks appear in the same form",
+        "editor fills the calendar available height",
+        "save and cancel align with the panel bottom",
+        "date creation retains its range strip with a clean draft",
+        "out-of-range stage prevents saving in the unified form",
+        "stage error reveals and focuses its own control without hiding other sections",
+        "all section edits keep the persistent range preview and draft",
+        "continuing cancellation preserves unified fields and scroll",
+        "all sections save through the native file bridge",
+        "stage, resource, task and note are committed together without losing whitespace",
+        "existing requirements reopen with the same continuous editor",
+        "editing also occupies the available height",
+        "stage edit action targets the stage section directly",
+        "resource management targets its section directly",
+        "dense fixture restored",
+        "long form scrolls inside the full-height panel",
+        "bottom actions remain visible after scrolling",
+        "long notes retain bounded inner scrolling",
+        "editor follows the available height after native window resize",
+        "no page overflow at the smaller desktop size"
+      ],
+      "scope": "isolated native WebKit; continuous create/edit, focus, scroll, validation, save and native resize"
+    },
+    "final": {
+      "appearance": "light",
+      "checks": [
+        "36: a clean installation contains no sample requirements",
+        "36: clean startup does not request notifications",
+        "fixture restored through the real file bridge",
+        "37: first supported month renders without a year-1900 conversion",
+        "37: previous-month command respects the lower bound",
+        "fixture restored through the real file bridge",
+        "37: final month disables navigation beyond the supported dates",
+        "37: next-month command respects the upper bound",
+        "fixture restored through the real file bridge",
+        "38: historical overlap does not create empty lanes in the visible month",
+        "39: full requirement and phase names remain available to hover and accessibility",
+        "fixture restored through the real file bridge",
+        "40: collapsed resource rows show a disclosure chevron",
+        "44: editing preserves note indentation, trailing whitespace and long content",
+        "45: long signed document URLs have no artificial input truncation",
+        "43: unsupported resource link is rejected",
+        "43: validation expands and focuses the actual invalid resource field",
+        "43: editing clears stale invalid-field styling",
+        "44–45: long notes and links survive UI save and native file validation",
+        "39: full resource destination is available on hover",
+        "37: editable date fields share the model-supported limits",
+        "43: invalid requirement range focuses its end-date field",
+        "43: overlapping phases focus the conflicting stage instead of a hidden row",
+        "46: deleting outside text editing exposes requirement undo",
+        "46: Command-Z remains available to native text undo while editing",
+        "asynchronous save settled",
+        "46: Command-Z restores the latest deletion outside the editor",
+        "47: native requirement menu contains open, edit and delete actions",
+        "47: context deletion protects the active unsaved editor",
+        "47: cancelling context deletion keeps the draft",
+        "fixture restored through the real file bridge",
+        "49: day rollover refreshes the visible current phase",
+        "49: day rollover preserves editor, draft and keyboard focus",
+        "50: a stale notification produces visible feedback",
+        "fixture restored through the real file bridge",
+        "31 audit: month persistence also prevents competing edits",
+        "37: month navigation commits its new anchor",
+        "31 audit: failed month save restores the prior month without blocking the app",
+        "fixture restored through the real file bridge",
+        "50: notification race test has a real pending save",
+        "50: notification waits for save and then opens the correct requirement",
+        "fixture restored through the real file bridge",
+        "41: a dense month scrolls within the calendar",
+        "41: long requirement details scroll within the inspector",
+        "41: calendar and inspector have independent scroll positions without document overflow",
+        "49: day rollover preserves both scroll positions in a dense month",
+        "14 audit: keyboard navigation scrolls dense rows to keep the focused date visible",
+        "14 audit: upward focus navigation remains visible below the sticky weekday header",
+        "42: native window exposes full-screen and standard desktop menus"
+      ],
+      "manualDragOutside": "requires trusted mouse regression; not simulated here",
+      "viewport": [
+        1160,
+        780
+      ]
+    },
+    "ui": {
+      "assertions": [
+        "11: application booted in real WebKit",
+        "19: a normal month fits inside the native window",
+        "11: new requirement shows persistent range strip",
+        "11: close protects an unsaved requirement",
+        "11: continue editing retains all input",
+        "12: Command-S saves the requirement",
+        "13: all editor sections share the same continuous form",
+        "14: date arrow key moves focus without creating a requirement",
+        "14: focus navigation leaves data unchanged",
+        "15: editable task content and completion survive save",
+        "16: deleting persists and offers undo",
+        "16: undo restores the deleted requirement",
+        "17: edit stages focuses the stage section directly",
+        "18: an incomplete range retains the last valid editing strip",
+        "18: fixing the range keeps its strip visible",
+        "19: inspector scrolls within the desktop viewport",
+        "20: clean close restores a connected focus target without prompting",
+        "09: failed native-WebKit storage write preserves editor and shows the error",
+        "09: retry after storage recovery succeeds",
+        "20: save-and-leave completes the pending close after successful save",
+        "11: discard applies only the requested navigation and creates a fresh draft"
+      ],
+      "title": "需求日历",
+      "viewport": [
+        1160,
+        780
+      ]
+    },
+    "data-reminders": {
+      "checks": [
+        "28: invalid backup rejected before native save",
+        "28: rejected backup leaves the calendar untouched",
+        "28: valid backup restores all requirement fields through the native file bridge",
+        "32: explicit future reminder requests permission once in the isolated adapter",
+        "34: notification identity opens the correct requirement and month",
+        "31: in-flight file save disables competing edits and shows busy state",
+        "31: competing navigation and duplicate save do not replace the draft",
+        "31: one asynchronous save completes normally",
+        "31: delayed save publishes exactly the captured requirement",
+        "34: notification click protects an active unsaved editor",
+        "34: notification navigation can be cancelled without losing text",
+        "33: deleting a requirement cancels its pending notification",
+        "33: undo reschedules a future reminder without another authorization request",
+        "33: clearing the optional time cancels the reminder"
+      ],
+      "notificationAdapter": "isolated; no real notification sent",
+      "snapshot": {
+        "anchor": "2026-10-10",
+        "requirements": [
+          {
+            "done": [
+              false
+            ],
+            "end": "2026-10-12",
+            "id": "restore-1",
+            "note": "多行\n备忘",
+            "phases": [],
+            "reminder": null,
+            "resources": [
+              {
+                "icon": "文",
+                "name": "验收文档",
+                "type": "自定义",
+                "url": "https://example.com/spec"
+              }
+            ],
+            "short": "保存锁验证",
+            "start": "2026-10-10",
+            "tasks": [
+              "检查原子保存"
+            ],
+            "title": "保存锁验证",
+            "tone": "blue"
+          }
+        ],
+        "version": 6
+      }
+    },
+    "editor-navigation": {
+      "appearance": "light",
+      "checks": [
+        "isolated navigation fixture restored",
+        "manage resources lands on the first resource without expanding every item",
+        "the resource target is visible between the sticky navigation and actions",
+        "targeting resources does not change the requirement",
+        "all content remains accessible in one scrolling form",
+        "reading resources preserves the unified editor scroll",
+        "isolated navigation fixture restored",
+        "empty resources focus the available add action",
+        "resource navigation retains the date strip and a clean draft"
+      ],
+      "scope": "actual WebKit focus, keyboard handler and scroll behavior; isolated native data"
+    },
+    "panel-continuity": {
+      "appearance": "light",
+      "checks": [
+        "isolated reading-context fixture restored",
+        "the fixture requires substantial detail scrolling",
+        "entering general editing begins with the visible name field",
+        "clean cancellation returns to the previous detail reading position",
+        "clean cancellation restores the general edit action focus",
+        "dirty cancellation still asks how to handle the draft",
+        "continue editing retains the draft, its reading position and date strip",
+        "discarding returns to the original detail without applying draft changes",
+        "resource management still targets the first resource summary",
+        "resource cancellation restores its section and management action",
+        "existing edits persist through the native bridge",
+        "saving preserves the resource section position when the title height changes",
+        "returning after save clears draft feedback and dirty state",
+        "a fresh opening begins at the heading without reusing old reading state",
+        "calendar-initiated editing retains the heading and focuses the visible close action when the edit action is offscreen",
+        "stage cancellation returns to its original action",
+        "editing without a previous detail view uses the normal detail opening"
+      ],
+      "scope": "actual WebKit scroll, focus and isolated save bridge; synthetic button activation"
+    },
+    "draft-range-continuity": {
+      "appearance": "light",
+      "checks": [
+        "isolated range fixture restored",
+        "editing begins with the complete original green period",
+        "clearing a date retains the same visible strip elements and geometry",
+        "incomplete entry changes only the draft",
+        "empty dates remain unsavable without removing visual feedback",
+        "temporarily reversed dates keep the last valid range",
+        "range validation remains explicit while the previous valid strip stays visible",
+        "a new valid range updates its length without changing the requirement tone",
+        "a second incomplete edit retains the most recent valid period rather than the original",
+        "native change events also update a newly valid period",
+        "a failed save preserves the edited range, input and original saved data",
+        "the valid range saves successfully on retry",
+        "saved formal bars take over the final dates and clear temporary feedback",
+        "fresh creation starts with its own period and palette rather than a previous draft",
+        "new drafts also retain their initial strip through required-date validation",
+        "a new draft follows completed valid dates",
+        "a valid offscreen period is not painted on unrelated calendar dates",
+        "visiting the edited month displays the same draft across its three weeks",
+        "an incomplete cross-month range preserves the latest valid visible period",
+        "month rerenders preserve the last valid range even while a field is empty",
+        "unsaved confirmation keeps the persistent preview",
+        "continuing editing retains incomplete inputs and the preview",
+        "discarding the draft clears feedback without creating a requirement",
+        "reopening another edit does not inherit the discarded cross-month range"
+      ],
+      "scope": "actual isolated native WebKit date input/change events, range geometry, validation and persistence with injected save failure; synthetic activation and completed animation endpoints, not trusted motion evidence"
+    },
+    "reminder-editor": {
+      "appearance": "light",
+      "checks": [
+        "isolated requirement without a reminder restored",
+        "unset reminder is explicit and its picker is collapsed and inactive",
+        "unset reminder occupies only a 34px summary row",
+        "opening the editor neither schedules a reminder nor requests permission",
+        "explicit expansion exposes the labelled native date-time control",
+        "expansion alone neither invents a time nor marks the draft dirty",
+        "choosing a time updates the summary and dirty state while retaining the range strip",
+        "unsaved reminder changes remain outside the scheduler",
+        "folding preserves the chosen time without scheduling it",
+        "a native save failure is reported",
+        "save failure retains the chosen time and untouched saved snapshot",
+        "retry saves the explicitly chosen reminder",
+        "successful save schedules the exact chosen time and requests isolated permission once",
+        "successful save disposes the old reminder disclosure",
+        "a saved reminder reopens as a clean compact row showing its actual local time",
+        "clear removes the draft time, collapses the control and returns focus to its summary",
+        "clearing a draft keeps the saved reminder scheduled until save",
+        "closing after clearing protects the unsaved reminder change",
+        "saving a cleared reminder succeeds",
+        "saving clear cancels the pending reminder without another permission request",
+        "a newly chosen past reminder is rejected",
+        "past-time validation reveals and visibly focuses the picker between sticky controls",
+        "clearing an invalid time restores the original clean unset state",
+        "an injected incomplete native value is visibly pending and protected despite an empty value",
+        "incomplete empty-valued input cannot silently leave the editor",
+        "restoring valid empty input restores the clean unset state",
+        "expanded reminder and summary fit the smaller native window without horizontal overflow",
+        "validation and expansion preserve scheduler state and unrelated content"
+      ],
+      "compact": {
+        "bottom": 310,
+        "height": 34,
+        "left": 779,
+        "right": 1121,
+        "top": 276,
+        "width": 342,
+        "x": 779,
+        "y": 276
+      },
+      "resources": {
+        "bottom": 525,
+        "height": 138,
+        "left": 779,
+        "right": 1121,
+        "top": 387,
+        "width": 342,
+        "x": 779,
+        "y": 387
+      },
+      "scope": "actual isolated native WebKit summary/picker geometry, synthetic clicks/inputs, native file bridge and isolated notification scheduler. Transitions completed to endpoints. Partial native badInput flag is injected, not trusted picker typing. No real permission, notification, trusted picker/keyboard operation or frame pacing claim"
+    },
+    "design": {
+      "appearance": "light",
+      "checks": [
+        "isolated design fixture restored",
+        "six-week months retain their complete calendar structure",
+        "a normal six-week month fits the default desktop viewport",
+        "the toolbar keeps only the two month navigation controls",
+        "month navigation occupies opposite edges with the date centered",
+        "the opened inspector remains inside the desktop viewport",
+        "every phase remains inside its single requirement band",
+        "phase decoration creates no extra calendar requirements",
+        "long resources retain access to save actions",
+        "invalid deep resource links remain rejected",
+        "validation focuses a deep field visibly between the panel top and actions: {\"active\":true,\"link\":{\"x\":822,\"y\":654.5,\"width\":299,\"height\":34,\"top\":654.5,\"right\":1121,\"bottom\":688.5,\"left\":822},\"panel\":{\"x\":759,\"y\":106,\"width\":382,\"height\":655,\"top\":106,\"right\":1141,\"bottom\":761,\"left\":759},\"footer\":{\"x\":779,\"y\":700,\"width\":342,\"height\":61,\"top\":700,\"right\":1121,\"bottom\":761,\"left\":779}}",
+        "the product layout is also checked in a smaller native window",
+        "the small-window editor scrolls within its own surface",
+        "the small-window application has no page overflow",
+        "isolated design fixture restored",
+        "dense requirements scroll independently of the editor",
+        "the redesigned editing range remains present in a dense month"
+      ],
+      "scope": "real WebKit layout and file bridge; animations completed before geometry checks; does not assess trusted mouse feel",
+      "viewport": [
+        980,
+        668
+      ]
+    },
+    "polish": {
+      "checks": [
+        "isolated fixture restored",
+        "release position determines the range even without a final pointermove",
+        "reverse release normalizes the requirement dates",
+        "a new drag begins before Escape cancellation",
+        "Escape immediately clears the pending range",
+        "Escape cancellation remains cancelled when the mouse is released later",
+        "a fresh gesture works immediately after cancellation",
+        "focus-loss cancellation rejects a trailing date click",
+        "isolated fixture restored",
+        "release over the sticky weekday header cannot select an obscured date",
+        "isolated fixture restored",
+        "every visible segment identifies the opened requirement",
+        "other requirement bars remain unselected",
+        "a month without the selected requirement has no stale highlight",
+        "returning to the month restores the selected segments",
+        "save actions remain visible when many resources are scrolled",
+        "phases and resources remain in one continuous form",
+        "editing keeps both the persistent range strip and selected requirement",
+        "closing the inspector clears selection and accessibility state",
+        "the polished editor does not create document overflow"
+      ],
+      "scope": "isolated real WebKit rendering and application persistence; pointer events synthetic, capture bookkeeping stubbed"
+    },
+    "readability": {
+      "appearance": "light",
+      "checks": [
+        "isolated reading fixture restored",
+        "all three requirement tones include both phase fills",
+        "phase text exceeds 4.5 against normal and alternating fills",
+        "interactive dates outside the month remain readable",
+        "resource types, completed tasks and notes retain readable secondary text",
+        "field placeholder text remains readable on its input surface",
+        "form labels preserve hierarchy with sufficient text contrast",
+        "section headings remain readable throughout the continuous form",
+        "phase editing names and full dates retain readable primary and secondary text",
+        "range strips remain distinct on weekday, weekend and adjacent-month date surfaces in all tones"
+      ],
+      "reference": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "samples": [
+        {
+          "background": "rgb(229, 214, 252)",
+          "contrast": 5.0044375877163585,
+          "foreground": "rgb(104, 66, 185)",
+          "name": "phase read-0",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(211, 234, 255)",
+          "contrast": 4.787110798948054,
+          "foreground": "rgb(35, 103, 164)",
+          "name": "phase read-1",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(204, 238, 221)",
+          "contrast": 4.64344548471516,
+          "foreground": "rgb(27, 115, 84)",
+          "name": "phase read-2",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(229, 214, 252)",
+          "contrast": 5.0044375877163585,
+          "foreground": "rgb(104, 66, 185)",
+          "name": "phase read-0",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.926078 0.88451 0.994706)",
+          "contrast": 5.464580013231707,
+          "foreground": "rgb(104, 66, 185)",
+          "name": "phase read-0 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(211, 234, 255)",
+          "contrast": 4.787110798948054,
+          "foreground": "rgb(35, 103, 164)",
+          "name": "phase read-1",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.877059 0.941373 1)",
+          "contrast": 5.0956518146718075,
+          "foreground": "rgb(35, 103, 164)",
+          "name": "phase read-1 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(204, 238, 221)",
+          "contrast": 4.64344548471516,
+          "foreground": "rgb(27, 115, 84)",
+          "name": "phase read-2",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.860392 0.954902 0.90549)",
+          "contrast": 4.992174933332911,
+          "foreground": "rgb(27, 115, 84)",
+          "name": "phase read-2 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.926078 0.88451 0.994706)",
+          "contrast": 5.464580013231707,
+          "foreground": "rgb(104, 66, 185)",
+          "name": "phase read-0 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.877059 0.941373 1)",
+          "contrast": 5.0956518146718075,
+          "foreground": "rgb(35, 103, 164)",
+          "name": "phase read-1 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.860392 0.954902 0.90549)",
+          "contrast": 4.992174933332911,
+          "foreground": "rgb(27, 115, 84)",
+          "name": "phase read-2 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.926078 0.88451 0.994706)",
+          "contrast": 5.464580013231707,
+          "foreground": "rgb(104, 66, 185)",
+          "name": "phase read-0 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.877059 0.941373 1)",
+          "contrast": 5.0956518146718075,
+          "foreground": "rgb(35, 103, 164)",
+          "name": "phase read-1 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.860392 0.954902 0.90549)",
+          "contrast": 4.992174933332911,
+          "foreground": "rgb(27, 115, 84)",
+          "name": "phase read-2 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.926078 0.88451 0.994706)",
+          "contrast": 5.464580013231707,
+          "foreground": "rgb(104, 66, 185)",
+          "name": "phase read-0 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.877059 0.941373 1)",
+          "contrast": 5.0956518146718075,
+          "foreground": "rgb(35, 103, 164)",
+          "name": "phase read-1 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "color(srgb 0.860392 0.954902 0.90549)",
+          "contrast": 4.992174933332911,
+          "foreground": "rgb(27, 115, 84)",
+          "name": "phase read-2 alternate",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(244, 247, 252)",
+          "contrast": 4.566747655580877,
+          "foreground": "rgb(101, 113, 138)",
+          "name": "outside date",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 4.90380734335668,
+          "foreground": "rgb(101, 113, 138)",
+          "name": "detail ",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 4.90380734335668,
+          "foreground": "rgb(101, 113, 138)",
+          "name": "detail ",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 4.90380734335668,
+          "foreground": "rgb(101, 113, 138)",
+          "name": "detail rf-note",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 4.90380734335668,
+          "foreground": "rgb(101, 113, 138)",
+          "name": "field placeholder",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 4.90380734335668,
+          "foreground": "rgb(101, 113, 138)",
+          "name": "field label",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 12.567940145711095,
+          "foreground": "rgb(40, 51, 77)",
+          "name": "editor section heading",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 12.567940145711095,
+          "foreground": "rgb(40, 51, 77)",
+          "name": "editor section heading",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 12.567940145711095,
+          "foreground": "rgb(40, 51, 77)",
+          "name": "editor section heading",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 12.567940145711095,
+          "foreground": "rgb(40, 51, 77)",
+          "name": "phase editor rf-summary-name",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 4.90380734335668,
+          "foreground": "rgb(101, 113, 138)",
+          "name": "phase editor rf-summary-meta",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 12.567940145711095,
+          "foreground": "rgb(40, 51, 77)",
+          "name": "phase editor rf-summary-name",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 4.90380734335668,
+          "foreground": "rgb(101, 113, 138)",
+          "name": "phase editor rf-summary-meta",
+          "opacity": 1
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 3.905842565401702,
+          "foreground": "rgb(104, 66, 185)",
+          "name": "range 0 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+          "opacity": 0.75
+        },
+        {
+          "background": "rgb(250, 251, 255)",
+          "contrast": 3.824338150471507,
+          "foreground": "rgb(104, 66, 185)",
+          "name": "range 0 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+          "opacity": 0.75
+        },
+        {
+          "background": "rgb(244, 247, 252)",
+          "contrast": 3.737176114537204,
+          "foreground": "rgb(104, 66, 185)",
+          "name": "range 0 .rf-date.outside .rf-date-label",
+          "opacity": 0.75
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 3.5234226615938287,
+          "foreground": "rgb(35, 103, 164)",
+          "name": "range 1 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+          "opacity": 0.75
+        },
+        {
+          "background": "rgb(250, 251, 255)",
+          "contrast": 3.4484280711996145,
+          "foreground": "rgb(35, 103, 164)",
+          "name": "range 1 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+          "opacity": 0.75
+        },
+        {
+          "background": "rgb(244, 247, 252)",
+          "contrast": 3.3661713153731054,
+          "foreground": "rgb(35, 103, 164)",
+          "name": "range 1 .rf-date.outside .rf-date-label",
+          "opacity": 0.75
+        },
+        {
+          "background": "rgb(255, 255, 255)",
+          "contrast": 3.4741401994681502,
+          "foreground": "rgb(27, 115, 84)",
+          "name": "range 2 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+          "opacity": 0.75
+        },
+        {
+          "background": "rgb(250, 251, 255)",
+          "contrast": 3.4018096421283226,
+          "foreground": "rgb(27, 115, 84)",
+          "name": "range 2 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+          "opacity": 0.75
+        },
+        {
+          "background": "rgb(244, 247, 252)",
+          "contrast": 3.3206896982376017,
+          "foreground": "rgb(27, 115, 84)",
+          "name": "range 2 .rf-date.outside .rf-date-label",
+          "opacity": 0.75
+        }
+      ],
+      "scope": "resolved foreground/background colors for the listed text contexts in actual WebKit; does not assess the entire app, assistive technology, anti-aliasing or user aesthetic preference"
+    },
+    "editor-addition": {
+      "appearance": "light",
+      "checks": [
+        "default 资料: the newly added name is focused and visible between the panel top and save actions: {\"active\":\"<input type=\\\"text\\\" placeholder=\\\"资料名称\\\" maxlength=\\\"64\\\" required=\\\"\\\">\",\"bounds\":{\"x\":822,\"y\":654.5,\"width\":299,\"height\":34,\"top\":654.5,\"right\":1121,\"bottom\":688.5,\"left\":822},\"top\":106,\"bottom\":700}",
+        "default 资料: adding keeps the calendar position, saved data and persistent draft strip",
+        "default 资料: only the newly added collection row is expanded",
+        "default 资料: the new entry saves through native persistence",
+        "default 资料: saved new content preserves all earlier entries and their associations",
+        "default 资料: successful save returns to clean details and clears the temporary strip",
+        "default 阶段: the newly added name is focused and visible between the panel top and save actions: {\"active\":\"<input type=\\\"text\\\" placeholder=\\\"例如：评审、开发、联调\\\" maxlength=\\\"64\\\" required=\\\"\\\">\",\"bounds\":{\"x\":805,\"y\":654.5,\"width\":316,\"height\":34,\"top\":654.5,\"right\":1121,\"bottom\":688.5,\"left\":805},\"top\":106,\"bottom\":700}",
+        "default 阶段: adding keeps the calendar position, saved data and persistent draft strip",
+        "default 阶段: only the newly added collection row is expanded",
+        "default 阶段: the new entry saves through native persistence",
+        "default 阶段: saved new content preserves all earlier entries and their associations",
+        "default 阶段: successful save returns to clean details and clears the temporary strip",
+        "default 事项: the newly added name is focused and visible between the panel top and save actions: {\"active\":\"<input type=\\\"text\\\" placeholder=\\\"可验收的具体事项\\\" aria-label=\\\"事项内容\\\" required=\\\"\\\" maxlength=\\\"200\\\">\",\"bounds\":{\"x\":799,\"y\":656,\"width\":291,\"height\":32,\"top\":656,\"right\":1090,\"bottom\":688,\"left\":799},\"top\":106,\"bottom\":700}",
+        "default 事项: adding keeps the calendar position, saved data and persistent draft strip",
+        "default 事项: the new entry saves through native persistence",
+        "default 事项: saved new content preserves all earlier entries and their associations",
+        "default 事项: successful save returns to clean details and clears the temporary strip",
+        "addition is checked in the smaller native window",
+        "small 资料: the newly added name is focused and visible between the panel top and save actions: {\"active\":\"<input type=\\\"text\\\" placeholder=\\\"资料名称\\\" maxlength=\\\"64\\\" required=\\\"\\\">\",\"bounds\":{\"x\":702,\"y\":542.5,\"width\":245,\"height\":34,\"top\":542.5,\"right\":947,\"bottom\":576.5,\"left\":702},\"top\":106,\"bottom\":588}",
+        "small 资料: adding keeps the calendar position, saved data and persistent draft strip",
+        "small 资料: only the newly added collection row is expanded",
+        "small 资料: the new entry saves through native persistence",
+        "small 资料: saved new content preserves all earlier entries and their associations",
+        "small 资料: successful save returns to clean details and clears the temporary strip",
+        "small 阶段: the newly added name is focused and visible between the panel top and save actions: {\"active\":\"<input type=\\\"text\\\" placeholder=\\\"例如：评审、开发、联调\\\" maxlength=\\\"64\\\" required=\\\"\\\">\",\"bounds\":{\"x\":685,\"y\":542.5,\"width\":262,\"height\":34,\"top\":542.5,\"right\":947,\"bottom\":576.5,\"left\":685},\"top\":106,\"bottom\":588}",
+        "small 阶段: adding keeps the calendar position, saved data and persistent draft strip",
+        "small 阶段: only the newly added collection row is expanded",
+        "small 阶段: the new entry saves through native persistence",
+        "small 阶段: saved new content preserves all earlier entries and their associations",
+        "small 阶段: successful save returns to clean details and clears the temporary strip",
+        "small 事项: the newly added name is focused and visible between the panel top and save actions: {\"active\":\"<input type=\\\"text\\\" placeholder=\\\"可验收的具体事项\\\" aria-label=\\\"事项内容\\\" required=\\\"\\\" maxlength=\\\"200\\\">\",\"bounds\":{\"x\":679,\"y\":544,\"width\":237,\"height\":32,\"top\":544,\"right\":916,\"bottom\":576,\"left\":679},\"top\":106,\"bottom\":588}",
+        "small 事项: adding keeps the calendar position, saved data and persistent draft strip",
+        "small 事项: the new entry saves through native persistence",
+        "small 事项: saved new content preserves all earlier entries and their associations",
+        "small 事项: successful save returns to clean details and clears the temporary strip",
+        "long-list additions do not cause document overflow"
+      ],
+      "measurements": [
+        {
+          "bottom": 688.5,
+          "footerTop": 700,
+          "kind": "资料",
+          "panelTop": 106,
+          "size": "default",
+          "top": 654.5
+        },
+        {
+          "bottom": 688.5,
+          "footerTop": 700,
+          "kind": "阶段",
+          "panelTop": 106,
+          "size": "default",
+          "top": 654.5
+        },
+        {
+          "bottom": 688,
+          "footerTop": 700,
+          "kind": "事项",
+          "panelTop": 106,
+          "size": "default",
+          "top": 656
+        },
+        {
+          "bottom": 576.5,
+          "footerTop": 588,
+          "kind": "资料",
+          "panelTop": 106,
+          "size": "small",
+          "top": 542.5
+        },
+        {
+          "bottom": 576.5,
+          "footerTop": 588,
+          "kind": "阶段",
+          "panelTop": 106,
+          "size": "small",
+          "top": 542.5
+        },
+        {
+          "bottom": 576,
+          "footerTop": 588,
+          "kind": "事项",
+          "panelTop": 106,
+          "size": "small",
+          "top": 544
+        }
+      ],
+      "scope": "actual isolated native WebKit geometry, activeElement and persistence using synthetic button/input actions; no trusted pointer or motion evidence"
+    },
+    "disclosure": {
+      "appearance": "light",
+      "checks": [
+        "isolated motion fixture restored",
+        "native summaries identify their collapsed and inactive content",
+        "opening immediately exposes the intended state and retains summary focus",
+        "height animation is exposed for measurement",
+        "height animation is exposed for measurement",
+        "opening has a real intermediate content height",
+        "opening releases temporary size and clipping",
+        "closing immediately removes input interaction while keeping content for the short exit",
+        "exiting content cannot take focus",
+        "height animation is exposed for measurement",
+        "height animation is exposed for measurement",
+        "closing interpolates before the native details element closes",
+        "folding preserves saved data, clean draft, calendar reading position and date strip: {\"data\":true,\"dirty\":false,\"calendar\":240,\"calendarTop\":240,\"range\":true}",
+        "height animation is exposed for measurement",
+        "height animation is exposed for measurement",
+        "reversing an opening starts from its displayed height",
+        "height animation is exposed for measurement",
+        "height animation is exposed for measurement",
+        "reopening an interrupted close keeps the displayed height",
+        "coalesced native toggle events do not override the latest intent",
+        "opening another resource settles with only that row expanded",
+        "coordinated folding retains the original fields",
+        "height animation is exposed for measurement",
+        "direct field access cancels an exit and expands immediately",
+        "external native closing synchronizes state",
+        "external native opening remains immediate and synchronized",
+        "folding retains the edited field node, value, selection and dirty state",
+        "a save failure keeps the expanded draft and saved snapshot",
+        "saving can be exercised during an exit",
+        "retry saves through the isolated native bridge",
+        "successful save disposes old motion and preserves the edited resource",
+        "height animation is exposed for measurement",
+        "removing an animating row cancels motion and focuses its neighbour",
+        "height animation is exposed for measurement",
+        "height animation is exposed for measurement",
+        "stage disclosure uses the same motion without changing its dates",
+        "expanded stages remain within the smaller native viewport",
+        "injected reduced-motion preference opens immediately",
+        "injected reduced-motion preference closes immediately",
+        "missing animation API preserves native expansion",
+        "missing animation API preserves native collapse",
+        "animation errors fall back to a complete expanded state",
+        "animation errors also settle a complete closed state"
+      ],
+      "measurements": [
+        {
+          "closing": [
+            208.5,
+            16.9375,
+            0
+          ],
+          "kind": "resource",
+          "opening": [
+            0,
+            191.546875,
+            208.5
+          ]
+        },
+        {
+          "kind": "phase",
+          "opening": [
+            0,
+            134.125,
+            146
+          ]
+        }
+      ],
+      "reducedMotion": false,
+      "scope": "actual isolated native WebKit heights at explicitly paused animation times, activeElement/selection and native persistence with synthetic clicks/inputs and injected save failure. Reduced-motion branch uses an injected preference; OS preference, trusted keyboard activation, frame pacing and pointer feel are not asserted"
+    },
+    "content": {
+      "appearance": "light",
+      "checks": [
+        "isolated long-content fixture restored",
+        "cross-year requirement periods show both years",
+        "cross-year phase periods show both years",
+        "cross-week bars retain the complete period on hover",
+        "long titles, phases, resource types and tasks fit their own widths",
+        "complete phase and task text stays present rather than truncated",
+        "long date ranges move below the full-width phase name instead of squeezing it: {\"period\":{\"x\":805,\"y\":319.28125,\"width\":127.90625,\"height\":16.5,\"top\":319.28125,\"right\":932.90625,\"bottom\":335.78125,\"left\":805},\"name\":{\"x\":805,\"y\":281.28125,\"width\":316,\"height\":36,\"top\":281.28125,\"right\":1121,\"bottom\":317.28125,\"left\":805}}",
+        "phase dates stay within the timeline section",
+        "custom resource types retain a complete summary tooltip",
+        "the collapsed editor wraps the complete long phase name without clipping",
+        "cross-year editor dates remain completely visible and available on hover",
+        "the full date sits beneath the phase name without entering the removal target",
+        "reading collapsed phase summaries retains a clean draft and its range strip",
+        "long titles, phases, resource types and tasks fit their own widths",
+        "complete phase and task text stays present rather than truncated",
+        "long date ranges move below the full-width phase name instead of squeezing it: {\"period\":{\"x\":685,\"y\":351.671875,\"width\":127.90625,\"height\":16.5,\"top\":351.671875,\"right\":812.90625,\"bottom\":368.171875,\"left\":685},\"name\":{\"x\":685,\"y\":313.671875,\"width\":262,\"height\":36,\"top\":313.671875,\"right\":947,\"bottom\":349.671875,\"left\":685}}",
+        "phase dates stay within the timeline section",
+        "custom resource types retain a complete summary tooltip",
+        "the collapsed editor wraps the complete long phase name without clipping",
+        "cross-year editor dates remain completely visible and available on hover",
+        "the full date sits beneath the phase name without entering the removal target",
+        "reading collapsed phase summaries retains a clean draft and its range strip",
+        "isolated long-content fixture restored",
+        "phases outside the visible year retain their year context",
+        "isolated long-content fixture restored",
+        "same-year content retains compact date labels",
+        "isolated long-content fixture restored",
+        "long current-stage status wraps within the metadata area",
+        "isolated long-content fixture restored"
+      ],
+      "scope": "actual WebKit geometry at default and smaller native window; synthetic actions with isolated data",
+      "viewport": [
+        980,
+        668
+      ]
+    },
+    "note-sizing": {
+      "appearance": "light",
+      "checks": [
+        "isolated note fixture restored",
+        "a saved long note opens at a bounded readable height with its original whitespace",
+        "initial note sizing leaves the draft clean and its period visible",
+        "shortening a long note fills the spare editor space without an inner scrollbar",
+        "eight lines fit without an inner scrollbar or excess fixed-height space",
+        "note edits remain draft changes until an explicit save",
+        "fitting does not replace the field or disturb its text selection",
+        "a narrower native window refits visible wrapped text without another input event",
+        "the continuous form keeps the entire note draft visible",
+        "inspector width changes refit the retained note: {\"height\":95,\"client\":93,\"scroll\":93,\"style\":\"height: 95px;\",\"value\":\"接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定\",\"wrapped\":\"接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定接口约定\"}",
+        "a growing focused note stays visible between the panel top and save actions in a smaller window: {\"height\":240,\"bounds\":{\"x\":659,\"y\":336.5,\"width\":288,\"height\":240,\"top\":336.5,\"right\":947,\"bottom\":576.5,\"left\":659},\"panel\":{\"x\":639,\"y\":106,\"width\":328,\"height\":543,\"top\":106,\"right\":967,\"bottom\":649,\"left\":639},\"footer\":{\"x\":659,\"y\":588,\"width\":288,\"height\":61,\"top\":588,\"right\":947,\"bottom\":649,\"left\":659}}",
+        "note fitting does not move the dense calendar or remove draft feedback",
+        "editing a capped long note preserves its internal reading position",
+        "an explicitly resized field keeps its chosen height during further input",
+        "inspector width changes preserve an explicitly chosen height",
+        "the unsaved confirmation preserves the note editor",
+        "continuing editing retains text and sizing",
+        "a failed native save retains the text, chosen height and previous stored data",
+        "the note saves successfully on retry",
+        "successful save preserves indentation and trailing spaces and returns to clean details",
+        "a new edit sizes saved content afresh without storing a previous presentation preference",
+        "discarding note edits restores saved content and clears the temporary editor",
+        "note fitting causes no document overflow"
+      ],
+      "eightLineHeight": 174,
+      "scope": "actual isolated WebKit geometry, activeElement/selection, synthetic input and native save with injected failure; explicit resize represented by inline height, not a trusted resize gesture or caret-motion observation",
+      "wrappedHeightBeforeResize": 106
+    }
+  },
+  "electron_macos": {
+    "checks": 22,
+    "result": "pass",
+    "scope": "development desktop integration, isolated data"
+  },
+  "node_tests": {
+    "passed": 34
+  },
+  "portable_build_test": {
+    "passed": 1
+  },
+  "screenshots": [
+    "assets/desktop-editor.png",
+    "assets/desktop-phase-editor.png",
+    "assets/desktop-resource-editor.png",
+    "assets/desktop-note-editor.png",
+    "assets/desktop-replan-editor.png"
+  ],
+  "scope": "Isolated actual macOS WebKit geometry, synthetic controls, native file bridge, completed animation endpoints. Screenshots visually inspected. No real Windows notifications or trusted mouse-motion acceptance claimed."
+}

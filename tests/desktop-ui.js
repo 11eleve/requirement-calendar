@@ -22,9 +22,7 @@ window.dispatchEvent(new KeyboardEvent('keydown',{key:'s',metaKey:true,bubbles:t
 assert(!$('.rf-form')&&$('#rf-panel h2').textContent==='桌面运行回归','12: Command-S saves the requirement');
 const initialCount=count();
 buttons('编辑需求').click();
-const phaseTab=$('[role=tab][aria-selected=false]');
-$('.rf-editor-tab[aria-selected=true]').dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true}));
-assert(phaseTab.getAttribute('aria-selected')==='true'&&phaseTab.tabIndex===0,'13: arrow key changes tab and its roving tab stop');
+assert(!$('.rf-editor-tabs')&&!$('[data-editor-panel=basic]').hidden&&!$('[data-editor-panel=phases]').hidden,'13: all editor sections share the same continuous form');
 command('close');
 const date=$('.rf-date');date.focus();
 const original=date.dataset.date;
@@ -39,7 +37,7 @@ assert($('.rf-task input').checked&&$('.rf-task span').textContent==='确认验�
 await click(buttons('删除需求'));assert(count()===initialCount&&!$('#rf-toast').hidden,'16: deleting persists and offers undo');
 await click($('#rf-undo'));assert(count()===initialCount+1&&$('#rf-panel h2').textContent==='事项编辑验证','16: undo restores the deleted requirement');
 buttons('编辑').click();
-assert($('[role=tab][aria-selected=true]').textContent==='阶段','17: edit stages opens the stage tab directly');
+assert($('[data-editor-panel=phases]').contains(document.activeElement),'17: edit stages focuses the stage section directly');
 command('close');Array.from(document.querySelectorAll('.rf-bar')).find(x=>x.textContent.includes('事项编辑验证')).click();buttons('编辑需求').click();
 const dates=$('.rf-form').querySelectorAll('input[type=date]');const previousEnd=dates[1].value;
 set(dates[1],CalendarModel.add(dates[0].value,-1));

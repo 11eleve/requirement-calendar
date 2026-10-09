@@ -11,8 +11,8 @@ const item={id:'disclosure',title:'认证服务排期',tone:'blue',start:'2026-1
 const others=Array.from({length:13},(_,i)=>({...item,id:'other-'+i,title:'并行需求 '+i,phases:[],resources:[],tasks:[],done:[]}));
 assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:'2026-10-01',requirements:[item,...others]})),'isolated motion fixture restored');
 CalendarApp.editRequirement(item.id);await settle();
-const calendar=$('#rf-calendar');calendar.scrollTop=240;const original=CalendarApp.exportSnapshot(),calendarTop=calendar.scrollTop;
-let rows=$$('[data-editor-panel=basic] .rf-disclosure'),first=rows[0],second=rows[1];
+const calendar=$('#rf-calendar');calendar.scrollTop=240;await settle();const original=CalendarApp.exportSnapshot(),calendarTop=calendar.scrollTop;
+let rows=$$('[data-editor-panel=resources] .rf-disclosure'),first=rows[0],second=rows[1];
 assert(rows.every(row=>row.tagName==='DETAILS'&&summary(row).tagName==='SUMMARY'&&summary(row).getAttribute('aria-controls')===body(row).id&&summary(row).getAttribute('aria-expanded')==='false'&&body(row).inert),'native summaries identify their collapsed and inactive content');
 summary(first).click();
 assert(first.open&&!body(first).inert&&summary(first).getAttribute('aria-expanded')==='true'&&document.activeElement===summary(first),'opening immediately exposes the intended state and retains summary focus');
@@ -54,11 +54,11 @@ summary(second).click();assert(!!motion(second),'saving can be exercised during 
 assert(await CalendarApp.command('save'),'retry saves through the isolated native bridge');await settle();
 assert(!input.isConnected&&!motion(second)&&JSON.parse(CalendarApp.exportSnapshot()).requirements.find(r=>r.id===item.id).resources[1].name==='灰度方案修订','successful save disposes old motion and preserves the edited resource');
 
-CalendarApp.editRequirement(item.id);await settle();rows=$$('[data-editor-panel=basic] .rf-disclosure');first=rows[0];summary(first).click();seek(first,90);
+CalendarApp.editRequirement(item.id);await settle();rows=$$('[data-editor-panel=resources] .rf-disclosure');first=rows[0];summary(first).click();seek(first,90);
 const removedBody=body(first);first.closest('.rf-editor-item').querySelector('.rf-remove').click();await settle();
-assert(!removedBody.isConnected&&!removedBody.getAnimations().length&&document.activeElement===$('[data-editor-panel=basic] .rf-disclosure summary'),'removing an animating row cancels motion and focuses its neighbour');
+assert(!removedBody.isConnected&&!removedBody.getAnimations().length&&document.activeElement===$('[data-editor-panel=resources] .rf-disclosure summary'),'removing an animating row cancels motion and focuses its neighbour');
 await CalendarApp.command('close');$('#rf-discard-drop').click();await settle();
-CalendarApp.editRequirement(item.id);$$('.rf-editor-tab')[1].click();await settle();
+CalendarApp.editRequirement(item.id);await settle();
 const phase=$('[data-editor-panel=phases] .rf-disclosure');summary(phase).click();const phaseStart=seek(phase,0),phaseMiddle=seek(phase,90);await settle();
 assert(phaseMiddle>phaseStart+1&&phaseMiddle<height(phase)-1&&phase.querySelector('input[type=date]').value==='2026-10-01','stage disclosure uses the same motion without changing its dates');
 measurements.push({kind:'phase',opening:[phaseStart,phaseMiddle,height(phase)]});

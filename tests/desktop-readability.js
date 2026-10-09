@@ -20,15 +20,13 @@ assert(measure('outside date',outside,getComputedStyle(outside).backgroundColor)
 CalendarApp.openRequirement('read-0');await settle();
 assert($$('.rf-resource-text small,.rf-task span,.rf-note').every(node=>measure('detail '+node.className,node,getComputedStyle(node.closest('.rf-section')).backgroundColor)>=4.5),'resource types, completed tasks and notes retain readable secondary text');
 CalendarApp.editRequirement('read-0');await settle();
-const tabs=$$('.rf-editor-tab'),tabBackground=getComputedStyle($('.rf-editor-tabs')).backgroundColor;
-assert(measure('inactive editor tab',tabs[1],tabBackground)>=4.5,'the other editor tab remains legible on the segmented background');
 const placeholder=$('.rf-form input[placeholder]');
 // Transparent title inputs inherit the visible surface from their ancestors.
 const surface=node=>{for(let current=node;current;current=current.parentElement){const color=getComputedStyle(current).backgroundColor;if(color!=='rgba(0, 0, 0, 0)'&&color!=='transparent')return color;}throw Error('No opaque field surface');};
 assert(measure('field placeholder',placeholder,surface(placeholder),'::placeholder')>=4.5,'field placeholder text remains readable on its input surface');
 const label=$('.rf-field>span');
 assert(measure('field label',label,getComputedStyle($('#rf-detail')).backgroundColor)>=4.5,'form labels preserve hierarchy with sufficient text contrast');
-tabs[1].click();await settle();
+assert($$('.rf-editor-section h3').every(node=>measure('editor section heading',node,getComputedStyle($('#rf-detail')).backgroundColor)>=4.5),'section headings remain readable throughout the continuous form');
 assert($$('.rf-phase-summary .rf-summary-name,.rf-phase-summary .rf-summary-meta').every(node=>measure('phase editor '+node.className,node,getComputedStyle($('#rf-detail')).backgroundColor)>=4.5),'phase editing names and full dates retain readable primary and secondary text');
 // Composite the thin range shape over the actual date-label surfaces.
 const rangeContrasts=[];

@@ -50,12 +50,11 @@ assert($$('.rf-bar').every(bar=>!bar.classList.contains('is-selected')),'a month
 await CalendarApp.command('previous');
 assert($$('.rf-bar[data-requirement-id="selected"]').every(bar=>bar.classList.contains('is-selected')),'returning to the month restores the selected segments');
 CalendarApp.editRequirement('selected');
-const panel=$('#rf-panel'), tabs=$('.rf-editor-tabs');panel.scrollTop=panel.scrollHeight;
+const panel=$('#rf-panel');panel.scrollTop=panel.scrollHeight;
 await pause();document.getAnimations().forEach(animation=>animation.finish());
-const panelBounds=panel.getBoundingClientRect(), tabBounds=tabs.getBoundingClientRect();
-assert(tabBounds.top>=panelBounds.top-1&&tabBounds.bottom<=panelBounds.bottom,'editor tabs remain visible when many resources are scrolled');
-$$('.rf-editor-tab').find(tab=>tab.textContent==='阶段').click();
-assert(panel.scrollTop===0&&!$('[data-editor-panel="phases"]').hidden,'switching tabs brings the phase content into view');
+const panelBounds=panel.getBoundingClientRect(),actionBounds=$('.rf-form-actions').getBoundingClientRect();
+assert(actionBounds.top>=panelBounds.top-1&&actionBounds.bottom<=panelBounds.bottom+1,'save actions remain visible when many resources are scrolled');
+assert(!$('[data-editor-panel=phases]').hidden&&!$('[data-editor-panel=resources]').hidden,'phases and resources remain in one continuous form');
 assert(!!$('.rf-range-preview.is-visible')&&$$('.rf-bar.is-selected').length>0,'editing keeps both the persistent range strip and selected requirement');
 await CalendarApp.command('close');
 assert(!$$('.rf-bar.is-selected').length&&$$('.rf-bar').every(bar=>bar.getAttribute('aria-expanded')==='false'),'closing the inspector clears selection and accessibility state');
