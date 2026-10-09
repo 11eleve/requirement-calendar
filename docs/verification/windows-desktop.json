@@ -1,0 +1,203 @@
+{
+  "checked_at_utc": "2026-10-09T15:34:12.309Z",
+  "implementation_commit": "4f03705510dba561fc33f073fe4819aad17adc79",
+  "electron": "44.7.0",
+  "electron_builder": "26.15.3",
+  "local": {
+    "node_tests": 34,
+    "electron_smoke": {
+      "platform": "darwin",
+      "arch": "arm64",
+      "electron": "44.7.0",
+      "packaged": false,
+      "checks": [
+        "renderer uses sandbox and context isolation",
+        "renderer has no Node APIs",
+        "desktop bridge is available",
+        "native layout and calendar rendered",
+        "unknown IPC rejected",
+        "invalid save rejected",
+        "restore through real native bridge succeeds",
+        "saved requirements preserve notes and phases",
+        "file reload restores requirements",
+        "notification activation reveals corresponding requirement",
+        "native reminder editor is available",
+        "dirty drafts detected",
+        "restore refuses dirty draft",
+        "save clears dirty state",
+        "save actually commits editor changes",
+        "explicit discard closes dirty editor",
+        "discard preserves committed record",
+        "bad import preserves persisted data",
+        "CSP blocks renderer remote networking",
+        "private favicon requests are rejected"
+      ]
+    },
+    "portable_build_test": "passed",
+    "macos_regressions": {
+      "final": 49,
+      "data-reminders": 14,
+      "calendar-navigation": 21,
+      "panel-continuity": 17
+    },
+    "macos_signature": "verified"
+  },
+  "pending_manual": [
+    "Windows 10/11 notification banner and sound",
+    "delivery while app is closed, sleep/wake and OS notification settings",
+    "click actual Windows notification to activate requirement"
+  ],
+  "windows": {
+    "implementation_commit": "4f03705510dba561fc33f073fe4819aad17adc79",
+    "run_id": 37952145009,
+    "run_url": "https://github.com/11eleve/requirement-calendar/actions/runs/37952145009",
+    "conclusion": "success",
+    "platform": "Windows Server 2022 x64 hosted runner",
+    "node_tests": 34,
+    "development_smoke": {
+      "platform": "win32",
+      "arch": "x64",
+      "electron": "44.7.0",
+      "packaged": false,
+      "checks": [
+        "renderer uses sandbox and context isolation",
+        "renderer has no Node APIs",
+        "desktop bridge is available",
+        "native layout and calendar rendered",
+        "unknown IPC rejected",
+        "invalid save rejected",
+        "restore through real native bridge succeeds",
+        "saved requirements preserve notes and phases",
+        "file reload restores requirements",
+        "notification activation reveals corresponding requirement",
+        "native reminder editor is available",
+        "dirty drafts detected",
+        "restore refuses dirty draft",
+        "save clears dirty state",
+        "save actually commits editor changes",
+        "explicit discard closes dirty editor",
+        "discard preserves committed record",
+        "bad import preserves persisted data",
+        "CSP blocks renderer remote networking",
+        "private favicon requests are rejected",
+        "Windows shortcut accepts notification identity",
+        "Windows shortcut retains AUMID and toast CLSID"
+      ]
+    },
+    "packaged_smoke_checks": 22,
+    "installed_smoke_checks": 22,
+    "installer": "RequirementCalendar-0.2.0-x64-Setup.exe",
+    "protocol_and_start_menu_checks": "passed",
+    "artifact": {
+      "id": 11625918951,
+      "name": "RequirementCalendar-Windows-x64",
+      "size_in_bytes": 111530568,
+      "url": "https://api.github.com/repos/11eleve/requirement-calendar/actions/artifacts/11625918951",
+      "archive_download_url": "https://api.github.com/repos/11eleve/requirement-calendar/actions/artifacts/11625918951/zip",
+      "expired": false,
+      "created_at": "2026-10-09T15:32:37Z",
+      "expires_at": "2026-11-08T15:32:31Z",
+      "updated_at": "2026-10-09T15:32:37Z",
+      "digest": "sha256:2b57507bcb74a5bd599da2efcda76715f0ddd6c7e581e99ee35402b6a72d597d",
+      "workflow_run": {
+        "id": 37952145009,
+        "repository_id": 1409048301,
+        "head_repository_id": 1409048301,
+        "head_branch": "main",
+        "head_sha": "4f03705510dba561fc33f073fe4819aad17adc79"
+      }
+    },
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3
+      },
+      {
+        "name": "Run npm ci --no-audit --no-fund",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4
+      },
+      {
+        "name": "Run npm test",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5
+      },
+      {
+        "name": "Validate Windows reminder adapter",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6
+      },
+      {
+        "name": "Exercise Windows desktop bridge",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7
+      },
+      {
+        "name": "Build Windows installer",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8
+      },
+      {
+        "name": "Exercise packaged application",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9
+      },
+      {
+        "name": "Install and exercise application",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10
+      },
+      {
+        "name": "Installer checksum",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11
+      },
+      {
+        "name": "Run actions/upload-artifact@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12
+      },
+      {
+        "name": "Post Run actions/setup-node@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 23
+      },
+      {
+        "name": "Post Run actions/checkout@v4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 24
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 25
+      }
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–59",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-09T14:26:19.849626+00:00",
+  "checked_at_utc": "2026-10-09T15:34:12.358Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Not revalidated by the current reminder-editor batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -13,8 +13,8 @@
     "startup": "Actual native WebKit progress and cleanup; reduced-motion/live preference/no-API/error cleanup via isolated unit harness."
   },
   "sources": {
-    "index.html": "fdee8e1fa6d25c3d789460ea2342534e5b0db098f9fd898fb5f294b503a22948",
-    "src/app.js": "c08ebc50a6208b0bbe9708342e1a1106a6940c86ff6172762d013ab0e9d28eab",
+    "index.html": "be0f06d9e32b8d4f9878cfe8f85f3b53c40ec76153b9f8ce1b12633a6e5618d6",
+    "src/app.js": "33b166246fdb6ee8c6a6e374ba4d18195304c446af4d9b58e859023134b37f81",
     "src/index.html": "57406f23a5d59a94a49ef8654ab86551caef7d11b77ae419d400182852fede12",
     "src/model.js": "bcdc293a2077297eeff99c59b4188977b83b11564e89d93a1a12eb754c373128",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
@@ -54,7 +54,7 @@
     "tests/desktop-readability.js": "57c785525a5b58f96092fab51a4a499ab0d7588aced729528fc3201519dd7c14",
     "tests/desktop-panel-continuity.js": "88ae4ed97783af517c0d476a66a660ef0c95ec4e272020677b901a51aae15560",
     "tests/desktop-creation-colors.js": "6526cc89b675a66b50e84f6d774055c2f7cce1580cff05f4aee6470a7dafab2a",
-    "README.md": "e1479ed63d155e2cd7253c0be57e6c7a68f7debe044c70771d8146a5d93329d9",
+    "README.md": "2a7ed63222ba99e1e18892dbcbccf52613a9e602640ad01d529fc765f315d75a",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "63d455cb9c2c5a88b330aeb4e3835250f11b0b47ef26790d4c046afebcc0bd7c",
     "tests/resource-icons.swift": "68cb12f0d68addc06ef734123f72affa7fb33c299dee86107db642b2a5b3795a",
@@ -87,7 +87,22 @@
     "assets/app-icon.png": "3528282a97a3342986af8ded31cbfede749aeb037d3757d3461607c5a85a4039",
     "src/startup.js": "50c27bf51b46c631b2df55bdfacdf5838c6bf7a2e9580eb1d69bcf3e77045f4b",
     "tests/startup.test.cjs": "d80608a77095a8a1f899bc283f39fb77a8658b5fa2f57e0e6e051a8e57380df5",
-    "tests/desktop-startup.js": "2aebd03a113aa5c92b2da3acf2214edf98820593fbb7d0eb3656b576491f0832"
+    "tests/desktop-startup.js": "2aebd03a113aa5c92b2da3acf2214edf98820593fbb7d0eb3656b576491f0832",
+    "package.json": "2487219c6200b85e39c894446bcd062d21095dff2b470b8d1f79a9f6b8d5edf6",
+    "package-lock.json": "992afa91463bc047b54984e8965888ab9712c00387ed23fa150d95889c176e43",
+    ".github/workflows/windows-desktop.yml": "0ae8d395e342253545d9b75442f120d9a5ef5a6a014e7a46b81a19cc230c6bbe",
+    "tests/electron.test.cjs": "22b049f1ae16bfc6fa6f11d2441adfbaaa41f5bcc05c8fbcd46e8dffef52164d",
+    "docs/WINDOWS_DESKTOP.md": "22ca86f764f702884315cf23a4e11772acd069031c2c3f3ef948ed8fd999d10d",
+    "electron/preload.cjs": "e7e8365b3aaa0fc69fb42faac54e366c53159628eb8a4769fd8c3ca470eca3bd",
+    "electron/reminders.cjs": "08413a2689f24c4f98c3c9cddd7e58c6f1b374ff68c1a701bad7dc4d634fe346",
+    "electron/smoke.cjs": "d4a009e4f7b10c9bc9cb837c4ff27d4be383e960709c020f6399bea707e20346",
+    "electron/site-icons.cjs": "c468f0f154335a665039ac686c1b200fe8a5293c341b1fe1dc311162b0e287aa",
+    "electron/data-store.cjs": "502e7d50dc3ddc0adfa31baf8495ee86f1074639e6d580524842f8420c69945e",
+    "electron/policy.cjs": "6b611da7b40d4a00793fa6ba830fff1043630fe778ebe8f22ea1de555a378ecd",
+    "electron/main.cjs": "7e9885f6769f9707db8e8234006c6285f5d9c210e06196f2f934775a915359fc",
+    "electron/windows-reminders.ps1": "6cd7ba7ccc051df248317c6173dc1333a19af1d348522a104bcf95a876f0a1ee",
+    "electron/installer.nsh": "a9a6cfcc719efe62df429a414330ab595f99b2edf1c2d63d50ad4f867fc8c358",
+    "docs/verification/windows-desktop.json": "34f1536197c0e82aa61048318383bcdb0b61a8eed1d98adc4c0b1c5ea7d46744"
   },
   "results": {
     "docs/verification/browser-storage.json": "70dca1f59a7f7fdde9af7f4eaf6c378e1e9b0347e51c3701d891166ea68807fb",
@@ -343,7 +358,7 @@
     "assets/desktop-reminder-configured-dark.png": "ad64bfe32face069cb59456fc6e3aaa4243919dbdfaec17b39068f9d97f0bed8"
   },
   "local_app": {
-    "binary_sha256": "dce6bf217c1ac4872403b342a687bd9432ef6e02c4afc74a49bff6c4aeef4e9e",
+    "binary_sha256": "a21a87ec8fdff3d03aed0627eab679aa555af2bd6195dd151d7dbda2c74b1e08",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -1663,5 +1678,20 @@
       "restore closing focus to an available month control when the prior trigger is gone or inside the hidden inspector"
     ],
     "scope": "isolated native WebKit, synthetic commands/buttons/pointers, transitions completed to endpoints; no OS settings changed"
+  },
+  "windows_desktop": {
+    "record": "docs/verification/windows-desktop.json",
+    "local_electron_smoke_checks": 20,
+    "node_tests": 34,
+    "native_regressions": {
+      "final": 49,
+      "data-reminders": 14,
+      "calendar-navigation": 21,
+      "panel-continuity": 17
+    },
+    "manual_windows_notifications": "pending on Windows 10/11 desktop",
+    "windows_build_run": 37952145009,
+    "windows_installed_smoke_checks": 22,
+    "windows_build_conclusion": "success"
   }
 }
