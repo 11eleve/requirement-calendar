@@ -22,7 +22,14 @@
   });
   const counts={all:searched.length,active:0,upcoming:0,past:0,completed:0};for(const item of searched)counts[status(item,today)]++;
   const rows=searched.filter(item=>state==='all'||status(item,today)===state).map(item=>({item,status:status(item,today),phase:currentPhase(item,today),progress:progress(item),nodes:nodeProgress(item),next:nextNode(item,today)}));
-  rows.sort((a,b)=>(sort==='end'?a.item.end.localeCompare(b.item.end):sort==='progress'?(a.progress.ratio??-1)-(b.progress.ratio??-1):a.item.start.localeCompare(b.item.start))||a.item.title.localeCompare(b.item.title)||a.item.id.localeCompare(b.item.id));
+  rows.sort((a,b)=>{
+   let order;
+   if(sort==='end')order=a.item.end.localeCompare(b.item.end);
+   else if(sort==='progress')order=(a.progress.ratio??2)-(b.progress.ratio??2);
+   else if(sort==='next')order=a.next&&b.next?a.next.date.localeCompare(b.next.date):a.next?-1:b.next?1:0;
+   else order=a.item.start.localeCompare(b.item.start);
+   return order||a.item.title.localeCompare(b.item.title)||a.item.id.localeCompare(b.item.id);
+  });
   const nodes=rows.flatMap(({item})=>item.milestones.filter(node=>!node.done).map(node=>({item,node}))).sort((a,b)=>a.node.date.localeCompare(b.node.date)||a.item.title.localeCompare(b.item.title)||a.node.id.localeCompare(b.node.id));
   return {rows,nodes,counts,scopeCount:inScope.length};
  }

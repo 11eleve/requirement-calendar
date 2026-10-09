@@ -2,7 +2,7 @@ name: Windows desktop
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'explore/**']
     paths: ['src/**', 'electron/**', 'tests/**', 'assets/app-icon.png', 'package*.json', '.github/workflows/windows-desktop.yml']
   pull_request:
     paths: ['src/**', 'electron/**', 'tests/**', 'assets/app-icon.png', 'package*.json', '.github/workflows/windows-desktop.yml']

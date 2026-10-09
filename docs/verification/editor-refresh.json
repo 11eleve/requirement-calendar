@@ -1,0 +1,197 @@
+{
+  "checked_at_utc": "2026-10-09T17:21:18.326385+00:00",
+  "changes": [
+    "Compact continuous section rows and consistent hover surfaces",
+    "Save and cancel anchored to the inspector bottom independently of its scrolling content",
+    "Reserved scroll space keeps the last note and validation message above the actions",
+    "Create and edit retain full available calendar height"
+  ],
+  "sources": {
+    "src/styles.css": "88e70a6062809b2bc52c15351828272f47f4f7b902204e5bd01e872022174233",
+    "index.html": "833784b3c8fce9d64e3bd5d4ec3ee0e06688d92c877e6583f4d8bc468bcb14e0"
+  },
+  "native_webkit": {
+    "unified-editor": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "empty fixture restored",
+          "creation has one form without editor tabs",
+          "stages, resources and tasks appear in the same form",
+          "editor fills the calendar available height",
+          "save and cancel align with the panel bottom",
+          "date creation retains its range strip with a clean draft",
+          "out-of-range stage prevents saving in the unified form",
+          "stage error reveals and focuses its own control without hiding other sections",
+          "all section edits keep the persistent range preview and draft",
+          "continuing cancellation preserves unified fields and scroll",
+          "all sections save through the native file bridge",
+          "stage, resource, task and note are committed together without losing whitespace",
+          "existing requirements reopen with the same continuous editor",
+          "editing also occupies the available height",
+          "stage edit action targets the stage section directly",
+          "resource management targets its section directly",
+          "dense fixture restored",
+          "long form scrolls inside the full-height panel",
+          "bottom actions remain visible after scrolling",
+          "long notes retain bounded inner scrolling",
+          "editor follows the available height after native window resize",
+          "no page overflow at the smaller desktop size"
+        ],
+        "scope": "isolated native WebKit; continuous create/edit, focus, scroll, validation, save and native resize"
+      }
+    },
+    "editor-addition": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "default 资料: the newly added name is focused and visible between the panel top and save actions",
+          "default 资料: adding keeps the calendar position, saved data and persistent draft strip",
+          "default 资料: only the newly added collection row is expanded",
+          "default 资料: the new entry saves through native persistence",
+          "default 资料: saved new content preserves all earlier entries and their associations",
+          "default 资料: successful save returns to clean details and clears the temporary strip",
+          "default 阶段: the newly added name is focused and visible between the panel top and save actions",
+          "default 阶段: adding keeps the calendar position, saved data and persistent draft strip",
+          "default 阶段: only the newly added collection row is expanded",
+          "default 阶段: the new entry saves through native persistence",
+          "default 阶段: saved new content preserves all earlier entries and their associations",
+          "default 阶段: successful save returns to clean details and clears the temporary strip",
+          "default 事项: the newly added name is focused and visible between the panel top and save actions",
+          "default 事项: adding keeps the calendar position, saved data and persistent draft strip",
+          "default 事项: the new entry saves through native persistence",
+          "default 事项: saved new content preserves all earlier entries and their associations",
+          "default 事项: successful save returns to clean details and clears the temporary strip",
+          "addition is checked in the smaller native window",
+          "small 资料: the newly added name is focused and visible between the panel top and save actions",
+          "small 资料: adding keeps the calendar position, saved data and persistent draft strip",
+          "small 资料: only the newly added collection row is expanded",
+          "small 资料: the new entry saves through native persistence",
+          "small 资料: saved new content preserves all earlier entries and their associations",
+          "small 资料: successful save returns to clean details and clears the temporary strip",
+          "small 阶段: the newly added name is focused and visible between the panel top and save actions",
+          "small 阶段: adding keeps the calendar position, saved data and persistent draft strip",
+          "small 阶段: only the newly added collection row is expanded",
+          "small 阶段: the new entry saves through native persistence",
+          "small 阶段: saved new content preserves all earlier entries and their associations",
+          "small 阶段: successful save returns to clean details and clears the temporary strip",
+          "small 事项: the newly added name is focused and visible between the panel top and save actions",
+          "small 事项: adding keeps the calendar position, saved data and persistent draft strip",
+          "small 事项: the new entry saves through native persistence",
+          "small 事项: saved new content preserves all earlier entries and their associations",
+          "small 事项: successful save returns to clean details and clears the temporary strip",
+          "long-list additions do not cause document overflow"
+        ],
+        "measurements": [
+          {
+            "bottom": 681,
+            "footerTop": 700,
+            "kind": "资料",
+            "panelTop": 106,
+            "size": "default",
+            "top": 647
+          },
+          {
+            "bottom": 681,
+            "footerTop": 700,
+            "kind": "阶段",
+            "panelTop": 106,
+            "size": "default",
+            "top": 647
+          },
+          {
+            "bottom": 680.5,
+            "footerTop": 700,
+            "kind": "事项",
+            "panelTop": 106,
+            "size": "default",
+            "top": 648.5
+          },
+          {
+            "bottom": 569,
+            "footerTop": 588,
+            "kind": "资料",
+            "panelTop": 106,
+            "size": "small",
+            "top": 535
+          },
+          {
+            "bottom": 569,
+            "footerTop": 588,
+            "kind": "阶段",
+            "panelTop": 106,
+            "size": "small",
+            "top": 535
+          },
+          {
+            "bottom": 568.5,
+            "footerTop": 588,
+            "kind": "事项",
+            "panelTop": 106,
+            "size": "small",
+            "top": 536.5
+          }
+        ],
+        "scope": "actual isolated native WebKit geometry, activeElement and persistence using synthetic button/input actions; no trusted pointer or motion evidence"
+      }
+    },
+    "note-editor": {
+      "ok": true,
+      "result": {
+        "bottom": 681,
+        "clientHeight": 172,
+        "footerTop": 700,
+        "height": 174,
+        "noteUnchanged": true,
+        "scope": "actual isolated native WebKit multiline-note screenshot; synthetic focus/input and completed animation endpoints",
+        "scrollHeight": 172
+      }
+    }
+  },
+  "electron": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "electron": "44.7.0",
+    "packaged": false,
+    "checks": [
+      "renderer uses sandbox and context isolation",
+      "renderer has no Node APIs",
+      "desktop bridge is available",
+      "native layout and calendar rendered",
+      "creation shows all sections together without tabs",
+      "editor fills calendar height with visible bottom actions",
+      "unknown IPC rejected",
+      "invalid save rejected",
+      "restore through real native bridge succeeds",
+      "saved requirements preserve notes and phases",
+      "v7 palette and nodes persist through the desktop bridge",
+      "file reload restores requirements",
+      "notification activation reveals corresponding requirement",
+      "native reminder editor is available",
+      "dirty drafts detected",
+      "Excel export refuses an unsaved draft",
+      "restore refuses dirty draft",
+      "save clears dirty state",
+      "save actually commits editor changes",
+      "explicit discard closes dirty editor",
+      "discard preserves committed record",
+      "summary renders saved requirements and remaining nodes",
+      "summary workbook includes requirement and node rows",
+      "desktop Excel export writes a real XLSX atomically",
+      "invalid Excel export scopes are rejected",
+      "summary selection follows the opened requirement",
+      "detail node completion persists through Electron and refreshes the overview",
+      "summary returns focus to the updated source row",
+      "Chinese search keeps composition intact until commit",
+      "summary search clears with Escape and retains focus",
+      "Excel command provides visible success feedback",
+      "returning from summary restores the calendar",
+      "bad import preserves persisted data",
+      "CSP blocks renderer remote networking",
+      "private favicon requests are rejected"
+    ]
+  },
+  "preview": "assets/editor-continuous.png",
+  "scope": "Isolated native WebKit and macOS Electron checks; Windows binary was not rebuilt for this layout change."
+}

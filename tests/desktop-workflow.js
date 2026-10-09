@@ -38,6 +38,11 @@ const select=(key,value)=>{const control=$('[data-summary-control='+key+']');con
 $$('button').find(node=>node.textContent==='清除筛选').click();await settle();
 assert($$('.rf-summary-row').length===2&&$('[data-summary-control=scope]').value==='all'&&$('[data-summary-control=sort]').value==='end','clearing narrowing filters retains chosen scope and ordering');
 assert(!$$('button').some(node=>node.textContent==='清除筛选')&&document.activeElement===$('[data-summary-control=query]'),'filter reset disappears when unneeded and returns focus to search');
+$('[data-summary-control=status-active]').click();$('.rf-summary-row[data-requirement-id=workflow]').click();await settle();
+task=$('.rf-task input');task.checked=true;task.dispatchEvent(new Event('change',{bubbles:true}));await settle();
+assert($('.rf-state').textContent==='已完成'&&!$('.rf-summary-row'),'finishing the last pending item refreshes completion state and removes the requirement from the active filter');
+await CalendarApp.command('close');assert(document.activeElement===$('[data-summary-control=query]'),'when the source requirement leaves the filter, closing details returns to the visible search controls');
+$$('button').find(node=>node.textContent==='清除筛选').click();await settle();
 await CalendarApp.restoreSnapshot('{invalid');const storageIssue=$('#rf-storage-error').textContent;
 bridge.postMessage=async message=>{if(message.action==='exportExcel')throw Error('isolated export destination failure');return post.call(bridge,message);};assert(await CalendarApp.command('exportExcel')===false,'failed Excel destination reports a failed export');
 assert($('#rf-export-status').getAttribute('role')==='alert'&&$('#rf-export-status').textContent.includes('isolated export destination failure')&&$('#rf-storage-error').textContent===storageIssue,'export failure has its own message and does not overwrite a storage issue');

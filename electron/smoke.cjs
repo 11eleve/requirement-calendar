@@ -42,6 +42,8 @@ async function run({app,window,store,invoke,directory}) {
   check('discard preserves committed record',JSON.parse(await invoke('exportSnapshot')).requirements[0].title==='未保存草稿');
   await invoke('command','summary');
   check('summary renders saved requirements and remaining nodes',await js("!document.querySelector('#rf-summary').hidden&&document.querySelectorAll('.rf-summary-row').length===1&&document.querySelectorAll('.rf-summary-node').length===1"));
+  check('pending nodes retain grouping and explicit cross-month scope',await js("!!document.querySelector('[data-node-group] .rf-summary-node')&&document.querySelector('.rf-node-scope').textContent.includes('跨月')"));
+  check('next-node ordering exposes pending context',await js("(()=>{const sort=document.querySelector('[data-summary-control=sort]');sort.focus();sort.value='next';sort.dispatchEvent(new Event('change',{bubbles:true}));return document.activeElement===document.querySelector('[data-summary-control=sort]')&&document.querySelector('.rf-summary-next').textContent.includes('方案评审');})()"));
   const workbook=await invoke('exportWorkbook','summary');
   check('summary workbook includes requirement and node rows',workbook.counts[0].rows===1&&workbook.counts[1].rows===1);
   const exported=await js("CalendarDesktop.postMessage({action:'exportExcel',scope:'summary'})");
@@ -57,7 +59,11 @@ async function run({app,window,store,invoke,directory}) {
   check('Chinese search keeps composition intact until commit',await js("(()=>{const q=document.querySelector('[data-summary-control=query]');q.focus();q.dispatchEvent(new CompositionEvent('compositionstart',{bubbles:true}));q.value='方案';q.dispatchEvent(new InputEvent('input',{bubbles:true,isComposing:true}));const intact=q.isConnected;q.dispatchEvent(new CompositionEvent('compositionend',{bubbles:true}));return intact&&document.querySelectorAll('.rf-summary-row').length===1;})()"));
   await js("(()=>{const q=document.querySelector('[data-summary-control=query]');q.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));})()");
   check('summary search clears with Escape and retains focus',await js("document.activeElement===document.querySelector('[data-summary-control=query]')&&document.activeElement.value===''") );
+  const summaryHeight=await js("document.querySelector('#rf-summary').getBoundingClientRect().height");
   check('Excel command provides visible success feedback',await invoke('command','exportExcel')&&await js("!document.querySelector('#rf-export-status').hidden&&document.querySelector('#rf-export-status').textContent.includes('已导出')"));
+  check('export status preserves planning geometry',await js("document.querySelector('#rf-summary').getBoundingClientRect().height")==summaryHeight);
+  await js("document.querySelector('#rf-export-dismiss').click()");
+  check('export status dismissal returns to its usable action',await js("document.querySelector('#rf-export-status').hidden&&document.activeElement===document.querySelector('[data-export-excel]')"));
   await invoke('command','summary');
   check('returning from summary restores the calendar' ,await js("!document.querySelector('#rf-calendar').hidden&&document.querySelector('#rf-summary').hidden"));
   check('bad import preserves persisted data',!await invoke('restoreSnapshot','{bad'));

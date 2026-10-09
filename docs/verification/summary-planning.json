@@ -1,0 +1,237 @@
+{
+  "branch": "explore/planning-workflow",
+  "source_parent": "b4ce85eea74a9973e6909db7841de454518e953b",
+  "version": "0.4.0-alpha.2",
+  "rounds": "74–79",
+  "checked_at_utc": "2026-10-09T17:31:19.285Z",
+  "sources": {
+    "src/app.js": "ce456dff123c6ddfc36fb8599ab777599ecbbc455e56e5e7524e510d934ccf7b",
+    "src/index.html": "5104bb0738f05dd98a8475d6f8e951de82f7f1945ef926d1e3631ebda9400aeb",
+    "src/styles.css": "99d0b64b2ccb3a580b95d4ce696a4f60c8bc0f046ca1aff6a86589f3512d3555",
+    "src/planning.js": "3de75bd64e18766f8ad77fbccecc09501b8e30f07d77e528cb3fa2184abdff8b",
+    "index.html": "f8d68697aec78f1f373afd3139b12e39a4db5d4f5de2a81e41854559431e527c",
+    "electron/smoke.cjs": "858d0f48669c68e8406b034da01c7cafd5d58c39b23d7a1a2241ba808d6d40c6",
+    "tests/planning.test.cjs": "2e49ee694c8ca90c05cae8321fd27fa4c5ccf69b09733d4bcc40de94a5c421a4",
+    "tests/desktop-summary-planning.js": "8bf6d88881d260619c911ff4aa21acbe685eb41c5a732d599fa1160c768a4d9a",
+    "tests/desktop-workflow.js": "4454aaf6a8d4c9361c28c262d5028b666b572abcb45cbc3c410369179927b776",
+    "package.json": "f34ac3ae0f036e416d69f219d42e0b3c6a3567e9b30ad3ee38081022daec2184",
+    "package-lock.json": "523b60847f07da6f45494e6f5972dea29ec9df841617e3779c6b864588447a6d",
+    "scripts/build-macos.sh": "ab251d2b70156d56329ae2332d0788d083b9e6990519a2edf7fec85b010e705f",
+    ".github/workflows/windows-desktop.yml": "604a7e51f147836328b6e0762016a7f7d7c99bf1f7a44fccfe8cd03261c29717",
+    "README.md": "b1a4a5ba09172cd52cd2760f025f95de07dde5f1f45250fb113a6c1934bd249a",
+    "docs/OPTIMIZATION_LOG.md": "44e89a19f0492bfb4afc079f42287359b0b78354606126413ea863094523def1",
+    "docs/COMPLETION_AUDIT.md": "1f419369de3d03db20c35cc53357dfdb8da50729d5f23b5d7e5e3cc861a0e2e3"
+  },
+  "node_tests": 48,
+  "build_test": 1,
+  "native_webkit": {
+    "summary-planning": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "planning fixture restores with real native persistence",
+          "pending nodes group by overdue, today and future without dropping identity",
+          "future group keeps chronological order across requirements",
+          "node heading explains requirement-based scope including cross-month nodes",
+          "next-node ordering prioritizes the pending date and places undated requirements last",
+          "next-node ordering exposes the actual reason for row position",
+          "changing ordering retains focus in the recreated selector",
+          "completing a node removes its empty date group and refreshes next-node context",
+          "zero-progress work appears before requirements with no task denominator",
+          "filtered empty state offers a concrete recovery action",
+          "empty-state recovery restores results and keeps scope, ordering and search focus",
+          "future-only fixture restores",
+          "month with no matching schedule offers all-requirement navigation",
+          "all-requirement navigation makes the future schedule visible and restores scope focus",
+          "export feedback floats without resizing the planning surface",
+          "dismissing an in-flight status does not allow duplicate export and returns to a usable control",
+          "pending export resolves",
+          "completed export dismissal returns focus to its available action",
+          "export failure remains visible and independently dismissible",
+          "empty installation fixture restores",
+          "empty installation offers a direct calendar action",
+          "empty-state calendar action restores the month view and keyboard entry",
+          "planning feedback and recovery stay within the desktop viewport"
+        ],
+        "scope": "isolated native WebKit with real persistence; synthetic control actions and injected Excel save responses; no real Save-panel or OS notification claim"
+      }
+    },
+    "summary": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "summary fixture persists through the native bridge",
+          "summary replaces the calendar through one compact view control",
+          "default summary includes month intersections and excludes next-month-only work",
+          "summary shows each remaining time node with its owning requirement",
+          "summary displays actual task completion rather than elapsed time",
+          "completed work displays completion instead of its still-current phase",
+          "summary export action retains a compact button height",
+          "all-requirements scope includes future months",
+          "search filters results and preserves typing focus and caret",
+          "search with no matches shows an explicit empty state",
+          "status cards filter actual completed work",
+          "summary requirement opens details beside the same overview",
+          "saving a task in details refreshes its overview progress",
+          "editing from summary returns to calendar with a persistent date strip",
+          "view switching protects a dirty editor",
+          "continue editing retains the draft after a view switch attempt",
+          "summary has internal scrolling without page overflow"
+        ],
+        "scope": "actual isolated native WebKit, synthetic controls, native persistence, focus and selection"
+      }
+    },
+    "workflow": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "workflow fixture restores through native file persistence",
+          "detail nodes expose named completion checkboxes",
+          "node completion locks competing edits and waits for the native commit",
+          "node completion persists and updates its existing detail row",
+          "node completion restores focus and reading position",
+          "saved completion updates the marker inside the calendar band",
+          "failed completion rolls back the checkbox and keeps committed data",
+          "failed completion retains the native storage explanation",
+          "summary distinguishes finished tasks from pending nodes",
+          "summary marks the requirement currently open in details",
+          "task completion also restores keyboard focus after native saving",
+          "closing details returns to the recreated source row after a progress update",
+          "completed node disappears from pending list and returns focus to its owning requirement",
+          "Chinese composition keeps the same search input and focus",
+          "Escape during composition does not clear the unfinished text",
+          "Chinese query filters after composition commits",
+          "rich search combines type, task and URL terms",
+          "Escape clears search and keeps the search focus",
+          "Command-F targets the local summary search",
+          "clearing narrowing filters retains chosen scope and ordering",
+          "filter reset disappears when unneeded and returns focus to search",
+          "finishing the last pending item refreshes completion state and removes the requirement from the active filter",
+          "when the source requirement leaves the filter, closing details returns to the visible search controls",
+          "failed Excel destination reports a failed export",
+          "export failure has its own message and does not overwrite a storage issue",
+          "pending export disables its action and prevents duplicate save dialogs",
+          "export success resolves normally",
+          "export completion gives visible feedback and re-enables the action",
+          "cancelled save dialog clears export status without showing an error",
+          "workflow additions remain within the desktop viewport"
+        ],
+        "scope": "isolated native WebKit with real persistence; save failures, export responses and IME events injected; no trusted keyboard/IME or native Save-panel gesture claim"
+      }
+    },
+    "unified-editor": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "empty fixture restored",
+          "creation has one form without editor tabs",
+          "stages, resources and tasks appear in the same form",
+          "editor fills the calendar available height",
+          "save and cancel align with the panel bottom",
+          "date creation retains its range strip with a clean draft",
+          "out-of-range stage prevents saving in the unified form",
+          "stage error reveals and focuses its own control without hiding other sections",
+          "all section edits keep the persistent range preview and draft",
+          "continuing cancellation preserves unified fields and scroll",
+          "all sections save through the native file bridge",
+          "stage, resource, task and note are committed together without losing whitespace",
+          "existing requirements reopen with the same continuous editor",
+          "editing also occupies the available height",
+          "stage edit action targets the stage section directly",
+          "resource management targets its section directly",
+          "dense fixture restored",
+          "long form scrolls inside the full-height panel",
+          "bottom actions remain visible after scrolling",
+          "long notes retain bounded inner scrolling",
+          "editor follows the available height after native window resize",
+          "no page overflow at the smaller desktop size"
+        ],
+        "scope": "isolated native WebKit; continuous create/edit, focus, scroll, validation, save and native resize"
+      }
+    }
+  },
+  "electron_macos": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "electron": "44.7.0",
+    "packaged": false,
+    "checks": [
+      "renderer uses sandbox and context isolation",
+      "renderer has no Node APIs",
+      "desktop bridge is available",
+      "native layout and calendar rendered",
+      "creation shows all sections together without tabs",
+      "editor fills calendar height with visible bottom actions",
+      "unknown IPC rejected",
+      "invalid save rejected",
+      "restore through real native bridge succeeds",
+      "saved requirements preserve notes and phases",
+      "v7 palette and nodes persist through the desktop bridge",
+      "file reload restores requirements",
+      "notification activation reveals corresponding requirement",
+      "native reminder editor is available",
+      "dirty drafts detected",
+      "Excel export refuses an unsaved draft",
+      "restore refuses dirty draft",
+      "save clears dirty state",
+      "save actually commits editor changes",
+      "explicit discard closes dirty editor",
+      "discard preserves committed record",
+      "summary renders saved requirements and remaining nodes",
+      "pending nodes retain grouping and explicit cross-month scope",
+      "next-node ordering exposes pending context",
+      "summary workbook includes requirement and node rows",
+      "desktop Excel export writes a real XLSX atomically",
+      "invalid Excel export scopes are rejected",
+      "summary selection follows the opened requirement",
+      "detail node completion persists through Electron and refreshes the overview",
+      "summary returns focus to the updated source row",
+      "Chinese search keeps composition intact until commit",
+      "summary search clears with Escape and retains focus",
+      "Excel command provides visible success feedback",
+      "export status preserves planning geometry",
+      "export status dismissal returns to its usable action",
+      "returning from summary restores the calendar",
+      "bad import preserves persisted data",
+      "CSP blocks renderer remote networking",
+      "private favicon requests are rejected"
+    ]
+  },
+  "independent_xlsx": {
+    "sheets": [
+      "需求汇总",
+      "时间节点",
+      "阶段排期",
+      "工作事项",
+      "相关资料"
+    ],
+    "rows": {
+      "需求汇总": 4,
+      "时间节点": 4,
+      "阶段排期": 1,
+      "工作事项": 6,
+      "相关资料": 0
+    },
+    "requirement": "导出任务状态优化",
+    "requirement_start": "2026-09-30T00:00:00",
+    "node": "接口契约确认",
+    "node_date": "2026-10-09T00:00:00",
+    "reader": "openpyxl 3.1.5",
+    "file": "native preview-export.xlsx"
+  },
+  "images": {
+    "assets/editor-continuous.png": "6d8bae7d3a1ea1181b0d07e68578bf5e661d41a11d7f6d162a0ba31dfcdb1e21",
+    "assets/summary-planning.png": "a27c4433c3226fa3911ffeb071fb09e6199a259f700553cf7e5c5dea6fcabd41",
+    "assets/summary-export.png": "e81461936d9efc9c0d9f4f3398d638158c4bc3d2671506f6d6808296813682a0"
+  },
+  "native_app": {
+    "binary_sha256": "0d4fca2ac404f623880a59a0b170fbd091ece51c7aeb12f28a21c663b818de6f",
+    "bundled_page_matches": true,
+    "signature_verified": true
+  },
+  "windows": {
+    "status": "pending_for_alpha_2",
+    "previous_alpha_1_run": 37964155978
+  },
+  "scope": "Actual isolated native WebKit and macOS Electron; UI actions synthesized, export failure/pending paths injected. Current preview XLSX exported through the real native bridge and independently read. No trusted IME or actual OS notification banner/click claim."
+}

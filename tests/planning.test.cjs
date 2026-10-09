@@ -47,3 +47,19 @@ test('workflow: node completion remains distinct from task progress, including n
  const row=Planning.project([item],{anchor:item.start,today:item.start}).rows[0];assert.equal(row.nodes.done,1);assert.equal(row.progress.ratio,null);assert.notEqual(row.status,'completed');
  assert.equal(Planning.status({...item,milestones:item.milestones.map(node=>({...node,done:true}))},item.start),'completed');
 });
+test('summary ordering: next pending node takes priority over requirement start and empty plans follow dated plans',()=>{
+ const early=Model.requirement(fixture({id:'early',title:'先开始',milestones:[{id:'done',name:'已完成评审',date:'2028-02-27',kind:'review',done:true},{id:'later',name:'后续发布',date:'2028-03-08',kind:'release',done:false}]}));
+ const urgent=Model.requirement(fixture({id:'urgent',title:'下一节点更早',start:'2028-02-28',milestones:[{id:'pending',name:'接口评审',date:'2028-02-29',kind:'review',done:false}]}));
+ const noPending=Model.requirement(fixture({id:'none',title:'没有待办',milestones:[]}));
+ const items=[early,noPending,urgent],copy=JSON.stringify(items),options={anchor:early.start,today:early.start,scope:'all',sort:'next'};
+ assert.deepEqual(Planning.project(items,options).rows.map(row=>row.item.id),['urgent','early','none']);
+ assert.equal(Planning.project(items,options).rows[0].next.id,'pending');
+ const completed={...urgent,milestones:urgent.milestones.map(node=>({...node,done:true}))};
+ assert.equal(Planning.project([completed,early],options).rows[0].item.id,'early');assert.equal(JSON.stringify(items),copy);
+});
+test('summary ordering: unknown task progress follows zero and complete progress instead of implying overdue work',()=>{
+ const unknown=Model.requirement(fixture({id:'unknown',milestones:[]})),zero=Model.requirement(fixture({id:'zero',tasks:['接口联调'],done:[false]})),complete=Model.requirement(fixture({id:'complete',tasks:['接口联调'],done:[true]}));
+ const options={anchor:unknown.start,today:unknown.start,scope:'all',sort:'progress'};
+ assert.deepEqual(Planning.project([unknown,complete,zero],options).rows.map(row=>row.item.id),['zero','complete','unknown']);
+ assert.equal(Planning.project([unknown],options).rows[0].progress.ratio,null);
+});
