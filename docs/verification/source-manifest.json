@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–59",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-09T15:58:29.356920+00:00",
+  "checked_at_utc": "2026-10-09T16:03:57.521Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Not revalidated by the current reminder-editor batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -1706,6 +1706,9 @@
       "assets/desktop-resource-editor.png",
       "assets/desktop-note-editor.png",
       "assets/desktop-replan-editor.png"
-    ]
+    ],
+    "windows_build_run": 37955782602,
+    "windows_build_conclusion": "success",
+    "windows_installed_smoke_checks": 24
   }
 }

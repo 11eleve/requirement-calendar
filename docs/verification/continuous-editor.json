@@ -902,5 +902,137 @@
     "assets/desktop-note-editor.png",
     "assets/desktop-replan-editor.png"
   ],
-  "scope": "Isolated actual macOS WebKit geometry, synthetic controls, native file bridge, completed animation endpoints. Screenshots visually inspected. No real Windows notifications or trusted mouse-motion acceptance claimed."
+  "scope": "Isolated actual macOS WebKit geometry, synthetic controls, native file bridge, completed animation endpoints. Screenshots visually inspected. No real Windows notifications or trusted mouse-motion acceptance claimed.",
+  "windows": {
+    "run_id": 37955782602,
+    "job_id": 113905822466,
+    "source_commit": "0f6382467de7088a67466b712a7075d1724fb752",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 113905822466,
+        "name": "windows",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 37955782602,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run npm ci --no-audit --no-fund",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run npm test",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Validate Windows reminder adapter",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Exercise Windows desktop bridge",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Build Windows installer",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Exercise packaged application",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Install and exercise application",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Installer checksum",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25
+          }
+        ]
+      }
+    ],
+    "artifact": {
+      "id": 11627498564,
+      "name": "RequirementCalendar-Windows-x64",
+      "size_in_bytes": 111530610,
+      "url": "https://api.github.com/repos/11eleve/requirement-calendar/actions/artifacts/11627498564",
+      "archive_download_url": "https://api.github.com/repos/11eleve/requirement-calendar/actions/artifacts/11627498564/zip",
+      "expired": false,
+      "created_at": "2026-10-09T16:02:35Z",
+      "expires_at": "2026-11-08T16:02:31Z",
+      "updated_at": "2026-10-09T16:02:35Z",
+      "digest": "sha256:c009451a29db156ece55007a216d778008e3186b23d1fa548134c32e3e3679e7",
+      "workflow_run": {
+        "id": 37955782602,
+        "repository_id": 1409048301,
+        "head_repository_id": 1409048301,
+        "head_branch": "main",
+        "head_sha": "0f6382467de7088a67466b712a7075d1724fb752"
+      }
+    },
+    "development_desktop_checks": 24,
+    "unpacked_desktop_checks": 24,
+    "installed_desktop_checks": 24,
+    "node_tests": 34,
+    "manual_notification_acceptance": "Real banner, sound, sleep delivery and OS notification click remain pending; this layout update does not change that scope."
+  }
 }
