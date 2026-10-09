@@ -1,7 +1,7 @@
 {
-  "rounds_implemented": "01–57",
+  "rounds_implemented": "01–58",
   "goal_complete": false,
-  "checked_at_utc": "2026-10-09T13:26:50.831Z",
+  "checked_at_utc": "2026-10-09T13:36:29.107Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Not revalidated by the current reminder-editor batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -12,12 +12,12 @@
     "existing_bar_replan": "Trusted native CUA forward/reverse cross-week drag, middle-continuation grab, dirty-draft continue/discard, Save and Command-S verified at dbbcee3. Isolated JSON confirms dates/phases and content preservation. Intermediate motion and held-drag focus loss remain unobserved."
   },
   "sources": {
-    "index.html": "f1da846a23999fdd2ab31d1b4ec106040d3085af0107bfaa93cc755ec05a72bd",
+    "index.html": "ee67960ad2b71c4c4db7757d8220c715b283ea221b100ee44882bedd5b551680",
     "src/app.js": "62c05bcc35119f448c75c1645e34f23b87f386711a90ed6765c265f368b2db3d",
     "src/index.html": "40f930bd1104ffad4ea5dda843e9112262434eb1a595c6bd24cd1d8abcc77583",
     "src/model.js": "bcdc293a2077297eeff99c59b4188977b83b11564e89d93a1a12eb754c373128",
     "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
-    "src/styles.css": "6ba352c77799bd5235464cb5a42d407782c7bb4a627581ab5ef1ce240cba6ab7",
+    "src/styles.css": "ebef1b0870400ae244e853488899c18e6d96b5428ddefe66fc3000f6013e9940",
     "native/App.swift": "b57691aeaa1dc95ac7f815b9d09842f60cb8164afe80960e16653c6198deffc0",
     "native/DataStore.swift": "7e2fe913db06f18ee669a799c1675bc99c704bd5e10ab7421510038079c0e091",
     "native/LinkPolicy.swift": "42695a8723abf96f25053ec625d535d985ab172087c2d6b60199a04996963ef1",
@@ -53,7 +53,7 @@
     "tests/desktop-readability.js": "57c785525a5b58f96092fab51a4a499ab0d7588aced729528fc3201519dd7c14",
     "tests/desktop-panel-continuity.js": "88ae4ed97783af517c0d476a66a660ef0c95ec4e272020677b901a51aae15560",
     "tests/desktop-creation-colors.js": "6526cc89b675a66b50e84f6d774055c2f7cce1580cff05f4aee6470a7dafab2a",
-    "README.md": "37e5d8298e281be14c6e6492405caae7729b9ab603ff92643c7664047efc27fd",
+    "README.md": "d7644fa1bb847f9e6f2f24df76edc56f7a71043864fbf90afb6938800532d171",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "63d455cb9c2c5a88b330aeb4e3835250f11b0b47ef26790d4c046afebcc0bd7c",
     "tests/resource-icons.swift": "68cb12f0d68addc06ef734123f72affa7fb33c299dee86107db642b2a5b3795a",
@@ -77,8 +77,8 @@
     "tests/desktop-disclosure.js": "afd925f37a70e25131c6109e9075a2f787d6988b5a3754633e550ab6a25d67ee",
     "tests/desktop-replan.js": "05601a673b89f9a5c6f19563ab61208525cf74a1a20d8848f3281c5d79a85927",
     "tests/desktop-replan-editor.js": "4a1c703a1ec94e6c01e234aa65e7fc4f39b17fea4e05d223b449c68b9123cc7b",
-    "docs/OPTIMIZATION_LOG.md": "7140a3188bd1f6cc55c32a3ccaa732925af84f5117ff2e53f7cf56d333a421e9",
-    "docs/COMPLETION_AUDIT.md": "5d393565a9ab135e0c310dec4c199b6563c79c7a889bee81882c663a9b84119e",
+    "docs/OPTIMIZATION_LOG.md": "e9bee07bfde14243c60e4096439e1bd200862f386d726e27b8542502af2a02fe",
+    "docs/COMPLETION_AUDIT.md": "7ce0c9eb703ad3af3863f56878a8a334f1342b4276df77053743e9a217940c4f",
     "tests/desktop-band-feedback.js": "52ac7a08e0d98e4ec802b20534dcc221cdbb6005adfe1f6c8cd64cf8caccde1f",
     "tests/desktop-reminder-editor.js": "906dd7c45eac694608e2aeda5cf837e8975397a738f2a13234c2c210d6f8adca",
     "tests/desktop-reminder-configured.js": "006705c50fd6383f263635f7181ddf6b25e829db1ef5f04bcb6d4f2979567dcb",
@@ -310,11 +310,12 @@
     "docs/verification/site-icon-fallback-final-light.json": "b15ca301464c138fef12a41af56e80106f64c6d81566c72f9e052212d6c62c8a",
     "docs/verification/site-icon-fallback-final-dark.json": "64d7d19f481207fdce7a5005e62ecccde9c1cbcada0bffb9f79880b0e46b16b7",
     "docs/verification/site-icon-fallback-live-light.json": "391e6aa083c1cc18f6a914bbae7d451a84b690158c17c3da345f044523441efa",
-    "docs/verification/site-icon-fallback-live-dark.json": "0ebb655c81ab6fdd13682a4743c105a3c4cacd95e9286d1fde67988e8eec7e2f"
+    "docs/verification/site-icon-fallback-live-dark.json": "0ebb655c81ab6fdd13682a4743c105a3c4cacd95e9286d1fde67988e8eec7e2f",
+    "docs/verification/context-accent.json": "ebd3f5419bcacc94e1075609032e6fe82c72a564954ed87c52ce0285bf648de9"
   },
   "screenshots": {
-    "assets/desktop-editor-dark.png": "457ba7176da5908ed649873d264d7c607bcaa39903bf49f40f80e7a041e4e7fc",
-    "assets/desktop-editor.png": "d89b0ab5fd79c04606623e016d51c9e5d368d8f8554b39af4fa70ccdd966f398",
+    "assets/desktop-editor-dark.png": "8d42e4bcee7b2c8c79a33d09f67e674b132b5c5d7a041ab02e1aeec9a1aadbf6",
+    "assets/desktop-editor.png": "5d89afcb3ac583c1e5e38d4de1a8e0bc88d693e483bed90f6e36ed7c0dbcd255",
     "assets/desktop-overview.png": "bd093df4511c0c31409b543d5dab2d3c915f019c3c906a1cf29ee80220d0e9d7",
     "assets/desktop-detail.png": "07b616812808ef0a0c002b93d5577d51c78eaf1ede78ef202811587c8546184a",
     "assets/desktop-detail-dark.png": "6058afb4bbfc0f31979c3e8d963bbcfb59a33dca1dee099106db602ab029c636",
@@ -335,7 +336,7 @@
     "assets/desktop-reminder-configured-dark.png": "ad64bfe32face069cb59456fc6e3aaa4243919dbdfaec17b39068f9d97f0bed8"
   },
   "local_app": {
-    "binary_sha256": "ba1809cbfc44875a86c5793f9ee0df32783fd27f7ceca2eb7b0b94b16ff15822",
+    "binary_sha256": "fcccbc35b81cefdd2ef4c0aac136445d5c833e9b6e02adf9749a9523c2d2604c",
     "bundled_page_matches_source_build": true,
     "ad_hoc_signature_verified": true,
     "bundled_third_party_notices_match": true
@@ -1588,5 +1589,37 @@
     "source_commit": "dbbcee3d1944c63e4eb15c82b922a211a66a1e47",
     "scope": "trusted gesture endpoints, AX and isolated persistence; no held-drag focus loss or intermediate frame verification",
     "code_changed": false
+  },
+  "context_accent_refinement": {
+    "record": "docs/verification/context-accent.json",
+    "source_before": "25172633bd7f3e7905c69352edf07b40114775a7",
+    "changes": "Requirement-colored text actions, checked controls, input focus and primary editing controls across blue/green details; global creation and resource identities retain own colors.",
+    "comparisons": [
+      {
+        "appearance": "light",
+        "identical_layout_samples": 6,
+        "identical_stored_fixture": true,
+        "global_add_unchanged": true,
+        "resource_identity_colors_unchanged": true,
+        "destructive_colors_unchanged": true,
+        "minimum_primary_text_contrast": 5.064725909701542
+      },
+      {
+        "appearance": "dark",
+        "identical_layout_samples": 6,
+        "identical_stored_fixture": true,
+        "global_add_unchanged": true,
+        "resource_identity_colors_unchanged": true,
+        "destructive_colors_unchanged": true,
+        "minimum_primary_text_contrast": 7.568830238676913
+      }
+    ],
+    "visually_inspected": [
+      "blue-light",
+      "blue-dark",
+      "green-light",
+      "green-dark"
+    ],
+    "scope": "Isolated native WebKit actual computed colors, geometry, file bridge and existing regressions. Focus/activation synthetic and transitions completed to endpoints. Inactive verification host did not exercise :focus-visible; no claim of trusted keyboard-ring or intermediate motion acceptance."
   }
 }

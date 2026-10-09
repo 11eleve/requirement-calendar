@@ -1,0 +1,5924 @@
+{
+  "checked_at_utc": "2026-10-09T13:36:29.107Z",
+  "source_before": "25172633bd7f3e7905c69352edf07b40114775a7",
+  "changes": "Requirement-colored text actions, checked controls, input focus and primary editing controls across blue/green details; global creation and resource identities retain own colors.",
+  "comparisons": [
+    {
+      "appearance": "light",
+      "identical_layout_samples": 6,
+      "identical_stored_fixture": true,
+      "global_add_unchanged": true,
+      "resource_identity_colors_unchanged": true,
+      "destructive_colors_unchanged": true,
+      "minimum_primary_text_contrast": 5.064725909701542
+    },
+    {
+      "appearance": "dark",
+      "identical_layout_samples": 6,
+      "identical_stored_fixture": true,
+      "global_add_unchanged": true,
+      "resource_identity_colors_unchanged": true,
+      "destructive_colors_unchanged": true,
+      "minimum_primary_text_contrast": 7.568830238676913
+    }
+  ],
+  "observations_and_regressions": {
+    "before-light": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "checkout primary button readable",
+          "checkout secondary actions readable",
+          "checkout save text readable",
+          "checkout focusing controls leaves clean draft",
+          "checkout stored requirements unchanged",
+          "login primary button readable",
+          "login secondary actions readable",
+          "login save text readable",
+          "login focusing controls leaves clean draft",
+          "login stored requirements unchanged",
+          "export primary button readable",
+          "export secondary actions readable",
+          "export save text readable",
+          "export focusing controls leaves clean draft",
+          "export stored requirements unchanged"
+        ],
+        "layouts": [
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                211.5
+              ],
+              [
+                807,
+                430.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                598.390625,
+                318,
+                170
+              ],
+              [
+                807,
+                788.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                729.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                199.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          }
+        ],
+        "samples": [
+          {
+            "action": "rgb(117, 98, 178)",
+            "brandIcons": [
+              {
+                "background": "rgb(237, 243, 248)",
+                "color": "rgb(62, 98, 132)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(248, 238, 233)",
+                "color": "rgb(174, 106, 76)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(102, 84, 154)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "checkout",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 5.064725909701542,
+            "textActions": [
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)"
+            ]
+          },
+          {
+            "checkbox": "rgb(102, 84, 154)",
+            "focusedSaveOutline": "rgb(102, 84, 154)",
+            "focusVisible": true,
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "checkout",
+            "mode": "edit",
+            "nameFocus": "rgb(102, 84, 154)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(117, 98, 178)",
+            "saveContrast": 5.064725909701542,
+            "tabTone": "rgb(102, 84, 154)",
+            "textActions": [
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)"
+            ]
+          },
+          {
+            "action": "rgb(117, 98, 178)",
+            "brandIcons": [
+              {
+                "background": "rgb(237, 243, 248)",
+                "color": "rgb(62, 98, 132)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(248, 248, 246)",
+                "color": "rgb(46, 51, 50)",
+                "kind": "G"
+              }
+            ],
+            "checkbox": "rgb(102, 84, 154)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "login",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 5.064725909701542,
+            "textActions": [
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)"
+            ]
+          },
+          {
+            "checkbox": "rgb(102, 84, 154)",
+            "focusedSaveOutline": "rgb(102, 84, 154)",
+            "focusVisible": true,
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "login",
+            "mode": "edit",
+            "nameFocus": "rgb(102, 84, 154)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(117, 98, 178)",
+            "saveContrast": 5.064725909701542,
+            "tabTone": "rgb(62, 98, 132)",
+            "textActions": [
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)"
+            ]
+          },
+          {
+            "action": "rgb(117, 98, 178)",
+            "brandIcons": [
+              {
+                "background": "rgb(237, 243, 248)",
+                "color": "rgb(62, 98, 132)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(248, 238, 233)",
+                "color": "rgb(174, 106, 76)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(102, 84, 154)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "export",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 5.064725909701542,
+            "textActions": [
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)"
+            ]
+          },
+          {
+            "checkbox": "rgb(102, 84, 154)",
+            "focusedSaveOutline": "rgb(102, 84, 154)",
+            "focusVisible": true,
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "export",
+            "mode": "edit",
+            "nameFocus": "rgb(102, 84, 154)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(117, 98, 178)",
+            "saveContrast": 5.064725909701542,
+            "tabTone": "rgb(53, 107, 89)",
+            "textActions": [
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)"
+            ]
+          }
+        ],
+        "scope": "Actual isolated native WebKit computed colors, contrast, layout, persistence; synthetic focus/activation, transition endpoints only. Resolved outline does not prove trusted keyboard-visible branch.",
+        "storedSnapshot": "{\"version\":6,\"anchor\":\"2026-10-09\",\"requirements\":[{\"id\":\"checkout\",\"title\":\"结算流程改版\",\"reminder\":null,\"short\":\"结算流程改版\",\"tone\":\"\",\"start\":\"2026-10-09\",\"end\":\"2026-11-08\",\"phases\":[{\"name\":\"评审\",\"start\":\"2026-10-09\",\"end\":\"2026-10-10\"},{\"name\":\"开发\",\"start\":\"2026-10-11\",\"end\":\"2026-10-18\"},{\"name\":\"联调\",\"start\":\"2026-10-19\",\"end\":\"2026-10-25\"},{\"name\":\"测试\",\"start\":\"2026-10-26\",\"end\":\"2026-11-01\"},{\"name\":\"上线\",\"start\":\"2026-11-02\",\"end\":\"2026-11-08\"}],\"resources\":[{\"name\":\"结算改版 PRD\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"Checkout 交互与视觉\",\"type\":\"设计稿\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认需求边界与验收标准\",\"实现优惠券选择与金额计算\",\"补齐支付失败恢复逻辑\",\"联调与回归验证\"],\"done\":[true,false,false,false],\"note\":\"待产品确认：优惠券与余额的扣减顺序。\"},{\"id\":\"login\",\"title\":\"登录态异常修复\",\"reminder\":null,\"short\":\"登录态异常修复\",\"tone\":\"blue\",\"start\":\"2026-10-11\",\"end\":\"2026-10-15\",\"phases\":[{\"name\":\"排查\",\"start\":\"2026-10-11\",\"end\":\"2026-10-12\"},{\"name\":\"修复\",\"start\":\"2026-10-13\",\"end\":\"2026-10-14\"},{\"name\":\"验证\",\"start\":\"2026-10-15\",\"end\":\"2026-10-15\"}],\"resources\":[{\"name\":\"登录失效场景整理\",\"type\":\"问题记录\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"认证模块设计\",\"type\":\"接口约定\",\"url\":\"\",\"icon\":\"G\"}],\"tasks\":[\"定位状态不同步\",\"修复与回归验证\",\"发布与观察\"],\"done\":[false,false,false],\"note\":\"确认自动续期失败后是否强制退出。\"},{\"id\":\"export\",\"title\":\"报表导出优化\",\"reminder\":null,\"short\":\"报表导出优化\",\"tone\":\"green\",\"start\":\"2026-10-21\",\"end\":\"2026-11-01\",\"phases\":[{\"name\":\"方案\",\"start\":\"2026-10-21\",\"end\":\"2026-10-22\"},{\"name\":\"开发\",\"start\":\"2026-10-23\",\"end\":\"2026-10-28\"},{\"name\":\"验收\",\"start\":\"2026-10-29\",\"end\":\"2026-11-01\"}],\"resources\":[{\"name\":\"异步导出说明\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"导出任务面板\",\"type\":\"交互设计\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认导出规模与边界\",\"实现任务状态展示\",\"联调与验收\"],\"done\":[false,false,false],\"note\":\"等待后端确认导出任务状态与重试接口。\"}]}"
+      }
+    },
+    "before-dark": {
+      "ok": true,
+      "result": {
+        "appearance": "dark",
+        "checks": [
+          "checkout primary button readable",
+          "checkout secondary actions readable",
+          "checkout save text readable",
+          "checkout focusing controls leaves clean draft",
+          "checkout stored requirements unchanged",
+          "login primary button readable",
+          "login secondary actions readable",
+          "login save text readable",
+          "login focusing controls leaves clean draft",
+          "login stored requirements unchanged",
+          "export primary button readable",
+          "export secondary actions readable",
+          "export save text readable",
+          "export focusing controls leaves clean draft",
+          "export stored requirements unchanged"
+        ],
+        "layouts": [
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                211.5
+              ],
+              [
+                807,
+                430.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                598.390625,
+                318,
+                170
+              ],
+              [
+                807,
+                788.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                729.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                199.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          }
+        ],
+        "samples": [
+          {
+            "action": "rgb(187, 169, 237)",
+            "brandIcons": [
+              {
+                "background": "rgb(43, 59, 73)",
+                "color": "rgb(179, 206, 232)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(67, 53, 47)",
+                "color": "rgb(239, 182, 151)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(199, 185, 239)",
+            "destructive": "rgb(236, 164, 177)",
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "checkout",
+            "mode": "detail",
+            "onAction": "rgb(36, 32, 47)",
+            "primaryContrast": 7.568830238676913,
+            "textActions": [
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)"
+            ]
+          },
+          {
+            "checkbox": "rgb(199, 185, 239)",
+            "focusedSaveOutline": "rgb(199, 185, 239)",
+            "focusVisible": true,
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "checkout",
+            "mode": "edit",
+            "nameFocus": "rgb(199, 185, 239)",
+            "onSave": "rgb(36, 32, 47)",
+            "primaryFocusOutline": "rgb(36, 32, 47)",
+            "save": "rgb(187, 169, 237)",
+            "saveContrast": 7.568830238676913,
+            "tabTone": "rgb(199, 185, 239)",
+            "textActions": [
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)"
+            ]
+          },
+          {
+            "action": "rgb(187, 169, 237)",
+            "brandIcons": [
+              {
+                "background": "rgb(43, 59, 73)",
+                "color": "rgb(179, 206, 232)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(32, 35, 37)",
+                "color": "rgb(237, 240, 237)",
+                "kind": "G"
+              }
+            ],
+            "checkbox": "rgb(199, 185, 239)",
+            "destructive": "rgb(236, 164, 177)",
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "login",
+            "mode": "detail",
+            "onAction": "rgb(36, 32, 47)",
+            "primaryContrast": 7.568830238676913,
+            "textActions": [
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)"
+            ]
+          },
+          {
+            "checkbox": "rgb(199, 185, 239)",
+            "focusedSaveOutline": "rgb(199, 185, 239)",
+            "focusVisible": true,
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "login",
+            "mode": "edit",
+            "nameFocus": "rgb(199, 185, 239)",
+            "onSave": "rgb(36, 32, 47)",
+            "primaryFocusOutline": "rgb(36, 32, 47)",
+            "save": "rgb(187, 169, 237)",
+            "saveContrast": 7.568830238676913,
+            "tabTone": "rgb(179, 206, 232)",
+            "textActions": [
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)"
+            ]
+          },
+          {
+            "action": "rgb(187, 169, 237)",
+            "brandIcons": [
+              {
+                "background": "rgb(43, 59, 73)",
+                "color": "rgb(179, 206, 232)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(67, 53, 47)",
+                "color": "rgb(239, 182, 151)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(199, 185, 239)",
+            "destructive": "rgb(236, 164, 177)",
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "export",
+            "mode": "detail",
+            "onAction": "rgb(36, 32, 47)",
+            "primaryContrast": 7.568830238676913,
+            "textActions": [
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)"
+            ]
+          },
+          {
+            "checkbox": "rgb(199, 185, 239)",
+            "focusedSaveOutline": "rgb(199, 185, 239)",
+            "focusVisible": true,
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "export",
+            "mode": "edit",
+            "nameFocus": "rgb(199, 185, 239)",
+            "onSave": "rgb(36, 32, 47)",
+            "primaryFocusOutline": "rgb(36, 32, 47)",
+            "save": "rgb(187, 169, 237)",
+            "saveContrast": 7.568830238676913,
+            "tabTone": "rgb(173, 212, 191)",
+            "textActions": [
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)"
+            ]
+          }
+        ],
+        "scope": "Actual isolated native WebKit computed colors, contrast, layout, persistence; synthetic focus/activation, transition endpoints only. Resolved outline does not prove trusted keyboard-visible branch.",
+        "storedSnapshot": "{\"version\":6,\"anchor\":\"2026-10-09\",\"requirements\":[{\"id\":\"checkout\",\"title\":\"结算流程改版\",\"reminder\":null,\"short\":\"结算流程改版\",\"tone\":\"\",\"start\":\"2026-10-09\",\"end\":\"2026-11-08\",\"phases\":[{\"name\":\"评审\",\"start\":\"2026-10-09\",\"end\":\"2026-10-10\"},{\"name\":\"开发\",\"start\":\"2026-10-11\",\"end\":\"2026-10-18\"},{\"name\":\"联调\",\"start\":\"2026-10-19\",\"end\":\"2026-10-25\"},{\"name\":\"测试\",\"start\":\"2026-10-26\",\"end\":\"2026-11-01\"},{\"name\":\"上线\",\"start\":\"2026-11-02\",\"end\":\"2026-11-08\"}],\"resources\":[{\"name\":\"结算改版 PRD\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"Checkout 交互与视觉\",\"type\":\"设计稿\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认需求边界与验收标准\",\"实现优惠券选择与金额计算\",\"补齐支付失败恢复逻辑\",\"联调与回归验证\"],\"done\":[true,false,false,false],\"note\":\"待产品确认：优惠券与余额的扣减顺序。\"},{\"id\":\"login\",\"title\":\"登录态异常修复\",\"reminder\":null,\"short\":\"登录态异常修复\",\"tone\":\"blue\",\"start\":\"2026-10-11\",\"end\":\"2026-10-15\",\"phases\":[{\"name\":\"排查\",\"start\":\"2026-10-11\",\"end\":\"2026-10-12\"},{\"name\":\"修复\",\"start\":\"2026-10-13\",\"end\":\"2026-10-14\"},{\"name\":\"验证\",\"start\":\"2026-10-15\",\"end\":\"2026-10-15\"}],\"resources\":[{\"name\":\"登录失效场景整理\",\"type\":\"问题记录\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"认证模块设计\",\"type\":\"接口约定\",\"url\":\"\",\"icon\":\"G\"}],\"tasks\":[\"定位状态不同步\",\"修复与回归验证\",\"发布与观察\"],\"done\":[false,false,false],\"note\":\"确认自动续期失败后是否强制退出。\"},{\"id\":\"export\",\"title\":\"报表导出优化\",\"reminder\":null,\"short\":\"报表导出优化\",\"tone\":\"green\",\"start\":\"2026-10-21\",\"end\":\"2026-11-01\",\"phases\":[{\"name\":\"方案\",\"start\":\"2026-10-21\",\"end\":\"2026-10-22\"},{\"name\":\"开发\",\"start\":\"2026-10-23\",\"end\":\"2026-10-28\"},{\"name\":\"验收\",\"start\":\"2026-10-29\",\"end\":\"2026-11-01\"}],\"resources\":[{\"name\":\"异步导出说明\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"导出任务面板\",\"type\":\"交互设计\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认导出规模与边界\",\"实现任务状态展示\",\"联调与验收\"],\"done\":[false,false,false],\"note\":\"等待后端确认导出任务状态与重试接口。\"}]}"
+      }
+    },
+    "blue-light": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "checkout primary button readable",
+          "checkout secondary actions readable",
+          "checkout save text readable",
+          "checkout focusing controls leaves clean draft",
+          "checkout stored requirements unchanged",
+          "checkout title focus matches tab tone",
+          "checkout checkbox matches requirement tone",
+          "checkout editing actions match requirement tone",
+          "checkout visible save outline matches requirement tone",
+          "login primary button readable",
+          "login secondary actions readable",
+          "login save text readable",
+          "login focusing controls leaves clean draft",
+          "login stored requirements unchanged",
+          "login title focus matches tab tone",
+          "login checkbox matches requirement tone",
+          "login editing actions match requirement tone",
+          "login visible save outline matches requirement tone",
+          "login save fill matches requirement tone",
+          "export primary button readable",
+          "export secondary actions readable",
+          "export save text readable",
+          "export focusing controls leaves clean draft",
+          "export stored requirements unchanged",
+          "export title focus matches tab tone",
+          "export checkbox matches requirement tone",
+          "export editing actions match requirement tone",
+          "export visible save outline matches requirement tone",
+          "export save fill matches requirement tone"
+        ],
+        "layouts": [
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                211.5
+              ],
+              [
+                807,
+                430.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                598.390625,
+                318,
+                170
+              ],
+              [
+                807,
+                788.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                729.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                199.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          }
+        ],
+        "samples": [
+          {
+            "action": "rgb(117, 98, 178)",
+            "brandIcons": [
+              {
+                "background": "rgb(237, 243, 248)",
+                "color": "rgb(62, 98, 132)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(248, 238, 233)",
+                "color": "rgb(174, 106, 76)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(102, 84, 154)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "checkout",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 5.064725909701542,
+            "textActions": [
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)"
+            ]
+          },
+          {
+            "checkbox": "rgb(102, 84, 154)",
+            "focusedSaveOutline": "rgb(102, 84, 154)",
+            "focusVisible": true,
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "checkout",
+            "mode": "edit",
+            "nameFocus": "rgb(102, 84, 154)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(117, 98, 178)",
+            "saveContrast": 5.064725909701542,
+            "tabTone": "rgb(102, 84, 154)",
+            "textActions": [
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)"
+            ]
+          },
+          {
+            "action": "rgb(62, 98, 132)",
+            "brandIcons": [
+              {
+                "background": "rgb(237, 243, 248)",
+                "color": "rgb(62, 98, 132)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(248, 248, 246)",
+                "color": "rgb(46, 51, 50)",
+                "kind": "G"
+              }
+            ],
+            "checkbox": "rgb(62, 98, 132)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "login",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 6.39252238110319,
+            "textActions": [
+              "rgb(62, 98, 132)",
+              "rgb(62, 98, 132)"
+            ]
+          },
+          {
+            "checkbox": "rgb(62, 98, 132)",
+            "focusedSaveOutline": "rgb(62, 98, 132)",
+            "focusVisible": true,
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "login",
+            "mode": "edit",
+            "nameFocus": "rgb(62, 98, 132)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(62, 98, 132)",
+            "saveContrast": 6.39252238110319,
+            "tabTone": "rgb(62, 98, 132)",
+            "textActions": [
+              "rgb(62, 98, 132)",
+              "rgb(62, 98, 132)",
+              "rgb(62, 98, 132)"
+            ]
+          },
+          {
+            "action": "rgb(53, 107, 89)",
+            "brandIcons": [
+              {
+                "background": "rgb(237, 243, 248)",
+                "color": "rgb(62, 98, 132)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(248, 238, 233)",
+                "color": "rgb(174, 106, 76)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(53, 107, 89)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "export",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 6.178817494992134,
+            "textActions": [
+              "rgb(53, 107, 89)",
+              "rgb(53, 107, 89)"
+            ]
+          },
+          {
+            "checkbox": "rgb(53, 107, 89)",
+            "focusedSaveOutline": "rgb(53, 107, 89)",
+            "focusVisible": true,
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "export",
+            "mode": "edit",
+            "nameFocus": "rgb(53, 107, 89)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(53, 107, 89)",
+            "saveContrast": 6.178817494992134,
+            "tabTone": "rgb(53, 107, 89)",
+            "textActions": [
+              "rgb(53, 107, 89)",
+              "rgb(53, 107, 89)",
+              "rgb(53, 107, 89)"
+            ]
+          }
+        ],
+        "scope": "Actual isolated native WebKit computed colors, contrast, layout, persistence; synthetic focus/activation, transition endpoints only. Resolved outline does not prove trusted keyboard-visible branch.",
+        "storedSnapshot": "{\"version\":6,\"anchor\":\"2026-10-09\",\"requirements\":[{\"id\":\"checkout\",\"title\":\"结算流程改版\",\"reminder\":null,\"short\":\"结算流程改版\",\"tone\":\"\",\"start\":\"2026-10-09\",\"end\":\"2026-11-08\",\"phases\":[{\"name\":\"评审\",\"start\":\"2026-10-09\",\"end\":\"2026-10-10\"},{\"name\":\"开发\",\"start\":\"2026-10-11\",\"end\":\"2026-10-18\"},{\"name\":\"联调\",\"start\":\"2026-10-19\",\"end\":\"2026-10-25\"},{\"name\":\"测试\",\"start\":\"2026-10-26\",\"end\":\"2026-11-01\"},{\"name\":\"上线\",\"start\":\"2026-11-02\",\"end\":\"2026-11-08\"}],\"resources\":[{\"name\":\"结算改版 PRD\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"Checkout 交互与视觉\",\"type\":\"设计稿\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认需求边界与验收标准\",\"实现优惠券选择与金额计算\",\"补齐支付失败恢复逻辑\",\"联调与回归验证\"],\"done\":[true,false,false,false],\"note\":\"待产品确认：优惠券与余额的扣减顺序。\"},{\"id\":\"login\",\"title\":\"登录态异常修复\",\"reminder\":null,\"short\":\"登录态异常修复\",\"tone\":\"blue\",\"start\":\"2026-10-11\",\"end\":\"2026-10-15\",\"phases\":[{\"name\":\"排查\",\"start\":\"2026-10-11\",\"end\":\"2026-10-12\"},{\"name\":\"修复\",\"start\":\"2026-10-13\",\"end\":\"2026-10-14\"},{\"name\":\"验证\",\"start\":\"2026-10-15\",\"end\":\"2026-10-15\"}],\"resources\":[{\"name\":\"登录失效场景整理\",\"type\":\"问题记录\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"认证模块设计\",\"type\":\"接口约定\",\"url\":\"\",\"icon\":\"G\"}],\"tasks\":[\"定位状态不同步\",\"修复与回归验证\",\"发布与观察\"],\"done\":[false,false,false],\"note\":\"确认自动续期失败后是否强制退出。\"},{\"id\":\"export\",\"title\":\"报表导出优化\",\"reminder\":null,\"short\":\"报表导出优化\",\"tone\":\"green\",\"start\":\"2026-10-21\",\"end\":\"2026-11-01\",\"phases\":[{\"name\":\"方案\",\"start\":\"2026-10-21\",\"end\":\"2026-10-22\"},{\"name\":\"开发\",\"start\":\"2026-10-23\",\"end\":\"2026-10-28\"},{\"name\":\"验收\",\"start\":\"2026-10-29\",\"end\":\"2026-11-01\"}],\"resources\":[{\"name\":\"异步导出说明\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"导出任务面板\",\"type\":\"交互设计\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认导出规模与边界\",\"实现任务状态展示\",\"联调与验收\"],\"done\":[false,false,false],\"note\":\"等待后端确认导出任务状态与重试接口。\"}]}"
+      }
+    },
+    "blue-dark": {
+      "ok": true,
+      "result": {
+        "appearance": "dark",
+        "checks": [
+          "checkout primary button readable",
+          "checkout secondary actions readable",
+          "checkout save text readable",
+          "checkout focusing controls leaves clean draft",
+          "checkout stored requirements unchanged",
+          "checkout title focus matches tab tone",
+          "checkout checkbox matches requirement tone",
+          "checkout editing actions match requirement tone",
+          "checkout visible save outline matches requirement tone",
+          "login primary button readable",
+          "login secondary actions readable",
+          "login save text readable",
+          "login focusing controls leaves clean draft",
+          "login stored requirements unchanged",
+          "login title focus matches tab tone",
+          "login checkbox matches requirement tone",
+          "login editing actions match requirement tone",
+          "login visible save outline matches requirement tone",
+          "login save fill matches requirement tone",
+          "export primary button readable",
+          "export secondary actions readable",
+          "export save text readable",
+          "export focusing controls leaves clean draft",
+          "export stored requirements unchanged",
+          "export title focus matches tab tone",
+          "export checkbox matches requirement tone",
+          "export editing actions match requirement tone",
+          "export visible save outline matches requirement tone",
+          "export save fill matches requirement tone"
+        ],
+        "layouts": [
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                211.5
+              ],
+              [
+                807,
+                430.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                598.390625,
+                318,
+                170
+              ],
+              [
+                807,
+                788.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                729.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                199.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          }
+        ],
+        "samples": [
+          {
+            "action": "rgb(187, 169, 237)",
+            "brandIcons": [
+              {
+                "background": "rgb(43, 59, 73)",
+                "color": "rgb(179, 206, 232)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(67, 53, 47)",
+                "color": "rgb(239, 182, 151)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(199, 185, 239)",
+            "destructive": "rgb(236, 164, 177)",
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "checkout",
+            "mode": "detail",
+            "onAction": "rgb(36, 32, 47)",
+            "primaryContrast": 7.568830238676913,
+            "textActions": [
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)"
+            ]
+          },
+          {
+            "checkbox": "rgb(199, 185, 239)",
+            "focusedSaveOutline": "rgb(199, 185, 239)",
+            "focusVisible": true,
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "checkout",
+            "mode": "edit",
+            "nameFocus": "rgb(199, 185, 239)",
+            "onSave": "rgb(36, 32, 47)",
+            "primaryFocusOutline": "rgb(36, 32, 47)",
+            "save": "rgb(187, 169, 237)",
+            "saveContrast": 7.568830238676913,
+            "tabTone": "rgb(199, 185, 239)",
+            "textActions": [
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)"
+            ]
+          },
+          {
+            "action": "rgb(179, 206, 232)",
+            "brandIcons": [
+              {
+                "background": "rgb(43, 59, 73)",
+                "color": "rgb(179, 206, 232)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(32, 35, 37)",
+                "color": "rgb(237, 240, 237)",
+                "kind": "G"
+              }
+            ],
+            "checkbox": "rgb(179, 206, 232)",
+            "destructive": "rgb(236, 164, 177)",
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "login",
+            "mode": "detail",
+            "onAction": "rgb(32, 41, 47)",
+            "primaryContrast": 9.094223921558198,
+            "textActions": [
+              "rgb(179, 206, 232)",
+              "rgb(179, 206, 232)"
+            ]
+          },
+          {
+            "checkbox": "rgb(179, 206, 232)",
+            "focusedSaveOutline": "rgb(179, 206, 232)",
+            "focusVisible": true,
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "login",
+            "mode": "edit",
+            "nameFocus": "rgb(179, 206, 232)",
+            "onSave": "rgb(32, 41, 47)",
+            "primaryFocusOutline": "rgb(32, 41, 47)",
+            "save": "rgb(179, 206, 232)",
+            "saveContrast": 9.094223921558198,
+            "tabTone": "rgb(179, 206, 232)",
+            "textActions": [
+              "rgb(179, 206, 232)",
+              "rgb(179, 206, 232)",
+              "rgb(179, 206, 232)"
+            ]
+          },
+          {
+            "action": "rgb(173, 212, 191)",
+            "brandIcons": [
+              {
+                "background": "rgb(43, 59, 73)",
+                "color": "rgb(179, 206, 232)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(67, 53, 47)",
+                "color": "rgb(239, 182, 151)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(173, 212, 191)",
+            "destructive": "rgb(236, 164, 177)",
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "export",
+            "mode": "detail",
+            "onAction": "rgb(31, 44, 37)",
+            "primaryContrast": 8.958015923160408,
+            "textActions": [
+              "rgb(173, 212, 191)",
+              "rgb(173, 212, 191)"
+            ]
+          },
+          {
+            "checkbox": "rgb(173, 212, 191)",
+            "focusedSaveOutline": "rgb(173, 212, 191)",
+            "focusVisible": true,
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "export",
+            "mode": "edit",
+            "nameFocus": "rgb(173, 212, 191)",
+            "onSave": "rgb(31, 44, 37)",
+            "primaryFocusOutline": "rgb(31, 44, 37)",
+            "save": "rgb(173, 212, 191)",
+            "saveContrast": 8.958015923160408,
+            "tabTone": "rgb(173, 212, 191)",
+            "textActions": [
+              "rgb(173, 212, 191)",
+              "rgb(173, 212, 191)",
+              "rgb(173, 212, 191)"
+            ]
+          }
+        ],
+        "scope": "Actual isolated native WebKit computed colors, contrast, layout, persistence; synthetic focus/activation, transition endpoints only. Resolved outline does not prove trusted keyboard-visible branch.",
+        "storedSnapshot": "{\"version\":6,\"anchor\":\"2026-10-09\",\"requirements\":[{\"id\":\"checkout\",\"title\":\"结算流程改版\",\"reminder\":null,\"short\":\"结算流程改版\",\"tone\":\"\",\"start\":\"2026-10-09\",\"end\":\"2026-11-08\",\"phases\":[{\"name\":\"评审\",\"start\":\"2026-10-09\",\"end\":\"2026-10-10\"},{\"name\":\"开发\",\"start\":\"2026-10-11\",\"end\":\"2026-10-18\"},{\"name\":\"联调\",\"start\":\"2026-10-19\",\"end\":\"2026-10-25\"},{\"name\":\"测试\",\"start\":\"2026-10-26\",\"end\":\"2026-11-01\"},{\"name\":\"上线\",\"start\":\"2026-11-02\",\"end\":\"2026-11-08\"}],\"resources\":[{\"name\":\"结算改版 PRD\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"Checkout 交互与视觉\",\"type\":\"设计稿\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认需求边界与验收标准\",\"实现优惠券选择与金额计算\",\"补齐支付失败恢复逻辑\",\"联调与回归验证\"],\"done\":[true,false,false,false],\"note\":\"待产品确认：优惠券与余额的扣减顺序。\"},{\"id\":\"login\",\"title\":\"登录态异常修复\",\"reminder\":null,\"short\":\"登录态异常修复\",\"tone\":\"blue\",\"start\":\"2026-10-11\",\"end\":\"2026-10-15\",\"phases\":[{\"name\":\"排查\",\"start\":\"2026-10-11\",\"end\":\"2026-10-12\"},{\"name\":\"修复\",\"start\":\"2026-10-13\",\"end\":\"2026-10-14\"},{\"name\":\"验证\",\"start\":\"2026-10-15\",\"end\":\"2026-10-15\"}],\"resources\":[{\"name\":\"登录失效场景整理\",\"type\":\"问题记录\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"认证模块设计\",\"type\":\"接口约定\",\"url\":\"\",\"icon\":\"G\"}],\"tasks\":[\"定位状态不同步\",\"修复与回归验证\",\"发布与观察\"],\"done\":[false,false,false],\"note\":\"确认自动续期失败后是否强制退出。\"},{\"id\":\"export\",\"title\":\"报表导出优化\",\"reminder\":null,\"short\":\"报表导出优化\",\"tone\":\"green\",\"start\":\"2026-10-21\",\"end\":\"2026-11-01\",\"phases\":[{\"name\":\"方案\",\"start\":\"2026-10-21\",\"end\":\"2026-10-22\"},{\"name\":\"开发\",\"start\":\"2026-10-23\",\"end\":\"2026-10-28\"},{\"name\":\"验收\",\"start\":\"2026-10-29\",\"end\":\"2026-11-01\"}],\"resources\":[{\"name\":\"异步导出说明\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"导出任务面板\",\"type\":\"交互设计\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认导出规模与边界\",\"实现任务状态展示\",\"联调与验收\"],\"done\":[false,false,false],\"note\":\"等待后端确认导出任务状态与重试接口。\"}]}"
+      }
+    },
+    "green-light": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "checkout primary button readable",
+          "checkout secondary actions readable",
+          "checkout save text readable",
+          "checkout focusing controls leaves clean draft",
+          "checkout stored requirements unchanged",
+          "checkout title focus matches tab tone",
+          "checkout checkbox matches requirement tone",
+          "checkout editing actions match requirement tone",
+          "checkout visible save outline matches requirement tone",
+          "login primary button readable",
+          "login secondary actions readable",
+          "login save text readable",
+          "login focusing controls leaves clean draft",
+          "login stored requirements unchanged",
+          "login title focus matches tab tone",
+          "login checkbox matches requirement tone",
+          "login editing actions match requirement tone",
+          "login visible save outline matches requirement tone",
+          "login save fill matches requirement tone",
+          "export primary button readable",
+          "export secondary actions readable",
+          "export save text readable",
+          "export focusing controls leaves clean draft",
+          "export stored requirements unchanged",
+          "export title focus matches tab tone",
+          "export checkbox matches requirement tone",
+          "export editing actions match requirement tone",
+          "export visible save outline matches requirement tone",
+          "export save fill matches requirement tone"
+        ],
+        "layouts": [
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                211.5
+              ],
+              [
+                807,
+                430.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                598.390625,
+                318,
+                170
+              ],
+              [
+                807,
+                788.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                729.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                199.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          }
+        ],
+        "samples": [
+          {
+            "action": "rgb(117, 98, 178)",
+            "brandIcons": [
+              {
+                "background": "rgb(237, 243, 248)",
+                "color": "rgb(62, 98, 132)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(248, 238, 233)",
+                "color": "rgb(174, 106, 76)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(102, 84, 154)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "checkout",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 5.064725909701542,
+            "textActions": [
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)"
+            ]
+          },
+          {
+            "checkbox": "rgb(102, 84, 154)",
+            "focusedSaveOutline": "rgb(102, 84, 154)",
+            "focusVisible": true,
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "checkout",
+            "mode": "edit",
+            "nameFocus": "rgb(102, 84, 154)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(117, 98, 178)",
+            "saveContrast": 5.064725909701542,
+            "tabTone": "rgb(102, 84, 154)",
+            "textActions": [
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)",
+              "rgb(102, 84, 154)"
+            ]
+          },
+          {
+            "action": "rgb(62, 98, 132)",
+            "brandIcons": [
+              {
+                "background": "rgb(237, 243, 248)",
+                "color": "rgb(62, 98, 132)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(248, 248, 246)",
+                "color": "rgb(46, 51, 50)",
+                "kind": "G"
+              }
+            ],
+            "checkbox": "rgb(62, 98, 132)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "login",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 6.39252238110319,
+            "textActions": [
+              "rgb(62, 98, 132)",
+              "rgb(62, 98, 132)"
+            ]
+          },
+          {
+            "checkbox": "rgb(62, 98, 132)",
+            "focusedSaveOutline": "rgb(62, 98, 132)",
+            "focusVisible": true,
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "login",
+            "mode": "edit",
+            "nameFocus": "rgb(62, 98, 132)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(62, 98, 132)",
+            "saveContrast": 6.39252238110319,
+            "tabTone": "rgb(62, 98, 132)",
+            "textActions": [
+              "rgb(62, 98, 132)",
+              "rgb(62, 98, 132)",
+              "rgb(62, 98, 132)"
+            ]
+          },
+          {
+            "action": "rgb(53, 107, 89)",
+            "brandIcons": [
+              {
+                "background": "rgb(237, 243, 248)",
+                "color": "rgb(62, 98, 132)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(248, 238, 233)",
+                "color": "rgb(174, 106, 76)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(53, 107, 89)",
+            "destructive": "rgb(165, 86, 98)",
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "export",
+            "mode": "detail",
+            "onAction": "rgb(255, 255, 255)",
+            "primaryContrast": 6.178817494992134,
+            "textActions": [
+              "rgb(53, 107, 89)",
+              "rgb(53, 107, 89)"
+            ]
+          },
+          {
+            "checkbox": "rgb(53, 107, 89)",
+            "focusedSaveOutline": "rgb(53, 107, 89)",
+            "focusVisible": true,
+            "globalAdd": "rgb(117, 98, 178)",
+            "id": "export",
+            "mode": "edit",
+            "nameFocus": "rgb(53, 107, 89)",
+            "onSave": "rgb(255, 255, 255)",
+            "primaryFocusOutline": "rgb(255, 255, 255)",
+            "save": "rgb(53, 107, 89)",
+            "saveContrast": 6.178817494992134,
+            "tabTone": "rgb(53, 107, 89)",
+            "textActions": [
+              "rgb(53, 107, 89)",
+              "rgb(53, 107, 89)",
+              "rgb(53, 107, 89)"
+            ]
+          }
+        ],
+        "scope": "Actual isolated native WebKit computed colors, contrast, layout, persistence; synthetic focus/activation, transition endpoints only. Resolved outline does not prove trusted keyboard-visible branch.",
+        "storedSnapshot": "{\"version\":6,\"anchor\":\"2026-10-09\",\"requirements\":[{\"id\":\"checkout\",\"title\":\"结算流程改版\",\"reminder\":null,\"short\":\"结算流程改版\",\"tone\":\"\",\"start\":\"2026-10-09\",\"end\":\"2026-11-08\",\"phases\":[{\"name\":\"评审\",\"start\":\"2026-10-09\",\"end\":\"2026-10-10\"},{\"name\":\"开发\",\"start\":\"2026-10-11\",\"end\":\"2026-10-18\"},{\"name\":\"联调\",\"start\":\"2026-10-19\",\"end\":\"2026-10-25\"},{\"name\":\"测试\",\"start\":\"2026-10-26\",\"end\":\"2026-11-01\"},{\"name\":\"上线\",\"start\":\"2026-11-02\",\"end\":\"2026-11-08\"}],\"resources\":[{\"name\":\"结算改版 PRD\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"Checkout 交互与视觉\",\"type\":\"设计稿\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认需求边界与验收标准\",\"实现优惠券选择与金额计算\",\"补齐支付失败恢复逻辑\",\"联调与回归验证\"],\"done\":[true,false,false,false],\"note\":\"待产品确认：优惠券与余额的扣减顺序。\"},{\"id\":\"login\",\"title\":\"登录态异常修复\",\"reminder\":null,\"short\":\"登录态异常修复\",\"tone\":\"blue\",\"start\":\"2026-10-11\",\"end\":\"2026-10-15\",\"phases\":[{\"name\":\"排查\",\"start\":\"2026-10-11\",\"end\":\"2026-10-12\"},{\"name\":\"修复\",\"start\":\"2026-10-13\",\"end\":\"2026-10-14\"},{\"name\":\"验证\",\"start\":\"2026-10-15\",\"end\":\"2026-10-15\"}],\"resources\":[{\"name\":\"登录失效场景整理\",\"type\":\"问题记录\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"认证模块设计\",\"type\":\"接口约定\",\"url\":\"\",\"icon\":\"G\"}],\"tasks\":[\"定位状态不同步\",\"修复与回归验证\",\"发布与观察\"],\"done\":[false,false,false],\"note\":\"确认自动续期失败后是否强制退出。\"},{\"id\":\"export\",\"title\":\"报表导出优化\",\"reminder\":null,\"short\":\"报表导出优化\",\"tone\":\"green\",\"start\":\"2026-10-21\",\"end\":\"2026-11-01\",\"phases\":[{\"name\":\"方案\",\"start\":\"2026-10-21\",\"end\":\"2026-10-22\"},{\"name\":\"开发\",\"start\":\"2026-10-23\",\"end\":\"2026-10-28\"},{\"name\":\"验收\",\"start\":\"2026-10-29\",\"end\":\"2026-11-01\"}],\"resources\":[{\"name\":\"异步导出说明\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"导出任务面板\",\"type\":\"交互设计\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认导出规模与边界\",\"实现任务状态展示\",\"联调与验收\"],\"done\":[false,false,false],\"note\":\"等待后端确认导出任务状态与重试接口。\"}]}"
+      }
+    },
+    "green-dark": {
+      "ok": true,
+      "result": {
+        "appearance": "dark",
+        "checks": [
+          "checkout primary button readable",
+          "checkout secondary actions readable",
+          "checkout save text readable",
+          "checkout focusing controls leaves clean draft",
+          "checkout stored requirements unchanged",
+          "checkout title focus matches tab tone",
+          "checkout checkbox matches requirement tone",
+          "checkout editing actions match requirement tone",
+          "checkout visible save outline matches requirement tone",
+          "login primary button readable",
+          "login secondary actions readable",
+          "login save text readable",
+          "login focusing controls leaves clean draft",
+          "login stored requirements unchanged",
+          "login title focus matches tab tone",
+          "login checkbox matches requirement tone",
+          "login editing actions match requirement tone",
+          "login visible save outline matches requirement tone",
+          "login save fill matches requirement tone",
+          "export primary button readable",
+          "export secondary actions readable",
+          "export save text readable",
+          "export focusing controls leaves clean draft",
+          "export stored requirements unchanged",
+          "export title focus matches tab tone",
+          "export checkbox matches requirement tone",
+          "export editing actions match requirement tone",
+          "export visible save outline matches requirement tone",
+          "export save fill matches requirement tone"
+        ],
+        "layouts": [
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                211.5
+              ],
+              [
+                807,
+                430.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                598.390625,
+                318,
+                170
+              ],
+              [
+                807,
+                788.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                729.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "checkout",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                199.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "login",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "detail",
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                199.390625,
+                318,
+                143.5
+              ],
+              [
+                807,
+                362.890625,
+                318,
+                147.5
+              ],
+              [
+                807,
+                530.390625,
+                318,
+                138
+              ],
+              [
+                807,
+                688.390625,
+                318,
+                63
+              ]
+            ],
+            "title": [
+              807,
+              124,
+              318,
+              32.390625
+            ]
+          },
+          {
+            "fields": [
+              [
+                807,
+                173.5,
+                318,
+                68.5
+              ],
+              [
+                808,
+                255,
+                158,
+                55.5
+              ],
+              [
+                966,
+                255,
+                158,
+                55.5
+              ],
+              [
+                821,
+                362.5,
+                304,
+                58
+              ],
+              [
+                850,
+                465,
+                275,
+                55.5
+              ],
+              [
+                850,
+                529.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                594,
+                275,
+                55.5
+              ],
+              [
+                850,
+                514,
+                275,
+                55.5
+              ],
+              [
+                850,
+                578.5,
+                275,
+                55.5
+              ],
+              [
+                850,
+                643,
+                275,
+                55.5
+              ],
+              [
+                807,
+                689.5,
+                318,
+                99.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "footer": [
+              807,
+              708,
+              318,
+              53
+            ],
+            "id": "export",
+            "mode": "edit",
+            "name": [
+              807,
+              195,
+              318,
+              47
+            ],
+            "panel": [
+              790,
+              72,
+              352,
+              690
+            ],
+            "sections": [
+              [
+                807,
+                369.5,
+                318,
+                136.5
+              ],
+              [
+                807,
+                518,
+                318,
+                159.5
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          }
+        ],
+        "samples": [
+          {
+            "action": "rgb(187, 169, 237)",
+            "brandIcons": [
+              {
+                "background": "rgb(43, 59, 73)",
+                "color": "rgb(179, 206, 232)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(67, 53, 47)",
+                "color": "rgb(239, 182, 151)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(199, 185, 239)",
+            "destructive": "rgb(236, 164, 177)",
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "checkout",
+            "mode": "detail",
+            "onAction": "rgb(36, 32, 47)",
+            "primaryContrast": 7.568830238676913,
+            "textActions": [
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)"
+            ]
+          },
+          {
+            "checkbox": "rgb(199, 185, 239)",
+            "focusedSaveOutline": "rgb(199, 185, 239)",
+            "focusVisible": true,
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "checkout",
+            "mode": "edit",
+            "nameFocus": "rgb(199, 185, 239)",
+            "onSave": "rgb(36, 32, 47)",
+            "primaryFocusOutline": "rgb(36, 32, 47)",
+            "save": "rgb(187, 169, 237)",
+            "saveContrast": 7.568830238676913,
+            "tabTone": "rgb(199, 185, 239)",
+            "textActions": [
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)",
+              "rgb(199, 185, 239)"
+            ]
+          },
+          {
+            "action": "rgb(179, 206, 232)",
+            "brandIcons": [
+              {
+                "background": "rgb(43, 59, 73)",
+                "color": "rgb(179, 206, 232)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(32, 35, 37)",
+                "color": "rgb(237, 240, 237)",
+                "kind": "G"
+              }
+            ],
+            "checkbox": "rgb(179, 206, 232)",
+            "destructive": "rgb(236, 164, 177)",
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "login",
+            "mode": "detail",
+            "onAction": "rgb(32, 41, 47)",
+            "primaryContrast": 9.094223921558198,
+            "textActions": [
+              "rgb(179, 206, 232)",
+              "rgb(179, 206, 232)"
+            ]
+          },
+          {
+            "checkbox": "rgb(179, 206, 232)",
+            "focusedSaveOutline": "rgb(179, 206, 232)",
+            "focusVisible": true,
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "login",
+            "mode": "edit",
+            "nameFocus": "rgb(179, 206, 232)",
+            "onSave": "rgb(32, 41, 47)",
+            "primaryFocusOutline": "rgb(32, 41, 47)",
+            "save": "rgb(179, 206, 232)",
+            "saveContrast": 9.094223921558198,
+            "tabTone": "rgb(179, 206, 232)",
+            "textActions": [
+              "rgb(179, 206, 232)",
+              "rgb(179, 206, 232)",
+              "rgb(179, 206, 232)"
+            ]
+          },
+          {
+            "action": "rgb(173, 212, 191)",
+            "brandIcons": [
+              {
+                "background": "rgb(43, 59, 73)",
+                "color": "rgb(179, 206, 232)",
+                "kind": "钉"
+              },
+              {
+                "background": "rgb(67, 53, 47)",
+                "color": "rgb(239, 182, 151)",
+                "kind": "F"
+              }
+            ],
+            "checkbox": "rgb(173, 212, 191)",
+            "destructive": "rgb(236, 164, 177)",
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "export",
+            "mode": "detail",
+            "onAction": "rgb(31, 44, 37)",
+            "primaryContrast": 8.958015923160408,
+            "textActions": [
+              "rgb(173, 212, 191)",
+              "rgb(173, 212, 191)"
+            ]
+          },
+          {
+            "checkbox": "rgb(173, 212, 191)",
+            "focusedSaveOutline": "rgb(173, 212, 191)",
+            "focusVisible": true,
+            "globalAdd": "rgb(187, 169, 237)",
+            "id": "export",
+            "mode": "edit",
+            "nameFocus": "rgb(173, 212, 191)",
+            "onSave": "rgb(31, 44, 37)",
+            "primaryFocusOutline": "rgb(31, 44, 37)",
+            "save": "rgb(173, 212, 191)",
+            "saveContrast": 8.958015923160408,
+            "tabTone": "rgb(173, 212, 191)",
+            "textActions": [
+              "rgb(173, 212, 191)",
+              "rgb(173, 212, 191)",
+              "rgb(173, 212, 191)"
+            ]
+          }
+        ],
+        "scope": "Actual isolated native WebKit computed colors, contrast, layout, persistence; synthetic focus/activation, transition endpoints only. Resolved outline does not prove trusted keyboard-visible branch.",
+        "storedSnapshot": "{\"version\":6,\"anchor\":\"2026-10-09\",\"requirements\":[{\"id\":\"checkout\",\"title\":\"结算流程改版\",\"reminder\":null,\"short\":\"结算流程改版\",\"tone\":\"\",\"start\":\"2026-10-09\",\"end\":\"2026-11-08\",\"phases\":[{\"name\":\"评审\",\"start\":\"2026-10-09\",\"end\":\"2026-10-10\"},{\"name\":\"开发\",\"start\":\"2026-10-11\",\"end\":\"2026-10-18\"},{\"name\":\"联调\",\"start\":\"2026-10-19\",\"end\":\"2026-10-25\"},{\"name\":\"测试\",\"start\":\"2026-10-26\",\"end\":\"2026-11-01\"},{\"name\":\"上线\",\"start\":\"2026-11-02\",\"end\":\"2026-11-08\"}],\"resources\":[{\"name\":\"结算改版 PRD\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"Checkout 交互与视觉\",\"type\":\"设计稿\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认需求边界与验收标准\",\"实现优惠券选择与金额计算\",\"补齐支付失败恢复逻辑\",\"联调与回归验证\"],\"done\":[true,false,false,false],\"note\":\"待产品确认：优惠券与余额的扣减顺序。\"},{\"id\":\"login\",\"title\":\"登录态异常修复\",\"reminder\":null,\"short\":\"登录态异常修复\",\"tone\":\"blue\",\"start\":\"2026-10-11\",\"end\":\"2026-10-15\",\"phases\":[{\"name\":\"排查\",\"start\":\"2026-10-11\",\"end\":\"2026-10-12\"},{\"name\":\"修复\",\"start\":\"2026-10-13\",\"end\":\"2026-10-14\"},{\"name\":\"验证\",\"start\":\"2026-10-15\",\"end\":\"2026-10-15\"}],\"resources\":[{\"name\":\"登录失效场景整理\",\"type\":\"问题记录\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"认证模块设计\",\"type\":\"接口约定\",\"url\":\"\",\"icon\":\"G\"}],\"tasks\":[\"定位状态不同步\",\"修复与回归验证\",\"发布与观察\"],\"done\":[false,false,false],\"note\":\"确认自动续期失败后是否强制退出。\"},{\"id\":\"export\",\"title\":\"报表导出优化\",\"reminder\":null,\"short\":\"报表导出优化\",\"tone\":\"green\",\"start\":\"2026-10-21\",\"end\":\"2026-11-01\",\"phases\":[{\"name\":\"方案\",\"start\":\"2026-10-21\",\"end\":\"2026-10-22\"},{\"name\":\"开发\",\"start\":\"2026-10-23\",\"end\":\"2026-10-28\"},{\"name\":\"验收\",\"start\":\"2026-10-29\",\"end\":\"2026-11-01\"}],\"resources\":[{\"name\":\"异步导出说明\",\"type\":\"需求文档\",\"url\":\"\",\"icon\":\"钉\"},{\"name\":\"导出任务面板\",\"type\":\"交互设计\",\"url\":\"\",\"icon\":\"F\"}],\"tasks\":[\"确认导出规模与边界\",\"实现任务状态展示\",\"联调与验收\"],\"done\":[false,false,false],\"note\":\"等待后端确认导出任务状态与重试接口。\"}]}"
+      }
+    },
+    "readability-light": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "isolated reading fixture restored",
+          "all three requirement tones include both phase fills",
+          "phase text exceeds 4.5 against normal and alternating fills",
+          "interactive dates outside the month remain readable",
+          "resource types, completed tasks and notes retain readable secondary text",
+          "the other editor tab remains legible on the segmented background",
+          "field placeholder text remains readable on its input surface",
+          "form labels preserve hierarchy with sufficient text contrast",
+          "phase editing names and full dates retain readable primary and secondary text",
+          "range strips remain distinct on weekday, weekend and adjacent-month date surfaces in all tones"
+        ],
+        "reference": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+        "samples": [
+          {
+            "background": "rgb(233, 226, 245)",
+            "contrast": 5.0494779398329435,
+            "foreground": "rgb(102, 84, 154)",
+            "name": "phase read-0",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(224, 235, 244)",
+            "contrast": 5.284217824621413,
+            "foreground": "rgb(62, 98, 132)",
+            "name": "phase read-1",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(223, 237, 226)",
+            "contrast": 5.104723387275279,
+            "foreground": "rgb(53, 107, 89)",
+            "name": "phase read-2",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(233, 226, 245)",
+            "contrast": 5.0494779398329435,
+            "foreground": "rgb(102, 84, 154)",
+            "name": "phase read-0",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.936667 0.916863 0.97098)",
+            "contrast": 5.392826725886696,
+            "foreground": "rgb(102, 84, 154)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(224, 235, 244)",
+            "contrast": 5.284217824621413,
+            "foreground": "rgb(62, 98, 132)",
+            "name": "phase read-1",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.911569 0.941961 0.967059)",
+            "contrast": 5.551837608271127,
+            "foreground": "rgb(62, 98, 132)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(223, 237, 226)",
+            "contrast": 5.104723387275279,
+            "foreground": "rgb(53, 107, 89)",
+            "name": "phase read-2",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.912745 0.949804 0.919412)",
+            "contrast": 5.40019308237752,
+            "foreground": "rgb(53, 107, 89)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.936667 0.916863 0.97098)",
+            "contrast": 5.392826725886696,
+            "foreground": "rgb(102, 84, 154)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.911569 0.941961 0.967059)",
+            "contrast": 5.551837608271127,
+            "foreground": "rgb(62, 98, 132)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.912745 0.949804 0.919412)",
+            "contrast": 5.40019308237752,
+            "foreground": "rgb(53, 107, 89)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.936667 0.916863 0.97098)",
+            "contrast": 5.392826725886696,
+            "foreground": "rgb(102, 84, 154)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.911569 0.941961 0.967059)",
+            "contrast": 5.551837608271127,
+            "foreground": "rgb(62, 98, 132)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.912745 0.949804 0.919412)",
+            "contrast": 5.40019308237752,
+            "foreground": "rgb(53, 107, 89)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.936667 0.916863 0.97098)",
+            "contrast": 5.392826725886696,
+            "foreground": "rgb(102, 84, 154)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.911569 0.941961 0.967059)",
+            "contrast": 5.551837608271127,
+            "foreground": "rgb(62, 98, 132)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.912745 0.949804 0.919412)",
+            "contrast": 5.40019308237752,
+            "foreground": "rgb(53, 107, 89)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(248, 248, 246)",
+            "contrast": 4.898931351530585,
+            "foreground": "rgb(104, 110, 107)",
+            "name": "outside date",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 5.209249684774561,
+            "foreground": "rgb(104, 110, 107)",
+            "name": "detail ",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 5.209249684774561,
+            "foreground": "rgb(104, 110, 107)",
+            "name": "detail ",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 5.209249684774561,
+            "foreground": "rgb(104, 110, 107)",
+            "name": "detail rf-note",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 5.209249684774561,
+            "foreground": "rgb(104, 110, 107)",
+            "name": "inactive editor tab",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 5.209249684774561,
+            "foreground": "rgb(104, 110, 107)",
+            "name": "field placeholder",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 5.209249684774561,
+            "foreground": "rgb(104, 110, 107)",
+            "name": "field label",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 12.83809360971557,
+            "foreground": "rgb(46, 51, 50)",
+            "name": "phase editor rf-summary-name",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 5.209249684774561,
+            "foreground": "rgb(104, 110, 107)",
+            "name": "phase editor rf-summary-meta",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 12.83809360971557,
+            "foreground": "rgb(46, 51, 50)",
+            "name": "phase editor rf-summary-name",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 5.209249684774561,
+            "foreground": "rgb(104, 110, 107)",
+            "name": "phase editor rf-summary-meta",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.623658934531446,
+            "foreground": "rgb(102, 84, 154)",
+            "name": "range 0 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(253, 254, 252)",
+            "contrast": 3.5992110990656663,
+            "foreground": "rgb(102, 84, 154)",
+            "name": "range 0 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(248, 248, 246)",
+            "contrast": 3.490757753293216,
+            "foreground": "rgb(102, 84, 154)",
+            "name": "range 0 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.629584792465636,
+            "foreground": "rgb(62, 98, 132)",
+            "name": "range 1 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(253, 254, 252)",
+            "contrast": 3.6041101575887424,
+            "foreground": "rgb(62, 98, 132)",
+            "name": "range 1 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(248, 248, 246)",
+            "contrast": 3.4962682765444906,
+            "foreground": "rgb(62, 98, 132)",
+            "name": "range 1 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.5611440659366083,
+            "foreground": "rgb(53, 107, 89)",
+            "name": "range 2 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(253, 254, 252)",
+            "contrast": 3.535304942517202,
+            "foreground": "rgb(53, 107, 89)",
+            "name": "range 2 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(248, 248, 246)",
+            "contrast": 3.4291510533237517,
+            "foreground": "rgb(53, 107, 89)",
+            "name": "range 2 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          }
+        ],
+        "scope": "resolved foreground/background colors for the listed text contexts in actual WebKit; does not assess the entire app, assistive technology, anti-aliasing or user aesthetic preference"
+      }
+    },
+    "readability-dark": {
+      "ok": true,
+      "result": {
+        "appearance": "dark",
+        "checks": [
+          "isolated reading fixture restored",
+          "all three requirement tones include both phase fills",
+          "phase text exceeds 4.5 against normal and alternating fills",
+          "interactive dates outside the month remain readable",
+          "resource types, completed tasks and notes retain readable secondary text",
+          "the other editor tab remains legible on the segmented background",
+          "field placeholder text remains readable on its input surface",
+          "form labels preserve hierarchy with sufficient text contrast",
+          "phase editing names and full dates retain readable primary and secondary text",
+          "range strips remain distinct on weekday, weekend and adjacent-month date surfaces in all tones"
+        ],
+        "reference": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+        "samples": [
+          {
+            "background": "rgb(69, 58, 90)",
+            "contrast": 5.7901187549308935,
+            "foreground": "rgb(199, 185, 239)",
+            "name": "phase read-0",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(57, 78, 97)",
+            "contrast": 5.299137097869826,
+            "foreground": "rgb(179, 206, 232)",
+            "name": "phase read-1",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(61, 85, 69)",
+            "contrast": 5.010754993043379,
+            "foreground": "rgb(173, 212, 191)",
+            "name": "phase read-2",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(69, 58, 90)",
+            "contrast": 5.7901187549308935,
+            "foreground": "rgb(199, 185, 239)",
+            "name": "phase read-0",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.229804 0.201961 0.299412)",
+            "contrast": 6.584681360686285,
+            "foreground": "rgb(199, 185, 239)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(57, 78, 97)",
+            "contrast": 5.299137097869826,
+            "foreground": "rgb(179, 206, 232)",
+            "name": "phase read-1",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.187843 0.257451 0.319216)",
+            "contrast": 6.3794074187933605,
+            "foreground": "rgb(179, 206, 232)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(61, 85, 69)",
+            "contrast": 5.010754993043379,
+            "foreground": "rgb(173, 212, 191)",
+            "name": "phase read-2",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.195882 0.274706 0.227255)",
+            "contrast": 6.245978116341542,
+            "foreground": "rgb(173, 212, 191)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.229804 0.201961 0.299412)",
+            "contrast": 6.584681360686285,
+            "foreground": "rgb(199, 185, 239)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.187843 0.257451 0.319216)",
+            "contrast": 6.3794074187933605,
+            "foreground": "rgb(179, 206, 232)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.195882 0.274706 0.227255)",
+            "contrast": 6.245978116341542,
+            "foreground": "rgb(173, 212, 191)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.229804 0.201961 0.299412)",
+            "contrast": 6.584681360686285,
+            "foreground": "rgb(199, 185, 239)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.187843 0.257451 0.319216)",
+            "contrast": 6.3794074187933605,
+            "foreground": "rgb(179, 206, 232)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.195882 0.274706 0.227255)",
+            "contrast": 6.245978116341542,
+            "foreground": "rgb(173, 212, 191)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.229804 0.201961 0.299412)",
+            "contrast": 6.584681360686285,
+            "foreground": "rgb(199, 185, 239)",
+            "name": "phase read-0 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.187843 0.257451 0.319216)",
+            "contrast": 6.3794074187933605,
+            "foreground": "rgb(179, 206, 232)",
+            "name": "phase read-1 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "color(srgb 0.195882 0.274706 0.227255)",
+            "contrast": 6.245978116341542,
+            "foreground": "rgb(173, 212, 191)",
+            "name": "phase read-2 alternate",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(32, 35, 37)",
+            "contrast": 7.1229610490528055,
+            "foreground": "rgb(168, 176, 171)",
+            "name": "outside date",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 6.684845253080805,
+            "foreground": "rgb(168, 176, 171)",
+            "name": "detail ",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 6.684845253080805,
+            "foreground": "rgb(168, 176, 171)",
+            "name": "detail ",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 6.684845253080805,
+            "foreground": "rgb(168, 176, 171)",
+            "name": "detail rf-note",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 6.684845253080805,
+            "foreground": "rgb(168, 176, 171)",
+            "name": "inactive editor tab",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 6.684845253080805,
+            "foreground": "rgb(168, 176, 171)",
+            "name": "field placeholder",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 6.684845253080805,
+            "foreground": "rgb(168, 176, 171)",
+            "name": "field label",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 12.91866042089531,
+            "foreground": "rgb(237, 240, 237)",
+            "name": "phase editor rf-summary-name",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 6.684845253080805,
+            "foreground": "rgb(168, 176, 171)",
+            "name": "phase editor rf-summary-meta",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 12.91866042089531,
+            "foreground": "rgb(237, 240, 237)",
+            "name": "phase editor rf-summary-name",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 6.684845253080805,
+            "foreground": "rgb(168, 176, 171)",
+            "name": "phase editor rf-summary-meta",
+            "opacity": 1
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 5.289942478091044,
+            "foreground": "rgb(199, 185, 239)",
+            "name": "range 0 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(36, 39, 41)",
+            "contrast": 5.34301347244565,
+            "foreground": "rgb(199, 185, 239)",
+            "name": "range 0 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(32, 35, 37)",
+            "contrast": 5.550294056226528,
+            "foreground": "rgb(199, 185, 239)",
+            "name": "range 0 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 5.806149490512842,
+            "foreground": "rgb(179, 206, 232)",
+            "name": "range 1 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(36, 39, 41)",
+            "contrast": 5.864940609989723,
+            "foreground": "rgb(179, 206, 232)",
+            "name": "range 1 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(32, 35, 37)",
+            "contrast": 6.09472472814098,
+            "foreground": "rgb(179, 206, 232)",
+            "name": "range 1 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(37, 40, 42)",
+            "contrast": 5.819340375590814,
+            "foreground": "rgb(173, 212, 191)",
+            "name": "range 2 .rf-date[data-date=\"2026-10-01\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(36, 39, 41)",
+            "contrast": 5.878292617010486,
+            "foreground": "rgb(173, 212, 191)",
+            "name": "range 2 .rf-date[data-date=\"2026-10-03\"] .rf-date-label",
+            "opacity": 0.75
+          },
+          {
+            "background": "rgb(32, 35, 37)",
+            "contrast": 6.108715259502041,
+            "foreground": "rgb(173, 212, 191)",
+            "name": "range 2 .rf-date.outside .rf-date-label",
+            "opacity": 0.75
+          }
+        ],
+        "scope": "resolved foreground/background colors for the listed text contexts in actual WebKit; does not assess the entire app, assistive technology, anti-aliasing or user aesthetic preference"
+      }
+    },
+    "design-light": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "isolated design fixture restored",
+          "six-week months retain their complete calendar structure",
+          "a normal six-week month fits the default desktop viewport",
+          "the toolbar keeps only month navigation and the new requirement control",
+          "the opened inspector remains inside the desktop viewport",
+          "every phase remains inside its single requirement band",
+          "phase decoration creates no extra calendar requirements",
+          "long resources retain access to the editor tabs",
+          "invalid deep resource links remain rejected",
+          "validation focuses a deep field visibly between sticky tabs and actions",
+          "the product layout is also checked in a smaller native window",
+          "the small-window editor scrolls within its own surface",
+          "the small-window application has no page overflow",
+          "isolated design fixture restored",
+          "dense requirements scroll independently of the editor",
+          "the redesigned editing range remains present in a dense month"
+        ],
+        "scope": "real WebKit layout and file bridge; animations completed before geometry checks; does not assess trusted mouse feel",
+        "viewport": [
+          980,
+          668
+        ]
+      }
+    },
+    "design-dark": {
+      "ok": true,
+      "result": {
+        "appearance": "dark",
+        "checks": [
+          "isolated design fixture restored",
+          "six-week months retain their complete calendar structure",
+          "a normal six-week month fits the default desktop viewport",
+          "the toolbar keeps only month navigation and the new requirement control",
+          "the opened inspector remains inside the desktop viewport",
+          "every phase remains inside its single requirement band",
+          "phase decoration creates no extra calendar requirements",
+          "long resources retain access to the editor tabs",
+          "invalid deep resource links remain rejected",
+          "validation focuses a deep field visibly between sticky tabs and actions",
+          "the product layout is also checked in a smaller native window",
+          "the small-window editor scrolls within its own surface",
+          "the small-window application has no page overflow",
+          "isolated design fixture restored",
+          "dense requirements scroll independently of the editor",
+          "the redesigned editing range remains present in a dense month"
+        ],
+        "scope": "real WebKit layout and file bridge; animations completed before geometry checks; does not assess trusted mouse feel",
+        "viewport": [
+          980,
+          668
+        ]
+      }
+    },
+    "panel-continuity-light": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "isolated reading-context fixture restored",
+          "the fixture requires substantial detail scrolling",
+          "entering general editing begins with the visible name field",
+          "clean cancellation returns to the previous detail reading position",
+          "clean cancellation restores the general edit action focus",
+          "dirty cancellation still asks how to handle the draft",
+          "continue editing retains the draft, its reading position and date strip",
+          "discarding returns to the original detail without applying draft changes",
+          "resource management still targets the first resource summary",
+          "resource cancellation restores its section and management action",
+          "existing edits persist through the native bridge",
+          "saving preserves the resource section position when the title height changes",
+          "returning after save clears draft feedback and dirty state",
+          "a fresh opening begins at the heading without reusing old reading state",
+          "calendar-initiated editing keeps the heading context and returns focus to the now-visible edit action",
+          "stage cancellation returns to its original action",
+          "editing without a previous detail view uses the normal detail opening"
+        ],
+        "scope": "actual WebKit scroll, focus and isolated save bridge; synthetic button activation"
+      }
+    },
+    "panel-continuity-dark": {
+      "ok": true,
+      "result": {
+        "appearance": "dark",
+        "checks": [
+          "isolated reading-context fixture restored",
+          "the fixture requires substantial detail scrolling",
+          "entering general editing begins with the visible name field",
+          "clean cancellation returns to the previous detail reading position",
+          "clean cancellation restores the general edit action focus",
+          "dirty cancellation still asks how to handle the draft",
+          "continue editing retains the draft, its reading position and date strip",
+          "discarding returns to the original detail without applying draft changes",
+          "resource management still targets the first resource summary",
+          "resource cancellation restores its section and management action",
+          "existing edits persist through the native bridge",
+          "saving preserves the resource section position when the title height changes",
+          "returning after save clears draft feedback and dirty state",
+          "a fresh opening begins at the heading without reusing old reading state",
+          "calendar-initiated editing keeps the heading context and returns focus to the now-visible edit action",
+          "stage cancellation returns to its original action",
+          "editing without a previous detail view uses the normal detail opening"
+        ],
+        "scope": "actual WebKit scroll, focus and isolated save bridge; synthetic button activation"
+      }
+    },
+    "final-light": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "36: a clean installation contains no sample requirements",
+          "36: clean startup does not request notifications",
+          "fixture restored through the real file bridge",
+          "37: first supported month renders without a year-1900 conversion",
+          "37: previous-month command respects the lower bound",
+          "fixture restored through the real file bridge",
+          "37: final month disables navigation beyond the supported dates",
+          "37: next-month command respects the upper bound",
+          "fixture restored through the real file bridge",
+          "38: historical overlap does not create empty lanes in the visible month",
+          "39: full requirement and phase names remain available to hover and accessibility",
+          "fixture restored through the real file bridge",
+          "40: collapsed resource rows show a disclosure chevron",
+          "44: editing preserves note indentation, trailing whitespace and long content",
+          "45: long signed document URLs have no artificial input truncation",
+          "43: unsupported resource link is rejected",
+          "43: validation expands and focuses the actual invalid resource field",
+          "43: editing clears stale invalid-field styling",
+          "44–45: long notes and links survive UI save and native file validation",
+          "39: full resource destination is available on hover",
+          "37: editable date fields share the model-supported limits",
+          "43: invalid requirement range focuses its end-date field",
+          "43: overlapping phases focus the conflicting stage instead of a hidden row",
+          "46: deleting outside text editing exposes requirement undo",
+          "46: Command-Z remains available to native text undo while editing",
+          "asynchronous save settled",
+          "46: Command-Z restores the latest deletion outside the editor",
+          "47: native requirement menu contains open, edit and delete actions",
+          "47: context deletion protects the active unsaved editor",
+          "47: cancelling context deletion keeps the draft",
+          "fixture restored through the real file bridge",
+          "49: day rollover refreshes the visible current phase",
+          "49: day rollover preserves editor, draft and keyboard focus",
+          "50: a stale notification produces visible feedback",
+          "fixture restored through the real file bridge",
+          "31 audit: month persistence also prevents competing edits",
+          "37: month navigation commits its new anchor",
+          "31 audit: failed month save restores the prior month without blocking the app",
+          "fixture restored through the real file bridge",
+          "50: notification race test has a real pending save",
+          "50: notification waits for save and then opens the correct requirement",
+          "fixture restored through the real file bridge",
+          "41: a dense month scrolls within the calendar",
+          "41: long requirement details scroll within the inspector",
+          "41: calendar and inspector have independent scroll positions without document overflow",
+          "49: day rollover preserves both scroll positions in a dense month",
+          "14 audit: keyboard navigation scrolls dense rows to keep the focused date visible",
+          "14 audit: upward focus navigation remains visible below the sticky weekday header",
+          "42: native window exposes full-screen and standard desktop menus"
+        ],
+        "manualDragOutside": "requires trusted mouse regression; not simulated here",
+        "viewport": [
+          1160,
+          780
+        ]
+      }
+    },
+    "final-dark": {
+      "ok": true,
+      "result": {
+        "appearance": "dark",
+        "checks": [
+          "36: a clean installation contains no sample requirements",
+          "36: clean startup does not request notifications",
+          "fixture restored through the real file bridge",
+          "37: first supported month renders without a year-1900 conversion",
+          "37: previous-month command respects the lower bound",
+          "fixture restored through the real file bridge",
+          "37: final month disables navigation beyond the supported dates",
+          "37: next-month command respects the upper bound",
+          "fixture restored through the real file bridge",
+          "38: historical overlap does not create empty lanes in the visible month",
+          "39: full requirement and phase names remain available to hover and accessibility",
+          "fixture restored through the real file bridge",
+          "40: collapsed resource rows show a disclosure chevron",
+          "44: editing preserves note indentation, trailing whitespace and long content",
+          "45: long signed document URLs have no artificial input truncation",
+          "43: unsupported resource link is rejected",
+          "43: validation expands and focuses the actual invalid resource field",
+          "43: editing clears stale invalid-field styling",
+          "44–45: long notes and links survive UI save and native file validation",
+          "39: full resource destination is available on hover",
+          "37: editable date fields share the model-supported limits",
+          "43: invalid requirement range focuses its end-date field",
+          "43: overlapping phases focus the conflicting stage instead of a hidden row",
+          "46: deleting outside text editing exposes requirement undo",
+          "46: Command-Z remains available to native text undo while editing",
+          "asynchronous save settled",
+          "46: Command-Z restores the latest deletion outside the editor",
+          "47: native requirement menu contains open, edit and delete actions",
+          "47: context deletion protects the active unsaved editor",
+          "47: cancelling context deletion keeps the draft",
+          "fixture restored through the real file bridge",
+          "49: day rollover refreshes the visible current phase",
+          "49: day rollover preserves editor, draft and keyboard focus",
+          "50: a stale notification produces visible feedback",
+          "fixture restored through the real file bridge",
+          "31 audit: month persistence also prevents competing edits",
+          "37: month navigation commits its new anchor",
+          "31 audit: failed month save restores the prior month without blocking the app",
+          "fixture restored through the real file bridge",
+          "50: notification race test has a real pending save",
+          "50: notification waits for save and then opens the correct requirement",
+          "fixture restored through the real file bridge",
+          "41: a dense month scrolls within the calendar",
+          "41: long requirement details scroll within the inspector",
+          "41: calendar and inspector have independent scroll positions without document overflow",
+          "49: day rollover preserves both scroll positions in a dense month",
+          "14 audit: keyboard navigation scrolls dense rows to keep the focused date visible",
+          "14 audit: upward focus navigation remains visible below the sticky weekday header",
+          "42: native window exposes full-screen and standard desktop menus"
+        ],
+        "manualDragOutside": "requires trusted mouse regression; not simulated here",
+        "viewport": [
+          1160,
+          780
+        ]
+      }
+    }
+  },
+  "probe_source": "const enforceAccent=true,screenshotTarget='login';\nconst $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));\nconst settle=async()=>{document.getAnimations().forEach(a=>a.finish());await new Promise(resolve=>setTimeout(resolve,30));document.getAnimations().forEach(a=>a.finish());};\nconst ctx=document.createElement('canvas').getContext('2d');\nconst rgb=c=>{ctx.clearRect(0,0,1,1);ctx.fillStyle=c;ctx.fillRect(0,0,1,1);return Array.from(ctx.getImageData(0,0,1,1).data).slice(0,3)};\nconst lum=c=>rgb(c).map(x=>(x/=255)<=.04045?x/12.92:((x+.055)/1.055)**2.4).reduce((a,x,i)=>a+x*[.2126,.7152,.0722][i],0);\nconst ratio=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};\nconst checks=[],samples=[],layouts=[];\nconst assert=(x,m)=>{if(!x)throw Error(m);checks.push(m)};\nconst initial=CalendarApp.exportSnapshot();\nconst box=n=>{const r=n.getBoundingClientRect();return [r.x,r.y,r.width,r.height]};\nfor(const id of ['checkout','login','export']){\n CalendarApp.openRequirement(id);await settle();\n const detail=$('#rf-detail'),panel=$('#rf-panel'),surface=getComputedStyle(detail).backgroundColor;\n const title=$('.rf-detail-title'),action=$('.rf-detail-actions .rf-primary'),color=getComputedStyle(action);\n const links=$$('.rf-section .rf-text-button:not(.rf-destructive)'),checkbox=$('.rf-task input'),destructive=$('.rf-destructive');\n samples.push({id,mode:'detail',action:color.backgroundColor,onAction:color.color,primaryContrast:ratio(color.color,color.backgroundColor),textActions:links.map(n=>getComputedStyle(n).color),checkbox:getComputedStyle(checkbox).accentColor,destructive:getComputedStyle(destructive).color,brandIcons:$$('.rf-resource-icon').map(n=>({kind:n.dataset.kind,color:getComputedStyle(n).color,background:getComputedStyle(n).backgroundColor})),globalAdd:getComputedStyle($('#rf-new')).backgroundColor});\n layouts.push({id,mode:'detail',panel:box(detail),title:box(title),sections:$$('.rf-section').map(box),footer:box($('.rf-detail-actions'))});\n assert(ratio(color.color,color.backgroundColor)>=4.5,id+' primary button readable');\n assert(links.every(n=>ratio(getComputedStyle(n).color,surface)>=4.5),id+' secondary actions readable');\n CalendarApp.editRequirement(id);await settle();\n const name=$('.rf-tab-panel[data-editor-panel=basic]>.rf-field input');name.focus();await settle();\n const selected=$('.rf-editor-tab[aria-selected=true]'),save=$('.rf-form-actions .rf-primary'),saveStyle=getComputedStyle(save),tabTone=getComputedStyle(selected,'::after').backgroundColor;\n const controls={id,mode:'edit',tabTone,nameFocus:getComputedStyle(name).borderBottomColor,checkbox:getComputedStyle($('.rf-task-edit input[type=checkbox]')).accentColor,save:saveStyle.backgroundColor,onSave:saveStyle.color,saveContrast:ratio(saveStyle.color,saveStyle.backgroundColor),textActions:$$('.rf-editor-section .rf-text-button').map(n=>getComputedStyle(n).color),primaryFocusOutline:getComputedStyle(save).outlineColor,globalAdd:getComputedStyle($('#rf-new')).backgroundColor};\n save.focus();await settle();controls.focusedSaveOutline=getComputedStyle(save).outlineColor;controls.focusVisible=save.matches(':focus-visible');\n name.focus();await settle();samples.push(controls);\n layouts.push({id,mode:'edit',panel:box($('#rf-detail')),name:box(name),fields:$$('.rf-field').map(box),sections:$$('.rf-editor-section').map(box),footer:box($('.rf-form-actions'))});\n assert(controls.saveContrast>=4.5,id+' save text readable');\n assert(!CalendarApp.hasUnsavedChanges(),id+' focusing controls leaves clean draft');\n assert(JSON.stringify(JSON.parse(CalendarApp.exportSnapshot()).requirements)===JSON.stringify(JSON.parse(initial).requirements),id+' stored requirements unchanged');\n if(enforceAccent){\n  assert(rgb(controls.nameFocus).join()===rgb(tabTone).join(),id+' title focus matches tab tone');\n  assert(rgb(controls.checkbox).join()===rgb(tabTone).join(),id+' checkbox matches requirement tone');\n  assert(controls.textActions.every(c=>rgb(c).join()===rgb(tabTone).join()),id+' editing actions match requirement tone');\n  if(controls.focusVisible)assert(rgb(controls.focusedSaveOutline).join()===rgb(tabTone).join(),id+' visible save outline matches requirement tone');\n  if(id!=='checkout')assert(rgb(controls.save).join()===rgb(tabTone).join(),id+' save fill matches requirement tone');\n }\n}\nCalendarApp.editRequirement(screenshotTarget);await settle();\n$('.rf-tab-panel[data-editor-panel=basic]>.rf-field input').focus();await settle();\nreturn {checks,samples,layouts,storedSnapshot:initial,appearance:matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light',scope:'Actual isolated native WebKit computed colors, contrast, layout, persistence; synthetic focus/activation, transition endpoints only. Resolved outline does not prove trusted keyboard-visible branch.'};",
+  "initial_harness_correction": "First before probes compared whole exported snapshot; opening another requirement legitimately changes navigation anchor. Corrected comparison to persisted requirements, then captured passing before baselines; product source unaffected.",
+  "validation": {
+    "build_test": 1,
+    "signature": "codesign --verify --deep --strict passed",
+    "bundled_page_matches": true,
+    "bundled_notices_match": true
+  },
+  "scope": "Isolated native WebKit actual computed colors, geometry, file bridge and existing regressions. Focus/activation synthetic and transitions completed to endpoints. Inactive verification host did not exercise :focus-visible; no claim of trusted keyboard-ring or intermediate motion acceptance.",
+  "visually_inspected": [
+    "blue-light",
+    "blue-dark",
+    "green-light",
+    "green-dark"
+  ]
+}
