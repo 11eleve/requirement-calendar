@@ -36,3 +36,14 @@ test('summary: month uses actual month bounds, searches context and filters node
  const filtered=Planning.project(items,{anchor:'2028-02-01',today:'2028-02-29',scope:'all',tone:'blue'});assert.equal(filtered.rows.length,0);
  assert.equal(Planning.project(items,{anchor:'2028-02-01',today:'2028-02-29',scope:'all',state:'upcoming'}).rows.length,1);assert.equal(JSON.stringify(items),copy);
 });
+test('workflow: search finds combined task, resource type and URL terms without changing records',()=>{
+ const item=Model.requirement(fixture({title:'认证迁移',tasks:['验证 rollback 条件'],done:[false],resources:[{name:'API',type:'OpenAPI 契约',url:'https://example.com/auth/v2'}]})),copy=JSON.stringify(item),options={anchor:item.start,today:item.start,scope:'all'};
+ for(const query of ['认证 rollback','openapi /auth/v2',' 认证   契约 ','ROLLBACK'])assert.equal(Planning.project([item],{...options,query}).rows.length,1,query);
+ assert.equal(Planning.project([item],{...options,query:'认证 unrelated'}).rows.length,0);
+ assert.equal(JSON.stringify(item),copy);
+});
+test('workflow: node completion remains distinct from task progress, including node-only requirements',()=>{
+ const item=Model.requirement(fixture());assert.deepEqual(Planning.nodeProgress(item),{total:2,done:1});assert.deepEqual(Planning.progress(item),{total:0,done:0,ratio:null});
+ const row=Planning.project([item],{anchor:item.start,today:item.start}).rows[0];assert.equal(row.nodes.done,1);assert.equal(row.progress.ratio,null);assert.notEqual(row.status,'completed');
+ assert.equal(Planning.status({...item,milestones:item.milestones.map(node=>({...node,done:true}))},item.start),'completed');
+});

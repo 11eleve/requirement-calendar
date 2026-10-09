@@ -391,3 +391,14 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
 @media(max-width:600px) { #req-calendar-refined .rf-summary-stats { gap:6px; } #req-calendar-refined .rf-summary-stat { padding:8px 5px; } #req-calendar-refined .rf-summary-stat strong { font-size:20px; } }
 
 #req-calendar-refined .rf-title-group .rf-view { position:absolute; left:calc(100% + 10px); }
+
+/* Workflow exploration: completion and clear overview context. */
+#req-calendar-refined .rf-node-detail { cursor:pointer; border-radius:6px; }
+#req-calendar-refined .rf-node-detail:hover { background:var(--rf-context-fill); }
+#req-calendar-refined .rf-node-detail input { margin-top:4px; }
+#req-calendar-refined .rf-summary-progress { width:94px; }
+#req-calendar-refined .rf-summary-node-progress { font-size:10px; }
+#req-calendar-refined .rf-summary-row.is-selected,#req-calendar-refined .rf-summary-node.is-selected { background:var(--rf-fill); }
+#req-calendar-refined .rf-summary-controls .rf-text-button { flex:none; padding:4px 6px; }
+#req-calendar-refined .rf-export-status { flex:none; margin:0 18px 12px; padding:9px 13px; border-radius:8px; font-size:11px; line-height:1.5; color:var(--rf-muted); background:var(--rf-bg); border:1px solid var(--rf-line); }
+#req-calendar-refined .rf-export-status[data-kind=error] { color:#984b58; background:#f9eaee; border-color:transparent; }
