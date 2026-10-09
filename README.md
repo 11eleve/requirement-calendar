@@ -6,7 +6,9 @@
 
 > 本分支为 `explore/planning-workflow`，当前源码版本为 **0.4.0-alpha.5**。稳定版 0.3.0 保留在 [main](https://github.com/11eleve/requirement-calendar/tree/main)，下方稳定版安装链接继续指向 0.3.0。
 
-前一探索版 **alpha.4** 的 Windows x64 安装包可从[本次构建产物](https://github.com/11eleve/requirement-calendar/actions/runs/37973077974/artifacts/11638136727)下载，运行 `RequirementCalendar-0.4.0-alpha.4-x64-Setup.exe`。已通过开发、打包与实际安装检查。试用前可用文件菜单导出 JSON 备份；产物于 2026-11-08 到期。
+当前探索版 **alpha.5** 的 Windows x64 安装包可从[本次构建产物](https://github.com/11eleve/requirement-calendar/actions/runs/37974961747/artifacts/11638555923)下载，运行 `RequirementCalendar-0.4.0-alpha.5-x64-Setup.exe`。已通过开发、打包与实际安装检查。试用前可用文件菜单导出 JSON 备份；产物于 2026-11-08 到期。
+
+从源码试用探索版：克隆仓库后先运行 `git switch explore/planning-workflow`，再按下方 macOS 构建或 Windows 开发步骤操作。下方稳定版下载和安装示例仍为 0.3.0。
 
 <p align="center">面向程序员的需求排期工具，把周期、阶段、资料和事项放在一起。</p>
 

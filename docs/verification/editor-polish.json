@@ -3,7 +3,7 @@
   "source_parent": "c7817d5ddcecac25f166b9a43170d89406d392d5",
   "version": "0.4.0-alpha.5",
   "rounds": "94–100",
-  "checked_at_utc": "2026-10-09T18:39:54.495Z",
+  "checked_at_utc": "2026-10-09T18:46:53.237Z",
   "sources": {
     "src/app.js": "41d47d342d5111b3f677f4588489174918bf2f251f6274a22204c370dc5043db",
     "src/styles.css": "1b0b4f84e424a450845428c2b2f704d000d0cecdba91f15e44dfd4fae5b3ff41",
@@ -15,9 +15,9 @@
     "tests/desktop-unified-editor.js": "300fc1a2684fd04db4d4fe45652ce74219fc7be8988ed2689d37bb94f4f91293",
     "tests/desktop-content.js": "d5682f72628e445583a266da9234d33d4b787b6be15d2f3c6580b71980f5f72a",
     "tests/desktop-editor-polish.js": "3786b60be114bd55ead1ae8ee802456bf7957c7913df67bb2d815b6d2ba70bc7",
-    "README.md": "dd99f883139a8d832bf688c20570c352f7fdcbfc6ab4cc493d95d4e7a038d0e5",
-    "docs/OPTIMIZATION_LOG.md": "96c3d42960214e6cb57a3610ed790d3762b478cf9f495e695537b294017e1992",
-    "docs/COMPLETION_AUDIT.md": "bfeb712833c173df6e807566c5fca32d65a0097bd0962bdef4793e0080f2eaed",
+    "README.md": "10464732275ae29e681aa3505a8d260ac9336ed7e2f5e6367cf4771ecf93c838",
+    "docs/OPTIMIZATION_LOG.md": "f9e5f9ca25dc955caa68ae31329eab1413f2428c5194c2f089c3f2955fdb9587",
+    "docs/COMPLETION_AUDIT.md": "23d6b484555f988f7aa766201725c959a48fe97618b76731890501b4e79bc464",
     "assets/editor-fullheight.png": "5e0b8bede1b42195733484de89a74dd53a4dc06bdaa8aa02c6d6aaa672236dfe",
     "assets/editor-planning.png": "875b9d405f59864339df752844f39609b08e3998d3d21524ce2aac12727234d0"
   },
@@ -1005,7 +1005,200 @@
     "documentation_or_verification_counted_as_product_rounds": false
   },
   "windows": {
-    "status": "pending"
+    "status": "success",
+    "run_id": 37974961747,
+    "job_id": 113970811369,
+    "source_commit": "2549e4d76a7d5f62ed992608dd0d90fa3282eafa",
+    "node_tests": 54,
+    "development": {
+      "platform": "win32",
+      "arch": "x64",
+      "electron": "44.7.0",
+      "packaged": false,
+      "checks": [
+        "renderer uses sandbox and context isolation",
+        "renderer has no Node APIs",
+        "desktop bridge is available",
+        "native layout and calendar rendered",
+        "creation shows all sections together without tabs",
+        "editor fills calendar height with visible bottom actions",
+        "calendar has one date Tab stop",
+        "month picker persists a selected month through Electron",
+        "unknown IPC rejected",
+        "invalid save rejected",
+        "restore through real native bridge succeeds",
+        "saved requirements preserve notes and phases",
+        "v7 palette and nodes persist through the desktop bridge",
+        "file reload restores requirements",
+        "notification activation reveals corresponding requirement",
+        "native reminder editor is available",
+        "editor duration includes both boundary dates",
+        "node and phase pickers inherit the requirement range",
+        "task composition Enter does not insert another row",
+        "task Enter inserts a focused pending row without saving",
+        "discarding quick task insertion preserves committed tasks",
+        "dirty drafts detected",
+        "Excel export refuses an unsaved draft",
+        "restore refuses dirty draft",
+        "save clears dirty state",
+        "save actually commits editor changes",
+        "explicit discard closes dirty editor",
+        "discard preserves committed record",
+        "copy opens a protected independent draft without persisting",
+        "discarding a copy preserves the original record",
+        "summary renders saved requirements and remaining nodes",
+        "pending nodes retain grouping and explicit cross-month scope",
+        "next-node ordering exposes pending context",
+        "summary node locates its own focused detail",
+        "node editing enters the continuous editor at its node section",
+        "node-only filter leaves requirement rows available",
+        "node-only filtering retains the full workbook source",
+        "node reset restores pending nodes and selector focus",
+        "summary workbook includes requirement and node rows",
+        "desktop Excel export writes a real XLSX atomically",
+        "invalid Excel export scopes are rejected",
+        "summary selection follows the opened requirement",
+        "detail node completion persists through Electron and refreshes the overview",
+        "summary returns focus to the updated source row",
+        "Chinese search keeps composition intact until commit",
+        "summary search clears with Escape and retains focus",
+        "Excel command provides visible success feedback",
+        "export status preserves planning geometry",
+        "export status dismissal returns to its usable action",
+        "returning from summary restores the calendar",
+        "bad import preserves persisted data",
+        "CSP blocks renderer remote networking",
+        "private favicon requests are rejected",
+        "Windows shortcut accepts notification identity",
+        "Windows shortcut retains AUMID and toast CLSID"
+      ]
+    },
+    "packaged_smoke": "passed",
+    "installed_smoke": "passed",
+    "protocol_and_start_menu": "passed",
+    "jobs": [
+      {
+        "id": 113970811369,
+        "name": "windows",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 37974961747,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run npm ci --no-audit --no-fund",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run npm test",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Validate Windows reminder adapter",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Exercise Windows desktop bridge",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Build Windows installer",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Exercise packaged application",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Install and exercise application",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Installer checksum",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25
+          }
+        ]
+      }
+    ],
+    "artifact": {
+      "id": 11638555923,
+      "name": "RequirementCalendar-Windows-x64",
+      "size_in_bytes": 111563090,
+      "url": "https://api.github.com/repos/11eleve/requirement-calendar/actions/artifacts/11638555923",
+      "archive_download_url": "https://api.github.com/repos/11eleve/requirement-calendar/actions/artifacts/11638555923/zip",
+      "expired": false,
+      "created_at": "2026-10-09T18:43:52Z",
+      "expires_at": "2026-11-08T18:43:47Z",
+      "updated_at": "2026-10-09T18:43:52Z",
+      "digest": "sha256:ec602cccb85eeb92a8edc6064a77cda3ac28bc0add601a5f40707c1dda037961",
+      "workflow_run": {
+        "id": 37974961747,
+        "repository_id": 1409048301,
+        "head_repository_id": 1409048301,
+        "head_branch": "explore/planning-workflow",
+        "head_sha": "2549e4d76a7d5f62ed992608dd0d90fa3282eafa"
+      }
+    },
+    "download_url": "https://github.com/11eleve/requirement-calendar/actions/runs/37974961747/artifacts/11638555923",
+    "scope": "GitHub Windows Server 2022 x64 runner: development bridge, packaged Electron application, actual NSIS installation, protocol and Chinese Start-menu notification identity checks. Manual Windows 10/11 notification banner, sound, real click and trusted input remain outside this automated result."
   },
   "scope": "Actual isolated native WebKit and macOS Electron, real file persistence and XLSX export, synthetic date/checkbox/keyboard input and injected save failure. Final node-input CSS was used by editor-polish, node-review, planning, unified-editor, editor-addition, content and readability; six other suites use identical final JavaScript before only that node-input edge/height styling. Screenshots show completed endpoints. No trusted IME, actual OS notification banner/sound/click, held-drag focus loss or user aesthetic acceptance claim.",
   "diagnostics": [
