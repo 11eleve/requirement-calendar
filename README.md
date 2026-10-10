@@ -1,6 +1,6 @@
 # 需求日历 0.5.3
 
-本地 macOS 版本（已修复上滑漏判，保留跟手切月动画与透明图标）：上下滚动切换月份，JSON 导入导出，命令行操作。需求保存在本机文件中。汇总页已移除“待办时间节点”区域，已有需求中的节点数据保留在详情和 JSON 中。Excel 导出已移除。
+macOS 和 Windows 桌面版本：上下滚动切换月份，JSON 导入导出，命令行操作。需求保存在本机文件中。汇总页已移除“待办时间节点”区域，已有需求中的节点数据保留在详情和 JSON 中。Excel 导出已移除。
 
 ## 下载与安装
 
@@ -30,6 +30,18 @@
 无效日期、重叠阶段、重复 ID、不支持的版本会在写入之前拒绝。JSON 文件上限 16 MB。
 
 ## 命令行
+
+Windows 安装器自带 `reqcal.exe` 并加入当前用户 PATH。安装后重新打开终端即可使用，无需安装 Node：
+
+```powershell
+reqcal schema
+reqcal list
+reqcal create --file requirement.json
+reqcal update REQUIREMENT_ID --file patch.json
+reqcal export --output backup.json
+```
+
+Windows 应用未运行时会自动后台启动；原有终端如果找不到命令，请重开终端或直接运行安装目录中的 `reqcal.exe`。复杂 JSON 推荐通过 UTF-8 文件传递，避免 PowerShell/命令提示符的引号差异。
 
 Mac 应用包内自带编译好的 `Contents/MacOS/reqcal`，使用时不需要 Node 或 Python。DMG 安装后直接执行：
 
@@ -71,7 +83,7 @@ Mac 应用包内自带编译好的 `Contents/MacOS/reqcal`，使用时不需要 
 
 未保存的编辑存在时，写入返回 `DRAFT_DIRTY`；版本已变化时返回 `REVISION_CONFLICT`；正在保存或打开导入预览时返回 `BUSY`。读取始终针对已提交的数据。遇到连接中断，不要盲目重复新建，应先查询已有 ID；为新需求提供稳定 ID 可避免重试产生重复记录。
 
-命令通过当前用户专用的 Unix socket 调用应用的统一操作层，不直接改写数据文件，也不执行请求中的代码。入口文件权限为 0600，并校验连接双方的用户身份。第一版命令行适用于 macOS 原生应用；Electron 的界面和 JSON 功能已同步更新，尚未提供 Windows 命令行包。
+命令通过本机通信调用应用的操作层，不直接改写数据文件，也不执行请求中的代码。Mac 使用 Unix socket，入口文件权限为 0600，并校验连接双方的用户身份。Windows 使用当前用户专用的命名管道，拒绝远程访问，并核对服务端程序；安装器包含原生 CLI，卸载会移除它自己添加的 PATH 项。
 
 退出码：0 成功，2 参数或校验错误，3 草稿、版本或忙碌冲突，4 连接或保存失败。`request --file command.json` 可提交结构化指令，例如：
 
@@ -121,6 +133,7 @@ src/
 desktop/
   macos/            Swift 原生宿主和 CLI
   electron/         Electron 宿主及 Windows 集成
+  windows/cli/      Windows 原生 CLI 和命名管道
 assets/             发布资源
 bin/                CLI 启动脚本
 scripts/            开发、构建、打包工具

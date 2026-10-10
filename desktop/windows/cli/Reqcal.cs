@@ -156,7 +156,9 @@ internal static class Reqcal {
                     } catch { }
                 } finally {
                     pending = null;
-                    if (!pipe.SafePipeHandle.IsClosed && pipe.IsConnected) pipe.Disconnect();
+                    // A client closing without a request can put the managed
+                    // stream in Broken state; it still needs Disconnect to reset.
+                    if (!pipe.SafePipeHandle.IsClosed) pipe.Disconnect();
                 }
             }
         }

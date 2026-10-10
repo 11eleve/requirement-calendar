@@ -22,6 +22,7 @@ src/
 desktop/
   macos/                    AppKit/WKWebView 宿主、文件存储、提醒、Socket、CLI
   electron/                 Electron 宿主、预加载桥接、Windows 提醒和安装配置
+  windows/cli/              Windows 原生 reqcal、命名管道宿主和 PATH 安装脚本
 assets/                     应用发布资源，目前是透明图标
 bin/reqcal                  开发目录/便携包的 CLI 启动脚本
 scripts/                    开发服务器、前端构建、桌面打包和验证
@@ -29,6 +30,7 @@ tests/
   unit/                     JavaScript 单元检查和前端构建检查
   e2e/                      运行在真实 WebView 中的界面检查
   macos/                    Swift 检查和原生 CLI 集成检查
+  windows/                  Windows 已安装 CLI、自动启动和重启恢复检查
 docs/
   images/                   历史界面截图和图标设计记录
   verification/             历史验证报告
@@ -51,6 +53,7 @@ npm run build:mac           # 构建 Mac .app 和原生 reqcal
 npm run test:cli            # 对构建出的 Mac 应用进行隔离的 CLI 集成检查
 npm run dist:mac            # 构建 Mac .app、PKG、DMG，并验证 DMG
 npm run dist:win            # 构建 Windows NSIS 安装器
+npm run build:cli:win       # 单独编译 Windows reqcal.exe，仅 Windows
 ```
 
 浏览器开发只需要 Node，无需安装 Electron 依赖。`dev` 监听本机固定端口，只提供入口和前端资源；浏览器模式使用该地址下的 localStorage。它没有桌面的系统提醒和原生命令行服务器。
@@ -63,7 +66,9 @@ Mac 版本用 Swift 实现 AppKit 窗口和 WKWebView 容器，以及文件选�
 
 `desktop/macos/CLI.swift` 也编译为独立可执行文件，用户使用 `reqcal` 不需要安装 Node/Python。Python 只用于开发构建。
 
-Windows 版本由 Electron 提供对应宿主。当前两个平台的宿主实现不同，因此需要分别维护桥接代码；改成 Mac 也用 Electron 属于后续架构选择，会涉及窗口、提醒、CLI 和安装包迁移。
+Windows 版本由 Electron 提供对应宿主。Windows CLI 用 C# 编译为独立控制台程序，并提供当前用户专用的本机命名管道；业务规则继续共用 JavaScript。开发与测试启动脚本会在 Windows 自动编译 CLI，安装时无需 Node。
+
+当前两个平台的宿主实现不同，因此需要分别维护桥接代码；改成 Mac 也用 Electron 属于后续架构选择，会涉及窗口、提醒、CLI 和安装包迁移。
 
 ## 命令行与数据
 
@@ -77,6 +82,8 @@ flowchart LR
   Store --> File[Mac DataStore：原子写入 calendar.json]
   App --> UI[刷新日历界面]
 ```
+
+Windows 的对应链路为 `reqcal.exe → 命名管道 → 私有原生宿主 → Electron CommandBroker → executeCommand → DataStore`。命令行参数、JSON 指令和业务校验与 Mac 一致，通信通道按系统实现。
 
 CLI 不直接编辑 `calendar.json`。应用操作入口负责草稿、忙碌和 revision 检查；纯业务层产生修改计划；原生存储负责原子落盘、备份和进程间冲突检查。普通界面编辑通过应用自身的编辑函数保存，并非每个按钮都调用命令规划器。
 

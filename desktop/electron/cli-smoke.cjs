@@ -57,7 +57,7 @@ async function run({executable,directory,window,invoke,broker}) {
   // The snapshot is identical after export/import; force a changed replacement for archival.
   await call(['delete',record.id]);
   await call(['import',exportFile,'--mode','replace','--if-revision',(await call(['status'])).revision]);
-  check('changed replacements create independent before-restore archives',(await fs.readdir(directory)).some(name=>name.startsWith('calendar.before-restore-')));
+  check('changed replacements create independent before-restore archives',(await fs.readdir(directory)).some(name=>name.startsWith('calendar.preserved-')));
   check('malformed pipe JSON is rejected without closing the service',(await raw(broker.pipe,'not-json')).error.code==='INVALID_JSON'&&(await call(['status'])).ok);
   check('the transport cannot execute arbitrary code',(await raw(broker.pipe,JSON.stringify({action:'eval',script:'bad'}))).error.code==='UNKNOWN_COMMAND');
   check('native get returns committed values',(await call(['get',record.id])).data.note==='接口已确认');

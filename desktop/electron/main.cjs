@@ -17,7 +17,8 @@ let window,store,reminders,ready=false,closing=false,closePrompt=false,notificat
 let smokeDirectory,smokeStarted=false;
 let commandBroker=null;
 app.setName('RequirementCalendar');
-if(commandDirectory)app.setPath('userData',path.join(commandDirectory,'.electron'));
+const isolatedDirectory=commandDirectory&&commandDirectory.toLowerCase()!==path.join(app.getPath('userData'),'data').toLowerCase();
+if(isolatedDirectory)app.setPath('userData',path.join(commandDirectory,'.electron'));
 app.setAppUserModelId(APP_ID);
 protocol.registerSchemesAsPrivileged([{scheme:'calendar-app',privileges:{standard:true,secure:true,supportFetchAPI:true}}]);
 if(smoke){smokeDirectory=require('node:fs').mkdtempSync(path.join(os.tmpdir(),'requirement-calendar-smoke-'));app.setPath('userData',smokeDirectory);}
@@ -88,7 +89,7 @@ function menu() {
   ]));
 }
 function installWindowsIdentity() {
-  if(process.platform!=='win32'||!app.isPackaged||smoke||commandDirectory)return false;
+  if(process.platform!=='win32'||!app.isPackaged||smoke||isolatedDirectory)return false;
   const shortcut=path.join(app.getPath('appData'),'Microsoft','Windows','Start Menu','Programs','需求日历.lnk');
   const ok=shell.writeShortcutLink(shortcut,'create',{target:process.execPath,description:'需求排期、阶段与资料',appUserModelId:APP_ID,toastActivatorClsid:TOAST_CLSID});
   return ok&&app.setAsDefaultProtocolClient('requirement-calendar');
