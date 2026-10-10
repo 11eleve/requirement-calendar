@@ -45,7 +45,8 @@ internal static class Reqcal {
     }
     static void Output(object value) { lock (OutputLock) { Console.WriteLine(Json().Serialize(value)); Console.Out.Flush(); } }
     static string DataDirectory(string supplied) {
-        return Path.GetFullPath(supplied ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RequirementCalendar", "data")).TrimEnd(Path.DirectorySeparatorChar);
+        string directory = Path.GetFullPath(supplied ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RequirementCalendar", "data"));
+        return directory.Length == Path.GetPathRoot(directory).Length ? directory : directory.TrimEnd(Path.DirectorySeparatorChar);
     }
     static string PipeName(string directory) {
         string identity = WindowsIdentity.GetCurrent().User.Value + "\n" + DataDirectory(directory).ToUpperInvariant();
