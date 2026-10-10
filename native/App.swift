@@ -37,6 +37,7 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.regular)
+        if let url = Bundle.main.url(forResource: "AppIcon", withExtension: "icns"), let icon = NSImage(contentsOf: url) { NSApp.applicationIconImage = icon }
         createMenu()
         if verifyScript == nil && ProcessInfo.processInfo.environment["CALENDAR_EPHEMERAL"] != "1" { UNUserNotificationCenter.current().delegate = self }
         let config = WKWebViewConfiguration()
@@ -163,7 +164,15 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
                     window.setFrame(NSRect(x: 100,y: 100,width: 980,height: 700), display: true)
                     window.saveFrame(usingName: name); UserDefaults.standard.synchronize()
                 }
-                replyHandler(["width":window.frame.width,"height":window.frame.height,"fullScreenAvailable":window.collectionBehavior.contains(.fullScreenPrimary),"menus":NSApp.mainMenu?.items.compactMap { $0.submenu?.title } ?? []], nil)
+                let bundleIcon = Bundle.main.url(forResource: "AppIcon", withExtension: "icns").flatMap { NSImage(contentsOf: $0) }
+                if let directory = ProcessInfo.processInfo.environment["CALENDAR_VERIFY_ICON_DIR"] {
+                    for (name, image) in [("bundle", bundleIcon), ("running", NSApp.applicationIconImage)] {
+                        if let data = image?.tiffRepresentation, let bitmap = NSBitmapImageRep(data: data), let png = bitmap.representation(using: .png, properties: [:]) {
+                            try? png.write(to: URL(fileURLWithPath: directory).appendingPathComponent(name + ".png"))
+                        }
+                    }
+                }
+                replyHandler(["applicationIconAvailable":NSApp.applicationIconImage?.isValid ?? false,"iconFile":Bundle.main.object(forInfoDictionaryKey: "CFBundleIconFile") as? String ?? "","width":window.frame.width,"height":window.frame.height,"fullScreenAvailable":window.collectionBehavior.contains(.fullScreenPrimary),"menus":NSApp.mainMenu?.items.compactMap { $0.submenu?.title } ?? []], nil)
             case "verifyReminders":
                 guard verifyScript != nil, let scheduler = notificationScheduler as? IsolatedNotificationScheduler else { replyHandler(nil, "仅在隔离回归中可用。"); return }
                 Task { @MainActor in

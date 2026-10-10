@@ -878,7 +878,7 @@ html.native #req-calendar-refined .rf-week { height:auto; min-height:calc(54px +
         if (legacy?.data) {
           const data = Model.snapshot(legacy.data);
           await bridge.postMessage({ action: 'save', raw: JSON.stringify(data) });
-          return { data, issue: '已将旧版本机记录迁移到独立数据文件，旧记录仍保留。', migrated: true };
+          return { data, issue: null, migrated: true };
         }
         if (legacy?.issue) { blocked = true; return { data: null, issue: legacy.issue }; }
         return { data: null, issue: null };

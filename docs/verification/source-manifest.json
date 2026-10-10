@@ -1,7 +1,7 @@
 {
   "rounds_implemented": "01–100",
   "goal_complete": true,
-  "checked_at_utc": "2026-10-09T18:46:53.244Z",
+  "checked_at_utc": "2026-10-10T01:18:30.522Z",
   "verification_scope": {
     "notification_delivery": "Last recorded manual result: authorized reminder reached NotificationCenter history; sharing suppressed banner/sound. Actual click and temporary permission restoration remain pending. Not revalidated by the current reminder-editor batch.",
     "native_system_interactions": "Trusted UI backup export/import/cancel/archive, close/quit branches and failure, context open/edit/delete, text/deletion undo, full screen passed in isolated app",
@@ -13,18 +13,18 @@
     "startup": "Actual native WebKit progress and cleanup; reduced-motion/live preference/no-API/error cleanup via isolated unit harness."
   },
   "sources": {
-    "index.html": "dc43a826ecf8483af88797479963c1b655413048f8d7005c88104efcc170de43",
+    "index.html": "1c7cd6d3dcfe7cc69c34db6e879f70b4e68d6b4a04cbeef34660595530f827d4",
     "src/app.js": "41d47d342d5111b3f677f4588489174918bf2f251f6274a22204c370dc5043db",
     "src/index.html": "add704bce2002564ed4a393be5a1cc4b7d89eb6b3b628435f29f2de56616a4f5",
     "src/model.js": "6ee7fea1384718aefdc9666fe1d240ab0e85d962ebe16b8aebaa49e4e00ee25b",
-    "src/storage.js": "2384f8518a2ae95c1bdfbd0dbf981ee056ee26862e5f725668b0c8c9fc60aebd",
+    "src/storage.js": "03e13d77496ee9a9f5c3488afd125c2664992d22f4355ab2d7b14b64bb9f74c5",
     "src/styles.css": "1b0b4f84e424a450845428c2b2f704d000d0cecdba91f15e44dfd4fae5b3ff41",
-    "native/App.swift": "515a02f134e461a093bc84126d2ec251150c3cb8670a67881582e16b0597bdc6",
+    "native/App.swift": "a5a17edeff3b275e387b2c55a36319aa2f4d46026ea8b122ed1d132cf7c1642a",
     "native/DataStore.swift": "49163b77d9a0c326706c2d02af5c9551bc94f0b7e561c0f1360398c9b319eff3",
     "native/LinkPolicy.swift": "42695a8723abf96f25053ec625d535d985ab172087c2d6b60199a04996963ef1",
     "native/Reminders.swift": "8438f16b93e7a6505484fba169394db5cc6255eeeb7e8d78e7a101948966ce0e",
     "scripts/build.py": "c03bb151d1bea77907d71f66c439d2104c56d9b8fc83419f0124750c97d7ec81",
-    "scripts/build-macos.sh": "96f2b313028d9ae80a4dc5d318e4abc4aeb31b542c59ac2a48724f8d1e4b9dec",
+    "scripts/build-macos.sh": "aa6ccdf1eef788e0ea4e73ba257b9be75b65e5fa5a8272b8997dad91f10c77be",
     "tests/build.test.py": "6a8f4e0a92235a5cc4c5f8d16be792912293842912edbd733b60fa5b523e6cf5",
     "tests/data-store.swift": "459316521e5f4c9dc4f6df4e77158c9410b24c3ab30e3b72ce2ecf790b83fb12",
     "tests/desktop-data-reminders.js": "321c306931dc6d633c539452740299234353d1e0c41cf631ea8675586015c04f",
@@ -39,7 +39,7 @@
     "tests/desktop-save-fixture.js": "563da7b3570b7a74f95534edfb8bdb0f3d36ade0b1daf1de1a8ded1f19d9a245",
     "tests/desktop-ui.js": "efaab64a29c9b468f7fac9e154727f9db291f1fa27cb7ed5abe2e20e1fac4ada",
     "tests/link-policy.swift": "9789149a02fc68b68e9ae295cd266c266e8dfc1bbff96d303a297e1f409b9eff",
-    "tests/model.test.cjs": "4ada4eba35fc15f5e0f444dfc60f5fae3b822f26c8982a6f4be59ea1d2ef357c",
+    "tests/model.test.cjs": "bbc239e75162bd992a74b2b6af24012d520f97213201d7ff0870b5779d961cc2",
     "tests/reminder-scheduling.swift": "3de859279c90d8101fb7937ebbfb17fc5ea86f9403f6d1ca1a6bdf24b4011647",
     "tests/desktop-permission-pending.js": "790301ca3932c78a33ce9f7a19b8389fdd81c0fe51a0995eb970dacda3fa3d83",
     "tests/desktop-polish.js": "37c34c887f79f9de5076a2e237bf665c3831858acc004a221778249a3ada1820",
@@ -54,7 +54,7 @@
     "tests/desktop-readability.js": "d247c1ef80337028168c9340a70b0353d5008e16406bc25cabd548dcd2ce1b86",
     "tests/desktop-panel-continuity.js": "3a640ff2db7c9a63cd739d4a63e91f9901484353836c0bc4a2a6fc75c13ead64",
     "tests/desktop-creation-colors.js": "6526cc89b675a66b50e84f6d774055c2f7cce1580cff05f4aee6470a7dafab2a",
-    "README.md": "10464732275ae29e681aa3505a8d260ac9336ed7e2f5e6367cf4771ecf93c838",
+    "README.md": "1f9472268aa8fd147cacf50dc50917ae51c7c8f352bb1e43fee30bcf5c5dad0d",
     "src/site-icons.js": "84d37304ab359c8c1002c7b94a09833cdfd695cb29266f58b3708e586406f21c",
     "native/ResourceIcons.swift": "63d455cb9c2c5a88b330aeb4e3835250f11b0b47ef26790d4c046afebcc0bd7c",
     "tests/resource-icons.swift": "68cb12f0d68addc06ef734123f72affa7fb33c299dee86107db642b2a5b3795a",
@@ -78,8 +78,8 @@
     "tests/desktop-disclosure.js": "236f480ef125186d0a0e5dae09ff29a5b1dc05622932af98c8d5d68034b04b1f",
     "tests/desktop-replan.js": "05601a673b89f9a5c6f19563ab61208525cf74a1a20d8848f3281c5d79a85927",
     "tests/desktop-replan-editor.js": "4a1c703a1ec94e6c01e234aa65e7fc4f39b17fea4e05d223b449c68b9123cc7b",
-    "docs/OPTIMIZATION_LOG.md": "f9e5f9ca25dc955caa68ae31329eab1413f2428c5194c2f089c3f2955fdb9587",
-    "docs/COMPLETION_AUDIT.md": "23d6b484555f988f7aa766201725c959a48fe97618b76731890501b4e79bc464",
+    "docs/OPTIMIZATION_LOG.md": "fea1aa2528bd58ff49533f65205aed21b63abbcb3c6d817af1a654a931e5ecc6",
+    "docs/COMPLETION_AUDIT.md": "259a3e74d3fb12548217e547ce4adaadbe0d2d5f4e42346dba1f4e000e517972",
     "tests/desktop-band-feedback.js": "c254eb00cb958835c066dc2ca027a44dc85a06e8d366454766b04658217cc299",
     "tests/desktop-reminder-editor.js": "13dd1445ba6e18060a30451e24fb72a089cbdfbc159fbfe767c6793f981e16b8",
     "tests/desktop-reminder-configured.js": "006705c50fd6383f263635f7181ddf6b25e829db1ef5f04bcb6d4f2979567dcb",
@@ -88,8 +88,8 @@
     "src/startup.js": "50c27bf51b46c631b2df55bdfacdf5838c6bf7a2e9580eb1d69bcf3e77045f4b",
     "tests/startup.test.cjs": "d80608a77095a8a1f899bc283f39fb77a8658b5fa2f57e0e6e051a8e57380df5",
     "tests/desktop-startup.js": "2aebd03a113aa5c92b2da3acf2214edf98820593fbb7d0eb3656b576491f0832",
-    "package.json": "7ff0de65b04e6c4a42deb0884d1f981e56786377e8b64f8bc7414fabad7d6da9",
-    "package-lock.json": "44176e34df0201f6c7cc0dde8f6dd3880ba51e6b67c08b7de34956a0ef4622a6",
+    "package.json": "e36d4fa312b4ba2efedfccda489e11172d7d6dafc27546d53ca74665f65ac061",
+    "package-lock.json": "3c42772d7f7a6e902a40220e6c9c039d1ad10b04d38041ee0314a8ac7a64d265",
     ".github/workflows/windows-desktop.yml": "604a7e51f147836328b6e0762016a7f7d7c99bf1f7a44fccfe8cd03261c29717",
     "tests/electron.test.cjs": "22b049f1ae16bfc6fa6f11d2441adfbaaa41f5bcc05c8fbcd46e8dffef52164d",
     "docs/WINDOWS_DESKTOP.md": "22ca86f764f702884315cf23a4e11772acd069031c2c3f3ef948ed8fd999d10d",
@@ -130,7 +130,9 @@
     "tests/desktop-editor-polish.js": "3786b60be114bd55ead1ae8ee802456bf7957c7913df67bb2d815b6d2ba70bc7",
     "assets/editor-fullheight.png": "5e0b8bede1b42195733484de89a74dd53a4dc06bdaa8aa02c6d6aaa672236dfe",
     "assets/editor-planning.png": "875b9d405f59864339df752844f39609b08e3998d3d21524ce2aac12727234d0",
-    "docs/verification/editor-polish.json": "9ef2799d738b3f61d91176db5e1648ec412374f0bbdfa0ed92a5781555ce6c2a"
+    "docs/verification/editor-polish.json": "9ef2799d738b3f61d91176db5e1648ec412374f0bbdfa0ed92a5781555ce6c2a",
+    "tests/desktop-release-main.js": "8fcdf12da0f03e841c9356c1ada90e0f60a928436d73115c557e31ac0b78c53d",
+    "docs/verification/release-main.json": "72b6db9da99915bdd6c2ffdf8732483d42d77dcd3e4a86434d63cd565ef2118f"
   },
   "results": {
     "docs/verification/browser-storage.json": "70dca1f59a7f7fdde9af7f4eaf6c378e1e9b0347e51c3701d891166ea68807fb",
@@ -1826,5 +1828,15 @@
     "windows_installed_smoke": "passed",
     "windows_artifact_id": 11638555923
   },
-  "goal_completion_scope": "100 documented independent product changes, eight colors, four node kinds, calendar and summary, five-sheet XLSX, README images/installation/features and pushed exploration branch. Stable main 0.3.0 retained. Previously user-deferred OS notification/manual gates and subjective aesthetic acceptance are explicitly excluded, not reported as passed."
+  "goal_completion_scope": "100 documented independent product changes already completed. Full exploration features promoted to main 0.4.0; current release checks in release-main.json, historical records retain their original scope.",
+  "main_release": {
+    "record": "docs/verification/release-main.json",
+    "version": "0.4.0",
+    "source_parent": "9b4b96254cd2d2b6fb6088a1500768e047196c12",
+    "merge_from": "explore/planning-workflow",
+    "node_tests": 54,
+    "native_checks": 89,
+    "electron_macos_checks": 53,
+    "windows": "pending"
+  }
 }

@@ -1,0 +1,294 @@
+{
+  "version": "0.4.0",
+  "macos_build": 9,
+  "source_parent": "9b4b96254cd2d2b6fb6088a1500768e047196c12",
+  "main_before": "4d2ee603e59f13b38c5f5bbc0b7ff46ec30cd3a8",
+  "merge_method": "fast-forward main to a release commit descending from explore/planning-workflow; preserve both histories",
+  "checked_at_utc": "2026-10-10T01:18:30.513Z",
+  "changes": [
+    "silence successful legacy-to-native migration without removing migration or source records",
+    "explicit AppIcon.icns metadata and NSApplication startup icon",
+    "refresh this local application registration; relaunch and confirm success banner absent",
+    "promote full exploration features to main version 0.4.0 and update README installation/features"
+  ],
+  "sources": {
+    "src/storage.js": "03e13d77496ee9a9f5c3488afd125c2664992d22f4355ab2d7b14b64bb9f74c5",
+    "native/App.swift": "a5a17edeff3b275e387b2c55a36319aa2f4d46026ea8b122ed1d132cf7c1642a",
+    "scripts/build-macos.sh": "aa6ccdf1eef788e0ea4e73ba257b9be75b65e5fa5a8272b8997dad91f10c77be",
+    "tests/model.test.cjs": "bbc239e75162bd992a74b2b6af24012d520f97213201d7ff0870b5779d961cc2",
+    "tests/desktop-release-main.js": "8fcdf12da0f03e841c9356c1ada90e0f60a928436d73115c557e31ac0b78c53d",
+    "package.json": "e36d4fa312b4ba2efedfccda489e11172d7d6dafc27546d53ca74665f65ac061",
+    "package-lock.json": "3c42772d7f7a6e902a40220e6c9c039d1ad10b04d38041ee0314a8ac7a64d265",
+    "index.html": "1c7cd6d3dcfe7cc69c34db6e879f70b4e68d6b4a04cbeef34660595530f827d4",
+    "README.md": "1f9472268aa8fd147cacf50dc50917ae51c7c8f352bb1e43fee30bcf5c5dad0d",
+    "docs/OPTIMIZATION_LOG.md": "fea1aa2528bd58ff49533f65205aed21b63abbcb3c6d817af1a654a931e5ecc6",
+    "docs/COMPLETION_AUDIT.md": "259a3e74d3fb12548217e547ce4adaadbe0d2d5f4e42346dba1f4e000e517972"
+  },
+  "node_tests": 54,
+  "build_test": 1,
+  "native_webkit": {
+    "release-main": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "bundle explicitly names the packaged ICNS icon",
+          "running application exposes a valid application icon",
+          "normal startup has no migration success banner",
+          "merged application retains the full continuous planning editor"
+        ],
+        "scope": "Actual isolated macOS WebKit, packaged icon metadata and running NSApplication icon; synthetic new/discard commands."
+      }
+    },
+    "data-reminders": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "28: invalid backup rejected before native save",
+          "28: rejected backup leaves the calendar untouched",
+          "28: valid backup restores all requirement fields through the native file bridge",
+          "32: explicit future reminder requests permission once in the isolated adapter",
+          "34: notification identity opens the correct requirement and month",
+          "31: in-flight file save disables competing edits and shows busy state",
+          "31: competing navigation and duplicate save do not replace the draft",
+          "31: one asynchronous save completes normally",
+          "31: delayed save publishes exactly the captured requirement",
+          "34: notification click protects an active unsaved editor",
+          "34: notification navigation can be cancelled without losing text",
+          "33: deleting a requirement cancels its pending notification",
+          "33: undo reschedules a future reminder without another authorization request",
+          "33: clearing the optional time cancels the reminder"
+        ],
+        "notificationAdapter": "isolated; no real notification sent",
+        "snapshot": {
+          "anchor": "2026-10-11",
+          "requirements": [
+            {
+              "done": [
+                false
+              ],
+              "end": "2026-10-13",
+              "id": "restore-1",
+              "milestones": [],
+              "note": "多行\n备忘",
+              "phases": [],
+              "reminder": null,
+              "resources": [
+                {
+                  "icon": "文",
+                  "name": "验收文档",
+                  "type": "自定义",
+                  "url": "https://example.com/spec"
+                }
+              ],
+              "short": "保存锁验证",
+              "start": "2026-10-11",
+              "tasks": [
+                "检查原子保存"
+              ],
+              "title": "保存锁验证",
+              "tone": "blue"
+            }
+          ],
+          "version": 7
+        }
+      }
+    },
+    "unified-editor": {
+      "ok": true,
+      "result": {
+        "checks": [
+          "empty fixture restored",
+          "creation has one form without editor tabs",
+          "stages, resources and tasks appear in the same form",
+          "editor fills the calendar available height",
+          "save and cancel align with the panel bottom",
+          "date creation retains its range strip with a clean draft",
+          "out-of-range stage prevents saving in the unified form",
+          "stage error reveals and focuses its exact invalid end date without hiding other sections",
+          "all section edits keep the persistent range preview and draft",
+          "continuing cancellation preserves unified fields and scroll",
+          "all sections save through the native file bridge",
+          "stage, resource, task and note are committed together without losing whitespace",
+          "existing requirements reopen with the same continuous editor",
+          "editing also occupies the available height",
+          "stage edit action targets the stage section directly",
+          "resource management targets its section directly",
+          "dense fixture restored",
+          "long form scrolls inside the full-height panel",
+          "bottom actions remain visible after scrolling",
+          "long notes retain bounded inner scrolling",
+          "editor follows the available height after native window resize",
+          "no page overflow at the smaller desktop size"
+        ],
+        "scope": "isolated native WebKit; continuous create/edit, focus, scroll, validation, save and native resize"
+      }
+    },
+    "final": {
+      "ok": true,
+      "result": {
+        "appearance": "light",
+        "checks": [
+          "36: a clean installation contains no sample requirements",
+          "36: clean startup does not request notifications",
+          "fixture restored through the real file bridge",
+          "37: first supported month renders without a year-1900 conversion",
+          "37: previous-month command respects the lower bound",
+          "fixture restored through the real file bridge",
+          "37: final month disables navigation beyond the supported dates",
+          "37: next-month command respects the upper bound",
+          "fixture restored through the real file bridge",
+          "38: historical overlap does not create empty lanes in the visible month",
+          "39: full requirement and phase names remain available to hover and accessibility",
+          "fixture restored through the real file bridge",
+          "40: collapsed resource rows show a disclosure chevron",
+          "44: editing preserves note indentation, trailing whitespace and long content",
+          "45: long signed document URLs have no artificial input truncation",
+          "43: unsupported resource link is rejected",
+          "43: validation expands and focuses the actual invalid resource field",
+          "43: editing clears stale invalid-field styling",
+          "44–45: long notes and links survive UI save and native file validation",
+          "39: full resource destination is available on hover",
+          "37: editable date fields share the model-supported limits",
+          "43: invalid requirement range focuses its end-date field",
+          "43: overlapping phases focus the conflicting stage instead of a hidden row",
+          "46: deleting outside text editing exposes requirement undo",
+          "46: Command-Z remains available to native text undo while editing",
+          "asynchronous save settled",
+          "46: Command-Z restores the latest deletion outside the editor",
+          "47: native requirement menu contains open, edit and delete actions",
+          "47: context deletion protects the active unsaved editor",
+          "47: cancelling context deletion keeps the draft",
+          "fixture restored through the real file bridge",
+          "49: day rollover refreshes the visible current phase",
+          "49: day rollover preserves editor, draft and keyboard focus",
+          "50: a stale notification produces visible feedback",
+          "fixture restored through the real file bridge",
+          "31 audit: month persistence also prevents competing edits",
+          "37: month navigation commits its new anchor",
+          "31 audit: failed month save restores the prior month without blocking the app",
+          "fixture restored through the real file bridge",
+          "50: notification race test has a real pending save",
+          "50: notification waits for save and then opens the correct requirement",
+          "fixture restored through the real file bridge",
+          "41: a dense month scrolls within the calendar",
+          "41: long requirement details scroll within the inspector",
+          "41: calendar and inspector have independent scroll positions without document overflow",
+          "49: day rollover preserves both scroll positions in a dense month",
+          "14 audit: keyboard navigation scrolls dense rows to keep the focused date visible",
+          "14 audit: upward focus navigation remains visible below the sticky weekday header",
+          "42: native window exposes full-screen and standard desktop menus"
+        ],
+        "manualDragOutside": "requires trusted mouse regression; not simulated here",
+        "viewport": [
+          1160,
+          780
+        ]
+      }
+    }
+  },
+  "native_total": 89,
+  "electron_macos": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "electron": "44.7.0",
+    "packaged": false,
+    "checks": [
+      "renderer uses sandbox and context isolation",
+      "renderer has no Node APIs",
+      "desktop bridge is available",
+      "native layout and calendar rendered",
+      "creation shows all sections together without tabs",
+      "editor fills calendar height with visible bottom actions",
+      "calendar has one date Tab stop",
+      "month picker persists a selected month through Electron",
+      "unknown IPC rejected",
+      "invalid save rejected",
+      "restore through real native bridge succeeds",
+      "saved requirements preserve notes and phases",
+      "v7 palette and nodes persist through the desktop bridge",
+      "file reload restores requirements",
+      "notification activation reveals corresponding requirement",
+      "native reminder editor is available",
+      "editor duration includes both boundary dates",
+      "node and phase pickers inherit the requirement range",
+      "task composition Enter does not insert another row",
+      "task Enter inserts a focused pending row without saving",
+      "discarding quick task insertion preserves committed tasks",
+      "dirty drafts detected",
+      "Excel export refuses an unsaved draft",
+      "restore refuses dirty draft",
+      "save clears dirty state",
+      "save actually commits editor changes",
+      "explicit discard closes dirty editor",
+      "discard preserves committed record",
+      "copy opens a protected independent draft without persisting",
+      "discarding a copy preserves the original record",
+      "summary renders saved requirements and remaining nodes",
+      "pending nodes retain grouping and explicit cross-month scope",
+      "next-node ordering exposes pending context",
+      "summary node locates its own focused detail",
+      "node editing enters the continuous editor at its node section",
+      "node-only filter leaves requirement rows available",
+      "node-only filtering retains the full workbook source",
+      "node reset restores pending nodes and selector focus",
+      "summary workbook includes requirement and node rows",
+      "desktop Excel export writes a real XLSX atomically",
+      "invalid Excel export scopes are rejected",
+      "summary selection follows the opened requirement",
+      "detail node completion persists through Electron and refreshes the overview",
+      "summary returns focus to the updated source row",
+      "Chinese search keeps composition intact until commit",
+      "summary search clears with Escape and retains focus",
+      "Excel command provides visible success feedback",
+      "export status preserves planning geometry",
+      "export status dismissal returns to its usable action",
+      "returning from summary restores the calendar",
+      "bad import preserves persisted data",
+      "CSP blocks renderer remote networking",
+      "private favicon requests are rejected"
+    ]
+  },
+  "icon_comparison": {
+    "reader": "Pillow/ImageCms",
+    "normalized_color_space": "sRGB",
+    "running_input_profile": "Display",
+    "size": [
+      1024,
+      1024
+    ],
+    "mean_channel_difference": [
+      0.5621070861816406,
+      0.2815122604370117,
+      0.30635643005371094,
+      0
+    ],
+    "max_channel_difference": [
+      2,
+      2,
+      2,
+      0
+    ],
+    "runtime_matches_packaged_icon": true,
+    "finder_icon_visually_inspected": true,
+    "hashes": {
+      "bundle.png": "4ce45b1bb5f99ba4cb1c0890ba2377bdd83e8c2da8ee6ba120b45102ce09792d",
+      "running.png": "790c38d9be3f5cb0c82b91c33b950708161c4aa5cee0a3112715cc0d66f48254",
+      "finder-icon.png": "9ce87e49b7871fbdd47a01ab9507f2698411f6072d3c38aca73e61c8e7b6a9b3"
+    }
+  },
+  "macos": {
+    "signature_verified": true,
+    "bundled_page_matches": true,
+    "local_application_relaunched": true,
+    "local_accessibility_banner_absent": true,
+    "finder_icon_refresh": "lsregister -f this application only; absolute-path NSWorkspace icon read inspected"
+  },
+  "windows": {
+    "status": "pending"
+  },
+  "scope": "Actual native NSApplication icon capture and registered file icon, normalized sRGB pixel comparison; isolated WebKit and Electron file/renderer tests. Local real app restarted normally after confirming no edit form; existing requirements remain visible. No system settings or notification permissions changed.",
+  "diagnostics": [
+    "Initial TIFF-byte equality was inappropriate: AppKit converts the runtime icon to Display ICC. sRGB normalization confirms maximum RGB difference 2/255 and identical alpha.",
+    "Initial NSWorkspace icon probe used a relative path and returned a generic document icon; absolute app path returned the correct mosaic calendar icon."
+  ]
+}

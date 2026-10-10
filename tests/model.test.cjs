@@ -96,7 +96,7 @@ test('29: v5 browser records migrate to a native file through the bridge without
   let written=null;
   const bridge={async postMessage(message){if(message.action==='load')return {raw:null,issue:null};written=JSON.parse(message.raw);return {ok:true};}};
   const store=Storage.createNativeStore(bridge,legacy),loaded=await store.load();
-  assert.equal(loaded.migrated,true);assert.equal(written.version,Model.VERSION);assert.equal(written.requirements[0].title,'支付改版');assert.equal(written.requirements[0].reminder,null);
+  assert.equal(loaded.migrated,true);assert.equal(loaded.issue,null);assert.equal(written.version,Model.VERSION);assert.equal(written.requirements[0].title,'支付改版');assert.equal(written.requirements[0].reminder,null);
   assert.equal(database.getItem('requirement-calendar:state:v5'),raw);
   bridge.postMessage=async()=>{throw new Error('another window changed the file');};
   const failed=await store.save(loaded.data);assert.equal(failed.ok,false);assert.match(failed.issue,/another window/);

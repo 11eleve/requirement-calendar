@@ -1,5 +1,11 @@
 # 需求日历交付与验收审计
 
+## 主分支 0.4.0 发布
+
+按用户要求将 explore/planning-workflow 的完整功能合并到 main。移除迁移成功后的常驻状态提示，保留原迁移和旧记录保护；macOS 显式配置 AppIcon.icns 并在启动时设置 NSApplication 图标。版本 0.4.0、macOS 构建号 9。当前检查结果见 verification/release-main.json，Windows 新安装包构建结果将补记。
+
+以下 01–100 与探索版记录保留其原始版本和验收范围。
+
 ## 产品优化与交付完成：01–100
 
 稳定版 0.3.0 保留在 main；探索版 0.4.0-alpha.5 位于 explore/planning-workflow。100 个独立产品改动已在 OPTIMIZATION_LOG 逐项记录；测试、版本、文档和截图不计轮次。最新一批补齐周期/阶段天数、资料来源、完成/超期节点编辑状态、连续回车录入事项，以及随需求周期变化的日期选择器。新建和编辑仍是一张全高表单，内部滚动且底部操作固定。

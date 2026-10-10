@@ -4,11 +4,7 @@
 
 <h1 align="center">需求日历</h1>
 
-> 本分支为 `explore/planning-workflow`，当前源码版本为 **0.4.0-alpha.5**。稳定版 0.3.0 保留在 [main](https://github.com/11eleve/requirement-calendar/tree/main)，下方稳定版安装链接继续指向 0.3.0。
-
-当前探索版 **alpha.5** 的 Windows x64 安装包可从[本次构建产物](https://github.com/11eleve/requirement-calendar/actions/runs/37974961747/artifacts/11638555923)下载，运行 `RequirementCalendar-0.4.0-alpha.5-x64-Setup.exe`。已通过开发、打包与实际安装检查。试用前可用文件菜单导出 JSON 备份；产物于 2026-11-08 到期。
-
-从源码试用探索版：克隆仓库后先运行 `git switch explore/planning-workflow`，再按下方 macOS 构建或 Windows 开发步骤操作。下方稳定版下载和安装示例仍为 0.3.0。
+> 当前版本 **0.4.0**，主分支已包含完整的连续编辑、八色配色、条内节点、需求汇总、节点筛选和 Excel 导出。
 
 <p align="center">面向程序员的需求排期工具，把周期、阶段、资料和事项放在一起。</p>
 
@@ -32,14 +28,14 @@
 
 #### 下载并安装
 
-当前已验证版本：**0.3.0**，可下载 [Windows x64 安装包与测试报告](https://github.com/11eleve/requirement-calendar/actions/runs/37961130646/artifacts/11631388599)（需登录有仓库权限的账号，产物于 2026-11-08 到期）。也可按以下步骤获取后续版本。
+**0.4.0** 安装包由 [Windows desktop 主分支构建](https://github.com/11eleve/requirement-calendar/actions/workflows/windows-desktop.yml)生成。选择 main 的成功构建后下载安装包与检查报告，需要登录有仓库权限的账号；产物保留 30 天。
 
 1. 登录有仓库访问权限的 GitHub 账号，打开 [Windows desktop 构建记录](https://github.com/11eleve/requirement-calendar/actions/workflows/windows-desktop.yml)。
 2. 选择最新成功的构建，在 **Artifacts** 中下载 `RequirementCalendar-Windows-x64` 并解压。构建产物保留 30 天，过期后可重新运行工作流。
-3. 运行 `RequirementCalendar-0.3.0-x64-Setup.exe`，选择安装目录并完成安装。安装器为当前用户安装，创建开始菜单和桌面快捷方式。
+3. 运行 `RequirementCalendar-0.4.0-x64-Setup.exe`，选择安装目录并完成安装。安装器为当前用户安装，创建开始菜单和桌面快捷方式。
 4. 从“需求日历”快捷方式打开应用。点击或拖动日期即可创建需求。
 
-安装包目前未购买 Windows 代码签名证书，SmartScreen 可能提示发行者未知。请先核对仓库和构建来源；ZIP 内提供 `.sha256` 文件，可用 PowerShell 的 `Get-FileHash .\RequirementCalendar-0.3.0-x64-Setup.exe -Algorithm SHA256` 核对。
+安装包目前未购买 Windows 代码签名证书，SmartScreen 可能提示发行者未知。请先核对仓库和构建来源；ZIP 内提供 `.sha256` 文件，可用 PowerShell 的 `Get-FileHash .\RequirementCalendar-0.4.0-x64-Setup.exe -Algorithm SHA256` 核对。
 
 更新前导出备份并退出旧版，再运行新安装包。卸载默认保留本机数据；再次安装后可以继续使用原记录。Windows 和 macOS 之间可通过 **文件 → 导出备份 / 恢复 JSON 备份** 迁移，不会自动同步。
 
@@ -113,7 +109,7 @@ scripts/build-macos.sh
 open "dist/需求日历.app"
 ```
 
-构建脚本会生成适合当前 Mac 架构的应用，包含多尺寸应用图标，并进行本机临时签名。构建成功后，应用位于 `dist/需求日历.app`。
+构建脚本会生成适合当前 Mac 架构的应用，包含多尺寸应用图标，并进行本机临时签名。构建成功后，应用位于 `dist/需求日历.app`。请通过这个应用包启动；它包含同一套马赛克日历图标，Finder 使用包内多尺寸 ICNS，运行时也会显式设置应用图标，用于 Dock 与“关于需求日历”窗口。
 
 #### 4. 放入应用程序文件夹
 
@@ -153,7 +149,7 @@ python3 -m http.server 8080 --bind 127.0.0.1
 
 ## 功能介绍
 
-### 探索版：更顺畅的节点与汇总工作流
+### 节点与汇总工作流
 
 在详情中可以直接勾选节点完成，无需打开编辑表单。保存后，日历条内的标记、汇总进度和待办节点同步更新；保存失败时保留原状态，并显示原因。汇总分别展示“事项”和“节点”的完成数量，避免把事项完成率误认为整体已交付。
 
@@ -167,7 +163,7 @@ python3 -m http.server 8080 --bind 127.0.0.1
 
 ![节点详情可直接勾选，汇总保留当前需求上下文](assets/workflow-nodes.png)
 
-*探索版实际桌面截图：节点与事项在详情中统一管理，长内容在面板内部滚动。*
+*桌面版实际运行截图：节点与事项在详情中统一管理，长内容在面板内部滚动。*
 
 ### 明亮的浅色界面与开场翻页
 
