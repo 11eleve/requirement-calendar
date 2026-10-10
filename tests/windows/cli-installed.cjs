@@ -10,8 +10,9 @@ const execute = promisify(execFile);
 
 async function run() {
   assert.equal(process.platform,'win32');
-  const app = path.resolve(process.argv[2]),executable = path.join(path.dirname(app),'reqcal.exe');
-  const directory = await fs.mkdtemp(path.join(os.tmpdir(),'reqcal-安装 空格-'));
+  const app = await fs.realpath(path.resolve(process.argv[2])),executable = path.join(path.dirname(app),'reqcal.exe');
+  // Windows TEMP can contain an 8.3 user alias; compare canonical long paths.
+  const directory = await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(),'reqcal-安装 空格-')));
   const checks=[],check=(name,value)=>{assert.ok(value,name);checks.push(name);console.log('PASS: '+name);};
   async function call(args,expected=0,stdin) {
     let result;
@@ -26,7 +27,7 @@ async function run() {
   const env={...process.env,REQCAL_TEST_APP:app,REQCAL_TEST_DATA:directory};
   async function processes() {
     const {stdout}=await execute('powershell.exe',['-NoProfile','-NonInteractive','-Command',
-      "$items=@(Get-CimInstance Win32_Process | Where-Object { $_.Name -in @('RequirementCalendar.exe','reqcal.exe') } | Select-Object ProcessId,ParentProcessId,ExecutablePath,CommandLine); ConvertTo-Json -Compress -InputObject $items"],{env,encoding:'utf8',windowsHide:true});
+      "[Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false); $items=@(Get-CimInstance Win32_Process | Where-Object { $_.Name -in @('RequirementCalendar.exe','reqcal.exe') } | Select-Object ProcessId,ParentProcessId,ExecutablePath,CommandLine); ConvertTo-Json -Compress -InputObject $items"],{env,encoding:'utf8',windowsHide:true});
     const items=JSON.parse(stdout);
     const selected=items.filter(item=>item.ExecutablePath?.toLowerCase()===app.toLowerCase()&&item.CommandLine?.includes('--calendar-data-dir')&&item.CommandLine.includes(directory));
     if(!selected.length)console.log('Isolated process lookup:',JSON.stringify({app,directory,items}));
