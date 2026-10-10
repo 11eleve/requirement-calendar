@@ -106,6 +106,9 @@ jobs:
           $env:CALENDAR_SMOKE_OUTPUT = "$pwd/installed-smoke-windows.json"
           $process = Start-Process -FilePath "$installDir/RequirementCalendar.exe" -ArgumentList '--calendar-smoke-test' -Wait -PassThru
           if ($process.ExitCode -ne 0 -or !(Test-Path $env:CALENDAR_SMOKE_OUTPUT)) { throw 'Installed release smoke test failed' }
+          $env:CALENDAR_CLI_REPORT = "$pwd/installed-cli-windows.json"
+          node tests/windows/cli-installed.cjs "$installDir/RequirementCalendar.exe"
+          if ($LASTEXITCODE -ne 0) { throw 'Installed release CLI test failed' }
       - uses: actions/upload-artifact@v4
         with:
           name: release-windows

@@ -11,14 +11,17 @@
   "scripts": {
     "dev": "node scripts/dev.cjs",
     "build": "python3 scripts/build.py",
+    "predesktop": "node scripts/prepare-windows-cli.cjs",
     "desktop": "electron .",
     "test": "node --test tests/unit/*.test.cjs",
     "test:build": "python3 tests/unit/build.test.py",
     "test:cli": "python3 tests/macos/cli-native.py",
+    "pretest:desktop": "node scripts/prepare-windows-cli.cjs",
     "test:desktop": "electron . --calendar-smoke-test",
     "build:mac": "scripts/build-macos.sh",
     "dist:mac": "npm run build:mac && scripts/build-installer-macos.sh && scripts/build-dmg-macos.sh && scripts/verify-dmg-macos.sh",
-    "dist:win": "electron-builder --win nsis --x64 --publish never"
+    "build:cli:win": "powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/build-cli-windows.ps1",
+    "dist:win": "npm run build:cli:win && electron-builder --win nsis --x64 --publish never"
   },
   "devDependencies": {
     "electron": "44.7.0",
@@ -43,7 +46,14 @@
       {
         "from": "desktop/electron/windows-reminders.ps1",
         "to": "windows-reminders.ps1"
+      },
+      {
+        "from": "desktop/windows/cli/path.ps1",
+        "to": "cli/path.ps1"
       }
+    ],
+    "extraFiles": [
+      {"from": ".build/windows-cli/reqcal.exe", "to": "reqcal.exe"}
     ],
     "protocols": [
       {

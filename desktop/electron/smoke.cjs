@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs/promises');
 const path=require('node:path');
 const {APP_ID,TOAST_CLSID}=require('./reminders.cjs');
-async function run({app,window,store,invoke,directory}) {
+async function run({app,window,store,invoke,directory,commandBroker}) {
   const checks=[];
   const check=(name,value)=>{assert.ok(value,name);checks.push(name);};
   const js=code=>window.webContents.executeJavaScript(code);
@@ -82,6 +82,8 @@ async function run({app,window,store,invoke,directory}) {
   check('CSP blocks renderer remote networking',await js("fetch('https://example.com').then(()=>false,()=>true)"));
   check('private favicon requests are rejected',await js("CalendarDesktop.postMessage({action:'resourceIcon',url:'https://127.0.0.1'}).then(value=>value===null)"));
   if(process.platform==='win32') {
+    const executable=app.isPackaged?path.join(path.dirname(process.execPath),'reqcal.exe'):path.join(__dirname,'../../.build/windows-cli/reqcal.exe');
+    checks.push(...await require('./cli-smoke.cjs').run({executable,directory:store.directory,window,invoke,broker:commandBroker}));
     const {shell}=require('electron'),shortcut=path.join(directory,'notification-identity.lnk');
     check('Windows shortcut accepts notification identity',shell.writeShortcutLink(shortcut,'create',{target:process.execPath,appUserModelId:APP_ID,toastActivatorClsid:TOAST_CLSID}));
     const identity=shell.readShortcutLink(shortcut),guid=value=>value?.replace(/[{}]/g,'').toLowerCase();

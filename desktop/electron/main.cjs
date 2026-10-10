@@ -7,11 +7,17 @@ const {DataStore,decode,LIMIT}=require('./data-store.cjs');
 const {ENTRY,externalURL,requirementID,trustedSender}=require('./policy.cjs');
 const {APP_ID,TOAST_CLSID,Reminders}=require('./reminders.cjs');
 const {fetchIcon}=require('./site-icons.cjs');
+const {CommandBroker}=require('./command-broker.cjs');
 const smoke=process.argv.includes('--calendar-smoke-test');
+let background=process.argv.includes('--command-background');
+const directoryIndex=process.argv.indexOf('--calendar-data-dir');
+const commandDirectory=directoryIndex<0?null:path.resolve(process.argv[directoryIndex+1]);
 const root=path.resolve(__dirname,'../..');
 let window,store,reminders,ready=false,closing=false,closePrompt=false,notificationID=null,reminderIssue=null;
 let smokeDirectory,smokeStarted=false;
+let commandBroker=null;
 app.setName('RequirementCalendar');
+if(commandDirectory)app.setPath('userData',path.join(commandDirectory,'.electron'));
 app.setAppUserModelId(APP_ID);
 protocol.registerSchemesAsPrivileged([{scheme:'calendar-app',privileges:{standard:true,secure:true,supportFetchAPI:true}}]);
 if(smoke){smokeDirectory=require('node:fs').mkdtempSync(path.join(os.tmpdir(),'requirement-calendar-smoke-'));app.setPath('userData',smokeDirectory);}
@@ -19,11 +25,12 @@ if(!app.requestSingleInstanceLock())app.quit();
 else {
   const receive=args=>{for(const arg of args){const id=requirementID(arg);if(id){notificationID=id;deliverNotification();break;}}};
   receive(process.argv);
-  app.on('second-instance',(_event,args)=>{receive(args);if(window){if(window.isMinimized())window.restore();window.show();window.focus();}});
+  app.on('second-instance',(_event,args)=>{receive(args);if(window&&!args.includes('--command-background')){background=false;if(window.isMinimized())window.restore();window.show();window.focus();}});
   app.on('open-url',(event,url)=>{event.preventDefault();receive([url]);});
   app.whenReady().then(start).catch(error=>{console.error(error);app.exit(1);});
   app.on('window-all-closed',()=>app.quit());
   app.on('before-quit',event=>{if(window&&!window.isDestroyed()&&!closing){event.preventDefault();window.close();}});
+  app.on('will-quit',()=>commandBroker?.stop());
 }
 async function invoke(method,...args) {
   if(!window||window.isDestroyed()||!ready)return false;
@@ -81,13 +88,13 @@ function menu() {
   ]));
 }
 function installWindowsIdentity() {
-  if(process.platform!=='win32'||!app.isPackaged||smoke)return false;
+  if(process.platform!=='win32'||!app.isPackaged||smoke||commandDirectory)return false;
   const shortcut=path.join(app.getPath('appData'),'Microsoft','Windows','Start Menu','Programs','需求日历.lnk');
   const ok=shell.writeShortcutLink(shortcut,'create',{target:process.execPath,description:'需求排期、阶段与资料',appUserModelId:APP_ID,toastActivatorClsid:TOAST_CLSID});
   return ok&&app.setAsDefaultProtocolClient('requirement-calendar');
 }
 async function start() {
-  store=new DataStore(path.join(app.getPath('userData'),'data'));
+  store=new DataStore(commandDirectory||path.join(app.getPath('userData'),'data'));
   const identity=installWindowsIdentity();
   reminders=new Reminders({enabled:identity,script:app.isPackaged?path.join(process.resourcesPath,'windows-reminders.ps1'):path.join(__dirname,'windows-reminders.ps1'),
     onIssue(issue){
@@ -124,8 +131,17 @@ async function start() {
     try {
       await window.webContents.executeJavaScript("document.documentElement.classList.add('native'); window.CalendarReady");
       ready=true;await invoke('setReminderIssue',reminderIssue);await deliverNotification();
-      if(smoke&&!smokeStarted){smokeStarted=true;await require('./smoke.cjs').run({app,window,store,invoke,directory:smokeDirectory});closing=true;app.exit(0);}
-      else if(!smoke)window.show();
+      if(process.platform==='win32'&&!commandBroker){
+        const executable=app.isPackaged?path.join(path.dirname(process.execPath),'reqcal.exe'):path.join(root,'.build','windows-cli','reqcal.exe');
+        commandBroker=new CommandBroker({executable,directory:store.directory,dispatch:async request=>{
+          if(closing||!ready)return {ok:false,error:{code:'BUSY',message:'应用正在启动或退出，请稍后重试。'}};
+          return {...await invoke('executeCommand',request),dataFile:store.file};
+        }});
+        commandBroker.on('failure',error=>console.error(error.message));
+        await commandBroker.start();
+      }
+      if(smoke&&!smokeStarted){smokeStarted=true;await require('./smoke.cjs').run({app,window,store,invoke,directory:smokeDirectory,commandBroker});commandBroker?.stop();closing=true;app.exit(0);}
+      else if(!smoke&&!background)window.show();
     } catch(error){if(smoke){console.error(error);app.exit(1);}else report(error);}
   });
   ipcMain.handle('calendar:request',async(event,message)=>{
