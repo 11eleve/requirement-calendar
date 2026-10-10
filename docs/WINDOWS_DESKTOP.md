@@ -8,7 +8,7 @@
 - `calendar-app://local` 只提供明确列出的本地静态文件；CSP 禁止远程脚本、网络请求、iframe 和表单提交。
 - renderer 开启 sandbox / contextIsolation，禁用 Node；preload 只暴露 load / save / resourceIcon / contextMenu，主进程校验主窗口、主 frame 和确切 URL。
 - 资料链接仅允许不含凭据的 HTTP(S)，交给默认浏览器；站点图标只读公开 HTTPS origin 的 `/favicon.ico`，不发送文档路径、Cookie，不跟随重定向，限制时长和响应大小，并在 DNS 解析后拒绝私网地址。
-- 本机保存复用 `src/model.js` 校验，限 16 MB，临时文件 flush 后原子替换。保留 last-good、损坏原文与恢复前归档。单实例和保存前文件比对保护过期写入。
+- 本机保存复用 `src/domain/model.js` 校验，限 16 MB，临时文件 flush 后原子替换。保留 last-good、损坏原文与恢复前归档。单实例和保存前文件比对保护过期写入。
 
 ## Windows 提醒
 

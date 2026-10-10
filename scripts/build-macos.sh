@@ -6,9 +6,9 @@ mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 # Python 3 is needed only to rebuild the portable interface, not to launch the app.
 "${PYTHON:-python3}" "$ROOT/scripts/build.py"
 mkdir -p "$ROOT/.build/module-cache"
-swiftc -parse-as-library -O -target "$(uname -m)-apple-macos15.0" -module-cache-path "$ROOT/.build/module-cache" -framework AppKit -framework WebKit -framework UserNotifications "$ROOT/native/CommandServer.swift" "$ROOT/native/App.swift" "$ROOT/native/LinkPolicy.swift" "$ROOT/native/DataStore.swift" "$ROOT/native/Reminders.swift" "$ROOT/native/ResourceIcons.swift" -o "$APP/Contents/MacOS/RequirementCalendar"
-swiftc -O -target "$(uname -m)-apple-macos15.0" -module-cache-path "$ROOT/.build/module-cache" "$ROOT/native/CLI.swift" -o "$APP/Contents/MacOS/reqcal"
-cp "$ROOT/index.html" "$APP/Contents/Resources/index.html"
+swiftc -parse-as-library -O -target "$(uname -m)-apple-macos15.0" -module-cache-path "$ROOT/.build/module-cache" -framework AppKit -framework WebKit -framework UserNotifications "$ROOT/desktop/macos/CommandServer.swift" "$ROOT/desktop/macos/App.swift" "$ROOT/desktop/macos/LinkPolicy.swift" "$ROOT/desktop/macos/DataStore.swift" "$ROOT/desktop/macos/Reminders.swift" "$ROOT/desktop/macos/ResourceIcons.swift" -o "$APP/Contents/MacOS/RequirementCalendar"
+swiftc -O -target "$(uname -m)-apple-macos15.0" -module-cache-path "$ROOT/.build/module-cache" "$ROOT/desktop/macos/CLI.swift" -o "$APP/Contents/MacOS/reqcal"
+cp "$ROOT/dist/web/index.html" "$APP/Contents/Resources/index.html"
 cp "$ROOT/THIRD_PARTY_NOTICES.md" "$APP/Contents/Resources/THIRD_PARTY_NOTICES.md"
 cat > "$APP/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>

@@ -4,10 +4,10 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs/promises');
 const os=require('node:os');
 const path=require('node:path');
-const {DataStore,decode}=require('../electron/data-store.cjs');
-const {plans,Reminders}=require('../electron/reminders.cjs');
-const {requirementURL,requirementID,externalURL,trustedSender,ENTRY}=require('../electron/policy.cjs');
-const {publicAddress,iconOrigin}=require('../electron/site-icons.cjs');
+const {DataStore,decode}=require('../../desktop/electron/data-store.cjs');
+const {plans,Reminders}=require('../../desktop/electron/reminders.cjs');
+const {requirementURL,requirementID,externalURL,trustedSender,ENTRY}=require('../../desktop/electron/policy.cjs');
+const {publicAddress,iconOrigin}=require('../../desktop/electron/site-icons.cjs');
 const item={id:'需求-1',title:'支付改版',tone:'blue',start:'2026-10-07',end:'2026-10-14',phases:[],resources:[],tasks:[],done:[],note:'  保留缩进\n'};
 const snapshot=(changes={})=>({version:6,anchor:'2026-10-07',requirements:[{...item,...changes}]});
 async function fixture(t){const dir=await fs.mkdtemp(path.join(os.tmpdir(),'calendar-unit-'));t.after(()=>fs.rm(dir,{recursive:true,force:true}));return new DataStore(dir);}

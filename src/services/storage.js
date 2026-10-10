@@ -1,6 +1,6 @@
 (function (scope) {
   'use strict';
-  const Model = typeof module !== 'undefined' && module.exports ? require('./model.js') : scope.CalendarModel;
+  const Model = typeof module !== 'undefined' && module.exports ? require('../domain/model.js') : scope.CalendarModel;
   const KEY = 'requirement-calendar:state:v6', BACKUP_KEY = KEY + ':last-good';
   function createStore(storage, options = {}) {
     let blocked = false;

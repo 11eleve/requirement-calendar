@@ -1,7 +1,7 @@
 """End-to-end real compiled CLI -> per-user Unix socket -> native WebKit -> disk."""
 from pathlib import Path
 import json, os, socket, stat, subprocess, tempfile, time
-ROOT=Path(__file__).resolve().parents[1]
+ROOT=Path(__file__).resolve().parents[2]
 APP=ROOT/'dist/需求日历.app/Contents/MacOS/RequirementCalendar'
 CLI=APP.with_name('reqcal')
 checks=[]
@@ -66,5 +66,7 @@ with tempfile.TemporaryDirectory(prefix='rc-cli-',dir='/private/tmp') as tmp:
     finally:
         if app and app.poll() is None: app.terminate();app.wait(timeout=5)
         log.close()
-(ROOT/'.build/month-wheel/cli-native.json').write_text(json.dumps({'ok':True,'checks':checks},ensure_ascii=False,indent=2)+'\n')
+report=ROOT/'.build/verification/cli-native.json'
+report.parent.mkdir(parents=True,exist_ok=True)
+report.write_text(json.dumps({'ok':True,'checks':checks},ensure_ascii=False,indent=2)+'\n')
 print(str(len(checks))+' end-to-end native CLI checks passed')

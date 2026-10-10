@@ -1,6 +1,7 @@
 
 window.CalendarReady=(async()=>{
  const Model=CalendarModel;
+ const {el,button,field,input}=CalendarElements;
  const root=document.getElementById('req-calendar-refined'),get=id=>root.querySelector('#'+id);let today=Model.localDate();
  const baseline=[{id:'checkout',title:'结算流程改版',short:'结算改版',tone:'',start:'2026-10-07',end:'2026-11-06',phases:[{name:'评审',start:'2026-10-07',end:'2026-10-08'},{name:'开发',start:'2026-10-09',end:'2026-10-16'},{name:'联调',start:'2026-10-17',end:'2026-10-23'},{name:'测试',start:'2026-10-24',end:'2026-10-30'},{name:'上线',start:'2026-10-31',end:'2026-11-06'}],resources:[{icon:'钉',name:'结算改版 PRD',type:'需求文档',url:''},{icon:'F',name:'Checkout 交互与视觉',type:'设计稿',url:''}],tasks:['确认需求边界与验收标准','实现优惠券选择与金额计算','补齐支付失败恢复逻辑','联调与回归验证'],done:[true,false,false,false],note:'待产品确认：优惠券与余额的扣减顺序。'},{id:'login',title:'登录态异常修复',short:'登录修复',tone:'blue',start:'2026-10-09',end:'2026-10-13',phases:[{name:'排查',start:'2026-10-09',end:'2026-10-10'},{name:'修复',start:'2026-10-11',end:'2026-10-12'},{name:'验证',start:'2026-10-13',end:'2026-10-13'}],resources:[{icon:'钉',name:'登录失效场景整理',type:'问题记录',url:''},{icon:'G',name:'认证模块设计',type:'接口约定',url:''}],tasks:['定位状态不同步','修复与回归验证','发布与观察'],done:[false,false,false],note:'确认自动续期失败后是否强制退出。'},{id:'export',title:'报表导出优化',short:'报表优化',tone:'green',start:'2026-10-19',end:'2026-10-30',phases:[{name:'方案',start:'2026-10-19',end:'2026-10-20'},{name:'开发',start:'2026-10-21',end:'2026-10-26'},{name:'验收',start:'2026-10-27',end:'2026-10-30'}],resources:[{icon:'钉',name:'异步导出说明',type:'需求文档',url:''},{icon:'F',name:'导出任务面板',type:'交互设计',url:''}],tasks:['确认导出规模与边界','实现任务状态展示','联调与验收'],done:[false,false,false],note:'等待后端确认导出任务状态与重试接口。'}];
  let requirements=window.__calendarDemo?structuredClone(baseline).map(item=>{const shift=date=>Model.add(today,Model.days('2026-10-07',date));return {...item,start:shift(item.start),end:shift(item.end),phases:item.phases.map(phase=>({...phase,start:shift(phase.start),end:shift(phase.end)}))};}):[],state={view:'month',anchor:today,selected:null,rowHeight:136},lastTrigger=null,draftPreview=null,editor=null,pendingAction=null,deleted=null,saving=false,queuedNotification=null,discardPosition=null,discardRestoreFrame=null,exporting=false;
@@ -8,8 +9,6 @@ window.CalendarReady=(async()=>{
  const {parse,iso,add,days,format,validDate}=Model,req=id=>requirements.find(r=>r.id===id);
  let monthMotion=null;
  let dateSelection=null,barSelection=null,cancelledDatePointer=null,suppressDateClickUntil=0,replanFrame=0;
- const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
- const button=(cls,text,label,action)=>{const b=el('button',cls+' cursor-interaction',text);b.type='button';if(label)b.setAttribute('aria-label',label);b.addEventListener('click',action);return b;};
  function applyTone(node,tone,context='bar'){
   const value=Model.TONES.find(value=>value.id===tone)||Model.TONES[0];
   if(context==='range'){node.style.setProperty('--rf-range-tone',value.color);return;}
@@ -17,8 +16,6 @@ window.CalendarReady=(async()=>{
  }
  function nodeKind(node){return Model.NODE_KINDS.find(kind=>kind.id===node.kind);}
  const removeButton=(kind,name,action)=>{const control=button('rf-remove','',null,action);control.append(get('rf-close').querySelector('svg').cloneNode(true));const label=()=>{control.title='移除'+kind+'：'+(name.value.trim()||'未命名'+kind);control.setAttribute('aria-label',control.title);};name.addEventListener('input',label);label();return control;};
- const field=(label,input)=>{const l=el('label','rf-field');l.append(el('span','',label),input);return l;};
- const input=(type,value='',placeholder='')=>{const n=el('input');n.type=type;n.value=value;n.placeholder=placeholder;if(type==='date'){n.min='0001-01-01';n.max='9999-12-31';}else if(type==='datetime-local'){n.min='0001-01-01T00:00';n.max='9999-12-31T23:59';}return n;};
  const revealEditorControl=control=>{
   control.scrollIntoView({block:'nearest'});
   const panel=get('rf-panel'),bounds=control.getBoundingClientRect(),top=panel.getBoundingClientRect().top+12,bottom=panel.querySelector('.rf-form-actions,.rf-detail-actions')?.getBoundingClientRect().top-12;

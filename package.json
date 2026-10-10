@@ -4,14 +4,20 @@
   "description": "面向程序员的需求排期日历",
   "author": "11eleve",
   "private": true,
-  "main": "electron/main.cjs",
+  "main": "desktop/electron/main.cjs",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
+    "dev": "node scripts/dev.cjs",
+    "build": "python3 scripts/build.py",
     "desktop": "electron .",
-    "test": "node --test tests/model.test.cjs tests/startup.test.cjs tests/electron.test.cjs tests/planning.test.cjs tests/commands.test.cjs",
+    "test": "node --test tests/unit/*.test.cjs",
+    "test:build": "python3 tests/unit/build.test.py",
+    "test:cli": "python3 tests/macos/cli-native.py",
     "test:desktop": "electron . --calendar-smoke-test",
+    "build:mac": "scripts/build-macos.sh",
+    "dist:mac": "npm run build:mac && scripts/build-installer-macos.sh && scripts/build-dmg-macos.sh && scripts/verify-dmg-macos.sh",
     "dist:win": "electron-builder --win nsis --x64 --publish never"
   },
   "devDependencies": {
@@ -26,7 +32,8 @@
       "output": "dist/windows"
     },
     "files": [
-      "electron/**",
+      "index.html",
+      "desktop/electron/**",
       "src/**",
       "assets/app-icon.png",
       "package.json",
@@ -34,7 +41,7 @@
     ],
     "extraResources": [
       {
-        "from": "electron/windows-reminders.ps1",
+        "from": "desktop/electron/windows-reminders.ps1",
         "to": "windows-reminders.ps1"
       }
     ],
@@ -62,7 +69,7 @@
       "createStartMenuShortcut": true,
       "shortcutName": "需求日历",
       "runAfterFinish": false,
-      "include": "electron/installer.nsh",
+      "include": "desktop/electron/installer.nsh",
       "deleteAppDataOnUninstall": false
     }
   }

@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const Model = require('../src/model.js');
-const Storage = require('../src/storage.js');
+const Model = require('../../src/domain/model.js');
+const Storage = require('../../src/services/storage.js');
 
 const requirement = (overrides = {}) => ({ id: 'req-1', title: '支付改版', tone: '', start: '2026-10-07', end: '2026-10-14', phases: [{ name: '开发', start: '2026-10-08', end: '2026-10-12' }], resources: [{ name: 'PRD', type: '文档', url: 'https://alidocs.com/doc/1' }], tasks: ['确认验收范围'], done: [false], note: '', ...overrides });
 const snapshot = (requirements = [requirement()]) => ({ version: 5, anchor: '2026-10-07', requirements });

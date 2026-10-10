@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
+      published: ${{ steps.existing.outputs.published }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,11 +30,30 @@ jobs:
           [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
           test -f "docs/releases/v$VERSION.md"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Keep published versions immutable
+        id: existing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          node <<'JS'
+          const fs = require('node:fs');
+          (async () => {
+            const url = `https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/releases/tags/v${process.env.VERSION}`;
+            const response = await fetch(url, {headers: {Authorization: `Bearer ${process.env.GH_TOKEN}`, Accept: 'application/vnd.github+json'}});
+            if (![200, 404].includes(response.status)) throw Error(`Release lookup failed: ${response.status}`);
+            const release = response.status === 200 ? await response.json() : null;
+            const published = release !== null && !release.draft;
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `published=${published}\n`);
+            console.log(published ? 'Version already published; keeping its assets unchanged.' : 'Version has not been published.');
+          })().catch(error => {console.error(error.message); process.exitCode = 1;});
+          JS
       - run: npm test
-      - run: python3 tests/build.test.py
+      - run: python3 tests/unit/build.test.py
 
   macos:
     needs: metadata
+    if: needs.metadata.outputs.published != 'true'
     runs-on: macos-15
     timeout-minutes: 20
     env:
@@ -60,6 +80,7 @@ jobs:
 
   windows:
     needs: metadata
+    if: needs.metadata.outputs.published != 'true'
     runs-on: windows-2022
     timeout-minutes: 20
     steps:

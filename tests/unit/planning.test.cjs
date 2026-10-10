@@ -1,4 +1,4 @@
-const test=require('node:test'),assert=require('node:assert/strict'),Model=require('../src/model.js'),Storage=require('../src/storage.js');
+const test=require('node:test'),assert=require('node:assert/strict'),Model=require('../../src/domain/model.js'),Storage=require('../../src/services/storage.js');
 const fixture=(overrides={})=>({id:'planning',title:'跨月认证改造',start:'2028-02-27',end:'2028-03-10',tone:'rose',phases:[],resources:[],tasks:[],done:[],note:'\n    contract  ',milestones:[{id:'release',name:'灰度发布',date:'2028-03-08',kind:'release',done:false},{id:'review',name:'方案评审',date:'2028-02-29',kind:'review',done:true}],...overrides});
 test('planning: all palette colors and node kinds persist; migration keeps originals and blocks future schemas',()=>{
  const old=JSON.stringify({version:6,anchor:'2028-02-01',requirements:[fixture({tone:'blue',milestones:undefined})]});
@@ -21,7 +21,7 @@ test('planning: whole-plan shifts preserve node identity, kind and completion ac
  assert.deepEqual(next.milestones,[{...original.milestones[0],date:'2028-03-03'},{...original.milestones[1],date:'2028-03-11'}]);
  assert.equal(JSON.stringify(original),raw);assert.deepEqual(Model.shiftRequirement(next,-3),original);
 });
-const Planning=require('../src/planning.js');
+const Planning=require('../../src/domain/planning.js');
 test('summary: time status is distinct from actual completion and phase gaps remain active',()=>{
  const item=Model.requirement(fixture({tasks:['契约','回滚'],done:[true,false]}));
  assert.equal(Planning.status(item,'2028-02-26'),'upcoming');assert.equal(Planning.status(item,'2028-03-11'),'past');assert.equal(Planning.status(item,'2028-03-01'),'active');assert.equal(Planning.currentPhase(item,'2028-03-01'),'');

@@ -1,22 +1,30 @@
-"""Build a portable, offline HTML app using only the Python standard library."""
+"""Build the shared offline interface into dist/web; never rewrite source files."""
 from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
 
 def build(root=ROOT):
-    source = (root / 'src/index.html').read_text(encoding='utf-8')
+    root = Path(root).resolve()
+    source = (root / 'index.html').read_text(encoding='utf-8')
+    def read_source(name):
+        path = (root / name).resolve()
+        if not path.is_relative_to(root / 'src'):
+            raise ValueError('Build inputs must be inside src/')
+        return path.read_text(encoding='utf-8')
     def style(match):
-        content = (root / 'src' / match.group(1)).read_text(encoding='utf-8')
+        content = read_source(match.group(1))
         return '<style>\n' + content + '\n</style>'
     def script(match):
-        content = (root / 'src' / match.group(1)).read_text(encoding='utf-8')
+        content = read_source(match.group(1))
         return '<script>\n' + content.replace('</script', '<\\/script') + '\n</script>'
-    source = re.sub(r'<link rel="stylesheet" href="([a-z-]+\.css)">', style, source)
-    source = re.sub(r'<script src="([a-z-]+\.js)"></script>', script, source)
-    (root / 'index.html').write_text(source, encoding='utf-8')
+    source = re.sub(r'<link rel="stylesheet" href="(src/[^"<>]+\.css)">', style, source)
+    source = re.sub(r'<script src="(src/[^"<>]+\.js)"></script>', script, source)
+    output = root / 'dist/web/index.html'
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(source, encoding='utf-8')
     return source
 
 if __name__ == '__main__':
     build()
-    print('Built index.html')
+    print('Built dist/web/index.html')

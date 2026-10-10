@@ -3,9 +3,9 @@ name: Windows desktop
 on:
   push:
     branches: [main, 'explore/**']
-    paths: ['src/**', 'electron/**', 'tests/**', 'assets/app-icon.png', 'package*.json', '.github/workflows/windows-desktop.yml']
+    paths: ['src/**', 'index.html', 'scripts/**', 'desktop/electron/**', 'tests/**', 'assets/app-icon.png', 'package*.json', '.github/workflows/windows-desktop.yml']
   pull_request:
-    paths: ['src/**', 'electron/**', 'tests/**', 'assets/app-icon.png', 'package*.json', '.github/workflows/windows-desktop.yml']
+    paths: ['src/**', 'index.html', 'scripts/**', 'desktop/electron/**', 'tests/**', 'assets/app-icon.png', 'package*.json', '.github/workflows/windows-desktop.yml']
   workflow_dispatch:
 
 permissions:
@@ -27,7 +27,7 @@ jobs:
         shell: powershell
         run: |
           $tokens = $null; $errors = $null
-          [System.Management.Automation.Language.Parser]::ParseFile("$pwd/electron/windows-reminders.ps1", [ref]$tokens, [ref]$errors) | Out-Null
+          [System.Management.Automation.Language.Parser]::ParseFile("$pwd/desktop/electron/windows-reminders.ps1", [ref]$tokens, [ref]$errors) | Out-Null
           if ($errors.Count) { throw ($errors | Out-String) }
           $null = [Windows.UI.Notifications.ScheduledToastNotification, Windows.UI.Notifications, ContentType = WindowsRuntime]
       - name: Exercise Windows desktop bridge

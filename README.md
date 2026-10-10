@@ -31,7 +31,14 @@
 
 ## 命令行
 
-Mac 应用包内自带编译好的 `Contents/MacOS/reqcal`，使用时不需要 Node 或 Python。交付压缩包内另有同名启动脚本；在解压目录中执行：
+Mac 应用包内自带编译好的 `Contents/MacOS/reqcal`，使用时不需要 Node 或 Python。DMG 安装后直接执行：
+
+```sh
+"/Applications/需求日历.app/Contents/MacOS/reqcal" schema
+"/Applications/需求日历.app/Contents/MacOS/reqcal" list
+```
+
+它不会自动安装到系统 PATH。源码构建后可通过 `bin/reqcal` 使用下列指令；便携包的启动脚本放在应用旁边时使用 `./reqcal`：
 
 ```sh
 ./reqcal --help
@@ -101,17 +108,48 @@ macOS 原生应用保存到 `~/Library/Application Support/RequirementCalendar/`
 
 Windows Electron 界面的数据目录为 `%APPDATA%\RequirementCalendar\data\`。浏览器版使用同一浏览器、同一地址的 localStorage；桌面和浏览器不自动同步。
 
-## 构建与检查
+## 项目结构
+
+```text
+index.html          前端入口源码
+src/
+  main.js           启动和界面状态协调
+  domain/           数据模型、排期规则、JSON 指令
+  services/         存储桥接、网站图标服务
+  components/       共用控件、图标和动画
+  styles/           样式
+desktop/
+  macos/            Swift 原生宿主和 CLI
+  electron/         Electron 宿主及 Windows 集成
+assets/             发布资源
+bin/                CLI 启动脚本
+scripts/            开发、构建、打包工具
+tests/              unit、e2e、macos 检查
+docs/               架构说明、截图、历史验证、发布说明
+dist/               生成文件，不提交 Git
+```
+
+当前前端使用原生 HTML/CSS/JavaScript。Mac 的 Swift 负责窗口、WebView、系统菜单、通知、文件保存和命令行通信；日历界面共用前端代码。详见 [项目架构](docs/ARCHITECTURE.md) 和 [命令行实现](docs/CLI.md)。
+
+## 开发、构建与检查
 
 ```sh
-scripts/build-macos.sh
-scripts/build-installer-macos.sh
-scripts/build-dmg-macos.sh
-scripts/verify-dmg-macos.sh
+npm run dev
+npm run build
 npm test
-python3 tests/build.test.py
-python3 tests/cli-native.py
+npm run test:build
+npm run build:mac
+npm run test:cli
+npm run dist:mac
+```
+
+`dev` 打开本机端口 5173，刷新查看更改；`build` 生成 `dist/web/index.html`，用于离线加载。浏览器开发仅需 Node；前端构建需要 Python 3。Electron 开发和 Windows 打包先安装依赖：
+
+```sh
+npm ci
+npm run desktop
 npm run test:desktop
+npm run dist:win
 ```
 
 Mac 构建需要 Xcode Command Line Tools 和 Python 3。Node 测试与 Electron 开发环境需要 Node 22.12 或以上。原生 CLI 端到端测试使用独立临时数据，覆盖真实指令、备份、版本冲突和应用重启。

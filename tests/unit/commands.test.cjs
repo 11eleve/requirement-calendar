@@ -1,5 +1,5 @@
 'use strict';
-const test=require('node:test'),assert=require('node:assert/strict'),Commands=require('../src/commands.js');
+const test=require('node:test'),assert=require('node:assert/strict'),Commands=require('../../src/domain/commands.js');
 const empty={version:7,anchor:'2026-10-01',requirements:[]};
 const input={id:'login',title:'登录优化',start:'2026-10-12',end:'2026-10-16',tasks:['实现','验收'],note:'  保留缩进\n'};
 const add=()=>Commands.plan(empty,{action:'create',data:input}).snapshot;

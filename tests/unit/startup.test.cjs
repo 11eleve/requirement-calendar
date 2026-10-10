@@ -2,7 +2,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const vm=require('node:vm');
 const fs=require('node:fs');
-const source=fs.readFileSync(require('node:path').join(__dirname,'../src/startup.js'),'utf8');
+const source=fs.readFileSync(require('node:path').join(__dirname,'../../src/components/startup.js'),'utf8');
 function harness({reduced=false,hidden=false,animate=true,throws=false}={}){
  class Target{constructor(){this.listeners=new Map();}addEventListener(name,fn){if(!this.listeners.has(name))this.listeners.set(name,new Set());this.listeners.get(name).add(fn);}removeEventListener(name,fn){this.listeners.get(name)?.delete(fn);}emit(name){for(const fn of [...(this.listeners.get(name)||[])])fn();}count(){return [...this.listeners.values()].reduce((sum,x)=>sum+x.size,0);}}
  class Element extends Target{constructor(){super();this.children=[];this.attributes={};}append(...children){for(const child of children){this.children.push(child);child.parent=this;}}setAttribute(name,value){this.attributes[name]=value;}remove(){this.parent.children=this.parent.children.filter(x=>x!==this);}}
