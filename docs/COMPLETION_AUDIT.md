@@ -2,7 +2,7 @@
 
 ## 主分支 0.4.0 发布
 
-按用户要求将 explore/planning-workflow 的完整功能合并到 main。移除迁移成功后的常驻状态提示，保留原迁移和旧记录保护；macOS 显式配置 AppIcon.icns 并在启动时设置 NSApplication 图标。版本 0.4.0、macOS 构建号 9。当前检查结果见 verification/release-main.json，Windows 新安装包构建结果将补记。
+按用户要求将 explore/planning-workflow 的完整功能合并到 main。移除迁移成功后的常驻状态提示，保留原迁移和旧记录保护；macOS 显式配置 AppIcon.icns 并在启动时设置 NSApplication 图标。版本 0.4.0、macOS 构建号 9。本次 54 项 Node、89 项原生 WebKit、53 项 Electron macOS、页面构建和签名检查通过；实际读取的 Finder 文件图标及运行时应用图标均为马赛克日历，已重启本机应用并确认成功提示消失、旧记录仍在。Windows 0.4.0 构建 38012718027 在产品提交 63e4a7cebeaf59c5f9716dec8278c7a80009eb0e 上通过：54 项 Node、55 项开发版桌面检查、打包版和实际安装版、协议与开始菜单检查；产物 11655495776 已写入 README。完整来源与范围见 verification/release-main.json。
 
 以下 01–100 与探索版记录保留其原始版本和验收范围。
 

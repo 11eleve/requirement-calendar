@@ -28,7 +28,7 @@
 
 #### 下载并安装
 
-**0.4.0** 安装包由 [Windows desktop 主分支构建](https://github.com/11eleve/requirement-calendar/actions/workflows/windows-desktop.yml)生成。选择 main 的成功构建后下载安装包与检查报告，需要登录有仓库权限的账号；产物保留 30 天。
+下载 [**0.4.0 Windows x64 安装包与检查报告**](https://github.com/11eleve/requirement-calendar/actions/runs/38012718027/artifacts/11655495776)。本次 [主分支构建](https://github.com/11eleve/requirement-calendar/actions/runs/38012718027)已通过开发版、打包版与实际安装版检查。下载需登录有仓库权限的账号；该产物保留至 **2026-11-09**，过期后可从工作流重新构建。
 
 1. 登录有仓库访问权限的 GitHub 账号，打开 [Windows desktop 构建记录](https://github.com/11eleve/requirement-calendar/actions/workflows/windows-desktop.yml)。
 2. 选择最新成功的构建，在 **Artifacts** 中下载 `RequirementCalendar-Windows-x64` 并解压。构建产物保留 30 天，过期后可重新运行工作流。
