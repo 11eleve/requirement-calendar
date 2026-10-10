@@ -1,0 +1,126 @@
+name: Publish installers
+
+on:
+  push:
+    branches: [main]
+    paths: ['package.json', '.github/workflows/release.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-installers-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - id: version
+        run: |
+          VERSION=$(node -p 'require("./package.json").version')
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          test -f "docs/releases/v$VERSION.md"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - run: npm test
+      - run: python3 tests/build.test.py
+
+  macos:
+    needs: metadata
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      VERSION: ${{ needs.metadata.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Apple Silicon application and installers
+        run: |
+          test "$(uname -m)" = arm64
+          scripts/build-macos.sh
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' 'dist/需求日历.app/Contents/Info.plist')" = "$VERSION"
+          scripts/build-installer-macos.sh
+          scripts/build-dmg-macos.sh
+          scripts/verify-dmg-macos.sh
+          cp "dist/需求日历-$VERSION-安装包.pkg" "dist/RequirementCalendar-$VERSION-macOS-arm64.pkg"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-macos
+          path: |
+            dist/RequirementCalendar-*-macOS-arm64.dmg
+            dist/RequirementCalendar-*-macOS-arm64.pkg
+          if-no-files-found: error
+          retention-days: 30
+
+  windows:
+    needs: metadata
+    runs-on: windows-2022
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run test:desktop
+        env:
+          CALENDAR_SMOKE_OUTPUT: desktop-smoke-windows.json
+      - run: npm run dist:win
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Exercise installed release
+        shell: pwsh
+        run: |
+          $installDir = Join-Path $env:RUNNER_TEMP 'RequirementCalendarRelease'
+          $installer = (Get-ChildItem dist/windows/*Setup.exe).FullName
+          $process = Start-Process -FilePath $installer -ArgumentList @('/S', "/D=$installDir") -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Installer failed: $($process.ExitCode)" }
+          $env:CALENDAR_SMOKE_OUTPUT = "$pwd/installed-smoke-windows.json"
+          $process = Start-Process -FilePath "$installDir/RequirementCalendar.exe" -ArgumentList '--calendar-smoke-test' -Wait -PassThru
+          if ($process.ExitCode -ne 0 -or !(Test-Path $env:CALENDAR_SMOKE_OUTPUT)) { throw 'Installed release smoke test failed' }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-windows
+          path: dist/windows/*Setup.exe
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    needs: [metadata, macos, windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ needs.metadata.outputs.version }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          path: installers
+          merge-multiple: true
+      - name: Check assets and publish GitHub Release
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v$VERSION"
+          test -f "installers/RequirementCalendar-$VERSION-macOS-arm64.dmg"
+          test -f "installers/RequirementCalendar-$VERSION-macOS-arm64.pkg"
+          test -f "installers/RequirementCalendar-$VERSION-x64-Setup.exe"
+          (cd installers && sha256sum ./*.dmg ./*.pkg ./*.exe > SHA256SUMS.txt)
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists; refusing to overwrite its installers."
+            exit 1
+          fi
+          gh release create "$TAG" installers/* --draft --target "$GITHUB_SHA" --title "需求日历 $VERSION" --notes-file "docs/releases/$TAG.md"
+          COUNT=$(gh release view "$TAG" --json assets --jq '.assets | length')
+          test "$COUNT" = 4
+          gh release edit "$TAG" --draft=false --latest

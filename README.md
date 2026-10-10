@@ -2,6 +2,18 @@
 
 本地 macOS 版本（已修复上滑漏判，保留跟手切月动画与透明图标）：上下滚动切换月份，JSON 导入导出，命令行操作。需求保存在本机文件中。汇总页已移除“待办时间节点”区域，已有需求中的节点数据保留在详情和 JSON 中。Excel 导出已移除。
 
+## 下载与安装
+
+普通用户从 [GitHub Releases](https://github.com/11eleve/requirement-calendar/releases/latest) 下载，无需编译源码。
+
+| 系统 | 文件 | 安装方法 |
+| --- | --- | --- |
+| Mac：Apple Silicon，macOS 15+ | `RequirementCalendar-0.5.3-macOS-arm64.dmg` | 打开后将“需求日历”拖到 Applications |
+| Mac：同上 | `RequirementCalendar-0.5.3-macOS-arm64.pkg` | 双击，按安装向导操作 |
+| Windows x64 | `RequirementCalendar-0.5.3-x64-Setup.exe` | 双击，按安装向导操作 |
+
+当前 Mac 包尚未做 Apple Developer ID 签名和公证；首次打开如被拦截，确认来源后按 [Apple 说明](https://support.apple.com/zh-cn/102445) 在“系统设置 → 隐私与安全性”中选择“仍要打开”。更新前先退出旧版，需求数据会保留。Intel Mac 暂不支持。
+
 ## 使用应用
 
 打开 `dist/需求日历.app`。点击或拖动日期创建需求，编辑后点击“保存需求”。滚到月历顶部继续向上是上个月，滚到底部继续向下是下个月；小幅滚动先预览，未达到距离会回弹，达到距离后整页连续滑入下一月。反向滑动可直接切回，越过顶部或底部的距离会在同一次滚动中计入切月；惯性末尾的微小移动不会持续锁住下一次操作。系统启用“减少动态效果”时直接切换。点击年月可直接跳转。今天用紫色圆底标识，非本月日期置灰。
@@ -94,6 +106,8 @@ Windows Electron 界面的数据目录为 `%APPDATA%\RequirementCalendar\data\`�
 ```sh
 scripts/build-macos.sh
 scripts/build-installer-macos.sh
+scripts/build-dmg-macos.sh
+scripts/verify-dmg-macos.sh
 npm test
 python3 tests/build.test.py
 python3 tests/cli-native.py
@@ -102,4 +116,4 @@ npm run test:desktop
 
 Mac 构建需要 Xcode Command Line Tools 和 Python 3。Node 测试与 Electron 开发环境需要 Node 22.12 或以上。原生 CLI 端到端测试使用独立临时数据，覆盖真实指令、备份、版本冲突和应用重启。
 
-本次变更仅提供本机构建的 macOS 应用；历史 Windows 发布、截图与验收记录位于 docs 中，不能代表本次 Windows 安装包已发布。
+发布工作流会构建 Mac DMG / PKG 和 Windows 安装器，成功后上传到 GitHub Releases。开发过程的历史检查记录位于 docs 中；本次发布结果以 Releases 对应的构建为准。
