@@ -5,6 +5,8 @@ import UserNotifications
 
 @MainActor
 final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelegate, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandlerWithReply, UNUserNotificationCenterDelegate {
+    let commandBackground = CommandLine.arguments.contains("--command-background")
+    var commandServer: CalendarCommandServer?
     var window: NSWindow!
     var webView: WKWebView!
     var latestRequirements: [[String: Any]] = []
@@ -64,9 +66,12 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
         window.appearance = NSAppearance(named: .aqua)
         if let appearance = ProcessInfo.processInfo.environment["CALENDAR_VERIFY_APPEARANCE"], verifyScript != nil { window.appearance = NSAppearance(named: appearance == "dark" ? .darkAqua : .aqua) }
         window.collectionBehavior.insert(.fullScreenPrimary)
-        window.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
+        if !commandBackground { window.makeKeyAndOrderFront(nil); NSApp.activate(ignoringOtherApps: true) }
         webView.loadFileURL(entry, allowingReadAccessTo: entry.deletingLastPathComponent())
+    }
+
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        window?.makeKeyAndOrderFront(nil); NSApp.activate(ignoringOtherApps:true); return true
     }
 
     func createMenu() {
@@ -87,7 +92,7 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
             item.target = self
         }
         fileMenu.addItem(.separator())
-        for (title, action) in [("导出 Excel 排期…", #selector(exportExcel)), ("导出备份…", #selector(exportBackup)), ("从备份恢复…", #selector(importBackup)), ("显示数据文件夹", #selector(showDataFolder))] {
+        for (title, action) in [("导入需求 JSON…", #selector(importJSON)), ("导出需求 JSON…", #selector(exportJSON)), ("显示数据文件夹", #selector(showDataFolder))] {
             let item = fileMenu.addItem(withTitle: title, action: action, keyEquivalent: "")
             item.target = self
         }
@@ -147,8 +152,10 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
                     let issue = await reminders.reconcile(snapshot, requestPermission: true)
                     webView.callAsyncJavaScript("await window.CalendarReady; while (window.CalendarApp.isSaving()) await new Promise(resolve => setTimeout(resolve, 10)); window.CalendarApp.setReminderIssue(issue)", arguments: ["issue": issue as Any? ?? NSNull()], in: nil, in: .page, completionHandler: nil)
                 }
-            case "exportExcel":
-                exportExcelWorkbook(scope: body["scope"] as? String ?? "all", completion: replyHandler)
+            case "exportJSON":
+                exportJSONFile(scope: body["scope"] as? String ?? "all", completion: replyHandler)
+            case "pickJSON":
+                pickJSONFile(completion: replyHandler)
             case "resourceIcon":
                 guard let raw = body["url"] as? String else { replyHandler(NSNull(), nil); return }
                 if verifyScript != nil && ProcessInfo.processInfo.environment["CALENDAR_VERIFY_SITE_ICONS"] != "live" { replyHandler(NSNull(), nil); return }
@@ -210,65 +217,47 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
     }
     nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) { completionHandler([.banner,.sound]) }
     func showError(_ message: String) { let alert = NSAlert(); alert.messageText = message; alert.addButton(withTitle: "好"); alert.beginSheetModal(for: window) }
-    func withCleanEditor(_ action: @escaping () -> Void) {
-        webView.evaluateJavaScript("window.CalendarApp?.hasUnsavedChanges() ?? true") { value, error in
-            if error != nil || value as? Bool != false { self.showError("请先保存或取消当前编辑，再进行备份操作。"); return }
-            action()
-        }
-    }
     @objc func showDataFolder() { NSWorkspace.shared.open(dataStore.directory) }
-    @objc func exportExcel() {
-        exportExcelWorkbook(scope: "all") { _, error in if let error { self.showError(error) } }
+    @objc func exportJSON() { exportJSONFile(scope: "all") { _, error in if let error { self.showError(error) } } }
+    @objc func importJSON() { command("importJSON") }
+    func pickJSONFile(completion: @escaping (Any?, String?) -> Void) {
+        let panel = NSOpenPanel(); panel.allowedContentTypes = [.json]; panel.allowsMultipleSelection = false; panel.canChooseDirectories = false; panel.title = "导入需求 JSON"
+        panel.beginSheetModal(for: window) { response in
+            guard response == .OK, let url = panel.url else { completion(["raw":NSNull()], nil); return }
+            do {
+                let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
+                guard size <= 16 * 1024 * 1024 else { throw CalendarDataError(message:"JSON 文件不能超过 16 MB。") }
+                let raw = try String(contentsOf: url, encoding: .utf8)
+                completion(["raw":raw], nil)
+            } catch { completion(nil, error.localizedDescription) }
+        }
     }
-    func exportExcelWorkbook(scope: String, completion: @escaping (Any?, String?) -> Void) {
-        guard ["all", "summary"].contains(scope) else { completion(nil, "导出范围无效。"); return }
-        webView.callAsyncJavaScript("return window.CalendarApp.exportWorkbook(scope)", arguments: ["scope":scope], in: nil, in: .page) { result in
-            guard case .success(let raw) = result, let payload = raw as? [String:Any], let name = payload["name"] as? String, name.hasSuffix(".xlsx"), !name.contains("/"), !name.contains("\\"), let base64 = payload["base64"] as? String, let data = Data(base64Encoded: base64), data.count >= 22, data.prefix(4) == Data([0x50,0x4b,0x03,0x04]) else { completion(nil, "无法生成 Excel。请先保存或取消当前编辑，再重试。"); return }
-            func write(_ url: URL) {
-                do { try data.write(to: url, options: .atomic); completion(["saved":true,"bytes":data.count],nil) }
-                catch { completion(nil,"Excel 导出失败：\(error.localizedDescription)") }
-            }
-            if self.verifyScript != nil {
-                if let path = ProcessInfo.processInfo.environment["CALENDAR_VERIFY_EXCEL_OUTPUT"] { write(URL(fileURLWithPath:path)) }
-                else { completion(["saved":false],nil) }
-                return
-            }
-            let panel = NSSavePanel();panel.allowedContentTypes = [UTType(filenameExtension:"xlsx") ?? .data];panel.nameFieldStringValue = name;panel.title = "导出 Excel 排期"
+    func exportJSONFile(scope: String, completion: @escaping (Any?, String?) -> Void) {
+        guard ["all","summary"].contains(scope) else { completion(nil,"导出范围无效。"); return }
+        webView.callAsyncJavaScript("return window.CalendarApp.exportJSON(scope)", arguments:["scope":scope], in:nil, in:.page) { result in
+            guard case .success(let value) = result, let raw = value as? String, let data = raw.data(using:.utf8), (try? CalendarDataStore.validate(data)) != nil else { completion(nil,"无法导出，请等待当前保存完成。"); return }
+            let panel = NSSavePanel(); panel.allowedContentTypes = [.json]; panel.nameFieldStringValue = "需求日历.json"; panel.title = "导出需求 JSON"
             panel.beginSheetModal(for:self.window) { response in
-                guard response == .OK, let url = panel.url else { completion(["saved":false],nil);return }
-                write(url)
+                guard response == .OK, let url = panel.url else { completion(["saved":false],nil); return }
+                do { try data.write(to:url,options:.atomic); completion(["saved":true,"bytes":data.count],nil) }
+                catch { completion(nil,error.localizedDescription) }
             }
         }
     }
-    @objc func exportBackup() {
-        withCleanEditor {
-            self.webView.evaluateJavaScript("window.CalendarApp.exportSnapshot()") { result, error in
-                guard error == nil, let raw = result as? String, let data = raw.data(using: .utf8) else { self.showError("无法读取当前记录。"); return }
-                let panel = NSSavePanel(); panel.allowedContentTypes = [.json]; panel.nameFieldStringValue = "需求日历备份.json"; panel.title = "导出需求备份"
-                panel.beginSheetModal(for: self.window) { response in
-                    guard response == .OK, let url = panel.url else { return }
-                    do { try data.write(to: url, options: .atomic) } catch { self.showError("导出失败：\(error.localizedDescription)") }
+    func startCommandServer() {
+        guard commandServer == nil, verifyScript == nil, ProcessInfo.processInfo.environment["CALENDAR_DISABLE_COMMANDS"] != "1" else { return }
+        do {
+            let server = CalendarCommandServer(directory:dataStore.directory) { [weak self] request, reply in
+                guard let self else { reply(["ok":false,"error":["code":"APP_CLOSED","message":"应用已关闭。"]]); return }
+                self.webView.callAsyncJavaScript("await window.CalendarReady; return await window.CalendarApp.executeCommand(request)", arguments:["request":request], in:nil, in:.page) { result in
+                    switch result {
+                    case .success(let value): reply(value as? [String:Any] ?? ["ok":false,"error":["code":"INTERNAL_ERROR","message":"无效的指令响应。"]])
+                    case .failure(let error): reply(["ok":false,"error":["code":"INTERNAL_ERROR","message":error.localizedDescription]])
+                    }
                 }
             }
-        }
-    }
-    @objc func importBackup() {
-        withCleanEditor {
-            let panel = NSOpenPanel(); panel.allowedContentTypes = [.json]; panel.allowsMultipleSelection = false; panel.canChooseDirectories = false; panel.title = "从备份恢复"
-            panel.beginSheetModal(for: self.window) { response in
-                guard response == .OK, let url = panel.url else { return }
-                do {
-                    let data = try Data(contentsOf: url), value = try CalendarDataStore.validate(data)
-                    let alert = NSAlert(); alert.messageText = "恢复这份备份？"; alert.informativeText = "备份包含 \((value["requirements"] as? [Any])?.count ?? 0) 个需求。将替换当前记录；原记录会保留在数据文件夹中。"; alert.addButton(withTitle: "恢复"); alert.addButton(withTitle: "取消")
-                    alert.beginSheetModal(for: self.window) { response in
-                        guard response == .alertFirstButtonReturn else { return }
-                        self.webView.callAsyncJavaScript("return await window.CalendarApp.restoreSnapshot(raw)", arguments: ["raw": String(decoding: data, as: UTF8.self)], in: nil, in: .page) { result in
-                            switch result { case .success(let value) where value as? Bool == true: break; default: self.showError("恢复失败。请检查窗口上方的错误提示，原文件未被静默替换。") }
-                        }
-                    }
-                } catch { self.showError("备份无效：\(error.localizedDescription)") }
-            }
-        }
+            try server.start(); commandServer = server
+        } catch { showError(error.localizedDescription) }
     }
     func requirementMenu(_ id: String) -> NSMenu {
         let menu = NSMenu(title: "需求")
@@ -344,6 +333,7 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
         return nil
     }
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        startCommandServer()
         guard let verifyScript, let verifyOutput else { return }
         // A test timeout is terminal evidence, not a reason to relaunch the same test.
         DispatchQueue.main.asyncAfter(deadline: .now() + 45) {

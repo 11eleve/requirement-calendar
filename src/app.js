@@ -6,6 +6,7 @@ window.CalendarReady=(async()=>{
  let requirements=window.__calendarDemo?structuredClone(baseline).map(item=>{const shift=date=>Model.add(today,Model.days('2026-10-07',date));return {...item,start:shift(item.start),end:shift(item.end),phases:item.phases.map(phase=>({...phase,start:shift(phase.start),end:shift(phase.end)}))};}):[],state={view:'month',anchor:today,selected:null,rowHeight:136},lastTrigger=null,draftPreview=null,editor=null,pendingAction=null,deleted=null,saving=false,queuedNotification=null,discardPosition=null,discardRestoreFrame=null,exporting=false;
  requirements=requirements.map(Model.requirement);
  const {parse,iso,add,days,format,validDate}=Model,req=id=>requirements.find(r=>r.id===id);
+ let monthMotion=null;
  let dateSelection=null,barSelection=null,cancelledDatePointer=null,suppressDateClickUntil=0,replanFrame=0;
  const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
  const button=(cls,text,label,action)=>{const b=el('button',cls+' cursor-interaction',text);b.type='button';if(label)b.setAttribute('aria-label',label);b.addEventListener('click',action);return b;};
@@ -25,6 +26,7 @@ window.CalendarReady=(async()=>{
   else if(bottom&&bounds.bottom>bottom)panel.scrollTop+=bounds.bottom-bottom;
  };
  const focusEditorControl=control=>{control.focus({preventScroll:true});revealEditorControl(control);};
+ let commandVersion=0;const commandSession=Model.newId();
  let storage=null;try{storage=window.localStorage;}catch{}
  const legacyKey='codex:visualization-widget-state-v2:'+JSON.stringify([window.location.pathname,window.location.search]);
  const browserStore=CalendarStorage.createStore(storage,{legacyKey}),nativeBridge=window.CalendarDesktop||window.webkit?.messageHandlers?.calendar;
@@ -33,25 +35,80 @@ window.CalendarReady=(async()=>{
  function showStorageIssue(issue){const node=get('rf-storage-error');node.hidden=!issue;node.textContent=issue||'';}
  function setReminderIssue(issue){const node=get('rf-reminder-status');node.hidden=!issue;node.textContent=issue||'';}
  const restored=await store.load();if(restored.data){requirements=restored.data.requirements;state.anchor=restored.data.anchor;}showStorageIssue(restored.issue);
- async function save(next=requirements,recovery=false){const result=await store.save({version:Model.VERSION,anchor:state.anchor,requirements:next},recovery);showStorageIssue(result.issue);setReminderIssue(result.reminderIssue);return result.ok;}
+ async function save(next=requirements,recovery=false){const result=await store.save({version:Model.VERSION,anchor:state.anchor,requirements:next},recovery);showStorageIssue(result.issue);setReminderIssue(result.reminderIssue);if(result.ok)commandVersion++;return result.ok;}
  function disposeDisclosures(){if(discardRestoreFrame!==null){cancelAnimationFrame(discardRestoreFrame);discardRestoreFrame=null;}get('rf-panel').querySelectorAll('.rf-disclosure,.rf-reminder-editor').forEach(CalendarDisclosure.dispose);}
- function openPanel(label,trigger,tone=''){if(saving)return;cancelCalendarGesture();disposeDisclosures();if(trigger&&!get('rf-detail').contains(trigger))lastTrigger=trigger;else if(!root.classList.contains('has-detail'))lastTrigger=document.activeElement;editor=null;root.classList.add('has-detail');get('rf-detail').dataset.tone=tone;applyTone(get('rf-detail'),tone,'detail');get('rf-detail').hidden=false;get('rf-panel-label').textContent=label;get('rf-panel').replaceChildren();get('rf-panel').scrollTop=0;}
+ function openPanel(label,trigger,tone=''){if(saving)return;cancelMonthMotion();cancelCalendarGesture();disposeDisclosures();if(trigger&&!get('rf-detail').contains(trigger))lastTrigger=trigger;else if(!root.classList.contains('has-detail'))lastTrigger=document.activeElement;editor=null;root.classList.add('has-detail');get('rf-detail').dataset.tone=tone;applyTone(get('rf-detail'),tone,'detail');get('rf-detail').hidden=false;get('rf-panel-label').textContent=label;get('rf-panel').replaceChildren();get('rf-panel').scrollTop=0;}
  function selectRequirement(id){state.selected=id;for(const bar of root.querySelectorAll('.rf-bar,.rf-summary-row,.rf-summary-node')){const selected=bar.dataset.requirementId===id;bar.classList.toggle('is-selected',selected);bar.setAttribute('aria-expanded',String(selected));bar.setAttribute('aria-controls','rf-detail');}}
  let calendarFocus=null;
- function closePanel(force=false){if(saving)return;if(!force&&!mayLeave(()=>closePanel(true)))return;cancelCalendarGesture();editor=null;disposeDisclosures();clearDraftPreview();root.classList.remove('has-detail');get('rf-detail').hidden=true;selectRequirement(null);let target=lastTrigger?.isConnected&&root.contains(lastTrigger)&&!get('rf-detail').contains(lastTrigger)&&!lastTrigger.disabled?lastTrigger:null;if(state.view==='summary'&&!target){const selector=lastTrigger?.classList.contains('rf-summary-node')?'.rf-summary-node':'.rf-summary-row';target=Array.from(get('rf-summary').querySelectorAll(selector)).find(node=>node.dataset.requirementId===lastTrigger?.dataset.requirementId&&node.dataset.nodeId===lastTrigger?.dataset.nodeId);if(!target)target=Array.from(get('rf-summary').querySelectorAll('.rf-summary-row')).find(node=>node.dataset.requirementId===lastTrigger?.dataset.requirementId);if(!target){target=get('rf-summary').querySelector('[data-summary-control=query]');get('rf-summary').scrollTop=0;}}target??=get('rf-next').disabled?get('rf-prev'):get('rf-next');target.focus({preventScroll:true});}
- function makeWeek(start,allocation){const end=boundedAdd(start,6)||'9999-12-31',week=el('div','rf-week'),dateGrid=el('div','rf-days'),bars=el('div','rf-bars');for(let i=0;i<7;i++){const date=boundedAdd(start,i);if(!date){const blank=el('div','rf-date outside');blank.setAttribute('aria-hidden','true');dateGrid.append(blank);continue;}const outside=date.slice(0,7)!==state.anchor.slice(0,7);const dateButton=button('rf-date'+(outside?' outside':''),'',date+' 新建需求',()=>edit(null,date));dateButton.dataset.date=date;dateButton.tabIndex=date===calendarFocus.date?0:-1;const label=el('span','rf-date-label');label.append(el('span','rf-date-number',String(Number(date.slice(8)))));dateButton.append(label);dateGrid.append(dateButton);}for(const r of requirements){if(r.start>end||r.end<start)continue;const a=r.start<start?start:r.start,b=r.end>end?end:r.end,length=days(a,b)+1;const bar=button('rf-bar '+(r.tone||'')+(r.start<start?' continued-left':'')+(r.end>end?' continued-right':''),'',r.title+'，'+r.start+' 至 '+r.end,e=>detail(r.id,e.currentTarget,false,null,e.target.closest('.rf-node-marker')?.dataset.nodeId));applyTone(bar,r.tone);bar.style.gridColumn=(days(start,a)+1)+' / span '+length;bar.style.gridRow=String(allocation.mapping[r.id]+1);bar.style.setProperty('--rf-days',length);bar.dataset.tooltip=r.title+' · '+rangeText(r.start,r.end);bar.title=bar.dataset.tooltip+' · 拖动调整排期';bar.dataset.requirementId=r.id;bar.setAttribute('aria-label',bar.getAttribute('aria-label')+(r.phases.length?'；'+r.phases.map(p=>p.name+' '+p.start+' 至 '+p.end).join('；'):''));bar.append(el('span','rf-bar-title',r.short||r.title));const track=el('span','rf-phases');for(const phase of r.phases){if(phase.start>b||phase.end<a)continue;const pa=phase.start<a?a:phase.start,pb=phase.end>b?b:phase.end;const segment=el('span','rf-phase'+(r.phases.indexOf(phase)%2?' phase-alt':'')+(phase.start<=today&&phase.end>=today?' is-current':''),phase.name);segment.style.gridColumn=(days(a,pa)+1)+' / span '+(days(pa,pb)+1);segment.dataset.tooltip=phase.name+' · '+rangeText(phase.start,phase.end);segment.title=segment.dataset.tooltip;track.append(segment);}bar.classList.toggle('has-phases',track.childElementCount>0);bar.append(track);const nodes=r.milestones.filter(node=>node.date>=a&&node.date<=b),byDate=new Map();for(const node of nodes){if(!byDate.has(node.date))byDate.set(node.date,[]);byDate.get(node.date).push(node);}for(const [date,group] of byDate){const marker=el('span','rf-node-marker'+(group.every(node=>node.done)?' is-done':''));marker.classList.toggle('is-overdue',date<today&&group.some(node=>!node.done));marker.dataset.nodeId=(group.find(node=>!node.done)||group[0]).id;marker.style.left=((days(a,date)+.5)/length*100)+'%';marker.append(el('span','rf-node-symbol',group.length>1?String(group.length):nodeKind(group[0]).symbol));marker.title=group.map(node=>nodeKind(node).name+' · '+node.name+' · '+node.date+(node.done?' · 已完成':node.date<today?' · 已过计划日期':'')).join('\n');marker.setAttribute('aria-label',marker.title);bar.append(marker);}bar.setAttribute('aria-label',bar.getAttribute('aria-label')+(nodes.length?'；节点：'+nodes.map(node=>nodeKind(node).name+' '+node.name+' '+node.date+(node.done?' 已完成':'')).join('；'):''));bars.append(bar);}week.style.setProperty('--rf-lanes',Math.max(0,...Array.from(bars.children,bar=>Number(bar.style.gridRow)+0)));week.append(dateGrid,bars);return week;}
+ function closePanel(force=false){if(saving)return;if(!force&&!mayLeave(()=>closePanel(true)))return;cancelCalendarGesture();editor=null;disposeDisclosures();clearDraftPreview();root.classList.remove('has-detail');get('rf-detail').hidden=true;selectRequirement(null);let target=lastTrigger?.isConnected&&root.contains(lastTrigger)&&!get('rf-detail').contains(lastTrigger)&&!lastTrigger.disabled?lastTrigger:null;if(state.view==='summary'&&!target){const selector=lastTrigger?.classList.contains('rf-summary-node')?'.rf-summary-node':'.rf-summary-row';target=Array.from(get('rf-summary').querySelectorAll(selector)).find(node=>node.dataset.requirementId===lastTrigger?.dataset.requirementId&&node.dataset.nodeId===lastTrigger?.dataset.nodeId);if(!target)target=Array.from(get('rf-summary').querySelectorAll('.rf-summary-row')).find(node=>node.dataset.requirementId===lastTrigger?.dataset.requirementId);if(!target){target=get('rf-summary').querySelector('[data-summary-control=query]');get('rf-summary').scrollTop=0;}}target??=get('rf-title');target.focus({preventScroll:true});}
+ function makeWeek(start,allocation,anchor=state.anchor){const end=boundedAdd(start,6)||'9999-12-31',week=el('div','rf-week'),dateGrid=el('div','rf-days'),bars=el('div','rf-bars');for(let i=0;i<7;i++){const date=boundedAdd(start,i);if(!date){const blank=el('div','rf-date outside');blank.setAttribute('aria-hidden','true');dateGrid.append(blank);continue;}const outside=date.slice(0,7)!==anchor.slice(0,7);const isToday=date===today,dateButton=button('rf-date'+(outside?' outside':'')+(isToday?' is-today':''),'',date+(isToday?' 今天，':' ')+'新建需求',()=>edit(null,date));dateButton.dataset.date=date;if(isToday)dateButton.setAttribute('aria-current','date');dateButton.tabIndex=date===calendarFocus.date?0:-1;const label=el('span','rf-date-label');label.append(el('span','rf-date-number',String(Number(date.slice(8)))));dateButton.append(label);dateGrid.append(dateButton);}for(const r of requirements){if(r.start>end||r.end<start)continue;const a=r.start<start?start:r.start,b=r.end>end?end:r.end,length=days(a,b)+1;const bar=button('rf-bar '+(r.tone||'')+(r.start<start?' continued-left':'')+(r.end>end?' continued-right':''),'',r.title+'，'+r.start+' 至 '+r.end,e=>detail(r.id,e.currentTarget,false,null,e.target.closest('.rf-node-marker')?.dataset.nodeId));applyTone(bar,r.tone);bar.style.gridColumn=(days(start,a)+1)+' / span '+length;bar.style.gridRow=String(allocation.mapping[r.id]+1);bar.style.setProperty('--rf-days',length);bar.dataset.tooltip=r.title+' · '+rangeText(r.start,r.end);bar.title=bar.dataset.tooltip+' · 拖动调整排期';bar.dataset.requirementId=r.id;bar.setAttribute('aria-label',bar.getAttribute('aria-label')+(r.phases.length?'；'+r.phases.map(p=>p.name+' '+p.start+' 至 '+p.end).join('；'):''));bar.append(el('span','rf-bar-title',r.short||r.title));const track=el('span','rf-phases');for(const phase of r.phases){if(phase.start>b||phase.end<a)continue;const pa=phase.start<a?a:phase.start,pb=phase.end>b?b:phase.end;const segment=el('span','rf-phase'+(r.phases.indexOf(phase)%2?' phase-alt':'')+(phase.start<=today&&phase.end>=today?' is-current':''),phase.name);segment.style.gridColumn=(days(a,pa)+1)+' / span '+(days(pa,pb)+1);segment.dataset.tooltip=phase.name+' · '+rangeText(phase.start,phase.end);segment.title=segment.dataset.tooltip;track.append(segment);}bar.classList.toggle('has-phases',track.childElementCount>0);bar.append(track);const nodes=r.milestones.filter(node=>node.date>=a&&node.date<=b),byDate=new Map();for(const node of nodes){if(!byDate.has(node.date))byDate.set(node.date,[]);byDate.get(node.date).push(node);}for(const [date,group] of byDate){const marker=el('span','rf-node-marker'+(group.every(node=>node.done)?' is-done':''));marker.classList.toggle('is-overdue',date<today&&group.some(node=>!node.done));marker.dataset.nodeId=(group.find(node=>!node.done)||group[0]).id;marker.style.left=((days(a,date)+.5)/length*100)+'%';marker.append(el('span','rf-node-symbol',group.length>1?String(group.length):nodeKind(group[0]).symbol));marker.title=group.map(node=>nodeKind(node).name+' · '+node.name+' · '+node.date+(node.done?' · 已完成':node.date<today?' · 已过计划日期':'')).join('\n');marker.setAttribute('aria-label',marker.title);bar.append(marker);}bar.setAttribute('aria-label',bar.getAttribute('aria-label')+(nodes.length?'；节点：'+nodes.map(node=>nodeKind(node).name+' '+node.name+' '+node.date+(node.done?' 已完成':'')).join('；'):''));bars.append(bar);}week.style.setProperty('--rf-lanes',Math.max(0,...Array.from(bars.children,bar=>Number(bar.style.gridRow)+0)));week.append(dateGrid,bars);return week;}
  function boundedAdd(date,delta){try{return add(date,delta);}catch{return null;}}
- function updateNavigation(){get('rf-prev').disabled=saving||Model.monthOffset(state.anchor,-1)===null;get('rf-next').disabled=saving||Model.monthOffset(state.anchor,1)===null;}
- function render(){cancelCalendarGesture();if(!calendarFocus||calendarFocus.month!==state.anchor.slice(0,7))calendarFocus={month:state.anchor.slice(0,7),date:state.anchor};const calendar=get('rf-calendar');calendar.replaceChildren();root.style.setProperty('--rf-row-height',state.rowHeight+'px');const grid=Model.monthGrid(state.anchor);let previous=null,peak=0;const heading=el('div','rf-weekdays'),d=parse(state.anchor);for(const day of ['一','二','三','四','五','六','日'])heading.append(el('span','','周'+day));calendar.append(heading);get('rf-title').replaceChildren(el('span','rf-month-year',d.getUTCFullYear()+' 年 '),el('span','rf-month-name',(d.getUTCMonth()+1)+' 月'));get('rf-title').setAttribute('aria-label','跳转月份，当前 '+d.getUTCFullYear()+' 年 '+(d.getUTCMonth()+1)+' 月');for(let i=0;i<grid.count;i++){const start=add(grid.start,i*7),allocation=Model.allocateLanes(requirements,start,boundedAdd(start,6)||'9999-12-31',previous);calendar.append(makeWeek(start,allocation));previous=allocation.mapping;peak=Math.max(peak,allocation.count);}root.style.setProperty('--rf-lanes',peak);selectRequirement(state.selected);if(draftPreview)paintDateSelection(draftPreview);updateNavigation();if(state.view==='summary')renderSummary();}
- const summaryFilter={scope:'month',query:'',tone:'all',state:'all',sort:'start'},nodeFilter={kind:'all',period:'all',completion:'pending'};let summaryComposing=null;
+ function fillMonth(host,anchor){
+  const grid=Model.monthGrid(anchor);let previous=null,peak=0;const heading=el('div','rf-weekdays');
+  for(const day of ['一','二','三','四','五','六','日'])heading.append(el('span','','周'+day));host.append(heading);
+  for(let i=0;i<grid.count;i++){const start=add(grid.start,i*7),allocation=Model.allocateLanes(requirements,start,boundedAdd(start,6)||'9999-12-31',previous);host.append(makeWeek(start,allocation,anchor));previous=allocation.mapping;peak=Math.max(peak,allocation.count);}
+  return peak;
+ }
+ function render(preserveMotion=false){
+  if(!preserveMotion)cancelMonthMotion();cancelCalendarGesture();
+  if(!calendarFocus||calendarFocus.month!==state.anchor.slice(0,7))calendarFocus={month:state.anchor.slice(0,7),date:state.anchor};
+  const calendar=get('rf-calendar');calendar.replaceChildren();root.style.setProperty('--rf-row-height',state.rowHeight+'px');
+  root.style.setProperty('--rf-lanes',fillMonth(calendar,state.anchor));const d=parse(state.anchor);
+  get('rf-title').replaceChildren(el('span','rf-month-year',d.getUTCFullYear()+' 年 '),el('span','rf-month-name',(d.getUTCMonth()+1)+' 月'));
+  get('rf-title').setAttribute('aria-label','跳转月份，当前 '+d.getUTCFullYear()+' 年 '+(d.getUTCMonth()+1)+' 月');
+  selectRequirement(state.selected);if(draftPreview)paintDateSelection(draftPreview);if(state.view==='summary')renderSummary();
+ }
+ // The live calendar keeps its scroll geometry and event listeners. Two inert
+ // visual copies cover only its body while the weekday heading stays fixed.
+ function cancelMonthMotion(){
+  const motion=monthMotion;if(!motion)return;monthMotion=null;clearTimeout(motion.timer);
+  for(const animation of motion.animations)animation.cancel();motion.window.remove();root.classList.remove('is-month-moving');
+ }
+ function monthMotionAllowed(){return !matchMedia('(prefers-reduced-motion:reduce)').matches&&typeof Element.prototype.animate==='function'&&!document.hidden;}
+ function beginMonthMotion(direction,next){
+  cancelMonthMotion();if(!monthMotionAllowed()||state.view!=='month')return null;
+  const calendar=get('rf-calendar'),content=get('rf-calendar').parentElement,rect=calendar.getBoundingClientRect(),contentRect=content.getBoundingClientRect(),heading=calendar.querySelector('.rf-weekdays').getBoundingClientRect().height,height=calendar.clientHeight-heading;
+  if(height<1)return null;
+  const window=el('div','rf-month-slide-window');window.setAttribute('aria-hidden','true');window.inert=true;
+  Object.assign(window.style,{left:(rect.left-contentRect.left+calendar.clientLeft)+'px',top:(rect.top-contentRect.top+calendar.clientTop+heading)+'px',width:calendar.clientWidth+'px',height:height+'px'});
+  const track=el('div','rf-month-slide-track');window.append(track);
+  const motion={window,track,direction,next,height,offset:0,phase:'preview',animations:[],timer:null};monthMotion=motion;
+  function page(sheet,scroll){
+   const page=el('div','rf-month-slide-page');sheet.classList.add('rf-month-slide-sheet');sheet.removeAttribute('id');sheet.removeAttribute('aria-label');sheet.inert=true;
+   sheet.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'));
+   sheet.querySelectorAll('[aria-controls]').forEach(node=>node.removeAttribute('aria-controls'));
+   Object.assign(sheet.style,{top:-heading+'px',height:calendar.clientHeight+'px'});page.append(sheet);track.append(page);sheet.scrollTop=scroll;return {page,sheet};
+  }
+  content.append(window);const outgoing=page(calendar.cloneNode(true),calendar.scrollTop),incomingSheet=el('main','rf-calendar');fillMonth(incomingSheet,next);
+  for(const bar of incomingSheet.querySelectorAll('.rf-bar'))bar.classList.toggle('is-selected',bar.dataset.requirementId===state.selected);
+  const incoming=page(incomingSheet,0);incoming.sheet.scrollTop=direction<0?incoming.sheet.scrollHeight-incoming.sheet.clientHeight:0;
+  Object.assign(motion,{outgoing:outgoing.page,incoming:incoming.page,incomingSheet:incoming.sheet});root.classList.add('is-month-moving');positionMonthMotion(motion,0);return motion;
+ }
+ function positionMonthMotion(motion,offset){
+  motion.offset=offset;motion.track.style.transform='translateY('+(-motion.direction*offset)+'px)';motion.incoming.style.transform='translateY('+(motion.direction*motion.height)+'px)';
+ }
+ function settleMonthMotion(commit){
+  const motion=monthMotion;if(!motion)return;clearTimeout(motion.timer);motion.phase=commit?'settling':'returning';
+  const destination=commit?motion.height:0,options={duration:commit?420:180,easing:commit?'cubic-bezier(.25,.1,.25,1)':'cubic-bezier(.2,.7,.2,1)',fill:'forwards'};
+  try{
+   motion.animations=[motion.track.animate([{transform:'translateY('+(-motion.direction*motion.offset)+'px)'},{transform:'translateY('+(-motion.direction*destination)+'px)'}],options)];
+   Promise.all(motion.animations.map(animation=>animation.finished)).then(()=>{if(monthMotion===motion)cancelMonthMotion();},()=>{if(monthMotion===motion)cancelMonthMotion();});
+  }catch{cancelMonthMotion();}
+ }
+ function previewMonthMotion(direction,next,distance){
+  if(!monthMotion||monthMotion.direction!==direction||monthMotion.next!==next)beginMonthMotion(direction,next);
+  const motion=monthMotion;if(!motion)return;clearTimeout(motion.timer);positionMonthMotion(motion,Math.min(distance*1.2,motion.height*.25));
+  motion.timer=setTimeout(()=>{if(monthMotion===motion&&motion.phase==='preview')settleMonthMotion(false);},160);
+ }
+
+ const summaryFilter={scope:'month',query:'',tone:'all',state:'all',sort:'start'};let summaryComposing=null;
  function resetSummaryFilters(){summaryFilter.query='';summaryFilter.tone='all';summaryFilter.state='all';renderSummary();get('rf-summary').querySelector('[data-summary-control=query]').focus({preventScroll:true});}
- function resetNodeFilters(){Object.assign(nodeFilter,{kind:'all',period:'all',completion:'pending'});renderSummary();get('rf-summary').querySelector('[data-summary-control=nodeKind]').focus({preventScroll:true});}
- function setView(view){if(view!=='summary'&&summaryComposing){summaryFilter.query=summaryComposing.value;summaryComposing=null;}state.view=view;const summary=view==='summary';get('rf-calendar').hidden=summary;get('rf-summary').hidden=!summary;root.classList.toggle('has-summary',summary);get('rf-view').setAttribute('aria-pressed',String(summary));get('rf-view').setAttribute('aria-label',summary?'返回月历':'打开需求汇总');get('rf-view').title=summary?'返回月历':'需求汇总';if(summary)renderSummary();}
+ function setView(view){cancelMonthMotion();if(view!=='summary'&&summaryComposing){summaryFilter.query=summaryComposing.value;summaryComposing=null;}state.view=view;const summary=view==='summary';get('rf-calendar').hidden=summary;get('rf-summary').hidden=!summary;root.classList.toggle('has-summary',summary);get('rf-view').setAttribute('aria-pressed',String(summary));get('rf-view').setAttribute('aria-label',summary?'返回月历':'打开需求汇总');get('rf-view').title=summary?'返回月历':'需求汇总';if(summary)renderSummary();}
  function renderSummary(){
   if(summaryComposing?.isConnected)return;
   const host=get('rf-summary'),scroll=host.scrollTop,active=document.activeElement,focused=active?.dataset.summaryControl,selection=focused==='query'?[active.selectionStart,active.selectionEnd,active.selectionDirection]:null;
   const projection=CalendarPlanning.project(requirements,{anchor:state.anchor,today,...summaryFilter});host.replaceChildren();
-  const header=el('div','rf-summary-header'),intro=el('div');intro.append(el('h2','','需求汇总'),el('p','rf-muted',summaryFilter.scope==='month'?'本月有交集的需求 · '+projection.scopeCount+' 项':'全部排期 · '+projection.scopeCount+' 项'));const exportButton=button('rf-button',exporting?'正在导出…':'导出 Excel','导出所列需求的完整排期，含全部时间节点',()=>requestExcel('summary'));exportButton.dataset.exportExcel='';exportButton.dataset.summaryControl='export';exportButton.disabled=exporting;header.append(intro,exportButton);host.append(header);
+  const header=el('div','rf-summary-header'),intro=el('div');intro.append(el('h2','','需求汇总'),el('p','rf-muted',summaryFilter.scope==='month'?'本月有交集的需求 · '+projection.scopeCount+' 项':'全部排期 · '+projection.scopeCount+' 项'));const exportButton=button('rf-button',exporting?'正在导出…':'导出 JSON','导出所列需求的完整排期，含全部时间节点',()=>requestJSON('summary'));exportButton.dataset.exportJson='';exportButton.dataset.summaryControl='export';exportButton.disabled=exporting;const actions=el('div','rf-summary-actions');actions.append(button('rf-button','导入 JSON','导入需求 JSON',()=>requestImportJSON()),exportButton);header.append(intro,actions);host.append(header);
   const controls=el('div','rf-summary-controls'),query=input('search',summaryFilter.query,'搜索需求及相关内容');query.setAttribute('aria-label','搜索需求');query.dataset.summaryControl='query';query.addEventListener('compositionstart',()=>{summaryComposing=query;});query.addEventListener('compositionend',()=>{if(summaryComposing===query)summaryComposing=null;summaryFilter.query=query.value;renderSummary();});query.addEventListener('input',event=>{if(event.isComposing||summaryComposing===query||!query.isConnected)return;summaryFilter.query=query.value;renderSummary();});query.addEventListener('keydown',event=>{if(event.key==='Escape'&&!event.isComposing&&summaryComposing!==query&&query.value){event.preventDefault();event.stopPropagation();summaryFilter.query='';renderSummary();}});controls.append(query);
   function selectControl(key,label,options){const control=el('select');control.setAttribute('aria-label',label);control.dataset.summaryControl=key;for(const [value,title] of options){const option=el('option','',title);option.value=value;option.selected=summaryFilter[key]===value;control.append(option);}control.addEventListener('change',()=>{summaryFilter[key]=control.value;renderSummary();});controls.append(control);}
   selectControl('scope','汇总范围',[['month','本月需求'],['all','全部需求']]);selectControl('tone','筛选配色',[['all','全部配色'],...Model.TONES.map(tone=>[tone.id,tone.name])]);selectControl('sort','排序方式',[['start','按开始日期'],['end','按结束日期'],['next','按下一节点'],['progress','按事项进度']]);if(summaryFilter.query||summaryFilter.tone!=='all'||summaryFilter.state!=='all'){const reset=button('rf-text-button','清除筛选','清除搜索、配色和状态筛选',resetSummaryFilters);controls.append(reset);}host.append(controls);
@@ -72,24 +129,7 @@ window.CalendarReady=(async()=>{
    empty.append(el('p','',narrowed?'没有匹配的需求。可以清除筛选后继续查看。':requirements.length?'本月还没有排期，可以查看全部需求。':'还没有需求。点击或拖动日历日期开始排期。'));
    const action=narrowed?button('rf-button','清除条件',null,resetSummaryFilters):requirements.length?button('rf-button','查看全部需求',null,()=>{summaryFilter.scope='all';renderSummary();get('rf-summary').querySelector('[data-summary-control=scope]').focus({preventScroll:true});}):button('rf-button','返回日历',null,()=>command('summary'));empty.append(action);list.append(empty);
   }
-  const nodeProjection=CalendarPlanning.projectNodes(projection.rows.map(row=>row.item),{anchor:state.anchor,today,...nodeFilter}),nodes=el('section','rf-summary-nodes'),nodeHeading=el('div','rf-heading'),nodeCount=el('span','rf-muted');
-  nodeCount.textContent=nodeProjection.nodes.length+' / '+nodeProjection.total;nodeCount.setAttribute('aria-label','显示 '+nodeProjection.nodes.length+' 个节点，共 '+nodeProjection.total+' 个');
-  nodeHeading.append(el('h3','',nodeFilter.completion==='completed'?'已完成时间节点':nodeFilter.completion==='all'?'全部时间节点':'待办时间节点'),nodeCount);nodes.append(nodeHeading,el('p','rf-muted rf-node-scope','来自所列需求，包含跨月节点'));
-  const nodeControls=el('div','rf-node-controls');
-  function nodeSelect(key,label,options){const control=el('select');control.dataset.summaryControl='node'+key[0].toUpperCase()+key.slice(1);control.setAttribute('aria-label',label);for(const [value,title] of options){const option=el('option','',title);option.value=value;option.selected=nodeFilter[key]===value;control.append(option);}control.addEventListener('change',()=>{nodeFilter[key]=control.value;renderSummary();});nodeControls.append(control);}
-  nodeSelect('kind','节点类型',[['all','全部类型'],...Model.NODE_KINDS.map(kind=>[kind.id,kind.name])]);
-  nodeSelect('period','节点时间范围',[['all','全部日期'],['overdue','已过计划日期'],['7','未来 7 天'],['30','未来 30 天'],['month','所选月份']]);
-  nodeSelect('completion','节点完成状态',[['pending','待办'],['completed','已完成'],['all','全部状态']]);nodes.append(nodeControls,el('p','rf-muted rf-node-filter-help','仅筛选节点列表；导出包含所列需求的全部节点'));
-  for(const [key,label,predicate] of [['past','已过计划日期',node=>!node.done&&node.date<today],['today','今天',node=>!node.done&&node.date===today],['future','后续节点',node=>!node.done&&node.date>today],['completed','已完成节点',node=>node.done]]){
-   const pending=nodeProjection.nodes.filter(({node})=>predicate(node));if(!pending.length)continue;
-   const group=el('div','rf-node-group');group.dataset.nodeGroup=key;const heading=el('h4','rf-node-group-heading');heading.append(el('span','',label),el('span','rf-muted',String(pending.length)));group.append(heading);
-   for(const {item,node} of pending){
-    const entry=button('rf-summary-node'+(node.done?' is-done':''),'',item.title+'，'+nodeKind(node).name+' '+node.name+'，'+node.date+(node.done?'，已完成':''),event=>detail(item.id,event.currentTarget));entry.dataset.requirementId=item.id;entry.dataset.nodeId=node.id;applyTone(entry,item.tone);
-    const info=el('span','rf-summary-info');info.append(el('strong','',node.name),el('span','rf-muted',item.title));entry.append(el('span','rf-node-glyph',nodeKind(node).symbol),info,el('span','rf-summary-node-date',nodeDateText(node.date)+(node.done?' · 已完成':node.date<today?' · 待确认':'')));group.append(entry);
-   }
-   nodes.append(group);
-  }
-  if(!nodeProjection.nodes.length){const empty=el('div','rf-summary-empty'),filtered=nodeFilter.kind!=='all'||nodeFilter.period!=='all'||nodeFilter.completion!=='pending';empty.append(el('p','',filtered?'没有符合条件的节点。':'所列需求没有待办节点。'));if(filtered)empty.append(button('rf-button','重置节点筛选',null,resetNodeFilters));nodes.append(empty);}layout.append(list,nodes);host.append(layout);selectRequirement(state.selected);host.scrollTop=scroll;
+  layout.append(list);host.append(layout);selectRequirement(state.selected);host.scrollTop=scroll;
   if(focused){const next=host.querySelector('[data-summary-control="'+focused+'"]');next?.focus({preventScroll:true});if(selection&&next)next.setSelectionRange(...selection);}
  }
  function revealCalendarRequirement(id){
@@ -268,7 +308,7 @@ window.CalendarReady=(async()=>{
   // plan is a real unsaved draft, even before its first keystroke.
   if(shifted){start.value=shifted.start;end.value=shifted.end;phases.setDates(shifted.phases);milestones.setDates(shifted.milestones);syncDraftPreview();start.focus({preventScroll:true});}
  }
- function setSaving(value){if(value)cancelCalendarGesture();saving=value;root.setAttribute('aria-busy',String(value));get('rf-panel').inert=value;get('rf-month-form').inert=value;for(const id of ['rf-prev','rf-next','rf-close','rf-undo','rf-title'])get(id).disabled=value;const submit=editor?.form.querySelector('[type=submit]');if(submit){submit.disabled=value;submit.textContent=value?'正在保存…':'保存需求';}updateNavigation();if(!value&&queuedNotification){const id=queuedNotification;queuedNotification=null;queueMicrotask(()=>CalendarApp.openRequirement(id));}}
+ function setSaving(value,{keepEditorInteractive=false}={}){if(value)cancelCalendarGesture();saving=value;root.setAttribute('aria-busy',String(value));get('rf-panel').inert=value&&!keepEditorInteractive;get('rf-month-form').inert=value;get('rf-import-form').inert=value;for(const id of ['rf-close','rf-undo','rf-title'])get(id).disabled=value;const submit=editor?.form.querySelector('[type=submit]');if(submit){submit.disabled=value;submit.textContent=value?'正在保存…':'保存需求';}if(!value&&queuedNotification){const id=queuedNotification;queuedNotification=null;queueMicrotask(()=>CalendarApp.openRequirement(id));}}
  function mayLeave(action){if(saving)return false;if(!editor?.isDirty())return true;pendingAction=action;const dialog=get('rf-discard');if(!dialog.open){const panel=get('rf-panel'),active=document.activeElement,bounds=active?.getBoundingClientRect(),viewport=panel.getBoundingClientRect();discardPosition={panel:panel.scrollTop,calendar:get('rf-calendar').scrollTop};
    // A scrolled-away input can retain focus. Returning focus to it when the
    // dialog closes makes WebKit scroll again after the restoration frame.
@@ -299,16 +339,20 @@ window.CalendarReady=(async()=>{
  async function deleteRequirement(id,force=false){if(saving)return false;if(!force&&editor?.isDirty()){mayLeave(()=>deleteRequirement(id,true));return false;}const item=req(id);if(!item)return;const next=requirements.filter(r=>r.id!==id);setSaving(true);const ok=await save(next);setSaving(false);if(!ok)return;requirements=next;deleted=structuredClone(item);closePanel(true);render();get('rf-toast-text').textContent='已删除“'+item.title+'”';get('rf-toast').hidden=false;}
  async function undoDeletion(force=false){if(saving||!deleted||req(deleted.id))return false;if(!force&&editor?.isDirty()){mayLeave(()=>undoDeletion(true));return false;}const next=[...requirements,deleted],previous=state.anchor;state.anchor=deleted.start;setSaving(true);const ok=await save(next);setSaving(false);if(!ok){state.anchor=previous;return;}const id=deleted.id;requirements=next;deleted=null;get('rf-toast').hidden=true;render();detail(id);return true;}
  get('rf-undo').addEventListener('click',()=>undoDeletion());
- async function navigateToMonth(next){
+ async function navigateToMonth(next,direction=0){
   if(saving||!validDate(next))return false;if(next.slice(0,7)===state.anchor.slice(0,7))return true;
-  const calendar=get('rf-calendar'),summary=get('rf-summary'),previous=state.anchor,scroll=calendar.scrollTop,summaryScroll=summary.scrollTop,previousFocus={...calendarFocus};state.anchor=next;render();calendar.scrollTop=0;summary.scrollTop=0;
-  setSaving(true);let ok=false;try{ok=await save();}catch(error){showStorageIssue(error.message||'月份未保存，请重试。');}finally{setSaving(false);}
+  const calendar=get('rf-calendar'),summary=get('rf-summary'),previous=state.anchor,scroll=calendar.scrollTop,summaryScroll=summary.scrollTop,previousFocus={...calendarFocus};
+  if(monthMotion&&monthMotion.next!==next)cancelMonthMotion();if(direction&&!monthMotion)beginMonthMotion(direction,next);const motion=direction?monthMotion:null;
+  state.anchor=next;render(!!motion);calendar.scrollTop=direction<0?calendar.scrollHeight-calendar.clientHeight:0;summary.scrollTop=0;
+  if(motion){const replacement=calendar.cloneNode(true);replacement.removeAttribute('id');replacement.classList.add('rf-month-slide-sheet');replacement.inert=true;replacement.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'));replacement.querySelectorAll('[aria-controls]').forEach(node=>node.removeAttribute('aria-controls'));replacement.style.cssText=motion.incomingSheet.style.cssText;motion.incoming.replaceChildren(replacement);replacement.scrollTop=calendar.scrollTop;motion.incomingSheet=replacement;settleMonthMotion(true);}
+  // Only the calendar anchor is being saved; keep the independent draft and caret usable.
+  setSaving(true,{keepEditorInteractive:true});let ok=false;try{ok=await save();}catch(error){showStorageIssue(error.message||'月份未保存，请重试。');}finally{setSaving(false);}
   if(!ok){state.anchor=previous;calendarFocus=previousFocus;render();calendar.scrollTop=scroll;summary.scrollTop=summaryScroll;}return ok;
  }
- async function shiftMonth(delta){const next=Model.monthOffset(state.anchor,delta);return next?navigateToMonth(next):false;}
+ async function shiftMonth(delta){const next=Model.monthOffset(state.anchor,delta);return next?navigateToMonth(next,Math.sign(delta)):false;}
  const monthPicker=get('rf-month-picker'),monthForm=get('rf-month-form'),monthYear=get('rf-month-year'),monthNumber=get('rf-month-number');
  for(let month=1;month<=12;month++){const option=el('option','',month+' 月');option.value=String(month);monthNumber.append(option);}
- function openMonthPicker(){if(saving||get('rf-discard').open||monthPicker.open)return;cancelCalendarGesture();monthYear.value=String(Number(state.anchor.slice(0,4)));monthNumber.value=String(Number(state.anchor.slice(5,7)));get('rf-month-error').textContent='';monthYear.removeAttribute('aria-invalid');monthPicker.showModal();get('rf-title').setAttribute('aria-expanded','true');monthYear.focus();monthYear.select();}
+ function openMonthPicker(){if(saving||get('rf-discard').open||monthPicker.open)return;cancelMonthMotion();cancelCalendarGesture();monthYear.value=String(Number(state.anchor.slice(0,4)));monthNumber.value=String(Number(state.anchor.slice(5,7)));get('rf-month-error').textContent='';monthYear.removeAttribute('aria-invalid');monthPicker.showModal();get('rf-title').setAttribute('aria-expanded','true');monthYear.focus();monthYear.select();}
  async function jumpMonth(current=false){
   if(saving)return false;let next;
   if(current)next=today.slice(0,7)+'-01';
@@ -322,32 +366,140 @@ window.CalendarReady=(async()=>{
  function canUndoDeletion(){const active=document.activeElement;return !!deleted&&!editor&&!saving&&!active?.isContentEditable&&!active?.matches('input,textarea');}
  function refreshDate(){const next=Model.localDate();if(next===today||saving)return false;today=next;const active=document.activeElement,focusedDate=active?.dataset.date,focusedRequirement=active?.dataset.requirementId,taskIndex=Array.from(get('rf-panel').querySelectorAll('.rf-task input')).indexOf(active),nodeId=active?.closest('.rf-node-detail')?.dataset.nodeId,label=active?.textContent,scroll=get('rf-panel').scrollTop,calendarScroll=get('rf-calendar').scrollTop,focusedWeek=Array.from(get('rf-calendar').querySelectorAll('.rf-week')).indexOf(active?.closest('.rf-week'));render();get('rf-calendar').scrollTop=calendarScroll;if(state.selected&&!editor){detail(state.selected,undefined,true);get('rf-panel').scrollTop=scroll;if(nodeId)Array.from(get('rf-panel').querySelectorAll('.rf-node-detail')).find(row=>row.dataset.nodeId===nodeId)?.querySelector('input')?.focus({preventScroll:true});else if(taskIndex>=0)get('rf-panel').querySelectorAll('.rf-task input')[taskIndex]?.focus({preventScroll:true});else if(active?.tagName==='BUTTON')Array.from(get('rf-panel').querySelectorAll('button')).find(button=>button.textContent===label)?.focus({preventScroll:true});}if(focusedDate)Array.from(get('rf-calendar').querySelectorAll('.rf-date')).find(node=>node.dataset.date===focusedDate)?.focus({preventScroll:true});else if(focusedRequirement)Array.from(get('rf-calendar').querySelectorAll('.rf-week'))[focusedWeek]?.querySelectorAll('.rf-bar').forEach(node=>{if(node.dataset.requirementId===focusedRequirement)node.focus({preventScroll:true});});return true;}
  setInterval(refreshDate,60000);window.addEventListener('focus',refreshDate);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshDate();});
- function exportWorkbook(scope='all'){
-  if(!['all','summary'].includes(scope))throw Error('导出范围无效。');
-  if(saving||editor?.isDirty())throw Error('请先保存或取消当前编辑，再导出 Excel。');
+ function currentSnapshot(){return Model.snapshot({version:Model.VERSION,anchor:state.anchor,requirements});}
+ const revision=()=>commandSession+':'+commandVersion;
+ async function executeCommand(request,fromImportDialog=false){
+  try{
+   if(!request||typeof request!=='object'||Array.isArray(request))throw new CalendarCommands.CommandError('INVALID_ARGUMENT','指令必须是 JSON 对象。');
+   if(saving)throw new CalendarCommands.CommandError('BUSY','正在保存，请稍后重试。');
+   const write=CalendarCommands.isWrite(request.action);
+   if(write&&(editor?.isDirty()||get('rf-discard').open))throw new CalendarCommands.CommandError('DRAFT_DIRTY','请先保存或取消正在编辑的草稿。');
+   if(write&&(monthPicker.open||dateSelection||barSelection||(!fromImportDialog&&get('rf-import-picker').open)))throw new CalendarCommands.CommandError('BUSY','正在进行日历交互，请稍后重试。');
+   if(request.action==='import'&&request.mode==='replace'&&!fromImportDialog&&request.expectedRevision===undefined)throw new CalendarCommands.CommandError('INVALID_ARGUMENT','替换全部需求需要提供 expectedRevision。');
+   if(write&&request.expectedRevision!==undefined&&request.expectedRevision!==revision())throw new CalendarCommands.CommandError('REVISION_CONFLICT','数据已经变化，请重新读取后再修改。');
+   const result=CalendarCommands.plan(currentSnapshot(),request);
+   if(result.changed){
+    const previous=state.anchor,scroll=get('rf-calendar').scrollTop;state.anchor=result.snapshot.anchor;setSaving(true);
+    let ok=false;try{ok=await save(result.snapshot.requirements,result.recovery);}finally{setSaving(false);}
+    if(!ok){state.anchor=previous;throw new CalendarCommands.CommandError('SAVE_FAILED',get('rf-storage-error').textContent||'写入失败。');}
+    requirements=result.snapshot.requirements;deleted=null;get('rf-toast').hidden=true;closePanel(true);render();if(previous===state.anchor)get('rf-calendar').scrollTop=scroll;
+   }
+   return {ok:true,revision:revision(),changed:result.changed,hasUnsavedChanges:!!editor?.isDirty(),data:result.data};
+  }catch(error){return {ok:false,revision:revision(),error:{code:error.code||(error.name==='ValidationError'?'VALIDATION_FAILED':'INTERNAL_ERROR'),message:error.message,details:error.details??null}};}
+ }
+ function exportJSON(scope='all'){
+  if(!['all','summary'].includes(scope))throw Error('导出范围无效。');if(saving)throw Error('正在保存，请稍后重试。');
   const items=scope==='summary'?CalendarPlanning.project(requirements,{anchor:state.anchor,today,...summaryFilter}).rows.map(row=>row.item):requirements;
-  const workbook=CalendarWorkbook.create({version:Model.VERSION,anchor:state.anchor,requirements:items},{today});let binary='';for(let i=0;i<workbook.bytes.length;i+=32768)binary+=String.fromCharCode(...workbook.bytes.subarray(i,i+32768));
-  return {name:workbook.name,base64:btoa(binary),counts:workbook.counts};
+  return JSON.stringify({...currentSnapshot(),requirements:items},null,2)+'\n';
  }
  function showExportStatus(message,error=false){const status=get('rf-export-status'),label=get('rf-export-message');status.hidden=!message;status.dataset.kind=error?'error':'success';status.setAttribute('role',error?'alert':'status');label.textContent=message;}
- get('rf-export-dismiss').addEventListener('click',()=>{showExportStatus('');const target=state.view==='summary'?get('rf-summary').querySelector('[data-export-excel]'):get('rf-view');if(target&&!target.disabled)target.focus({preventScroll:true});else get('rf-view').focus({preventScroll:true});});
- async function requestExcel(scope='all'){
-  if(exporting)return false;exporting=true;const active=document.activeElement;
-  const buttons=()=>root.querySelectorAll('[data-export-excel]');const update=()=>buttons().forEach(control=>{control.disabled=exporting;control.textContent=exporting?'正在导出…':'导出 Excel';});update();showExportStatus('正在导出 Excel…');
+ get('rf-export-dismiss').addEventListener('click',()=>{showExportStatus('');const target=state.view==='summary'?get('rf-summary').querySelector('[data-export-json]'):get('rf-view');target?.focus({preventScroll:true});});
+ async function requestJSON(scope='all'){
+  if(exporting)return false;exporting=true;const active=document.activeElement,buttons=()=>root.querySelectorAll('[data-export-json]');
+  const update=()=>buttons().forEach(control=>{control.disabled=exporting;control.textContent=exporting?'正在导出…':'导出 JSON';});update();
   try{
    let saved;
-   if(nativeBridge)saved=(await nativeBridge.postMessage({action:'exportExcel',scope})).saved;
-   else{const workbook=exportWorkbook(scope),binary=atob(workbook.base64),bytes=Uint8Array.from(binary,value=>value.charCodeAt(0)),url=URL.createObjectURL(new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})),link=el('a');link.href=url;link.download=workbook.name;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);saved=true;}
-   showExportStatus(saved?(nativeBridge?'已导出 Excel 排期。':'Excel 已准备下载，请在浏览器中查看。'):'');return !!saved;
-  }catch(error){showExportStatus('Excel 导出失败：'+error.message,true);return false;}
-  finally{exporting=false;update();if(active?.isConnected&&active.matches('[data-export-excel]'))active.focus({preventScroll:true});}
+   if(nativeBridge)saved=(await nativeBridge.postMessage({action:'exportJSON',scope})).saved;
+   else{const raw=exportJSON(scope),url=URL.createObjectURL(new Blob([raw],{type:'application/json'})),link=el('a');link.href=url;link.download='需求日历-'+today+'.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);saved=true;}
+   showExportStatus(saved?'已导出 JSON，包含所选范围的已保存需求。':'');return !!saved;
+  }catch(error){showExportStatus('JSON 导出失败：'+error.message,true);return false;}
+  finally{exporting=false;update();if(active?.isConnected&&active.matches('[data-export-json]'))active.focus({preventScroll:true});}
  }
- async function command(name){if(name==='discard'){if(saving)return false;get('rf-discard').close();pendingAction=null;closePanel(true);return true;}if(saving||get('rf-discard').open||monthPicker.open)return false;if(name==='exportExcel')return requestExcel();if(name==='summary'){const action=()=>{closePanel(true);setView(state.view==='summary'?'month':'summary');get('rf-view').focus({preventScroll:true});};if(mayLeave(action))action();return true;}if(name==='new')edit();else if(name==='save')return editor?await editor.submit():true;else if(name==='close')closePanel();else if(name==='previous')await shiftMonth(-1);else if(name==='next')await shiftMonth(1);else if(name==='undo')return canUndoDeletion()?await undoDeletion():false;}
- window.CalendarApp={command,exportWorkbook,setReminderIssue,refreshDate,canUndoDeletion,editRequirement(id){if(!req(id)||saving)return false;edit(id);return true;},deleteRequirement,openRequirement(id){if(saving){queuedNotification=id;return true;}if(!req(id)){setReminderIssue('此提醒对应的需求已删除或不在当前数据中。');return false;}const action=()=>{setView('month');const current=req(id);if(!current){setReminderIssue('此提醒对应的需求已删除或不在当前数据中。');return;}state.anchor=current.start;render();get('rf-calendar').scrollTop=0;detail(id,undefined,true);revealCalendarRequirement(id);};if(mayLeave(action))action();return true;},hasUnsavedChanges:()=>saving||!!editor?.isDirty(),isSaving:()=>saving,exportSnapshot:()=>JSON.stringify(Model.snapshot({version:Model.VERSION,anchor:state.anchor,requirements})),async restoreSnapshot(raw){if(saving||editor?.isDirty())return false;let next;try{next=Model.snapshot(JSON.parse(raw));}catch(error){showStorageIssue(error.message);return false;}const previous=state.anchor;state.anchor=next.anchor;setSaving(true);const ok=await save(next.requirements,true);setSaving(false);if(!ok){state.anchor=previous;return false;}requirements=next.requirements;deleted=null;get('rf-toast').hidden=true;closePanel(true);render();return true;}};
+ let importPrepared=null;
+ const importPicker=get('rf-import-picker'),importForm=get('rf-import-form'),importMode=get('rf-import-mode');
+ function refreshImportPreview(){
+  try{const result=CalendarCommands.plan(currentSnapshot(),{action:'preview-import',data:importPrepared,mode:importMode.value});const info=result.data;get('rf-import-summary').textContent='新增 '+info.added+' 项，更新 '+info.updated+' 项，跳过 '+info.skipped+' 项。'+(info.mode==='replace'?'将替换当前全部 '+info.replaced+' 项需求；原记录会另存归档。':'当前已有需求会保留。');get('rf-import-error').textContent='';get('rf-import-go').disabled=false;get('rf-import-go').textContent=info.mode==='replace'?'确认替换全部':'确认导入';}
+  catch(error){get('rf-import-error').textContent=error.message;get('rf-import-go').disabled=true;}
+ }
+ function previewImportJSON(raw){
+  if(saving||editor?.isDirty()||monthPicker.open||get('rf-discard').open){showExportStatus('请先保存或取消当前编辑，再导入 JSON。',true);return false;}
+  try{importPrepared=CalendarCommands.parseImport(raw,state.anchor);importMode.value='merge';refreshImportPreview();if(!importPicker.open)importPicker.showModal();return true;}
+  catch(error){showExportStatus('JSON 导入失败：'+error.message,true);return false;}
+ }
+ async function requestImportJSON(){
+  if(saving||editor?.isDirty()||monthPicker.open||get('rf-discard').open||importPicker.open){showExportStatus('请先保存或取消当前编辑，再导入 JSON。',true);return false;}
+  if(!nativeBridge){get('rf-json-file').click();return true;}
+  try{const result=await nativeBridge.postMessage({action:'pickJSON'});return result.raw===null?false:previewImportJSON(result.raw);}
+  catch(error){showExportStatus('JSON 导入失败：'+error.message,true);return false;}
+ }
+ get('rf-json-file').addEventListener('change',async event=>{const file=event.target.files[0];event.target.value='';if(!file)return;if(file.size>16*1024*1024){showExportStatus('JSON 文件不能超过 16 MB。',true);return;}previewImportJSON(await file.text());});
+ importMode.addEventListener('change',refreshImportPreview);get('rf-import-cancel').addEventListener('click',()=>importPicker.close());
+ importForm.addEventListener('submit',async event=>{
+  event.preventDefault();get('rf-import-go').disabled=true;
+  const response=await executeCommand({action:'import',data:importPrepared,mode:importMode.value},true);
+  if(response.ok){importPicker.close();showExportStatus('JSON 已导入：新增 '+response.data.added+' 项，更新 '+response.data.updated+' 项，跳过 '+response.data.skipped+' 项。');}
+  else{get('rf-import-error').textContent=response.error.message;get('rf-import-go').disabled=false;}
+ });
+ importPicker.addEventListener('cancel',event=>{if(saving)event.preventDefault();});
+ importPicker.addEventListener('close',()=>{importPrepared=null;});
+ async function command(name){if(name==='discard'){if(saving)return false;get('rf-discard').close();pendingAction=null;closePanel(true);return true;}if(saving||get('rf-discard').open||monthPicker.open||get('rf-import-picker').open)return false;if(name==='exportJSON')return requestJSON();if(name==='importJSON')return requestImportJSON();if(name==='summary'){const action=()=>{closePanel(true);setView(state.view==='summary'?'month':'summary');get('rf-view').focus({preventScroll:true});};if(mayLeave(action))action();return true;}if(name==='new')edit();else if(name==='save')return editor?await editor.submit():true;else if(name==='close')closePanel();else if(name==='previous')await shiftMonth(-1);else if(name==='next')await shiftMonth(1);else if(name==='undo')return canUndoDeletion()?await undoDeletion():false;}
+ window.CalendarApp={command,exportJSON,executeCommand,previewImportJSON,setReminderIssue,refreshDate,canUndoDeletion,editRequirement(id){if(!req(id)||saving)return false;edit(id);return true;},deleteRequirement,openRequirement(id){if(saving){queuedNotification=id;return true;}if(!req(id)){setReminderIssue('此提醒对应的需求已删除或不在当前数据中。');return false;}const action=()=>{setView('month');const current=req(id);if(!current){setReminderIssue('此提醒对应的需求已删除或不在当前数据中。');return;}state.anchor=current.start;render();get('rf-calendar').scrollTop=0;detail(id,undefined,true);revealCalendarRequirement(id);};if(mayLeave(action))action();return true;},hasUnsavedChanges:()=>saving||!!editor?.isDirty(),isSaving:()=>saving,exportSnapshot:()=>JSON.stringify(Model.snapshot({version:Model.VERSION,anchor:state.anchor,requirements})),async restoreSnapshot(raw){if(saving||editor?.isDirty())return false;let next;try{next=Model.snapshot(JSON.parse(raw));}catch(error){showStorageIssue(error.message);return false;}const previous=state.anchor;state.anchor=next.anchor;setSaving(true);const ok=await save(next.requirements,true);setSaving(false);if(!ok){state.anchor=previous;return false;}requirements=next.requirements;deleted=null;get('rf-toast').hidden=true;closePanel(true);render();return true;}};
  get('rf-view').addEventListener('click',()=>command('summary'));
- get('rf-close').addEventListener('click',()=>command('close'));get('rf-prev').addEventListener('click',()=>command('previous'));get('rf-next').addEventListener('click',()=>command('next'));
- window.addEventListener('keydown',event=>{if(event.isComposing||event.defaultPrevented||monthPicker.open)return;const modifier=event.metaKey||event.ctrlKey;const key=event.key.toLowerCase();if(modifier&&!event.altKey&&!event.shiftKey&&key==='f'&&state.view==='summary'&&!get('rf-discard').open){event.preventDefault();const search=get('rf-summary').querySelector('[data-summary-control=query]');search?.focus();search?.select();}else if(modifier&&!event.altKey&&!event.shiftKey&&key==='z'&&canUndoDeletion()){event.preventDefault();void command('undo');}else if(modifier&&!event.altKey&&['n','s'].includes(key)){event.preventDefault();command(key==='n'?'new':'save');}else if(modifier&&event.altKey&&['arrowleft','arrowright'].includes(key)){event.preventDefault();command(key==='arrowleft'?'previous':'next');}else if(event.key==='Escape'&&!dateSelection&&!barSelection&&!get('rf-detail').hidden&&!get('rf-discard').open){event.preventDefault();command('close');}});render();
+ get('rf-close').addEventListener('click',()=>command('close'));
+ window.addEventListener('keydown',event=>{if(event.isComposing||event.defaultPrevented||monthPicker.open||get('rf-import-picker').open)return;const modifier=event.metaKey||event.ctrlKey;const key=event.key.toLowerCase();if(modifier&&!event.altKey&&!event.shiftKey&&key==='f'&&state.view==='summary'&&!get('rf-discard').open){event.preventDefault();const search=get('rf-summary').querySelector('[data-summary-control=query]');search?.focus();search?.select();}else if(modifier&&!event.altKey&&!event.shiftKey&&key==='z'&&canUndoDeletion()){event.preventDefault();void command('undo');}else if(modifier&&!event.altKey&&['n','s'].includes(key)){event.preventDefault();command(key==='n'?'new':'save');}else if(modifier&&event.altKey&&['arrowleft','arrowright'].includes(key)){event.preventDefault();command(key==='arrowleft'?'previous':'next');}else if(event.key==='Escape'&&!dateSelection&&!barSelection&&!get('rf-detail').hidden&&!get('rf-discard').open){event.preventDefault();command('close');}});render();
  const calendar=get('rf-calendar');
+ // Keep native scrolling inside a busy month, then use only the distance
+ // beyond its edge. Direction changes start a new gesture even during momentum.
+ let monthWheelTime=-Infinity,monthWheelDistance=0,monthWheelDirection=0,monthWheelLocked=false;
+ let monthWheelLast=0,monthWheelPeak=0,monthWheelDecayed=false,monthWheelTurnTime=-Infinity;
+ let monthWheelNavigation=null,monthWheelPending=null;
+ const monthWheelBlocked=()=>state.view!=='month'||monthPicker.open||get('rf-import-picker').open||get('rf-discard').open||dateSelection||barSelection;
+ function commitWheelMonth(next,direction){
+  if(monthWheelNavigation){monthWheelPending={next,direction,anchor:state.anchor};return;}
+  monthWheelPending=null;
+  const navigation=navigateToMonth(next,direction);monthWheelNavigation=navigation;
+  void navigation.then(ok=>{
+   if(monthWheelNavigation!==navigation)return;monthWheelNavigation=null;
+   const pending=monthWheelPending;monthWheelPending=null;
+   if(ok&&pending&&pending.anchor===state.anchor&&!saving&&!monthWheelBlocked())commitWheelMonth(pending.next,pending.direction);
+  },()=>{monthWheelNavigation=null;monthWheelPending=null;});
+ }
+ calendar.addEventListener('wheel',event=>{
+  if(event.defaultPrevented||event.ctrlKey||event.metaKey||event.altKey||event.shiftKey||!event.deltaY||Math.abs(event.deltaX)>=Math.abs(event.deltaY))return;
+  const unit=event.deltaMode===1?20:event.deltaMode===2?calendar.clientHeight:1;
+  const delta=event.deltaY*unit,magnitude=Math.abs(delta),direction=Math.sign(delta),now=performance.now();
+  // Subpixel tail noise must not keep extending a lock or reverse a gesture.
+  if(magnitude<.5)return;
+  const reversed=direction!==monthWheelDirection;
+  if(reversed&&magnitude<2&&now-monthWheelTime<180)return;
+  const renewed=monthWheelLocked&&monthWheelDecayed&&now-monthWheelTurnTime>100&&magnitude>=Math.max(10,monthWheelLast*2,monthWheelPeak*.4);
+  if(now-monthWheelTime>180||reversed||renewed){
+   monthWheelDistance=0;monthWheelLocked=false;monthWheelPeak=0;monthWheelDecayed=false;monthWheelDirection=direction;
+  }
+  monthWheelTime=now;monthWheelLast=magnitude;monthWheelPeak=Math.max(monthWheelPeak,magnitude);
+  if(monthWheelLocked&&magnitude<=Math.max(4,monthWheelPeak*.3))monthWheelDecayed=true;
+  if(monthWheelBlocked()||(saving&&!monthWheelNavigation)){
+   if(monthMotion||monthWheelLocked)event.preventDefault();
+   monthWheelDistance=0;monthWheelLocked=true;monthWheelPending=null;return;
+  }
+  const maxScroll=Math.max(0,calendar.scrollHeight-calendar.clientHeight),scroll=Math.max(0,Math.min(maxScroll,calendar.scrollTop));
+  const remaining=direction<0?scroll:maxScroll-scroll;
+  // Allow content to scroll immediately after a turn, including its momentum.
+  if(remaining>2&&magnitude<=remaining){
+   cancelMonthMotion();monthWheelDistance=0;return;
+  }
+  event.preventDefault();
+  // Even a locked momentum tail must be able to reach the content boundary.
+  if(remaining>2){calendar.scrollTop=direction<0?0:maxScroll;cancelMonthMotion();}
+  if(monthWheelLocked)return;
+  if(monthMotion?.phase==='settling'){
+   for(const animation of monthMotion.animations)animation.finish();cancelMonthMotion();
+  }else if(monthMotion?.phase==='returning'||monthMotion&&monthMotion.direction!==direction)cancelMonthMotion();
+  // Native scrolling would clamp here and discard the overflow. Apply the
+  // interior portion ourselves so this very event can also begin a page turn.
+  monthWheelDistance+=Math.max(0,magnitude-(remaining>2?remaining:0));
+  const next=Model.monthOffset(state.anchor,direction);
+  if(!next){cancelMonthMotion();monthWheelLocked=true;return;}
+  if(!monthWheelNavigation)previewMonthMotion(direction,next,monthWheelDistance);
+  if(monthWheelDistance<60)return;
+  monthWheelLocked=true;monthWheelTurnTime=now;monthWheelDecayed=false;
+  commitWheelMonth(next,direction);
+ },{passive:false});
+ calendar.addEventListener('pointerdown',cancelMonthMotion,{capture:true});
+ calendar.addEventListener('keydown',cancelMonthMotion,{capture:true});
+ window.addEventListener('resize',cancelMonthMotion);
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelMonthMotion();});
+ matchMedia('(prefers-reduced-motion:reduce)').addEventListener('change',cancelMonthMotion);
  const bandAt=node=>{const bar=node?.closest?.('.rf-bar');return bar&&calendar.contains(bar)?bar:null;};
  calendar.addEventListener('pointerover',event=>{if(event.pointerType==='touch'||barSelection?.dragged||saving)return;const bar=bandAt(event.target);if(bar)markBandState('is-hovered',bar.dataset.requirementId);});
  calendar.addEventListener('pointerout',event=>{const bar=bandAt(event.target);if(bar&&bandAt(event.relatedTarget)?.dataset.requirementId!==bar.dataset.requirementId)markBandState('is-hovered',null);});

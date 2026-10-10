@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-10",
+  "version": "0.5.2",
+  "ok": true,
+  "checks": {
+    "month-motion-existing.json": {
+      "ok": true,
+      "passed": 39
+    },
+    "month-motion.json": {
+      "ok": true,
+      "passed": 32
+    },
+    "month-motion-json.json": {
+      "ok": true,
+      "passed": 23
+    },
+    "date-indicators.json": {
+      "ok": true,
+      "passed": 2
+    },
+    "electronSmoke": {
+      "ok": true,
+      "passed": 46
+    }
+  },
+  "nodeTests": {
+    "passed": 64,
+    "failed": 0
+  },
+  "portableBuildTests": {
+    "passed": 1,
+    "failed": 0
+  },
+  "package": {
+    "payloadMatchesSignedBundle": true,
+    "version": "0.5.2",
+    "build": "12",
+    "installLocation": "/Applications",
+    "sha256": "7b032d76f04c16d271239d81d417fef69892b3f7aa917d7e8f9d2965f79fd480"
+  },
+  "scope": "Native WebKit intermediate animation geometry and synthetic gestures; native JSON and persistence; Electron UI smoke; actual decoded package verified. Physical trackpad feel not measured.",
+  "sources": {
+    "src/app.js": "373963bf1bfb9a989a8b0105913cf454d8b1c2ea469805897328d43847af4ffc",
+    "src/styles.css": "a47e77880ce3536e0459752e0faff511840563d315d290a1ed6180e12b55c5bc",
+    "src/index.html": "e70f673988d1a692c5fd3ec1da7c32baaa2d822a5290a0c2d7cc035fa353f314",
+    "scripts/build-macos.sh": "4c1815b959073822cfe7d87cb7fdb695276058663c6e38debabec16a5b0d698a",
+    "scripts/build-installer-macos.sh": "4a93cbcc28184e1b29306cd151fa2926bda1efa71b6d749fe90c10976d605aba",
+    "tests/desktop-month-motion.js": "f9a97282a681ace1dc77dfe570455e8783a46092a86557808b91710bb495f5b8",
+    "tests/desktop-month-wheel.js": "35c05c3c1c2e876493dd2d9ac1d82d38fccbcf3d2506932c48386bd92bd4e72e"
+  }
+}

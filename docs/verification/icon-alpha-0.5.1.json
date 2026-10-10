@@ -1,0 +1,101 @@
+{
+  "version": "0.5.1",
+  "date": "2026-10-10",
+  "ok": true,
+  "cause": "Original rounded icon had opaque black corners and no alpha channel.",
+  "fix": "Transparent icon asset; native iconset rebuilt with alpha at every size; unique icon filename and build 11.",
+  "checks": [
+    {
+      "borderMaxAlpha": 0,
+      "file": "work/icon-fix/verified.iconset/icon_128x128.png",
+      "hasAlpha": true,
+      "height": 128,
+      "transparentPixels": 4938,
+      "visibleBlackPixels": 0,
+      "width": 128
+    },
+    {
+      "borderMaxAlpha": 0.00392156862745098,
+      "file": "work/icon-fix/verified.iconset/icon_128x128@2x.png",
+      "hasAlpha": true,
+      "height": 256,
+      "transparentPixels": 19920,
+      "visibleBlackPixels": 0,
+      "width": 256
+    },
+    {
+      "borderMaxAlpha": 0,
+      "file": "work/icon-fix/verified.iconset/icon_16x16.png",
+      "hasAlpha": true,
+      "height": 16,
+      "transparentPixels": 72,
+      "visibleBlackPixels": 0,
+      "width": 16
+    },
+    {
+      "borderMaxAlpha": 0,
+      "file": "work/icon-fix/verified.iconset/icon_16x16@2x.png",
+      "hasAlpha": true,
+      "height": 32,
+      "transparentPixels": 286,
+      "visibleBlackPixels": 0,
+      "width": 32
+    },
+    {
+      "borderMaxAlpha": 0.00392156862745098,
+      "file": "work/icon-fix/verified.iconset/icon_256x256.png",
+      "hasAlpha": true,
+      "height": 256,
+      "transparentPixels": 19920,
+      "visibleBlackPixels": 0,
+      "width": 256
+    },
+    {
+      "borderMaxAlpha": 0.00392156862745098,
+      "file": "work/icon-fix/verified.iconset/icon_256x256@2x.png",
+      "hasAlpha": true,
+      "height": 512,
+      "transparentPixels": 79750,
+      "visibleBlackPixels": 0,
+      "width": 512
+    },
+    {
+      "borderMaxAlpha": 0,
+      "file": "work/icon-fix/verified.iconset/icon_32x32.png",
+      "hasAlpha": true,
+      "height": 32,
+      "transparentPixels": 286,
+      "visibleBlackPixels": 0,
+      "width": 32
+    },
+    {
+      "borderMaxAlpha": 0,
+      "file": "work/icon-fix/verified.iconset/icon_32x32@2x.png",
+      "hasAlpha": true,
+      "height": 64,
+      "transparentPixels": 1212,
+      "visibleBlackPixels": 0,
+      "width": 64
+    },
+    {
+      "borderMaxAlpha": 0.00392156862745098,
+      "file": "work/icon-fix/verified.iconset/icon_512x512.png",
+      "hasAlpha": true,
+      "height": 512,
+      "transparentPixels": 79750,
+      "visibleBlackPixels": 0,
+      "width": 512
+    },
+    {
+      "borderMaxAlpha": 0.00392156862745098,
+      "file": "work/icon-fix/verified.iconset/icon_512x512@2x.png",
+      "hasAlpha": true,
+      "height": 1024,
+      "transparentPixels": 318341,
+      "visibleBlackPixels": 0,
+      "width": 1024
+    }
+  ],
+  "assetSHA256": "3c5ae32c079db2c2f126abdd5fdfe6b7ff105ea8ad710e8cc6c0d4876491a6bd",
+  "scope": "Actual packaged icns decoded and alpha/pixel data verified. Finder and Dock visual appearance not verified interactively."
+}

@@ -1,0 +1,10 @@
+#!/bin/sh
+REQCAL_BASE=$(CDPATH= cd -P "$(dirname "$0")" && pwd) || exit 4
+if [ -x "$REQCAL_BASE/需求日历.app/Contents/MacOS/reqcal" ]; then
+  exec "$REQCAL_BASE/需求日历.app/Contents/MacOS/reqcal" "$@"
+fi
+if [ -x "$REQCAL_BASE/../dist/需求日历.app/Contents/MacOS/reqcal" ]; then
+  exec "$REQCAL_BASE/../dist/需求日历.app/Contents/MacOS/reqcal" "$@"
+fi
+printf '%s\n' '{"ok":false,"error":{"code":"APP_NOT_FOUND","message":"请把 reqcal 和新版需求日历.app 放在同一目录，或先构建应用。"}}'
+exit 4

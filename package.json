@@ -1,14 +1,16 @@
 {
   "name": "requirement-calendar",
-  "version": "0.4.0",
+  "version": "0.5.3",
   "description": "面向程序员的需求排期日历",
   "author": "11eleve",
   "private": true,
   "main": "electron/main.cjs",
-  "engines": { "node": ">=22.12.0" },
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "desktop": "electron .",
-    "test": "node --test tests/model.test.cjs tests/startup.test.cjs tests/electron.test.cjs tests/planning.test.cjs tests/workbook.test.cjs",
+    "test": "node --test tests/model.test.cjs tests/startup.test.cjs tests/electron.test.cjs tests/planning.test.cjs tests/commands.test.cjs",
     "test:desktop": "electron . --calendar-smoke-test",
     "dist:win": "electron-builder --win nsis --x64 --publish never"
   },
@@ -20,10 +22,30 @@
     "appId": "dev.11eleve.requirement-calendar",
     "productName": "需求日历",
     "asar": true,
-    "directories": { "output": "dist/windows" },
-    "files": ["electron/**", "src/**", "assets/app-icon.png", "package.json", "THIRD_PARTY_NOTICES.md"],
-    "extraResources": [{ "from": "electron/windows-reminders.ps1", "to": "windows-reminders.ps1" }],
-    "protocols": [{ "name": "需求日历提醒", "schemes": ["requirement-calendar"] }],
+    "directories": {
+      "output": "dist/windows"
+    },
+    "files": [
+      "electron/**",
+      "src/**",
+      "assets/app-icon.png",
+      "package.json",
+      "THIRD_PARTY_NOTICES.md"
+    ],
+    "extraResources": [
+      {
+        "from": "electron/windows-reminders.ps1",
+        "to": "windows-reminders.ps1"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "需求日历提醒",
+        "schemes": [
+          "requirement-calendar"
+        ]
+      }
+    ],
     "win": {
       "target": "nsis",
       "icon": "assets/app-icon.png",

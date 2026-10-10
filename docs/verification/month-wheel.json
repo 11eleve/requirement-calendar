@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "result": {
+    "checks": [
+      "restore 2026-10-01",
+      "empty native month fits in the viewport",
+      "a small accidental movement does not flip",
+      "downward trackpad deltas accumulate to the next month",
+      "continuous trackpad momentum cannot skip additional months; actual 2026-11",
+      "line-mode mouse wheel returns to the previous month",
+      "page-mode wheels also navigate",
+      "reversing direction resets the movement threshold",
+      "horizontal gestures keep their native behavior",
+      "ctrlKey is not captured",
+      "metaKey is not captured",
+      "shiftKey is not captured",
+      "altKey is not captured",
+      "horizontal and modified gestures do not change month",
+      "restore 2026-10-01",
+      "scrolling inside dense content keeps native scrolling enabled",
+      "interior scrolling does not turn the month",
+      "the bottom edge consumes the month-switch gesture",
+      "downward navigation starts the next month at its beginning",
+      "upward navigation resumes at the previous month end",
+      "wheel navigation preserves all requirement data",
+      "wheel navigation preserves the unsaved editor",
+      "month navigation preserves the independent editor scroll position; 120 -> 120",
+      "editor scrolling never turns the calendar",
+      "an open month picker blocks wheel navigation",
+      "dirty editor opens the discard confirmation",
+      "a discard confirmation blocks wheel navigation",
+      "restore 2026-10-01",
+      "failed persistence restores the month and original scroll position",
+      "a fresh gesture retries the failed navigation successfully",
+      "restore 2026-12-01",
+      "downward navigation crosses the year boundary",
+      "upward navigation crosses the year boundary",
+      "restore 0001-01-01",
+      "the earliest supported month is bounded",
+      "restore 9999-12-01",
+      "the latest supported month is bounded",
+      "restore 2026-10-01",
+      "summary scrolling never changes the calendar month"
+    ],
+    "scope": "synthetic wheel dispatch in actual native WebKit; native save and scroll geometry verified; physical trackpad feel remains manual"
+  },
+  "date": "2026-10-10",
+  "nodeTests": {
+    "passed": 54,
+    "failed": 0
+  },
+  "build": "macOS build, portable HTML build and strict code signature verification passed",
+  "manualVerification": "Mac was locked; physical trackpad interaction was not verified.",
+  "sources": {
+    "src/app.js": "4a9401beb80f0c6098cfc86d2ed5853ebf931f918d1cb85c360ca51e90832b33",
+    "tests/desktop-month-wheel.js": "83d4774f6c74c24de86a6574e79c6faec6e80080233484653ef7481f8a1cd99d",
+    "index.html": "9402d57ce0027509248fb4cfa11f7781ce0bc3af3adaa92071cf060294f3838c"
+  }
+}

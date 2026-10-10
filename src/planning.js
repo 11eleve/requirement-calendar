@@ -1,4 +1,4 @@
-/* Read-only planning projections shared by summaries and workbook export. */
+/* Read-only planning projections shared by summaries and JSON export. */
 (function(scope){
  'use strict';
  const Model=typeof module!=='undefined'&&module.exports?require('./model.js'):scope.CalendarModel;

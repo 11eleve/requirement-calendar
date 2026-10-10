@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-10",
+  "version": "0.5.0",
+  "ok": true,
+  "checks": {
+    "json-commands-ui.json": {
+      "ok": true,
+      "passed": 23
+    },
+    "cli-month-wheel.json": {
+      "ok": true,
+      "passed": 39
+    },
+    "cli-native.json": {
+      "ok": true,
+      "passed": 23
+    }
+  },
+  "nodeTests": {
+    "passed": 64,
+    "failed": 0
+  },
+  "portableBuildTests": {
+    "passed": 1,
+    "failed": 0
+  },
+  "electronSmokeTests": {
+    "passed": 46,
+    "failed": 0
+  },
+  "scope": "Apple Silicon macOS native CLI, isolated persisted data and synthetic actions in actual native WebKit. Physical trackpad interaction not verified. No Windows release included.",
+  "sources": {
+    "src/app.js": "3ec34c6e089c12a1867e10d2ea77c245748847be79214913d1aec93c7e560671",
+    "src/commands.js": "c3efc9747877911eb0d80175a44a3cff1e3e3d1f0e1c9627fccdb30dcc8d917b",
+    "src/index.html": "e70f673988d1a692c5fd3ec1da7c32baaa2d822a5290a0c2d7cc035fa353f314",
+    "src/styles.css": "f2571d167f4c493314482121dd8fbd5f2f39dca6a25e2c27592347fe5be8bfc8",
+    "native/App.swift": "b8b0cd5876d4c833ecc1b1342c4e2149d687d71cae2fd08c6d28a53bb361bb33",
+    "native/CLI.swift": "c139e42cb91fbbb7d1978053888f76fc6dc1ada50e302d60d93a393698b5ee19",
+    "native/CommandServer.swift": "6827a64272bfff41745bab913d5fa5ceff1f28edef11a4447e688fced09d89d0",
+    "tests/commands.test.cjs": "338cd9b711603049bea20657e2b2c9219386165c2a69bfe1bb1cee2af20e03cc",
+    "tests/desktop-json-commands.js": "b4dfab0656935d51f00a4613f1d8bd73ff21415d0ffa17e1fd66c634018f12e9",
+    "tests/cli-native.py": "f734844c900475bb26d1b8988cbd7c505c7c56626e5ae1050eb6e9bb4049279d"
+  }
+}

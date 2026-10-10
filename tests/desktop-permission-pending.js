@@ -4,7 +4,7 @@ const bridge=webkit.messageHandlers.calendar;
 const nextDay=CalendarModel.add(CalendarModel.localDate(),1);
 const item={id:'permission-pending',title:'通知等待不阻塞保存',start:nextDay,end:nextDay,phases:[],resources:[],tasks:[],done:[],note:'',reminder:nextDay+'T09:00'};
 assert(await CalendarApp.restoreSnapshot(JSON.stringify({version:6,anchor:nextDay,requirements:[item]})),'file save returns while notification permission is still pending');
-assert(!CalendarApp.isSaving()&&!document.querySelector('#rf-next').disabled,'requirement controls unlock after file persistence');
+assert(!CalendarApp.isSaving()&&!document.querySelector('#rf-title').disabled,'requirement controls unlock after file persistence');
 let pending=await bridge.postMessage({action:'verifyReminders',wait:false});
 assert(pending.permissionRequests===1&&pending.ids.length===0,'isolated permission request is pending and notification has not been scheduled');
 await CalendarApp.command('new');

@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-10",
+  "nativeStorageAssertions": 21,
+  "nativeLayout": {
+    "ok": true,
+    "result": {
+      "appearance": "light",
+      "checks": [
+        "isolated design fixture restored",
+        "six-week months retain their complete calendar structure",
+        "a normal six-week month fits the default desktop viewport",
+        "the toolbar has no month arrows or new-requirement plus",
+        "the month title remains centered without edge controls",
+        "the opened inspector remains inside the desktop viewport",
+        "every phase remains inside its single requirement band",
+        "phase decoration creates no extra calendar requirements",
+        "long resources retain access to save actions",
+        "invalid deep resource links remain rejected",
+        "validation focuses a deep field visibly between the panel top and actions",
+        "the product layout is also checked in a smaller native window",
+        "the small-window editor scrolls within its own surface",
+        "the small-window application has no page overflow",
+        "isolated design fixture restored",
+        "dense requirements scroll independently of the editor",
+        "the redesigned editing range remains present in a dense month"
+      ],
+      "scope": "real WebKit layout and file bridge; animations completed before geometry checks; does not assess trusted mouse feel",
+      "viewport": [
+        980,
+        668
+      ]
+    }
+  },
+  "sources": {
+    "src/index.html": "dc1997296cf08c01a6025f06f56e177ae814b9bb46a9a9cb524882d46e53d4ee",
+    "src/styles.css": "d44acfa64f75075ad8913c0d987f871316ee0fa74be0bcebb3c7cb2fe9473bda",
+    "src/app.js": "55cc0f13503e13125d53f088d5d411075f9b52045a716cff08d10a389ab5c0c9",
+    "native/DataStore.swift": "49163b77d9a0c326706c2d02af5c9551bc94f0b7e561c0f1360398c9b319eff3",
+    "index.html": "b09f8708197f6b8e06a9600cbbd4096fd62375fd3c76c200f10ab9b1195854a6"
+  },
+  "dataStorage": "Existing independent local JSON file store; save button commits requirements. Unsaved drafts remain in memory.",
+  "nativeWheel": {
+    "ok": true,
+    "result": {
+      "checks": [
+        "restore 2026-10-01",
+        "empty native month fits in the viewport",
+        "a small accidental movement does not flip",
+        "downward trackpad deltas accumulate to the next month",
+        "continuous trackpad momentum cannot skip additional months; actual 2026-11",
+        "line-mode mouse wheel returns to the previous month",
+        "page-mode wheels also navigate",
+        "reversing direction resets the movement threshold",
+        "horizontal gestures keep their native behavior",
+        "ctrlKey is not captured",
+        "metaKey is not captured",
+        "shiftKey is not captured",
+        "altKey is not captured",
+        "horizontal and modified gestures do not change month",
+        "restore 2026-10-01",
+        "scrolling inside dense content keeps native scrolling enabled",
+        "interior scrolling does not turn the month",
+        "the bottom edge consumes the month-switch gesture",
+        "downward navigation starts the next month at its beginning",
+        "upward navigation resumes at the previous month end",
+        "wheel navigation preserves all requirement data",
+        "wheel navigation preserves the unsaved editor",
+        "month navigation preserves the independent editor scroll position; 120 -> 120",
+        "editor scrolling never turns the calendar",
+        "an open month picker blocks wheel navigation",
+        "dirty editor opens the discard confirmation",
+        "a discard confirmation blocks wheel navigation",
+        "restore 2026-10-01",
+        "failed persistence restores the month and original scroll position",
+        "a fresh gesture retries the failed navigation successfully",
+        "restore 2026-12-01",
+        "downward navigation crosses the year boundary",
+        "upward navigation crosses the year boundary",
+        "restore 0001-01-01",
+        "the earliest supported month is bounded",
+        "restore 9999-12-01",
+        "the latest supported month is bounded",
+        "restore 2026-10-01",
+        "summary scrolling never changes the calendar month"
+      ],
+      "scope": "synthetic wheel dispatch in actual native WebKit; native save and scroll geometry verified; physical trackpad feel remains manual"
+    }
+  }
+}

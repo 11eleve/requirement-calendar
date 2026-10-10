@@ -7,7 +7,6 @@ const {DataStore,decode,LIMIT}=require('./data-store.cjs');
 const {ENTRY,externalURL,requirementID,trustedSender}=require('./policy.cjs');
 const {APP_ID,TOAST_CLSID,Reminders}=require('./reminders.cjs');
 const {fetchIcon}=require('./site-icons.cjs');
-const {workbookBytes,writeWorkbook}=require('./workbook.cjs');
 const smoke=process.argv.includes('--calendar-smoke-test');
 const root=path.resolve(__dirname,'..');
 let window,store,reminders,ready=false,closing=false,closePrompt=false,notificationID=null,reminderIssue=null;
@@ -28,7 +27,7 @@ else {
 }
 async function invoke(method,...args) {
   if(!window||window.isDestroyed()||!ready)return false;
-  if(!['command','openRequirement','editRequirement','deleteRequirement','hasUnsavedChanges','isSaving','exportSnapshot','exportWorkbook','restoreSnapshot','refreshDate','setReminderIssue'].includes(method))throw new Error('Invalid UI method');
+  if(!['command','openRequirement','editRequirement','deleteRequirement','hasUnsavedChanges','isSaving','exportSnapshot','exportJSON','executeCommand','restoreSnapshot','refreshDate','setReminderIssue'].includes(method))throw new Error('Invalid UI method');
   return window.webContents.executeJavaScript(`window.CalendarReady.then(()=>window.CalendarApp[${JSON.stringify(method)}](...${JSON.stringify(args)}))`);
 }
 function report(error) { if(window&&!window.isDestroyed())dialog.showMessageBox(window,{type:'error',title:'需求日历',message:error.message||String(error)}); }
@@ -45,29 +44,18 @@ async function confirmSaved() {
   if(response!==0)return false;
   await invoke('command','save');return !await invoke('hasUnsavedChanges');
 }
-async function exportBackup() {
-  if(await invoke('isSaving'))return;
-  const {canceled,filePath}=await dialog.showSaveDialog(window,{title:'导出已保存的需求',defaultPath:'需求日历备份.json',filters:[{name:'JSON 备份',extensions:['json']}]});
-  if(canceled||!filePath)return;
-  const raw=await invoke('exportSnapshot');decode(raw);await fs.writeFile(filePath,raw,'utf8');
-}
-async function exportExcel(scope='all') {
-  if(!['all','summary'].includes(scope))throw new Error('导出范围无效。');
-  const workbook=await invoke('exportWorkbook',scope),bytes=workbookBytes(workbook);
-  const selected=smoke?{canceled:false,filePath:path.join(smokeDirectory,workbook.name)}:await dialog.showSaveDialog(window,{title:'导出 Excel 排期',defaultPath:workbook.name,filters:[{name:'Excel 工作簿',extensions:['xlsx']}]});
+async function exportJSON(scope='all') {
+  if(!['all','summary'].includes(scope))throw Error('导出范围无效。');
+  const raw=await invoke('exportJSON',scope);decode(raw);
+  const selected=smoke?{canceled:false,filePath:path.join(smokeDirectory,'requirements.json')}:await dialog.showSaveDialog(window,{title:'导出需求 JSON',defaultPath:'需求日历.json',filters:[{name:'JSON',extensions:['json']}]});
   if(selected.canceled||!selected.filePath)return {saved:false};
-  await writeWorkbook(selected.filePath,bytes);return {saved:true,bytes:bytes.length};
+  await store.atomic(selected.filePath,raw);return {saved:true,bytes:Buffer.byteLength(raw)};
 }
-async function restoreBackup() {
-  if(!await confirmSaved())return;
-  const {canceled,filePaths}=await dialog.showOpenDialog(window,{title:'恢复需求备份',properties:['openFile'],filters:[{name:'JSON 备份',extensions:['json']}]});
-  if(canceled)return;
-  if((await fs.stat(filePaths[0])).size>LIMIT)throw new Error('备份超过 16 MB。');
-  const raw=await fs.readFile(filePaths[0],'utf8');decode(raw);
-  const {response}=await dialog.showMessageBox(window,{type:'question',title:'恢复备份',message:'用此备份替换当前需求？',detail:'当前文件会另外保存在数据目录中。',buttons:['恢复备份','取消'],defaultId:1,cancelId:1,noLink:true});
-  if(response!==0)return;
-  if(await invoke('hasUnsavedChanges'))return;
-  await invoke('restoreSnapshot',raw);
+async function pickJSON() {
+  const {canceled,filePaths}=await dialog.showOpenDialog(window,{title:'导入需求 JSON',properties:['openFile'],filters:[{name:'JSON',extensions:['json']}]});
+  if(canceled)return {raw:null};
+  if((await fs.stat(filePaths[0])).size>LIMIT)throw Error('JSON 文件不能超过 16 MB。');
+  return {raw:await fs.readFile(filePaths[0],'utf8')};
 }
 function menu() {
   const safe=fn=>()=>{void fn().catch(report);};
@@ -76,9 +64,8 @@ function menu() {
       {label:'新建需求',accelerator:'CmdOrCtrl+N',click:()=>act('command','new')},
       {label:'保存需求',accelerator:'CmdOrCtrl+S',click:()=>act('command','save')},
       {label:'关闭详情',accelerator:'CmdOrCtrl+W',click:()=>act('command','close')},{type:'separator'},
-      {label:'导出 Excel 排期…',click:safe(()=>exportExcel())},
-      {label:'导出 JSON 备份…',click:safe(exportBackup)},
-      {label:'恢复 JSON 备份…',click:safe(restoreBackup)},
+      {label:'导入需求 JSON…',click:()=>act('command','importJSON')},
+      {label:'导出需求 JSON…',click:safe(()=>exportJSON())},
       {label:'打开数据文件夹',click:safe(async()=>{const issue=await shell.openPath(store.directory);if(issue)throw new Error(issue);})},
       {type:'separator'},{label:'退出',accelerator:'Alt+F4',click:()=>window.close()}
     ]},
@@ -107,7 +94,7 @@ async function start() {
       reminderIssue=issue;
       if(ready)void window.webContents.executeJavaScript(`(async()=>{await window.CalendarReady;while(window.CalendarApp.isSaving())await new Promise(resolve=>setTimeout(resolve,20));window.CalendarApp.setReminderIssue(${JSON.stringify(issue)});})()`).catch(()=>{});
     }});
-  const assets=new Set(['index.html','styles.css','model.js','planning.js','workbook.js','storage.js','icons.js','site-icons.js','disclosure.js','startup.js','app.js']);
+  const assets=new Set(['index.html','styles.css','model.js','planning.js','commands.js','storage.js','icons.js','site-icons.js','disclosure.js','startup.js','app.js']);
   protocol.handle('calendar-app',async request=>{
     const url=new URL(request.url),file=url.pathname.slice(1);
     if(url.protocol!=='calendar-app:'||url.hostname!=='local'||url.port||url.username||url.password||!assets.has(file)||url.search||request.method!=='GET')return new Response('',{status:404});
@@ -153,7 +140,8 @@ async function start() {
         void reminders.reconcile(data);
         return {reminderIssue:'需求已保存，正在确认系统提醒状态…'};
       }
-      case 'exportExcel':return await exportExcel(message.scope??'all');
+      case 'exportJSON':return await exportJSON(message.scope??'all');
+      case 'pickJSON':return await pickJSON();
       case 'resourceIcon':return typeof message.url==='string'?await fetchIcon(message.url,nativeImage):null;
       case 'contextMenu': {
         if(typeof message.id!=='string'||message.id.length>256)throw new Error('无效的需求标识。');

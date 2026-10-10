@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-10",
+  "version": "0.5.3",
+  "ok": true,
+  "checks": {
+    "desktop-month-wheel-recovery": {
+      "ok": true,
+      "passed": 53
+    },
+    "desktop-month-wheel": {
+      "ok": true,
+      "passed": 39
+    },
+    "desktop-month-motion": {
+      "ok": true,
+      "passed": 32
+    },
+    "desktop-json-commands": {
+      "ok": true,
+      "passed": 23
+    },
+    "electronSmoke": {
+      "passed": 46
+    }
+  },
+  "nodeTests": {
+    "passed": 64,
+    "failed": 0
+  },
+  "portableBuildTests": {
+    "passed": 1,
+    "failed": 0
+  },
+  "package": {
+    "payloadMatchesSignedBundle": true,
+    "version": "0.5.3",
+    "build": "13",
+    "installLocation": "/Applications",
+    "sha256": "19c551ba83bb767eec707ab2b14162ac12715cf497d9f49bbc691e95ca8095fb"
+  },
+  "scope": "Synthetic wheel dispatch in native WebKit with real geometry, animation and persistence; regression cases include immediate reversal, delayed saves, edge overflow and momentum. Physical trackpad feel not measured.",
+  "sources": {
+    "src/app.js": "d57d73f8878d668c2e90d6ffd1350565646ce34449bc167264edf93f9e3ce4f6",
+    "scripts/build-macos.sh": "7e6194c704a81b72eacf9b319dd37fb756f2fe4fc6b396c54cd0f3bf32a4d475",
+    "tests/desktop-month-wheel-recovery.js": "3055cf2c7f5544aa77e69d9436bbaa845f923aad113415dc8b9bf85dd301795a",
+    "tests/desktop-month-wheel.js": "35c05c3c1c2e876493dd2d9ac1d82d38fccbcf3d2506932c48386bd92bd4e72e",
+    "tests/desktop-month-motion.js": "f9a97282a681ace1dc77dfe570455e8783a46092a86557808b91710bb495f5b8"
+  }
+}

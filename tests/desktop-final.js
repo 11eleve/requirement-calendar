@@ -13,10 +13,10 @@ const restore=async(requirements,anchor='2026-10-08')=>{assert(await CalendarApp
 assert(snap().requirements.length===0&&!$('.rf-bar')&&$('#rf-detail').hidden,'36: a clean installation contains no sample requirements');
 assert((await bridge.postMessage({action:'verifyReminders'})).permissionRequests===0,'36: clean startup does not request notifications');
 await restore([item('early',{start:'0001-01-01',end:'0001-01-31'})],'0001-01-01');
-assert($('#rf-prev').disabled&&$('#rf-title').textContent==='1 年 1 月','37: first supported month renders without a year-1900 conversion');
+assert($('#rf-title').textContent==='1 年 1 月','37: first supported month renders without a year-1900 conversion');
 await CalendarApp.command('previous');assert(snap().anchor==='0001-01-01','37: previous-month command respects the lower bound');
 await restore([item('late',{start:'9999-12-01',end:'9999-12-31'})],'9999-12-31');
-assert($('#rf-next').disabled&&!$('.rf-date[data-date^="10000"]'),'37: final month disables navigation beyond the supported dates');
+assert(!$('.rf-date[data-date^="10000"]'),'37: final month renders no dates beyond the supported range');
 await CalendarApp.command('next');assert(snap().anchor==='9999-12-31','37: next-month command respects the upper bound');
 
 const histories=Array.from({length:40},(_,i)=>item('old-'+i,{start:'2025-01-01',end:'2025-03-01'}));
