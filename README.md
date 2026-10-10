@@ -1,4 +1,4 @@
-# 需求日历 0.5.3
+# 需求日历 0.5.4
 
 macOS 和 Windows 桌面版本：上下滚动切换月份，JSON 导入导出，命令行操作。需求保存在本机文件中。汇总页已移除“待办时间节点”区域，已有需求中的节点数据保留在详情和 JSON 中。Excel 导出已移除。
 
@@ -8,9 +8,9 @@ macOS 和 Windows 桌面版本：上下滚动切换月份，JSON 导入导出，
 
 | 系统 | 文件 | 安装方法 |
 | --- | --- | --- |
-| Mac：Apple Silicon，macOS 15+ | `RequirementCalendar-0.5.3-macOS-arm64.dmg` | 打开后将“需求日历”拖到 Applications |
-| Mac：同上 | `RequirementCalendar-0.5.3-macOS-arm64.pkg` | 双击，按安装向导操作 |
-| Windows x64 | `RequirementCalendar-0.5.3-x64-Setup.exe` | 双击，按安装向导操作 |
+| Mac：Apple Silicon，macOS 15+ | `RequirementCalendar-0.5.4-macOS-arm64.dmg` | 打开后将“需求日历”拖到 Applications |
+| Mac：同上 | `RequirementCalendar-0.5.4-macOS-arm64.pkg` | 双击，按安装向导操作 |
+| Windows x64 | `RequirementCalendar-0.5.4-x64-Setup.exe` | 双击，按安装向导操作 |
 
 当前 Mac 包尚未做 Apple Developer ID 签名和公证；首次打开如被拦截，确认来源后按 [Apple 说明](https://support.apple.com/zh-cn/102445) 在“系统设置 → 隐私与安全性”中选择“仍要打开”。更新前先退出旧版，需求数据会保留。Intel Mac 暂不支持。
 

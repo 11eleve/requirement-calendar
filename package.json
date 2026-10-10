@@ -1,6 +1,6 @@
 {
   "name": "requirement-calendar",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "面向程序员的需求排期日历",
   "author": "11eleve",
   "private": true,
@@ -53,7 +53,10 @@
       }
     ],
     "extraFiles": [
-      {"from": ".build/windows-cli/reqcal.exe", "to": "reqcal.exe"}
+      {
+        "from": ".build/windows-cli/reqcal.exe",
+        "to": "reqcal.exe"
+      }
     ],
     "protocols": [
       {

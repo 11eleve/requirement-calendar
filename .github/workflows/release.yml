@@ -106,9 +106,16 @@ jobs:
           $env:CALENDAR_SMOKE_OUTPUT = "$pwd/installed-smoke-windows.json"
           $process = Start-Process -FilePath "$installDir/RequirementCalendar.exe" -ArgumentList '--calendar-smoke-test' -Wait -PassThru
           if ($process.ExitCode -ne 0 -or !(Test-Path $env:CALENDAR_SMOKE_OUTPUT)) { throw 'Installed release smoke test failed' }
+          if (([Environment]::GetEnvironmentVariable('Path','User') -split ';') -inotcontains $installDir) { throw 'Release installer did not register reqcal PATH' }
           $env:CALENDAR_CLI_REPORT = "$pwd/installed-cli-windows.json"
           node tests/windows/cli-installed.cjs "$installDir/RequirementCalendar.exe"
           if ($LASTEXITCODE -ne 0) { throw 'Installed release CLI test failed' }
+          $before = @([Environment]::GetEnvironmentVariable('Path','User') -split ';' | Where-Object { $_ -ine $installDir -and $_ -ne '' })
+          $uninstaller = (Get-ChildItem "$installDir/Uninstall*.exe").FullName
+          $process = Start-Process -FilePath $uninstaller -ArgumentList @('/S',"_?=$installDir") -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw 'Release uninstaller failed' }
+          $after = @([Environment]::GetEnvironmentVariable('Path','User') -split ';' | Where-Object { $_ -ne '' })
+          if ($after -icontains $installDir -or (Compare-Object $before $after)) { throw 'Release uninstaller changed unrelated PATH entries' }
       - uses: actions/upload-artifact@v4
         with:
           name: release-windows

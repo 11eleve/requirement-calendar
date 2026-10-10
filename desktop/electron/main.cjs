@@ -18,7 +18,7 @@ let smokeDirectory,smokeStarted=false;
 let commandBroker=null;
 app.setName('RequirementCalendar');
 const isolatedDirectory=commandDirectory&&commandDirectory.toLowerCase()!==path.join(app.getPath('userData'),'data').toLowerCase();
-if(isolatedDirectory)app.setPath('userData',path.join(commandDirectory,'.electron'));
+if(isolatedDirectory){const profile=path.join(commandDirectory,'.electron');require('node:fs').mkdirSync(profile,{recursive:true});app.setPath('userData',profile);}
 app.setAppUserModelId(APP_ID);
 protocol.registerSchemesAsPrivileged([{scheme:'calendar-app',privileges:{standard:true,secure:true,supportFetchAPI:true}}]);
 if(smoke){smokeDirectory=require('node:fs').mkdtempSync(path.join(os.tmpdir(),'requirement-calendar-smoke-'));app.setPath('userData',smokeDirectory);}

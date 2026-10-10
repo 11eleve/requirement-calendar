@@ -2,6 +2,7 @@
 set -eu
 ROOT="${0:A:h:h}"
 APP="$ROOT/dist/需求日历.app"
+VERSION=$("${PYTHON:-python3}" -c 'import json,sys; print(json.load(open(sys.argv[1]))["version"])' "$ROOT/package.json")
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 # Python 3 is needed only to rebuild the portable interface, not to launch the app.
 "${PYTHON:-python3}" "$ROOT/scripts/build.py"
@@ -10,7 +11,7 @@ swiftc -parse-as-library -O -target "$(uname -m)-apple-macos15.0" -module-cache-
 swiftc -O -target "$(uname -m)-apple-macos15.0" -module-cache-path "$ROOT/.build/module-cache" "$ROOT/desktop/macos/CLI.swift" -o "$APP/Contents/MacOS/reqcal"
 cp "$ROOT/dist/web/index.html" "$APP/Contents/Resources/index.html"
 cp "$ROOT/THIRD_PARTY_NOTICES.md" "$APP/Contents/Resources/THIRD_PARTY_NOTICES.md"
-cat > "$APP/Contents/Info.plist" <<'PLIST'
+cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
@@ -18,8 +19,8 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
 <key>CFBundleName</key><string>需求日历</string>
 <key>CFBundleExecutable</key><string>RequirementCalendar</string>
 <key>CFBundlePackageType</key><string>APPL</string>
-<key>CFBundleShortVersionString</key><string>0.5.3</string>
-<key>CFBundleVersion</key><string>13</string>
+<key>CFBundleShortVersionString</key><string>$VERSION</string>
+<key>CFBundleVersion</key><string>14</string>
 <key>LSMinimumSystemVersion</key><string>15.0</string>
 <key>NSHighResolutionCapable</key><true/>
 </dict></plist>

@@ -12,7 +12,7 @@ async function run() {
   assert.equal(process.platform,'win32');
   const app = path.resolve(process.argv[2]),executable = path.join(path.dirname(app),'reqcal.exe');
   const directory = await fs.mkdtemp(path.join(os.tmpdir(),'reqcal-安装 空格-'));
-  const checks=[],check=(name,value)=>{assert.ok(value,name);checks.push(name);};
+  const checks=[],check=(name,value)=>{assert.ok(value,name);checks.push(name);console.log('PASS: '+name);};
   async function call(args,expected=0,stdin) {
     let result;
     try {
@@ -30,9 +30,11 @@ async function run() {
     return JSON.parse(stdout);
   }
   async function stop() {
-    for(const pid of await processes()) await execute('taskkill.exe',['/PID',String(pid),'/T','/F'],{windowsHide:true});
-    for(let i=0;i<100;i++){try{const response=await call(['status','--no-launch'],4);if(response.error.code==='APP_NOT_RUNNING')return;}catch{ }await new Promise(resolve=>setTimeout(resolve,50));}
-    throw Error('Isolated application did not stop');
+    const pids=await processes();
+    for(const pid of pids) await execute('taskkill.exe',['/PID',String(pid),'/T','/F'],{windowsHide:true});
+    let last;
+    for(let i=0;i<20;i++){try{const response=await call(['status','--no-launch'],4);if(response.error.code==='APP_NOT_RUNNING')return;last=response;}catch(error){last=error.message;}await new Promise(resolve=>setTimeout(resolve,50));}
+    throw Error('Isolated application did not stop; PIDs='+JSON.stringify(pids)+'; last='+JSON.stringify(last));
   }
   try {
     check('no-launch reports a missing app with exit code 4',(await call(['status','--no-launch'],4)).error.code==='APP_NOT_RUNNING');
@@ -59,6 +61,7 @@ async function run() {
     const result={ok:true,checks};
     await fs.writeFile(path.resolve(process.env.CALENDAR_CLI_REPORT||'installed-cli-windows.json'),JSON.stringify(result,null,2)+'\n');
     console.log(JSON.stringify(result,null,2));
+  } catch(error) { console.error('Installed CLI failure:',error);throw error;
   } finally { await stop(); await fs.rm(directory,{recursive:true,force:true}); }
 }
 run().catch(error=>{console.error(error);process.exitCode=1;});
