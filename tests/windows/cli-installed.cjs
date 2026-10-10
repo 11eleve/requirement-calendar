@@ -26,8 +26,11 @@ async function run() {
   const env={...process.env,REQCAL_TEST_APP:app,REQCAL_TEST_DATA:directory};
   async function processes() {
     const {stdout}=await execute('powershell.exe',['-NoProfile','-NonInteractive','-Command',
-      "$items=@(Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -ieq $env:REQCAL_TEST_APP -and $_.CommandLine -and $_.CommandLine.Contains('--calendar-data-dir') -and $_.CommandLine.Contains($env:REQCAL_TEST_DATA) } | ForEach-Object { $_.ProcessId }); ConvertTo-Json -Compress -InputObject $items"],{env,encoding:'utf8',windowsHide:true});
-    return JSON.parse(stdout);
+      "$items=@(Get-CimInstance Win32_Process | Where-Object { $_.Name -in @('RequirementCalendar.exe','reqcal.exe') } | Select-Object ProcessId,ParentProcessId,ExecutablePath,CommandLine); ConvertTo-Json -Compress -InputObject $items"],{env,encoding:'utf8',windowsHide:true});
+    const items=JSON.parse(stdout);
+    const selected=items.filter(item=>item.ExecutablePath?.toLowerCase()===app.toLowerCase()&&item.CommandLine?.includes('--calendar-data-dir')&&item.CommandLine.includes(directory));
+    if(!selected.length)console.log('Isolated process lookup:',JSON.stringify({app,directory,items}));
+    return selected.map(item=>item.ProcessId);
   }
   async function stop() {
     const pids=await processes();
