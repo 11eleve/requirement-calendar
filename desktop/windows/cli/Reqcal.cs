@@ -144,10 +144,16 @@ internal static class Reqcal {
                     Output(new Dictionary<string, object> { {"id", id}, {"request", request} });
                     string response = Timed(pending.Task, pipe);
                     Timed(WriteFrame(pipe, response), pipe);
+                    // Disconnect discards unread bytes on Windows. Wait until the
+                    // client has consumed the response before recycling the pipe.
+                    Timed(Task.Run(() => pipe.WaitForPipeDrain()), pipe);
                 } catch (Exception error) {
                     var actual = error is AggregateException ? error.GetBaseException() : error;
                     var cli = actual as CliError;
-                    try { Timed(WriteFrame(pipe, Json().Serialize(Error(cli == null ? "INVALID_JSON" : cli.Code, actual.Message))), pipe); } catch { }
+                    try {
+                        Timed(WriteFrame(pipe, Json().Serialize(Error(cli == null ? "INVALID_JSON" : cli.Code, actual.Message))), pipe);
+                        Timed(Task.Run(() => pipe.WaitForPipeDrain()), pipe);
+                    } catch { }
                 } finally {
                     pending = null;
                     if (!pipe.SafePipeHandle.IsClosed && pipe.IsConnected) pipe.Disconnect();

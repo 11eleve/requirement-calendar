@@ -6,7 +6,7 @@ const net = require('node:net');
 const {promisify} = require('node:util');
 const execute = promisify(require('node:child_process').execFile);
 
-async function cli(executable,directory,args,expected=0,input) {
+async function cli(executable,directory,args,expected=0) {
   let result;
   try { result = await execute(executable,[...args,'--data-dir',directory,'--no-launch'],{encoding:'utf8',windowsHide:true,maxBuffer:70*1024*1024,timeout:35000}); }
   catch (error) { result = error; }
@@ -27,7 +27,7 @@ async function run({executable,directory,window,invoke,broker}) {
   const call=(args,expected)=>cli(executable,directory,args,expected);
   const jsonFile=path.join(directory,'cli-中文.json');
   check('Windows native CLI schema shares the application command contract',(await call(['schema'])).data.commands.includes('preview-import'));
-  const record={id:'windows-cli',title:'命令行需求',start:'2026-10-12',end:'2026-10-16',note:'  中文\n$(literal) `code` "quote"\\path',phases:[{name:'开发',start:'2026-10-12',end:'2026-10-14'}],tasks:['验收'],done:[false],milestones:[{name:'发布',date:'2026-10-16'}]};
+  const record={id:'windows-cli',title:'命令行需求',start:'2026-10-12',end:'2026-10-16',note:'  中文\n$(literal) `code` "quote"\\path'+'😀中文\n'.repeat(3000),phases:[{name:'开发',start:'2026-10-12',end:'2026-10-14'}],tasks:['验收'],done:[false],milestones:[{name:'发布',date:'2026-10-16'}]};
   await fs.writeFile(jsonFile,JSON.stringify(record));
   const created=await call(['create','--file',jsonFile]);
   check('real reqcal.exe creates a record through the live named pipe',created.ok&&created.changed&&created.data.note===record.note);

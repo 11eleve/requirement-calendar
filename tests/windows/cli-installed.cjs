@@ -26,11 +26,11 @@ async function run() {
   const env={...process.env,REQCAL_TEST_APP:app,REQCAL_TEST_DATA:directory};
   async function processes() {
     const {stdout}=await execute('powershell.exe',['-NoProfile','-NonInteractive','-Command',
-      "$items=@(Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -ieq $env:REQCAL_TEST_APP -and $_.CommandLine -and $_.CommandLine.Contains($env:REQCAL_TEST_DATA) } | ForEach-Object { $_.ProcessId }); ConvertTo-Json -Compress -InputObject $items"],{env,encoding:'utf8',windowsHide:true});
+      "$items=@(Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -ieq $env:REQCAL_TEST_APP -and $_.CommandLine -and $_.CommandLine.Contains('--calendar-data-dir') -and $_.CommandLine.Contains($env:REQCAL_TEST_DATA) } | ForEach-Object { $_.ProcessId }); ConvertTo-Json -Compress -InputObject $items"],{env,encoding:'utf8',windowsHide:true});
     return JSON.parse(stdout);
   }
   async function stop() {
-    for(const pid of await processes()) {try{process.kill(pid);}catch(error){if(error.code!=='ESRCH')throw error;}}
+    for(const pid of await processes()) await execute('taskkill.exe',['/PID',String(pid),'/T','/F'],{windowsHide:true});
     for(let i=0;i<100;i++){try{const response=await call(['status','--no-launch'],4);if(response.error.code==='APP_NOT_RUNNING')return;}catch{ }await new Promise(resolve=>setTimeout(resolve,50));}
     throw Error('Isolated application did not stop');
   }
