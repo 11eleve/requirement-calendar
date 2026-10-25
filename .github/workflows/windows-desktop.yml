@@ -90,6 +90,15 @@ jobs:
             $hash = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower()
             "$hash  $($_.Name)" | Set-Content -Encoding ascii "$($_.FullName).sha256"
           }
+      - name: Upload AI failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: AI-failure-diagnostics
+          path: |
+            .build/assistant-*.png
+            assistant-*.png
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:
           name: RequirementCalendar-Windows-x64
