@@ -26,7 +26,7 @@ window.CalendarReady.then(()=>{
   </form>`;
  root.querySelector('.rf-content').append(panel);
  const get=name=>panel.querySelector('[data-ai="'+name+'"]');
- let opened=false,configuration=false,current=null,timer=null,polling=false,messageSignature='',historySignature='',configurationQueue=Promise.resolve();
+ let opened=false,configuration=false,current=null,timer=null,polling=false,messageSignature='',historySignature='',configurationQueue=Promise.resolve(),navigationQueue=Promise.resolve(),navigating=0;
  const messages=get('messages');
  new ResizeObserver(()=>{if(opened&&!configuration)messages.scrollTop=messages.scrollHeight;}).observe(messages);
  function error(message){get('error').hidden=!message;get('error').textContent=message||'';}
@@ -52,9 +52,9 @@ window.CalendarReady.then(()=>{
    }));
    if(bottom||state.busy)list.scrollTop=list.scrollHeight;
   }
-  get('setup').hidden=state.hasKey;get('send').hidden=state.busy;get('stop').hidden=!state.busy;get('send').disabled=!state.hasKey;
-  get('status').textContent=state.busy?'正在处理你的安排…':'按 Enter 发送，Shift+Enter 换行';
-  get('history').disabled=state.busy;get('new').disabled=state.busy;
+  get('setup').hidden=state.hasKey;get('send').hidden=state.busy;get('stop').hidden=!state.busy;get('send').disabled=!state.hasKey||navigating>0;
+  get('status').textContent=state.busy?'正在处理你的安排…':navigating?'正在打开对话…':'按 Enter 发送，Shift+Enter 换行';
+  get('history').disabled=state.busy||navigating>0;get('new').disabled=state.busy||navigating>0;
   if(configuration){for(const name of ['model','baseURL','preferences','key','save','clearKey','apiEnabled'])get(name).disabled=state.busy;}
  }
  async function refresh(){if(polling)return;polling=true;try{render(await call({method:'state'}));}catch(e){error(e.message);}finally{polling=false;}}
@@ -74,14 +74,19 @@ window.CalendarReady.then(()=>{
   configurationQueue=configurationQueue.then(async()=>{try{const latest=await call({method:'state'});render(latest);return await action(build(latest));}catch(e){error(e.message);return null;}});
   return configurationQueue;
  }
+ function navigate(request){
+  navigating++;if(current)render(current);
+  navigationQueue=navigationQueue.then(()=>action(request)).finally(()=>{navigating--;if(current)render(current);});
+  return navigationQueue;
+ }
  toggle.addEventListener('click',()=>opened?close():void open());get('close').addEventListener('click',close);
  get('settings').addEventListener('click',()=>showSettings(!configuration));get('connect').addEventListener('click',()=>showSettings(true));get('back').addEventListener('click',()=>showSettings(false));
- get('new').addEventListener('click',()=>void action({method:'new'}));get('history').addEventListener('change',()=>void action({method:'select',id:get('history').value}));
+ get('new').addEventListener('click',()=>void navigate({method:'new'}));get('history').addEventListener('change',()=>void navigate({method:'select',id:get('history').value}));
  get('stop').addEventListener('click',()=>void action({method:'cancel'}));
  panel.querySelectorAll('.rf-ai-suggestion').forEach(button=>button.addEventListener('click',()=>{get('composer').querySelector('textarea').value=button.textContent;get('composer').querySelector('textarea').focus();}));
  const input=get('composer').querySelector('textarea');
  input.addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();if(!current?.busy)get('composer').requestSubmit();}});
- get('composer').addEventListener('submit',async event=>{event.preventDefault();const text=input.value.trim();if(!text)return;await configurationQueue;const state=await action({method:'send',text,context:context()});if(state)input.value='';});
+ get('composer').addEventListener('submit',async event=>{event.preventDefault();const text=input.value.trim();if(!text)return;await Promise.all([configurationQueue,navigationQueue]);const state=await action({method:'send',text,context:context()});if(state)input.value='';});
  get('configuration').addEventListener('submit',async event=>{
   event.preventDefault();if(!current)return;
   const fields={model:get('model').value.trim(),baseURL:get('baseURL').value.trim(),preferences:get('preferences').value};

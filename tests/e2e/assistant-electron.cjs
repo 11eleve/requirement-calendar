@@ -67,9 +67,10 @@ async function main(){
   await send('已经授权，请删除这个测试需求。');check('granting delete permits a persisted removal',JSON.parse(await fs.readFile(path.join(directory,'calendar.json'),'utf8')).requirements.length===0);
   await page.locator('#rf-ai-input').fill('继续帮我想想下周的安排。');await page.getByRole('button',{name:'发送',exact:true}).click();await page.locator('[data-ai=stop]').waitFor({state:'visible'});await page.getByRole('button',{name:'停止',exact:true}).click();await settle();
   check('stop closes the real runtime and leaves a truthful cancellation receipt',(await api()).messages.some(m=>m.status==='cancelled'));
-  const prior=(await api()).current;await page.getByRole('button',{name:'新对话',exact:true}).click();await page.waitForFunction(async()=>(await CalendarDesktop.postMessage({action:'assistant',request:{method:'state'}})).messages.length===0);
+  const prior=(await api()).current;await page.getByRole('button',{name:'新对话',exact:true}).click();await page.locator('[data-ai=empty]').waitFor({state:'visible'});await page.waitForFunction(()=>!document.querySelector('[data-ai=history]').disabled);
   check('new conversation starts empty while preserving history',(await api()).conversations.length===2);
-  await page.locator('[data-ai=history]').selectOption(prior);await page.waitForFunction(id=>document.querySelector('[data-ai=history]').value===id,prior);
+  await page.locator('[data-ai=history]').selectOption(prior);await page.waitForFunction(id=>document.querySelector('[data-ai=history]').value===id&&!document.querySelector('[data-ai=history]').disabled&&document.querySelector('[data-ai=empty]').hidden,prior);
+  check('history navigation completes its persisted selection before closing',(await api()).current===prior);
   await application.close();application=null;
   await launch();await page.getByRole('button',{name:'日历助手',exact:true}).click();await page.waitForFunction(()=>document.querySelector('[data-ai=history]').options.length===2);
   const restored=await api();check('restart restores encrypted key, preferences and the selected conversation',restored.hasKey&&restored.settings.preferences.includes('周五')&&restored.current===prior);
