@@ -58,8 +58,11 @@
         "to": "cli/path.ps1"
       },
       {
-        "from": ".build/ai-runtime",
-        "to": "ai"
+        "from": ".build",
+        "to": ".",
+        "filter": [
+          "ai-runtime/**/*"
+        ]
       }
     ],
     "extraFiles": [

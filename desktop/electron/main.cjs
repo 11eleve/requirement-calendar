@@ -135,7 +135,7 @@ async function start() {
       await window.webContents.executeJavaScript("document.documentElement.classList.add('native'); window.CalendarReady");
       ready=true;await invoke('setReminderIssue',reminderIssue);await deliverNotification();
       if(!aiClient){
-        aiClient=new AIClient({entry:app.isPackaged?path.join(process.resourcesPath,'ai','entry.mjs'):path.join(root,'desktop','ai','entry.mjs'),directory:path.join(store.directory,'assistant'),dispatch:request=>closing||!ready?{ok:false,error:{code:'BUSY',message:'应用正在退出，请稍后重试。'}}:invoke('executeCommand',request),vault:{
+        aiClient=new AIClient({entry:app.isPackaged?path.join(process.resourcesPath,'ai-runtime','entry.mjs'):path.join(root,'desktop','ai','entry.mjs'),directory:path.join(store.directory,'assistant'),dispatch:request=>closing||!ready?{ok:false,error:{code:'BUSY',message:'应用正在退出，请稍后重试。'}}:invoke('executeCommand',request),vault:{
           encrypt(key){if(!safeStorage.isEncryptionAvailable())throw Error('系统凭据加密不可用，无法保存 API Key。');return safeStorage.encryptString(key);},
           decrypt(value){return safeStorage.decryptString(value);}
         }});
