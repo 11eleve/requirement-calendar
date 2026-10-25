@@ -1,0 +1,66 @@
+/* The assistant shares the calendar's inspector, color and type tokens. */
+#req-calendar-refined .rf-toolbar { position:relative; }
+#req-calendar-refined .rf-assistant-toggle { position:absolute; right:22px; display:flex; align-items:center; gap:7px; padding:7px 11px; border-radius:8px; font-size:12px; color:var(--rf-accent); }
+#req-calendar-refined .rf-assistant-toggle::before { content:'✳'; font-size:19px; line-height:1; }
+#req-calendar-refined .rf-assistant-toggle:hover,#req-calendar-refined .rf-assistant-toggle[aria-expanded=true] { background:var(--rf-purple-bg); }
+#req-calendar-refined.has-assistant .rf-content { grid-template-columns:minmax(0,1fr) var(--rf-inspector-width); column-gap:14px; transition:none; }
+#req-calendar-refined.has-assistant #rf-detail { display:none; }
+#req-calendar-refined .rf-assistant { grid-column:2; grid-row:1; display:flex; flex-direction:column; width:100%; height:100%; min-height:0; overflow:hidden; background:var(--rf-bg); border:1px solid var(--rf-line); border-radius:12px; }
+#req-calendar-refined .rf-ai-head { display:flex; justify-content:space-between; align-items:center; flex:none; padding:15px 16px 12px; border-bottom:1px solid var(--rf-grid); }
+#req-calendar-refined .rf-ai-head h3 { font-size:14px; font-weight:600; }
+#req-calendar-refined .rf-ai-head p { margin-top:2px; color:var(--rf-muted); font-size:11px; }
+#req-calendar-refined .rf-ai-actions { display:flex; align-items:center; gap:9px; }
+#req-calendar-refined .rf-ai-chat { display:flex; flex-direction:column; flex:1; min-height:0; }
+#req-calendar-refined .rf-ai-history { display:flex; flex:none; align-items:center; justify-content:space-between; gap:14px; padding:9px 16px; }
+#req-calendar-refined .rf-ai-history label { min-width:0; flex:1; }
+#req-calendar-refined .rf-ai-history select { max-width:100%; width:100%; border:0; background:transparent; font:inherit; font-size:11px; color:var(--rf-muted); text-overflow:ellipsis; }
+#req-calendar-refined .rf-ai-link { padding:3px 0; color:var(--rf-accent); font-size:11px; text-align:left; }
+#req-calendar-refined .rf-ai-link:hover { text-decoration:underline; }
+#req-calendar-refined .rf-ai-messages { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain; padding:12px 16px; scrollbar-width:thin; }
+#req-calendar-refined .rf-ai-message { margin:0 0 22px; overflow-wrap:anywhere; }
+#req-calendar-refined .rf-ai-speaker { display:block; margin-bottom:6px; color:var(--rf-muted); font-size:10px; }
+#req-calendar-refined .rf-ai-message p { white-space:pre-wrap; line-height:1.75; font-size:12px; }
+#req-calendar-refined .rf-ai-user { padding:10px 12px; background:var(--rf-purple-bg); border-radius:9px 9px 2px 9px; }
+#req-calendar-refined .rf-ai-user .rf-ai-speaker { color:var(--rf-accent); }
+#req-calendar-refined .rf-ai-tool { margin:0 0 13px; padding:3px 0 3px 10px; border-left:2px solid var(--rf-line); }
+#req-calendar-refined .rf-ai-tool .rf-ai-speaker { display:none; }
+#req-calendar-refined .rf-ai-tool p { font-size:11px; color:var(--rf-muted); }
+#req-calendar-refined .rf-ai-message.is-pending p { color:var(--rf-muted); }
+#req-calendar-refined .rf-ai-empty { flex:1; min-height:0; overflow:auto; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; padding:24px; }
+#req-calendar-refined .rf-ai-mark { color:var(--rf-accent); font-size:35px; line-height:1; margin-bottom:16px; }
+#req-calendar-refined .rf-ai-empty h3 { font-size:19px; font-weight:550; letter-spacing:-.4px; }
+#req-calendar-refined .rf-ai-empty p { margin:9px 0 22px; color:var(--rf-muted); font-size:12px; line-height:1.7; max-width:250px; }
+#req-calendar-refined .rf-ai-suggestion { padding:9px 0; font-size:12px; text-align:left; }
+#req-calendar-refined .rf-ai-suggestion::before { content:'+'; color:var(--rf-accent); margin-right:9px; }
+#req-calendar-refined .rf-ai-suggestion:hover { color:var(--rf-accent); }
+#req-calendar-refined .rf-ai-setup { display:flex; justify-content:space-between; align-items:center; flex:none; gap:8px; margin:0 14px 9px; padding:10px; font-size:11px; background:var(--rf-soft); border-radius:7px; color:var(--rf-muted); }
+#req-calendar-refined .rf-ai-setup .rf-ai-link { flex:none; }
+#req-calendar-refined .rf-ai-composer { flex:none; margin:0 12px 12px; padding:10px; border:1px solid var(--rf-line); border-radius:9px; background:var(--rf-bg); }
+#req-calendar-refined .rf-ai-composer:focus-within { border-color:var(--rf-accent); }
+#req-calendar-refined .rf-ai-composer textarea { resize:none; display:block; width:100%; min-height:54px; max-height:100px; padding:0; border:0; background:transparent; outline:none; font-size:12px; }
+#req-calendar-refined textarea::placeholder,#req-calendar-refined .rf-ai-configuration input::placeholder { color:var(--rf-muted); opacity:.75; }
+#req-calendar-refined .rf-ai-compose-actions { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:10px; }
+#req-calendar-refined .rf-ai-compose-actions span { color:var(--rf-muted); font-size:9px; }
+#req-calendar-refined .rf-ai-compose-actions .rf-button { flex:none; white-space:nowrap; }
+#req-calendar-refined .rf-ai-error { flex:none; padding:10px 14px; background:#fff3ef; color:#9b3e2d; font-size:11px; overflow-wrap:anywhere; max-height:110px; overflow:auto; }
+#req-calendar-refined .rf-ai-configuration { flex:1; min-height:0; overflow-y:auto; padding:18px; scrollbar-width:thin; }
+#req-calendar-refined .rf-ai-section { margin:0 0 23px; padding:0; border:0; min-width:0; }
+#req-calendar-refined .rf-ai-section h3,#req-calendar-refined .rf-ai-section legend { margin:0 0 12px; padding:0; font-size:12px; font-weight:600; }
+#req-calendar-refined .rf-ai-configuration label { display:flex; flex-direction:column; gap:6px; margin:0 0 12px; font-size:11px; }
+#req-calendar-refined .rf-ai-configuration input:not([type=checkbox]),#req-calendar-refined .rf-ai-configuration textarea { width:100%; min-width:0; padding:8px 9px; border:1px solid var(--rf-line); border-radius:6px; background:var(--rf-bg); font-size:12px; }
+#req-calendar-refined .rf-ai-configuration textarea { resize:vertical; min-height:72px; max-height:160px; }
+#req-calendar-refined .rf-ai-help,#req-calendar-refined .rf-ai-privacy { color:var(--rf-muted); font-size:10px; line-height:1.7; }
+#req-calendar-refined .rf-ai-permissions .rf-ai-help { margin-bottom:12px; }
+#req-calendar-refined .rf-ai-permissions label,#req-calendar-refined label.rf-ai-api-switch { flex-direction:row; align-items:flex-start; gap:9px; }
+#req-calendar-refined .rf-ai-configuration input[type=checkbox] { margin:2px 0 0; accent-color:var(--rf-accent); }
+#req-calendar-refined .rf-ai-permissions small { display:block; color:var(--rf-muted); font-size:10px; margin-top:2px; }
+#req-calendar-refined .rf-ai-api { margin-top:15px; }
+#req-calendar-refined .rf-ai-api input { font-family:ui-monospace,monospace; font-size:10px!important; }
+#req-calendar-refined .rf-ai-settings-actions { position:sticky; bottom:-18px; display:flex; justify-content:space-between; gap:12px; padding:13px 0 18px; margin-top:16px; background:var(--rf-bg); border-top:1px solid var(--rf-line); }
+#req-calendar-refined .rf-ai-sr { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+@media(max-width:700px) {
+ #req-calendar-refined .rf-assistant-toggle { right:12px; font-size:0; padding:7px; }
+ #req-calendar-refined .rf-assistant-toggle::before { margin:0; }
+ #req-calendar-refined.has-assistant .rf-content { display:block; }
+ #req-calendar-refined.has-assistant .rf-assistant { position:absolute; inset:0; z-index:6; }
+}

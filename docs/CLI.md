@@ -68,3 +68,7 @@ AI 通过执行上述命令读取/修改需求。`schema` 返回 JSON Schema 和
 ```
 
 退出码：0 成功，2 参数/校验失败，3 草稿/版本/忙碌冲突，4 连接/保存失败。完整支持 `list/get/create/update/shift/delete/preview-import/import/export/schema/status/request`，详细参数用 `--help` 查询。
+
+## 应用内助手与 HTTP API
+
+0.6.0 新增 DeepSeek Harness 驱动的应用内对话和带令牌的本机 HTTP API。操作权限在助手设置中配置，详见 [AI 与 API 文档](AI.md)。原有 CLI 仍按当前本机用户权限执行。

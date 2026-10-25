@@ -22,7 +22,7 @@ for component in components:
 p.write_bytes(plistlib.dumps(components))
 (root/'requirements.plist').write_bytes(plistlib.dumps({'os':['15.0'],'arch':['arm64'],'home':False}))
 style='<meta charset="utf-8"><style>body{font:14px -apple-system,sans-serif;line-height:1.7;padding:12px}h1{font-size:22px}code{font-size:12px}</style>'
-(root/'resources/welcome.html').write_text('<!doctype html><html lang="zh-CN">'+style+'<h1>安装需求日历 '+version+'</h1><p>请先退出正在运行的旧版需求日历，再继续安装。</p><p>应用会安装到“应用程序”文件夹。此版本包含跟手切月动画、JSON 导入导出与命令行工具。</p><p>安装只替换应用，需求数据仍保存在你自己的用户资料目录中。</p><p>支持 Apple Silicon Mac，macOS 15 或以上。</p></html>')
+(root/'resources/welcome.html').write_text('<!doctype html><html lang="zh-CN">'+style+'<h1>安装需求日历 '+version+'</h1><p>请先退出正在运行的旧版需求日历，再继续安装。</p><p>应用会安装到“应用程序”文件夹。此版本包含应用内 AI 对话、细粒度操作权限、本机 API、JSON 导入导出与命令行工具。</p><p>安装只替换应用，需求数据仍保存在你自己的用户资料目录中。</p><p>支持 Apple Silicon Mac，macOS 15 或以上。</p></html>')
 (root/'resources/conclusion.html').write_text('<!doctype html><html lang="zh-CN">'+style+'<h1>安装完成</h1><p>从“应用程序”打开“需求日历”。</p><p>在终端中运行以下指令可以查看命令行帮助：</p><p><code>"/Applications/需求日历.app/Contents/MacOS/reqcal" --help</code></p><p>若 Dock 保留旧图标，可移除旧快捷图标后从新应用重新添加。</p></html>')
 PY
 pkgbuild --root "$STAGING/root" --component-plist "$STAGING/components.plist" --identifier dev.11eleve.requirement-calendar.installer --version "$VERSION" --install-location /Applications --ownership recommended "$STAGING/packages/RequirementCalendar.pkg"

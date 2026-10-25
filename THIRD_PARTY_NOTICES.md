@@ -38,3 +38,9 @@ License: [CC0-1.0](https://github.com/simple-icons/simple-icons/blob/develop/LIC
 The icon paths are bundled locally. Resource links are not sent to an icon service.
 Document, design, code and repository symbols are drawn for this project.
 Brand names identify the linked services; the calendar is an independent application.
+
+## DeepSeek Harness
+
+The assistant uses the official `@deepseek-ai/dsh-sdk-client` and `@deepseek-ai/dsh-tools`, pinned to `0.2.1-rc.3`, from [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness), under the MIT license. The calendar plugin follows the documented Cordis `defineTool` registration interface.
+
+The packaged AI runtime retains dependency license files and includes `DEPENDENCIES.txt`. The Mac package additionally bundles Node.js and includes its complete `NODE-LICENSE.txt`.

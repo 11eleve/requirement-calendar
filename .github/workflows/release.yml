@@ -48,7 +48,9 @@ jobs:
             console.log(published ? 'Version already published; keeping its assets unchanged.' : 'Version has not been published.');
           })().catch(error => {console.error(error.message); process.exitCode = 1;});
           JS
+      - run: npm ci --no-audit --no-fund
       - run: npm test
+      - run: npm run test:ai
       - run: python3 tests/unit/build.test.py
 
   macos:
@@ -60,11 +62,17 @@ jobs:
       VERSION: ${{ needs.metadata.outputs.version }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
       - name: Build Apple Silicon application and installers
         run: |
           test "$(uname -m)" = arm64
           scripts/build-macos.sh
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' 'dist/需求日历.app/Contents/Info.plist')" = "$VERSION"
+          npm run test:ai:mac
           scripts/build-installer-macos.sh
           scripts/build-dmg-macos.sh
           scripts/verify-dmg-macos.sh
@@ -90,6 +98,7 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci --no-audit --no-fund
+      - run: npm run test:ai
       - run: npm run test:desktop
         env:
           CALENDAR_SMOKE_OUTPUT: desktop-smoke-windows.json
@@ -110,6 +119,10 @@ jobs:
           $env:CALENDAR_CLI_REPORT = "$pwd/installed-cli-windows.json"
           node tests/windows/cli-installed.cjs "$installDir/RequirementCalendar.exe"
           if ($LASTEXITCODE -ne 0) { throw 'Installed release CLI test failed' }
+          $env:CALENDAR_ELECTRON_EXE = "$installDir/RequirementCalendar.exe"
+          $env:CALENDAR_AI_REPORT = "$pwd/installed-ai-windows.json"
+          node tests/e2e/assistant-electron.cjs
+          if ($LASTEXITCODE -ne 0) { throw 'Installed release AI test failed' }
           $before = @([Environment]::GetEnvironmentVariable('Path','User') -split ';' | Where-Object { $_ -ine $installDir -and $_ -ne '' })
           $uninstaller = (Get-ChildItem "$installDir/Uninstall*.exe").FullName
           $process = Start-Process -FilePath $uninstaller -ArgumentList @('/S',"_?=$installDir") -Wait -PassThru

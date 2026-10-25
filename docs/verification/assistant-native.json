@@ -1,0 +1,14 @@
+{
+  "ok" : true,
+  "result" : {
+    "checks" : [
+      "assistant settings open inside the native calendar",
+      "saved API key is removed from the form",
+      "real Harness CRUD reaches the actual native WebView and persistence bridge",
+      "AI creation refreshes the rendered native calendar",
+      "native conversation exposes actual operation receipts",
+      "completed native turn restores the send action",
+      "native assistant and composer fit in the launched window"
+    ]
+  }
+}

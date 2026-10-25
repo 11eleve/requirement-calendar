@@ -1,12 +1,12 @@
 {
   "name": "requirement-calendar",
-  "version": "0.5.4",
-  "description": "面向程序员的需求排期日历",
+  "version": "0.6.0",
+  "description": "支持 AI 对话的个人需求排期日历",
   "author": "11eleve",
   "private": true,
   "main": "desktop/electron/main.cjs",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=24.9.0"
   },
   "scripts": {
     "dev": "node scripts/dev.cjs",
@@ -21,11 +21,17 @@
     "build:mac": "scripts/build-macos.sh",
     "dist:mac": "npm run build:mac && scripts/build-installer-macos.sh && scripts/build-dmg-macos.sh && scripts/verify-dmg-macos.sh",
     "build:cli:win": "powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/build-cli-windows.ps1",
-    "dist:win": "npm run build:cli:win && electron-builder --win nsis --x64 --publish never"
+    "dist:win": "npm run build:cli:win && npm run build:ai && electron-builder --win nsis --x64 --publish never",
+    "postinstall": "node scripts/install-ai.cjs",
+    "build:ai": "node scripts/build-ai-runtime.cjs",
+    "test:ai": "node --test tests/ai/*.test.mjs",
+    "test:ai:desktop": "node tests/e2e/assistant-electron.cjs",
+    "test:ai:mac": "node tests/e2e/assistant-native.mjs"
   },
   "devDependencies": {
     "electron": "44.7.0",
-    "electron-builder": "26.15.3"
+    "electron-builder": "26.15.3",
+    "playwright": "1.62.1"
   },
   "build": {
     "appId": "dev.11eleve.requirement-calendar",
@@ -50,6 +56,10 @@
       {
         "from": "desktop/windows/cli/path.ps1",
         "to": "cli/path.ps1"
+      },
+      {
+        "from": ".build/ai-runtime",
+        "to": "ai"
       }
     ],
     "extraFiles": [

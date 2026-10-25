@@ -1,5 +1,5 @@
 'use strict';
-const {app,BrowserWindow,Menu,dialog,ipcMain,protocol,session,shell,nativeImage,powerMonitor}=require('electron');
+const {app,BrowserWindow,Menu,dialog,ipcMain,protocol,session,shell,nativeImage,powerMonitor,safeStorage}=require('electron');
 const fs=require('node:fs/promises');
 const path=require('node:path');
 const os=require('node:os');
@@ -8,6 +8,7 @@ const {ENTRY,externalURL,requirementID,trustedSender}=require('./policy.cjs');
 const {APP_ID,TOAST_CLSID,Reminders}=require('./reminders.cjs');
 const {fetchIcon}=require('./site-icons.cjs');
 const {CommandBroker}=require('./command-broker.cjs');
+const {AIClient}=require('./ai-client.cjs');
 const smoke=process.argv.includes('--calendar-smoke-test');
 let background=process.argv.includes('--command-background');
 const directoryIndex=process.argv.indexOf('--calendar-data-dir');
@@ -16,6 +17,7 @@ const root=path.resolve(__dirname,'../..');
 let window,store,reminders,ready=false,closing=false,closePrompt=false,notificationID=null,reminderIssue=null;
 let smokeDirectory,smokeStarted=false;
 let commandBroker=null;
+let aiClient=null;
 app.setName('RequirementCalendar');
 const isolatedDirectory=commandDirectory&&commandDirectory.toLowerCase()!==path.join(app.getPath('userData'),'data').toLowerCase();
 if(isolatedDirectory){const profile=path.join(commandDirectory,'.electron');require('node:fs').mkdirSync(profile,{recursive:true});app.setPath('userData',profile);}
@@ -31,7 +33,7 @@ else {
   app.whenReady().then(start).catch(error=>{console.error(error);app.exit(1);});
   app.on('window-all-closed',()=>app.quit());
   app.on('before-quit',event=>{if(window&&!window.isDestroyed()&&!closing){event.preventDefault();window.close();}});
-  app.on('will-quit',()=>commandBroker?.stop());
+  app.on('will-quit',()=>{commandBroker?.stop();aiClient?.stop();});
 }
 async function invoke(method,...args) {
   if(!window||window.isDestroyed()||!ready)return false;
@@ -102,7 +104,7 @@ async function start() {
       reminderIssue=issue;
       if(ready)void window.webContents.executeJavaScript(`(async()=>{await window.CalendarReady;while(window.CalendarApp.isSaving())await new Promise(resolve=>setTimeout(resolve,20));window.CalendarApp.setReminderIssue(${JSON.stringify(issue)});})()`).catch(()=>{});
     }});
-  const assets=new Set(["index.html","src/main.js","src/styles/main.css","src/domain/model.js","src/domain/planning.js","src/domain/commands.js","src/services/storage.js","src/services/site-icons.js","src/components/elements.js","src/components/icons.js","src/components/disclosure.js","src/components/startup.js"]);
+  const assets=new Set(["index.html","src/main.js","src/styles/main.css","src/styles/assistant.css","src/domain/model.js","src/domain/planning.js","src/domain/commands.js","src/services/storage.js","src/services/site-icons.js","src/components/elements.js","src/components/icons.js","src/components/disclosure.js","src/components/startup.js","src/components/assistant.js"]);
   protocol.handle('calendar-app',async request=>{
     const url=new URL(request.url),file=url.pathname.slice(1);
     if(url.protocol!=='calendar-app:'||url.hostname!=='local'||url.port||url.username||url.password||!assets.has(file)||url.search||request.method!=='GET')return new Response('',{status:404});
@@ -132,6 +134,14 @@ async function start() {
     try {
       await window.webContents.executeJavaScript("document.documentElement.classList.add('native'); window.CalendarReady");
       ready=true;await invoke('setReminderIssue',reminderIssue);await deliverNotification();
+      if(!aiClient){
+        aiClient=new AIClient({entry:app.isPackaged?path.join(process.resourcesPath,'ai','entry.mjs'):path.join(root,'desktop','ai','entry.mjs'),directory:path.join(store.directory,'assistant'),dispatch:request=>closing||!ready?{ok:false,error:{code:'BUSY',message:'应用正在退出，请稍后重试。'}}:invoke('executeCommand',request),vault:{
+          encrypt(key){if(!safeStorage.isEncryptionAvailable())throw Error('系统凭据加密不可用，无法保存 API Key。');return safeStorage.encryptString(key);},
+          decrypt(value){return safeStorage.decryptString(value);}
+        }});
+        // Calendar loading stays independent of optional AI runtime failures.
+        void aiClient.start().catch(()=>{});
+      }
       if(process.platform==='win32'&&!commandBroker){
         const executable=app.isPackaged?path.join(path.dirname(process.execPath),'reqcal.exe'):path.join(root,'.build','windows-cli','reqcal.exe');
         commandBroker=new CommandBroker({executable,directory:store.directory,dispatch:async request=>{
@@ -141,7 +151,7 @@ async function start() {
         commandBroker.on('failure',error=>console.error(error.message));
         await commandBroker.start();
       }
-      if(smoke&&!smokeStarted){smokeStarted=true;await require('./smoke.cjs').run({app,window,store,invoke,directory:smokeDirectory,commandBroker});commandBroker?.stop();closing=true;app.exit(0);}
+      if(smoke&&!smokeStarted){smokeStarted=true;await require('./smoke.cjs').run({app,window,store,invoke,directory:smokeDirectory,commandBroker});commandBroker?.stop();aiClient?.stop();closing=true;app.exit(0);}
       else if(!smoke&&!background)window.show();
     } catch(error){if(smoke){console.error(error);app.exit(1);}else report(error);}
   });
@@ -159,6 +169,7 @@ async function start() {
       }
       case 'exportJSON':return await exportJSON(message.scope??'all');
       case 'pickJSON':return await pickJSON();
+      case 'assistant':if(!aiClient)throw Error('日历助手正在准备，请稍后重试。');return await aiClient.request(message.request);
       case 'resourceIcon':return typeof message.url==='string'?await fetchIcon(message.url,nativeImage):null;
       case 'contextMenu': {
         if(typeof message.id!=='string'||message.id.length>256)throw new Error('无效的需求标识。');

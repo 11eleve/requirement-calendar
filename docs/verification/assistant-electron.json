@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "checks": [
+    "assistant fits the actual launched window before resizing",
+    "initial assistant explains connection and disables sending without a key",
+    "only read permission is enabled by default",
+    "permissions and API switches retain unsaved work habits and provider fields",
+    "chat shows the committed assistant response",
+    "normal chat persists complete requirement and shifted phase dates",
+    "AI writes refresh the calendar bar",
+    "external AI API cannot overwrite an actual unsaved UI draft",
+    "ungranted delete is refused in a real Harness turn",
+    "granting delete permits a persisted removal",
+    "stop closes the real runtime and leaves a truthful cancellation receipt",
+    "new conversation starts empty while preserving history",
+    "restart restores encrypted key, preferences and the selected conversation",
+    "local API reuses its saved endpoint across a normal app restart",
+    "Harness resumes durable history after a cancelled turn and app restart",
+    "API key is absent from public state and plain JSON records",
+    "assistant and composer fit the minimum 920×600 window",
+    "latest reply stays visible after resizing"
+  ],
+  "platform": "darwin",
+  "model": "local Messages fixture; official Harness runtime"
+}

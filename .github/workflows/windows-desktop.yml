@@ -23,6 +23,7 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: npm test
+      - run: npm run test:ai
       - name: Validate Windows reminder adapter
         shell: powershell
         run: |
@@ -34,6 +35,8 @@ jobs:
         run: npm run test:desktop
         env:
           CALENDAR_SMOKE_OUTPUT: desktop-smoke-windows.json
+      - name: Exercise AI conversation through the real desktop UI
+        run: npm run test:ai:desktop
       - name: Build Windows installer
         run: npm run dist:win
         env:
@@ -66,6 +69,10 @@ jobs:
           if ((Get-Command reqcal.exe).Source -ine "$installDir\reqcal.exe") { throw 'Installed reqcal command not found' }
           node tests/windows/cli-installed.cjs "$installDir/RequirementCalendar.exe"
           if ($LASTEXITCODE -ne 0) { throw 'Installed CLI test failed' }
+          $env:CALENDAR_ELECTRON_EXE = "$installDir/RequirementCalendar.exe"
+          $env:CALENDAR_AI_REPORT = "$pwd/installed-ai-windows.json"
+          node tests/e2e/assistant-electron.cjs
+          if ($LASTEXITCODE -ne 0) { throw 'Installed AI test failed' }
       - name: Uninstall and preserve unrelated PATH entries
         shell: pwsh
         run: |
@@ -93,5 +100,6 @@ jobs:
             packaged-smoke-windows.json
             installed-smoke-windows.json
             installed-cli-windows.json
+            installed-ai-windows.json
           if-no-files-found: error
           retention-days: 30

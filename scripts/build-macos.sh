@@ -3,11 +3,16 @@ set -eu
 ROOT="${0:A:h:h}"
 APP="$ROOT/dist/需求日历.app"
 VERSION=$("${PYTHON:-python3}" -c 'import json,sys; print(json.load(open(sys.argv[1]))["version"])' "$ROOT/package.json")
+NODE_BINARY="${NODE_BINARY:-node}"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 # Python 3 is needed only to rebuild the portable interface, not to launch the app.
 "${PYTHON:-python3}" "$ROOT/scripts/build.py"
+"$NODE_BINARY" "$ROOT/scripts/build-ai-runtime.cjs" --node
+mkdir -p "$APP/Contents/Resources/ai"
+ditto "$ROOT/.build/ai-runtime" "$APP/Contents/Resources/ai"
+codesign --force --sign - "$APP/Contents/Resources/ai/node"
 mkdir -p "$ROOT/.build/module-cache"
-swiftc -parse-as-library -O -target "$(uname -m)-apple-macos15.0" -module-cache-path "$ROOT/.build/module-cache" -framework AppKit -framework WebKit -framework UserNotifications "$ROOT/desktop/macos/CommandServer.swift" "$ROOT/desktop/macos/App.swift" "$ROOT/desktop/macos/LinkPolicy.swift" "$ROOT/desktop/macos/DataStore.swift" "$ROOT/desktop/macos/Reminders.swift" "$ROOT/desktop/macos/ResourceIcons.swift" -o "$APP/Contents/MacOS/RequirementCalendar"
+swiftc -parse-as-library -O -target "$(uname -m)-apple-macos15.0" -module-cache-path "$ROOT/.build/module-cache" -framework AppKit -framework WebKit -framework UserNotifications -framework Security "$ROOT/desktop/macos/AIService.swift" "$ROOT/desktop/macos/CommandServer.swift" "$ROOT/desktop/macos/App.swift" "$ROOT/desktop/macos/LinkPolicy.swift" "$ROOT/desktop/macos/DataStore.swift" "$ROOT/desktop/macos/Reminders.swift" "$ROOT/desktop/macos/ResourceIcons.swift" -o "$APP/Contents/MacOS/RequirementCalendar"
 swiftc -O -target "$(uname -m)-apple-macos15.0" -module-cache-path "$ROOT/.build/module-cache" "$ROOT/desktop/macos/CLI.swift" -o "$APP/Contents/MacOS/reqcal"
 cp "$ROOT/dist/web/index.html" "$APP/Contents/Resources/index.html"
 cp "$ROOT/THIRD_PARTY_NOTICES.md" "$APP/Contents/Resources/THIRD_PARTY_NOTICES.md"
@@ -20,7 +25,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 <key>CFBundleExecutable</key><string>RequirementCalendar</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleShortVersionString</key><string>$VERSION</string>
-<key>CFBundleVersion</key><string>14</string>
+<key>CFBundleVersion</key><string>15</string>
 <key>LSMinimumSystemVersion</key><string>15.0</string>
 <key>NSHighResolutionCapable</key><true/>
 </dict></plist>

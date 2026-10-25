@@ -7,6 +7,13 @@ import UserNotifications
 final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelegate, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandlerWithReply, UNUserNotificationCenterDelegate {
     let commandBackground = CommandLine.arguments.contains("--command-background")
     var commandServer: CalendarCommandServer?
+    lazy var aiService = CalendarAIService(directory:dataStore.directory.appendingPathComponent("assistant",isDirectory:true),isolated:verifyScript != nil || ProcessInfo.processInfo.environment["CALENDAR_EPHEMERAL"] == "1") { [weak self] request,reply in
+        guard let self else { reply(["ok":false,"error":["code":"APP_CLOSED","message":"日历已关闭。"]]); return }
+        guard !self.closingAuthorized else { reply(["ok":false,"error":["code":"BUSY","message":"应用正在退出。"]]); return }
+        self.webView.callAsyncJavaScript("await window.CalendarReady; return await window.CalendarApp.executeCommand(request)",arguments:["request":request],in:nil,in:.page) { result in
+            switch result { case .success(let value):reply(value as? [String:Any] ?? ["ok":false,"error":["code":"INTERNAL_ERROR","message":"无效的日历响应。"]]);case .failure:reply(["ok":false,"error":["code":"APP_CLOSED","message":"日历尚未就绪。"]]) }
+        }
+    }
     var window: NSWindow!
     var webView: WKWebView!
     var latestRequirements: [[String: Any]] = []
@@ -156,6 +163,9 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
                 exportJSONFile(scope: body["scope"] as? String ?? "all", completion: replyHandler)
             case "pickJSON":
                 pickJSONFile(completion: replyHandler)
+            case "assistant":
+                guard let request = body["request"] as? [String:Any] else { replyHandler(nil,"助手请求无效。"); return }
+                aiService.request(request,reply:replyHandler)
             case "resourceIcon":
                 guard let raw = body["url"] as? String else { replyHandler(NSNull(), nil); return }
                 if verifyScript != nil && ProcessInfo.processInfo.environment["CALENDAR_VERIFY_SITE_ICONS"] != "live" { replyHandler(NSNull(), nil); return }
@@ -318,6 +328,7 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
         return .terminateLater
     }
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
+    func applicationWillTerminate(_ notification: Notification) { aiService.stop() }
 
     func openExternal(_ url: URL?) {
         guard let url, LinkPolicy.permits(url) else { return }
@@ -334,6 +345,7 @@ final class CalendarApplication: NSObject, NSApplicationDelegate, NSWindowDelega
     }
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         startCommandServer()
+        aiService.start()
         guard let verifyScript, let verifyOutput else { return }
         // A test timeout is terminal evidence, not a reason to relaunch the same test.
         DispatchQueue.main.asyncAfter(deadline: .now() + 45) {
