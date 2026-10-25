@@ -22,7 +22,7 @@ class AIClient {
         // Runtime diagnostics must not become renderer state or log credentials.
         child.stderr.on('data',()=>{});
         child.stdout.on('data',chunk=>{
-          buffer=Buffer.concat([buffer,chunk]);if(buffer.length>4*1024*1024){child.kill();fail(Error('助手消息过大。'));return;}
+          buffer=Buffer.concat([buffer,chunk]);if(buffer.length>64*1024*1024){child.kill();fail(Error('助手消息过大。'));return;}
           let end;while((end=buffer.indexOf(10))>=0){
             const raw=buffer.subarray(0,end);buffer=buffer.subarray(end+1);let message;
             try{message=JSON.parse(raw.toString('utf8'));}catch{child.kill();fail(Error('助手通信格式无效。'));return;}

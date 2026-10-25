@@ -72,7 +72,7 @@ final class CalendarAIService {
     func consume(_ data: Data) {
         guard !data.isEmpty else { return }
         buffer.append(data)
-        guard buffer.count <= 4*1024*1024 else { failed("助手消息过大。"); child?.terminate(); return }
+        guard buffer.count <= 64*1024*1024 else { failed("助手消息过大。"); child?.terminate(); return }
         while let end = buffer.firstIndex(of:10) {
             let line = buffer[..<end]; buffer.removeSubrange(...end)
             guard let message = try? JSONSerialization.jsonObject(with:line) as? [String:Any], let type = message["type"] as? String else { failed("助手通信格式无效。"); child?.terminate(); return }

@@ -18,3 +18,13 @@ test('a corrupt encrypted key remains recoverable through settings without expos
  assert.equal(await fs.readFile(path.join(directory,'key.enc'),'utf8'),'sealed-fixture');
  assert.ok(!(await fs.readFile(path.join(directory,'settings.json'),'utf8')).includes('replacement-fixture'));
 });
+
+test('private host transport preserves large valid calendar reads with literal Unicode',async t=>{
+ const directory=await fs.mkdtemp(path.join(os.tmpdir(),'calendar-ai-large-'));
+ const note='😀'.repeat(600000);
+ const client=new Client.AIClient({directory,entry:fileURLToPath(new URL('../../desktop/ai/entry.mjs',import.meta.url)),dispatch:async()=>({ok:true,revision:'large',data:[{id:'large-record',note}]}),vault:{decrypt(){return '';},encrypt(){throw Error('No key should be stored by a read.');}}});
+ t.after(async()=>{if(client.child){const exited=once(client.child,'exit');client.stop();await exited;}await fs.rm(directory,{recursive:true,force:true});});
+ let state=await client.request({method:'state'});state=await client.request({method:'configure',settings:{...state.settings,apiEnabled:true}});
+ const response=await fetch(state.api.url+'/v1/requirements',{headers:{Authorization:'Bearer '+state.api.token}});
+ assert.equal(response.status,200);assert.equal((await response.json()).data[0].note,note);
+});

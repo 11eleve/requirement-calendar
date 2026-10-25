@@ -11,7 +11,7 @@ const service=new CalendarAI({directory:process.argv[2],dispatch});
 const lines=readline.createInterface({input:process.stdin,crlfDelay:Infinity});
 let started;
 lines.on('line',line=>{
-  if(Buffer.byteLength(line)>2*1024*1024){console.error('AI host message exceeds limit');process.exit(1);}
+  if(Buffer.byteLength(line)>64*1024*1024){console.error('AI host message exceeds limit');process.exit(1);}
   let message;try{message=JSON.parse(line);}catch{console.error('Invalid AI host JSON');process.exit(1);}
   if(message.type==='commandResult'){
     const waiter=pending.get(message.id);if(waiter){pending.delete(message.id);clearTimeout(waiter.timer);waiter.resolve(message.result);}return;
