@@ -46,7 +46,8 @@ async function main(){
   await page.waitForFunction(async()=>{const s=await CalendarDesktop.postMessage({action:'assistant',request:{method:'state'}});return s.settings.permissions.create&&s.settings.permissions.update;});
   await page.locator('[data-ai=apiEnabled]').check();await page.waitForFunction(async()=>(await CalendarDesktop.postMessage({action:'assistant',request:{method:'state'}})).api.enabled);
   await screenshot('settings');await page.getByRole('button',{name:'保存设置',exact:true}).click();await page.waitForSelector('[data-ai=configuration]',{state:'hidden'});
-  check('permissions and API switches retain unsaved work habits and provider fields',(await api()).settings.preferences.includes('周五'));
+  const configured=(await api()).settings;
+  check('permissions and API switches retain unsaved work habits and provider fields',configured.preferences.includes('周五')&&configured.permissions.create&&configured.permissions.update&&configured.apiEnabled);
   await send('新建登录优化，备注接口已确认，再整体后移两天。');
   check('chat shows the committed assistant response',await page.locator('.rf-ai-assistant').last().innerText().then(text=>text.includes('已创建登录优化')));
   let stored=JSON.parse(await fs.readFile(path.join(directory,'calendar.json'),'utf8'));
@@ -79,7 +80,7 @@ async function main(){
   await page.waitForFunction(width=>innerWidth===width,contentSize[0]);await visibleFit('assistant and composer fit the minimum 920×600 window');
   await page.waitForFunction(()=>{const messages=document.querySelector('[data-ai=messages]'),last=messages.lastElementChild;return last.getBoundingClientRect().bottom<=messages.getBoundingClientRect().bottom+1;});check('latest reply stays visible after resizing',true);await screenshot('minimum');
   await fs.writeFile(output,JSON.stringify({ok:true,checks,platform:process.platform,model:'local Messages fixture; official Harness runtime'},null,2)+'\n');
- }catch(error){if(page){await screenshot('failure').catch(()=>{});try{const state=await api();console.error('Assistant diagnostics:',{busy:state.busy,error:state.error,reply:state.messages.filter(m=>m.role==='assistant').at(-1),modelRequests:model.requests.length});}catch{}}throw error;
+ }catch(error){if(page){await screenshot('failure').catch(()=>{});try{const state=await api();console.error('Assistant diagnostics:',{busy:state.busy,error:state.error,permissions:state.settings.permissions,reply:state.messages.filter(m=>m.role==='assistant').at(-1),receipts:state.messages.filter(m=>m.role==='tool'),modelRequests:model.requests.length});}catch{}}throw error;
  }finally{
   if(application)await application.close().catch(()=>{});await model.close();await fs.rm(directory,{recursive:true,force:true});
  }

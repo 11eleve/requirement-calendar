@@ -26,7 +26,7 @@ window.CalendarReady.then(()=>{
   </form>`;
  root.querySelector('.rf-content').append(panel);
  const get=name=>panel.querySelector('[data-ai="'+name+'"]');
- let opened=false,configuration=false,current=null,timer=null,polling=false,messageSignature='',historySignature='',permissionQueue=Promise.resolve();
+ let opened=false,configuration=false,current=null,timer=null,polling=false,messageSignature='',historySignature='',configurationQueue=Promise.resolve();
  const messages=get('messages');
  new ResizeObserver(()=>{if(opened&&!configuration)messages.scrollTop=messages.scrollHeight;}).observe(messages);
  function error(message){get('error').hidden=!message;get('error').textContent=message||'';}
@@ -70,6 +70,10 @@ window.CalendarReady.then(()=>{
  }
  function showSettings(show){configuration=show;get('configuration').hidden=!show;get('chat').hidden=show;error('');if(show){fillSettings();get('key').focus({preventScroll:true});}else get('composer').querySelector('textarea').focus({preventScroll:true});}
  async function action(request){error('');try{const state=await call(request);render(state);return state;}catch(e){error(e.message);return null;}}
+ function configure(build){
+  configurationQueue=configurationQueue.then(async()=>{try{const latest=await call({method:'state'});render(latest);return await action(build(latest));}catch(e){error(e.message);return null;}});
+  return configurationQueue;
+ }
  toggle.addEventListener('click',()=>opened?close():void open());get('close').addEventListener('click',close);
  get('settings').addEventListener('click',()=>showSettings(!configuration));get('connect').addEventListener('click',()=>showSettings(true));get('back').addEventListener('click',()=>showSettings(false));
  get('new').addEventListener('click',()=>void action({method:'new'}));get('history').addEventListener('change',()=>void action({method:'select',id:get('history').value}));
@@ -77,20 +81,20 @@ window.CalendarReady.then(()=>{
  panel.querySelectorAll('.rf-ai-suggestion').forEach(button=>button.addEventListener('click',()=>{get('composer').querySelector('textarea').value=button.textContent;get('composer').querySelector('textarea').focus();}));
  const input=get('composer').querySelector('textarea');
  input.addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();if(!current?.busy)get('composer').requestSubmit();}});
- get('composer').addEventListener('submit',async event=>{event.preventDefault();const text=input.value.trim();if(!text)return;const state=await action({method:'send',text,context:context()});if(state)input.value='';});
+ get('composer').addEventListener('submit',async event=>{event.preventDefault();const text=input.value.trim();if(!text)return;await configurationQueue;const state=await action({method:'send',text,context:context()});if(state)input.value='';});
  get('configuration').addEventListener('submit',async event=>{
   event.preventDefault();if(!current)return;
-  const settings={...current.settings,model:get('model').value.trim(),baseURL:get('baseURL').value.trim(),preferences:get('preferences').value};
+  const fields={model:get('model').value.trim(),baseURL:get('baseURL').value.trim(),preferences:get('preferences').value};
   const apiKey=get('key').value.trim();get('key').value='';
-  const state=await action({method:'configure',settings,...apiKey?{apiKey}:{}});if(state)showSettings(false);
+  const state=await configure(latest=>({method:'configure',settings:{...latest.settings,...fields},...apiKey?{apiKey}:{}}));if(state)showSettings(false);
  });
  panel.querySelectorAll('[data-permission]').forEach(input=>input.addEventListener('change',()=>{
   const checked=input.checked;
-  permissionQueue=permissionQueue.then(async()=>{if(!current)return;const permissions={...current.settings.permissions,[input.dataset.permission]:checked};const state=await action({method:'configure',settings:{...current.settings,permissions}});if(!state)input.checked=current.settings.permissions[input.dataset.permission];});
+  void configure(latest=>({method:'configure',settings:{...latest.settings,permissions:{...latest.settings.permissions,[input.dataset.permission]:checked}}})).then(state=>{if(!state&&current)input.checked=current.settings.permissions[input.dataset.permission];});
  }));
- get('apiEnabled').addEventListener('change',async()=>{if(current){await action({method:'configure',settings:{...current.settings,apiEnabled:get('apiEnabled').checked}});}fillAPI();});
- get('clearKey').addEventListener('click',async()=>{if(current){await action({method:'configure',settings:current.settings,clearKey:true});get('clearKey').hidden=!current.hasKey;get('key').placeholder=current.hasKey?'已保存，留空保持不变':'填写你的 API Key';}});
- get('rotateToken').addEventListener('click',async()=>{await action({method:'rotateToken'});fillAPI();});
+ get('apiEnabled').addEventListener('change',async()=>{const enabled=get('apiEnabled').checked;await configure(latest=>({method:'configure',settings:{...latest.settings,apiEnabled:enabled}}));fillAPI();});
+ get('clearKey').addEventListener('click',async()=>{if(current){await configure(latest=>({method:'configure',settings:latest.settings,clearKey:true}));get('clearKey').hidden=!current.hasKey;get('key').placeholder=current.hasKey?'已保存，留空保持不变':'填写你的 API Key';}});
+ get('rotateToken').addEventListener('click',async()=>{await configure(()=>({method:'rotateToken'}));fillAPI();});
  get('showToken').addEventListener('click',()=>{const visible=get('apiToken').type==='password';get('apiToken').type=visible?'text':'password';get('showToken').textContent=visible?'隐藏令牌':'显示令牌';});
  panel.addEventListener('keydown',event=>{if(event.key==='Escape'&&!event.isComposing){event.stopPropagation();if(configuration)showSettings(false);else close();}});
 });

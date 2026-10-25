@@ -95,6 +95,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AI-failure-diagnostics
+          include-hidden-files: true
           path: |
             .build/assistant-*.png
             assistant-*.png
